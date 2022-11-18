@@ -351,8 +351,6 @@ MigrationBackup/
 
 LegalSystemCore/bin/Debug/
 LegalSystemCore/obj/Debug/
-LegalSystemCore/LegalSystemCore.csproj
 
 LegalSystemWeb/bin/
 LegalSystemWeb/obj/Debug/
-LegalSystemWeb/LegalSystemWeb.csproj
