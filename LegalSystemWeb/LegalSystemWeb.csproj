@@ -73,6 +73,7 @@
     <Content Include="bin\LegalSystemWeb.dll" />
     <Content Include="bin\LegalSystemWeb.pdb" />
     <Content Include="charts.html" />
+    <Content Include="CreateCase.aspx" />
     <Content Include="css\styles.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="index.html" />
@@ -94,7 +95,11 @@
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="tables.html" />
     <Content Include="Test.aspx" />
+
     <Content Include="ViewPaymentMemo.aspx" />
+
+    <Content Include="UpdateCaseActivity.aspx" />
+
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -139,6 +144,13 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CreateCase.aspx.cs">
+      <DependentUpon>CreateCase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateCase.aspx.designer.cs">
+      <DependentUpon>CreateCase.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,6 +189,12 @@
     </Compile>
     <Compile Include="ViewPaymentMemo.aspx.designer.cs">
       <DependentUpon>ViewPaymentMemo.aspx</DependentUpon>
+    <Compile Include="UpdateCaseActivity.aspx.cs">
+      <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateCaseActivity.aspx.designer.cs">
+      <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
