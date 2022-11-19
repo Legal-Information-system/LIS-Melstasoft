@@ -95,6 +95,7 @@
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="tables.html" />
     <Content Include="Test.aspx" />
+    <Content Include="UpdateCaseActivity.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -177,6 +178,13 @@
     </Compile>
     <Compile Include="Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCaseActivity.aspx.cs">
+      <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateCaseActivity.aspx.designer.cs">
+      <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
