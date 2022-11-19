@@ -74,6 +74,7 @@
     <Content Include="bin\LegalSystemWeb.pdb" />
     <Content Include="charts.html" />
     <Content Include="css\styles.css" />
+    <Content Include="Dashboard.aspx" />
     <Content Include="index.html" />
     <Content Include="js\datatables-simple-demo.js" />
     <Content Include="js\scripts.js" />
@@ -136,6 +137,13 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
