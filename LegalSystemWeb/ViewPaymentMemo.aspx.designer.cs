@@ -11,25 +11,16 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class SiteMaster
+    public partial class ViewPaymentMemo
     {
 
         /// <summary>
-        /// HeadContent control.
+        /// datatablesSimple control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
-
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.GridView datatablesSimple;
     }
 }
