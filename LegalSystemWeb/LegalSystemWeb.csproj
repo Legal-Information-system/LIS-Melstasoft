@@ -97,6 +97,7 @@
     <Content Include="tables.html" />
     <Content Include="Test.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="ViewCases.aspx" />
     <Content Include="ViewPaymentMemo.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -194,6 +195,13 @@
     </Compile>
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCases.aspx.cs">
+      <DependentUpon>ViewCases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewCases.aspx.designer.cs">
+      <DependentUpon>ViewCases.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewPaymentMemo.aspx.cs">
       <DependentUpon>ViewPaymentMemo.aspx</DependentUpon>
