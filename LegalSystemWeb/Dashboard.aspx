@@ -20,9 +20,11 @@
                     <div class="text-center">
                         50
                     </div>
+                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
                 </div>
             </div>
         </div>
+
         <div class="col-xl-3 col-md-6">
             <div class="card bg-warning text-white mb-4">
                 <div class="card-body">
@@ -32,6 +34,7 @@
                     <div class="text-center">
                         50
                     </div>
+                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
                 </div>
             </div>
         </div>
@@ -44,6 +47,7 @@
                     <div class="text-center">
                         25
                     </div>
+                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
                 </div>
             </div>
         </div>
@@ -56,6 +60,7 @@
                     <div class="text-center">
                         50
                     </div>
+                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
                 </div>
             </div>
         </div>
