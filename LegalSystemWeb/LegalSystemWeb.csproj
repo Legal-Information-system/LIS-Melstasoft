@@ -83,6 +83,7 @@
     <Content Include="js\scripts.js" />
     <Content Include="layout-sidenav-light.html" />
     <Content Include="layout-static.html" />
+    <Content Include="Login.aspx" />
     <Content Include="login.html" />
     <Content Include="obj\Debug\LegalSystemWeb.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\LegalSystemWeb.dll" />
@@ -98,6 +99,7 @@
     <Content Include="tables.html" />
     <Content Include="Test.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="UploadDocument.aspx" />
     <Content Include="ViewCases.aspx" />
     <Content Include="ViewPaymentMemo.aspx" />
     <Content Include="Web.config" />
@@ -182,6 +184,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -203,6 +212,13 @@
     </Compile>
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadDocument.aspx.cs">
+      <DependentUpon>UploadDocument.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UploadDocument.aspx.designer.cs">
+      <DependentUpon>UploadDocument.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewCases.aspx.cs">
       <DependentUpon>ViewCases.aspx</DependentUpon>
