@@ -74,6 +74,7 @@
     <Content Include="bin\LegalSystemWeb.pdb" />
     <Content Include="charts.html" />
     <Content Include="CreateCase.aspx" />
+    <Content Include="CreatePaymentMemo.aspx" />
     <Content Include="css\styles.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="index.html" />
@@ -146,6 +147,13 @@
     </Compile>
     <Compile Include="CreateCase.aspx.designer.cs">
       <DependentUpon>CreateCase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreatePaymentMemo.aspx.cs">
+      <DependentUpon>CreatePaymentMemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreatePaymentMemo.aspx.designer.cs">
+      <DependentUpon>CreatePaymentMemo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
