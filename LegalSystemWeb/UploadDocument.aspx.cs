@@ -7,18 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace LegalSystemWeb
 {
-    public partial class CreateCase : System.Web.UI.Page
+    public partial class UploadDocument : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-
-
-        protected void btnDocUpload_Click1(object sender, EventArgs e)
-        {
-            Response.Redirect("UploadDocument.aspx");
         }
     }
 }
