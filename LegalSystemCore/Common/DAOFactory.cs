@@ -14,5 +14,11 @@ namespace LegalSystemCore.Common
             ICompanyDAO companyDAO = new CompanySqlDAOImpl();
             return (ICompanyDAO)companyDAO;
         }
+
+        public static ICompanyUnitDAO CreateCompanyUnitDAO()
+        {
+            ICompanyUnitDAO companyUnitDAO = new CompanyUnitSqlDAOImpl();
+            return (ICompanyUnitDAO)companyUnitDAO;
+        }
     }
 }
