@@ -78,10 +78,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 View Payment Memo
                             </a>
-                            <a class="nav-link" href="CreateAccount.aspx">
+                            <%--<a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Create Account
-                            </a>
+                            </a>--%>
                             <a class="nav-link" href="ViewCases.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 ViewCases
@@ -117,7 +117,7 @@
                             </div>--%>
 
                             <div class="sb-sidenav-menu-heading">Admin</div>
-                            <a class="nav-link" href="Register.aspx">
+                            <a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Regiter Users
                             </a>
