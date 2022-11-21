@@ -20,7 +20,8 @@
                             <%--     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                 ControlToValidate="ddlCompany" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
                         </div>
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
+
+                        <div class="col-sm-6" style="display: flex; flex-direction: column">
 
                             <asp:Literal ID="Literal2" runat="server" Text="Company Unit"></asp:Literal>
                             <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-primary dropdown-toggle"></asp:DropDownList>
@@ -67,7 +68,7 @@
 
                             <asp:Literal ID="Literal15" runat="server" Text="Company Side"></asp:Literal>
                             <asp:RadioButtonList ID="rbIsPlantiff" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px">
-                                <asp:ListItem Value="P" CssClass="form-check-input" Style="margin-right: 15px">Plantiff</asp:ListItem>
+                                <asp:ListItem Value="P" CssClass="form-check-input" Style="margin-right: 50px">Plantiff</asp:ListItem>
                                 <asp:ListItem Value="D" CssClass="form-check-input">Difendant</asp:ListItem>
                             </asp:RadioButtonList>
 
