@@ -9,10 +9,8 @@
             <i class="fas fa-table me-1"></i>
             Approve Payment Table
         </div>
-        
-           
-    </div>
-    <asp:GridView Id="datatablesSimple" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
+        <div class="card-body table-responsive">
+            <asp:GridView Id="datatablesSimple" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
          
             <Columns>
@@ -31,4 +29,9 @@
             </Columns>
         
     </asp:GridView>
+        </div>
+        
+           
+    </div>
+    
 </asp:Content>

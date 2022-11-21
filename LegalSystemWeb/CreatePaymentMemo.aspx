@@ -10,7 +10,7 @@
                                     <div class="card-body m-5">
                                         <form class="user" action="">
                                             <div class="row mb-3">
-                                                 <div class="col-2" style="display:flex;flex-direction:row">
+                                                 <div class="col-2 align-middle" style="display:flex;flex-direction:row">
                                                        
                                                     <asp:Literal ID="Literal1" runat="server" Text="Case No: "></asp:Literal> 
                                            
@@ -25,7 +25,7 @@
 
                                             </div>
                                             <div class="row mb-3">
-                                                 <div class="col-2" style="display:flex;flex-direction:row">
+                                                 <div class="col-2 align-middle" style="display:flex;flex-direction:row">
                                                        
                                                     <asp:Literal ID="Literal2" runat="server" Text="Lawyer Name: "></asp:Literal> 
                                            
@@ -40,7 +40,7 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                 <div class="col-2" style="display:flex;flex-direction:row">
+                                                 <div class="col-2 align-middle" style="display:flex;flex-direction:row">
                                                        
                                                     <asp:Literal ID="Literal5" runat="server" Text="Activities: "></asp:Literal> 
                                            
@@ -65,7 +65,7 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                 <div class="col-2" style="display:flex;flex-direction:row">
+                                                 <div class="col-2 align-middle" style="display:flex;flex-direction:row">
                                                        
                                                     <asp:Literal ID="Literal3" runat="server" Text="Total Payable Amount : "></asp:Literal> 
                                            
@@ -78,7 +78,7 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                 <div class="col-2" style="display:flex;flex-direction:row">
+                                                 <div class="col-2 align-middle" style="display:flex;flex-direction:row">
                                                        
                                                     <asp:Literal ID="Literal4" runat="server" Text="Upload Documents / Slips : "></asp:Literal> 
                                            
