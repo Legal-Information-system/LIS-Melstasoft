@@ -65,6 +65,7 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
     <Content Include="assets\demo\chart-bar-demo.js" />
     <Content Include="assets\demo\chart-pie-demo.js" />
@@ -152,6 +153,13 @@
     </Compile>
     <Compile Include="CreateAccount.aspx.designer.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovePaymentMemo.aspx.cs">
+      <DependentUpon>ApprovePaymentMemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApprovePaymentMemo.aspx.designer.cs">
+      <DependentUpon>ApprovePaymentMemo.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateCase.aspx.cs">
       <DependentUpon>CreateCase.aspx</DependentUpon>

@@ -27,8 +27,8 @@ namespace LegalSystemWeb
                 order.Add(new Orders(code + 5, "SUPRD", i + 4, 6.3 * i, "Charleroi", "Suprêmes délices", new DateTime(1953, 02, 18), "Belgium", "B-6000", false));
                 code += 5;
             }
-            this.datatablesSimple.DataSource = order;
-            this.datatablesSimple.DataBind();
+            this.GridView1.DataSource = order;
+            this.GridView1.DataBind();
         }
 
         [Serializable]
