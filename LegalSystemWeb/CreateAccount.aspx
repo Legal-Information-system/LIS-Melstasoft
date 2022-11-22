@@ -12,37 +12,37 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="col" style="display: flex; flex-direction: column">
+                    <div class="col my-3 py-1" style="display: flex; flex-direction: column">
 
                         <asp:Literal ID="Literal1" runat="server" Text="User Name"></asp:Literal>
                         <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtUserName"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtUserName" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                     </div>
 
-                    <div class="col" style="display: flex; flex-direction: column">
+                    <div class="col my-3 py-1" style="display: flex; flex-direction: column">
 
                         <asp:Literal ID="Literal5" runat="server" Text="Password"></asp:Literal>
                         <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtPassword"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPassword" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                     </div>
-                    <div class="col" style="display: flex; flex-direction: column">
+                    <div class="col my-3 py-1" style="display: flex; flex-direction: column">
                         <asp:Literal ID="Literal2" runat="server" Text="User Type"></asp:Literal>
-                        <asp:DropDownList runat="server" ID="ddlUserType" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtPassword" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                        <asp:DropDownList runat="server" ID="ddlUserType" CssClass="btn btn-default dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
+                        
                     </div>
-                    <div class="col" style="display: flex; flex-direction: column">
+                    <div class="col my-3 py-1" style="display: flex; flex-direction: column">
                         <asp:Literal ID="Literal3" runat="server" Text="Company Name: "></asp:Literal>
-                        <asp:DropDownList ID="ddlCompanyName" runat="server" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCompanyName" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-default dropdown-toggle" Style="margin-top: 5px" AutoPostBack="true"></asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCompany" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                     </div>
 
-                    <div class="col" style="display: flex; flex-direction: column">
+                    <div class="col my-3 py-1" style="display: flex; flex-direction: column">
                         <asp:Literal ID="Literal4" runat="server" Text="Company Unit Name"></asp:Literal>
-                        <asp:DropDownList ID="ddlCompanyUnitName" runat="server" CssClass="btn btn-primary dropdown-toggle w-100" Style="margin-top: 5px"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="ddlCompanyUnitName" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-default dropdown-toggle w-100" Style="margin-top: 5px"></asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="ddlCompanyUnit" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                     </div>
                     <div class="col d-flex flex-row justify-content-center">
-                        <asp:Button runat="server" ID="btnSubmit" CssClass="btn btn-primary" Text="Submit" />
+                        <asp:Button runat="server" ID="btnSubmit" CssClass="btn btn-primary" Text="Submit" OnClick="btnSubmit_Click" />
                     </div>
 
 

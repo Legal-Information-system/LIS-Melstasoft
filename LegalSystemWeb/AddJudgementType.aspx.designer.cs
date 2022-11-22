@@ -11,17 +11,26 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddActivity
+    public partial class AddJudgementType
     {
 
         /// <summary>
-        /// txtAddActivity control.
+        /// txtJType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAddActivity;
+        protected global::System.Web.UI.WebControls.TextBox txtJType;
+
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
         /// btnSave control.
@@ -33,12 +42,12 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
-        /// GridView2 control.
+        /// gvJudgementType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView gvJudgementType;
     }
 }

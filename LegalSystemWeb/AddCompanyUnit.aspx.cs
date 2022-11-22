@@ -6,62 +6,95 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using LegalSystemCore.Common;
+using LegalSystemCore.Domain;
+using LegalSystemCore;
 
 namespace LegalSystemWeb
 {
     public partial class AddCompanyUnit : System.Web.UI.Page
     {
-        List<Orders> order = new List<Orders>();
+        List<CompanyUnit> companyUnitList = new List<CompanyUnit>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDataSource();
+            if (!IsPostBack)
+            {
+                BindCompanyList();
+                BindDataSource();
+            }
         }
 
         private void BindDataSource()
         {
+            ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
+
+            companyUnitList = companyUnitController.GetCompanyUnitList(true);
+            GridView2.DataSource = companyUnitController.GetCompanyUnitList(true);
+            GridView2.DataBind();
+
+        }
+
+        private void BindCompanyList()
+        {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
+            ddlCompany.DataSource = companyController.GetCompanyList();
+            ddlCompany.DataValueField = "CompanyId";
+            ddlCompany.DataTextField = "CompanyName";
 
-
-            this.GridView2.DataSource = companyController.GetCompanyList();
-            this.GridView2.DataBind();
+            ddlCompany.DataBind();
         }
 
-        [Serializable]
-        public class Orders
+        protected void btnSave_Click(object sender, EventArgs e)
         {
+            ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
 
-            public Orders()
+            if (btnSave.Text == "Update")
             {
+                int rowIndex = (int)ViewState["updatedRowIndex"];
+                CompanyUnit companyUnit = new CompanyUnit();
+                companyUnit.CompanyUnitName = txtCompanyUnitName.Text;
 
+
+
+                companyUnitController.Update(companyUnit);
+                btnSave.Text = "Save";
             }
-            public Orders(long OrderId, string CustomerId, int EmployeeId, double Freight, string ShipCity, string ShipName,
-                DateTime OrderDate, string ShipCountry, string ShipPostalCode, bool Verified)
+            else
             {
-                this.OrderID = OrderId;
-                this.CustomerID = CustomerId;
-                this.EmployeeID = EmployeeId;
-                this.Freight = Freight;
-                this.ShipCity = ShipCity;
-                this.ShipName = ShipName;
-                this.OrderDate = OrderDate;
-                this.ShipCountry = ShipCountry;
-                this.ShipPostalCode = ShipPostalCode;
-                this.Verified = Verified;
+                CompanyUnit companyUnit = new CompanyUnit();
+                companyUnit.CompanyUnitName = txtCompanyUnitName.Text;
+                string test = ddlCompany.SelectedValue;
+                companyUnit.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                companyUnit.CompanyUnitId = companyUnitController.Save(companyUnit);
             }
-            public long OrderID { get; set; }
-            public string CustomerID { get; set; }
-            public int EmployeeID { get; set; }
-            public double Freight { get; set; }
-            public string ShipCity { get; set; }
-            public string ShipName { get; set; }
-            public DateTime OrderDate { get; set; }
-            public string ShipCountry { get; set; }
-            public string ShipPostalCode { get; set; }
-            public bool Verified { get; set; }
+
+
+            Clear();
+            BindDataSource();
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void btnEdit_Click(object sender, EventArgs e)
         {
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            //if (listStudent == null && ViewState["listStudent"] != null)
+            //    listStudent = (List<Student>)ViewState["listStudent"];
+            //else
+            //    listStudent = new List<Student>();
+
+            txtCompanyUnitName.Text = companyUnitList[rowIndex].CompanyUnitName;
+            ddlCompany.SelectedValue = Convert.ToString(companyUnitList[rowIndex].CompanyId);
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = companyUnitList[rowIndex].CompanyId; ;
+        }
+
+        private void Clear()
+        {
+            txtCompanyUnitName.Text = string.Empty;
+            ddlCompany.ClearSelection();
 
         }
     }

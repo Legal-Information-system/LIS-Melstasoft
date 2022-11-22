@@ -11,17 +11,26 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddActivity
+    public partial class AddCaseNature
     {
 
         /// <summary>
-        /// txtAddActivity control.
+        /// txtNatureName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAddActivity;
+        protected global::System.Web.UI.WebControls.TextBox txtNatureName;
+
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
         /// btnSave control.

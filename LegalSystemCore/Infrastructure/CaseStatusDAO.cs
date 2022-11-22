@@ -35,12 +35,34 @@ namespace LegalSystemCore.Infrastructure
 
         public int Save(CaseStatus caseStatus, DbConnection dbConnection)
         {
-            throw new NotImplementedException();
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "INSERT INTO case_status (case_status_name) " +
+                                           "VALUES (@StatusName)";
+
+            dbConnection.cmd.Parameters.AddWithValue("@StatusName", caseStatus.StatusName);
+
+            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+
+            return output;
         }
 
         public int Update(CaseStatus caseStatus, DbConnection dbConnection)
         {
-            throw new NotImplementedException();
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE case_status SET case_status_name = @StatusName WHERE case_status_id = @StatusId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@StatusName", caseStatus.StatusName);
+            dbConnection.cmd.Parameters.AddWithValue("@StatusId", caseStatus.StatusId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
     }
 }

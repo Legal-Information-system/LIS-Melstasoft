@@ -52,6 +52,7 @@
 
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
+
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -78,54 +79,50 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 View Payment Memo
                             </a>
-                            <%--<a class="nav-link" href="CreateAccount.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Create Account
-                            </a>--%>
+
                             <a class="nav-link" href="ViewCases.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 ViewCases
                             </a>
-                            <%-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+
+                            <div class="sb-sidenav-menu-heading">Admin</div>
+
+                            <a class="nav-link" href="CreateAccount.aspx">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                Create Account
+                            </a>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
+                                Utilities
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="AddCompany.aspx">Add Company</a>
+                                    <a class="nav-link" href="AddCompanyUnit.aspx">Add Company Unit</a>
+                                    <a class="nav-link" href="AddLawyer.aspx">Add Lawyer</a>
+                                    <a class="nav-link" href="AddUserRole.aspx">Add User Role</a>
+                                    <a class="nav-link" href="AddCourt.aspx">Add Court</a>
+                                    <a class="nav-link" href="">Add Case Nature</a>
+                                    <a class="nav-link" href="AddAction.aspx">Add Action</a>
+                                    <a class="nav-link" href="AddActivity.aspx">Add Activity</a>
+                                    <a class="nav-link" href="AddJudgementType.aspx">Add Judgement Type</a>
+                                    <a class="nav-link" href="AddCaseStatus.aspx">Add Case Status</a>
+                                    <a class="nav-link" href="AddPaymentStatus.aspx">Add Payment Status</a>
                                 </nav>
-                            </div>--%>
+                            </div>
 
-                            <div class="sb-sidenav-menu-heading">Admin</div>
-                            <a class="nav-link" href="CreateAccount.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                                Regiter Users
-                            </a>
-                            <%--<a class="nav-link" href="">
+                        </div>
+                        <%-- <div class="sb-sidenav-menu-heading">Admin</div>
+                        <a class="nav-link" href="CreateAccount.aspx">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Regiter Users
+                        </a>--%>
+                        <%--<a class="nav-link" href="">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>--%>
-                        </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>

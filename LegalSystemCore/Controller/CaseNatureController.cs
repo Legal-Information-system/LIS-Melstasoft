@@ -3,51 +3,29 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICourtController
+    public interface ICaseNatureController
     {
-        int Save(Court court);
-        int Update(Court court);
-        List<Court> GetCourtList();
-
+        int Save(CaseNature caseNature);
+        List<CaseNature> GetCaseNatureList();
     }
-    public class CourtControllerImpl : ICourtController
+
+    public class CaseNatureControllerImpl : ICaseNatureController
     {
-        ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
-        public int Save(Court court)
-        {
-            Common.DbConnection dbconnection = null;
-            try
-            {
-                dbconnection = new Common.DbConnection();
-                return courtDAO.Save(court, dbconnection);
-            }
-            catch (Exception)
-            {
-                dbconnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbconnection.Commit();
-                }
-            }
-        }
 
-        public int Update(Court court)
+        ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
+        public int Save(CaseNature caseNature)
         {
             Common.DbConnection dbConnection = null;
             try
             {
                 dbConnection = new Common.DbConnection();
-                return courtDAO.Update(court, dbConnection);
+                return caseNatureDAO.Save(caseNature, dbConnection);
+
             }
             catch (Exception)
             {
@@ -62,15 +40,15 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
-
-        public List<Court> GetCourtList()
+        public List<CaseNature> GetCaseNatureList()
         {
             Common.DbConnection dbConnection = null;
-            List<Court> listcourt = new List<Court>();
+            List<CaseNature> listCaseNature = new List<CaseNature>();
+
             try
             {
                 dbConnection = new Common.DbConnection();
-                listcourt = courtDAO.GetCourtList(dbConnection);
+                listCaseNature = caseNatureDAO.GetCaseNatureList(dbConnection);
 
             }
             catch (Exception)
@@ -85,7 +63,10 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listcourt;
+            return listCaseNature;
         }
+
+
+
     }
 }

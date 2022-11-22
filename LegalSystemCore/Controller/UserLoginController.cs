@@ -7,25 +7,29 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 
+
 namespace LegalSystemCore.Controller
 {
-    public interface ILocationController
+
+    public interface IUserLoginController
     {
-        int Save(Location location);
-        int Update(Location location);
-        List<Location> GetLocationList();
+        int Save(UserLogin userLogin);
+        int Update(UserLogin userLogin);
+        List<UserLogin> GetUserLoginList();
 
     }
-    public class LocationControllerImpl : ILocationController
+
+    public class UserLoginControllerImpl : IUserLoginController
     {
-        ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
-        public int Save(Location location)
+        IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
+
+        public int Save(UserLogin userLogin)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return locationDAO.Save(location, dbconnection);
+                return userLoginDAO.Save(userLogin, dbconnection);
             }
             catch (Exception)
             {
@@ -41,13 +45,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(Location location)
+        public int Update(UserLogin userLogin)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return locationDAO.Update(location, dbconnection);
+                return userLoginDAO.Update(userLogin, dbconnection);
             }
             catch (Exception)
             {
@@ -57,18 +61,20 @@ namespace LegalSystemCore.Controller
             finally
             {
                 if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                {
                     dbconnection.Commit();
+                }
             }
         }
 
-        public List<Location> GetLocationList()
+        public List<UserLogin> GetUserLoginList()
         {
             Common.DbConnection dbConnection = null;
-            List<Location> listlocation = new List<Location>();
+            List<UserLogin> listUserLogin = new List<UserLogin>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listlocation = locationDAO.GetLocationList(dbConnection);
+                listUserLogin = userLoginDAO.GetUserLoginList(dbConnection);
 
             }
             catch (Exception)
@@ -83,7 +89,9 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listlocation;
+            return listUserLogin;
         }
+
     }
+
 }

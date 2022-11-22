@@ -50,22 +50,19 @@ namespace LegalSystemWeb
                 caseAction.ActionId = caseActionController.Save(caseAction);
             }
 
-
             Clear();
             BindDataSource();
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)
         {
-            ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
 
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
-
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
             txtAction.Text = caseActions[rowIndex].ActionName;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = caseActions[rowIndex].ActionId; ;
+            ViewState["updatedRowIndex"] = caseActions[rowIndex].ActionId;
         }
 
         private void Clear()
