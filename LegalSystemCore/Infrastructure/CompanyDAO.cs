@@ -25,11 +25,11 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into company (company_id ,comapny_name,company_address) " +
-                                           "values (@CompanyId,@CompanyName,@CompanyAddress) SELECT SCOPE_IDENTITY() ";
+            dbConnection.cmd.CommandText = "Insert into company (company_name,company_address) " +
+                                           "values (@CompanyName,@CompanyAddress) SELECT SCOPE_IDENTITY() ";
 
 
-            dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
+            //dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyName", company.CompanyName);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyAddress", company.CompanyAddress);
 
@@ -47,7 +47,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Update company set comapny_name = @CompanyName ,company_address = @CompanyAddress WHERE company_id = @CompanyId ";
+            dbConnection.cmd.CommandText = "Update company set company_name = @CompanyName ,company_address = @CompanyAddress WHERE company_id = @CompanyId ";
 
 
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
@@ -56,15 +56,12 @@ namespace LegalSystemCore.Infrastructure
 
             output = dbConnection.cmd.ExecuteNonQuery();
 
-
             return output;
         }
 
         public List<Company> GetCompanyList(DbConnection dbConnection)
         {
             List<Company> listCompany = new List<Company>();
-
-            dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "select * from company";
 

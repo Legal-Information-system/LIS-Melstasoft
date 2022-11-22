@@ -302,6 +302,12 @@
   <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LegalSystemCore\LegalSystemCore.csproj">
+      <Project>{40318980-c02b-4bf3-bed3-863aed4f456a}</Project>
+      <Name>LegalSystemCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
