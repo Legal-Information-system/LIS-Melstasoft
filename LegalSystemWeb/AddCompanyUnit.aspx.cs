@@ -64,5 +64,10 @@ namespace LegalSystemWeb
             public string ShipPostalCode { get; set; }
             public bool Verified { get; set; }
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
