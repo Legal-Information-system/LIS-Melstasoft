@@ -70,7 +70,6 @@ namespace LegalSystemWeb
         private void Clear()
         {
             txtRoleName.Text = string.Empty;
-
         }
     }
 }

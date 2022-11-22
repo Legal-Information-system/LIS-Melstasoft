@@ -26,5 +26,17 @@ namespace LegalSystemCore.Common
             IUserRoleDAO userRoleDAO = new UserRoleDAOSqlImpl();
             return (IUserRoleDAO)userRoleDAO;
         }
+
+        public static ICaseActionDAO CreateCaseActionDAO()
+        {
+            ICaseActionDAO caseActionDAO = new CaseActionDAOSqlImpl();
+            return (ICaseActionDAO)caseActionDAO;
+        }
+
+        public static ICaseStatusDAO CreateCaseStatusDAO()
+        {
+            ICaseStatusDAO caseStatusDAO = new CaseStatusDAOSqlImpl();
+            return (ICaseStatusDAO)caseStatusDAO;
+        }
     }
 }
