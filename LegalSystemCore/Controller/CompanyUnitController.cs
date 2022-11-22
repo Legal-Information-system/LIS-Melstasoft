@@ -5,16 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-
-    public interface ICompanyUnitController
-    {
-        int Save(CompanyUnit companyUnit);
-        int Update(CompanyUnit companyUnit);
-        List<CompanyUnit> GetCompanyUnitList();
+    
+        public interface ICompanyUnitController
+        {
+            int Save(CompanyUnit companyUnit);
+            int Update(CompanyUnit companyUnit);
+            List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
 
     }
 
@@ -66,30 +67,39 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<CompanyUnit> GetCompanyUnitList()
-        {
-            Common.DbConnection dbConnection = null;
-            List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
-            try
+            public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
             {
-                dbConnection = new Common.DbConnection();
-                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
-
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                Common.DbConnection dbConnection = null;
+                List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
+                try
                 {
-                    dbConnection.Commit();
-                }
+                    dbConnection = new Common.DbConnection();
+                    listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+                    if (withCompanyName)
+                    {
+                        ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                        List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
+
+                        foreach (var companyUnit in listCompanyUnit)
+                        {
+                            companyUnit.company = listCompany.Where(x => x.CompanyId == companyUnit.CompanyId ).Single();
+                        }
+                    }
             }
-            return listCompanyUnit;
-        }
+                catch (Exception)
+                {
+                    dbConnection.RollBack();
+                    throw;
+                }
+                finally
+                {
+                    if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                    {
+                        dbConnection.Commit();
+                    }
+                }
+                return listCompanyUnit;
+            }
 
     }
 

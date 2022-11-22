@@ -8,21 +8,28 @@
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Company Unit</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
             <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox2" runat="server"></asp:TextBox>
+                <asp:TextBox Style="width: 100%;" ID="txtCompanyUnitName" runat="server"></asp:TextBox>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox3" runat="server"></asp:TextBox>
-            </div>
+            <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-default dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" OnClick="Button1_Click" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <Columns>
-                        <asp:BoundField DataField="OrderID" HeaderText="Comapny Unit Id" />
-                        <asp:BoundField DataField="CustomerID" HeaderText="Company Name" />
-                        <asp:BoundField DataField="EmployeeID" HeaderText="Company Unit Name" />
+                        <asp:BoundField DataField="CompanyId" HeaderText="Company Id" ItemStyle-CssClass="display: none;" >
+<ItemStyle CssClass="display: none;"></ItemStyle>
+                        </asp:BoundField>
+                        <asp:TemplateField HeaderText="Company Name">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("company.CompanyName") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("company.CompanyName") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="CompanyUnitName" HeaderText="Company Unit Name" />
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
