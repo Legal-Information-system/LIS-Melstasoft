@@ -3,6 +3,7 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 
@@ -52,6 +53,13 @@ namespace LegalSystemCore.Controller
             {
                 dbconnection.RollBack();
                 throw;
+            }
+            finally
+            {
+                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbconnection.Commit();
+                }
             }
         }
 

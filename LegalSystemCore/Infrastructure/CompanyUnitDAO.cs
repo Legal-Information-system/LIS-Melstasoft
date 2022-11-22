@@ -24,11 +24,10 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into company_unit (company_unit_id ,company_unit_name,company_id) " +
-                                           "values (@CompanyUnitId,@CompanyUnitName,@CompanyId) SELECT SCOPE_IDENTITY() ";
+            dbConnection.cmd.CommandText = "Insert into company_unit (company_unit_name,company_id) " +
+                                           "values (@CompanyUnitName,@CompanyId) SELECT SCOPE_IDENTITY() ";
 
 
-            dbConnection.cmd.Parameters.AddWithValue("@CompanyunitId", companyUnit.CompanyUnitId);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitName", companyUnit.CompanyUnitName);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", companyUnit.CompanyId);
 
@@ -67,7 +66,7 @@ namespace LegalSystemCore.Infrastructure
 
             String query = "select * from company_unit ";
 
-            if (companyId == null)
+            if (companyId != null)
             {
                 query = query + " " + " where company_id=" + companyId;
             }
