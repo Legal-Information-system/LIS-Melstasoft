@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LegalSystemCore.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LegalSystemCore.Common;
 
 namespace LegalSystemWeb
 {
@@ -17,17 +19,10 @@ namespace LegalSystemWeb
 
         private void BindDataSource()
         {
-            int code = 10000;
-            for (int i = 1; i < 10; i++)
-            {
-                order.Add(new Orders(code + 1, "TOMSP", i + 0, 2.3 * i, "Münster", "Toms Spezialitäten", new DateTime(1991, 05, 15), "Germany", "44087", false));
-                order.Add(new Orders(code + 2, "HANAR", i + 2, 3.3 * i, "Rio de Janeiro", "Hanari Carnes", new DateTime(1990, 04, 04), "Brazil", "05454-876", true));
-                order.Add(new Orders(code + 3, "VICTE", i + 1, 4.3 * i, "Lyon", "Victuailles en stock", new DateTime(1957, 11, 30), "France", "69004", true));
-                order.Add(new Orders(code + 4, "VINET", i + 3, 5.3 * i, "Reims", "Vins et alcools Chevalier", new DateTime(1930, 10, 22), "France", "51100", true));
-                order.Add(new Orders(code + 5, "SUPRD", i + 4, 6.3 * i, "Charleroi", "Suprêmes délices", new DateTime(1953, 02, 18), "Belgium", "B-6000", false));
-                code += 5;
-            }
-            this.GridView2.DataSource = order;
+            ICompanyController companyController = ControllerFactory.CreateCompanyController();
+
+
+            this.GridView2.DataSource = companyController.GetCompanyList();
             this.GridView2.DataBind();
         }
 

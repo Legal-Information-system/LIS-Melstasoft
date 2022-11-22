@@ -8,24 +8,28 @@
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Company</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
             <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox2" runat="server"></asp:TextBox>
+                <asp:TextBox Style="width: 100%;" ID="txtCompanyName" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                    ControlToValidate="txtCompanyName" ErrorMessage="Email is Required">Email is Required</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox3" runat="server"></asp:TextBox>
+                <asp:TextBox Style="width: 100%;" ID="txtCompanyAddress" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
+                    ControlToValidate="txtCompanyAddress" ErrorMessage="Email is Required">*</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <Columns>
-                        <asp:BoundField DataField="OrderID" HeaderText="Comapny Id" />
-                        <asp:BoundField DataField="CustomerID" HeaderText="Company Name" />
-                        <asp:BoundField DataField="EmployeeID" HeaderText="Address" />
+                        <asp:BoundField DataField="CompanyId" HeaderText="Comapny Id" />
+                        <asp:BoundField DataField="CompanyName" HeaderText="Company Name" />
+                        <asp:BoundField DataField="CompanyAddress" HeaderText="Address" />
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
+                                <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>
