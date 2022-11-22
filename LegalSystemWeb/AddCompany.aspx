@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddComapny.aspx.cs" Inherits="LegalSystemWeb.AddComapny" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddCompany.aspx.cs" Inherits="LegalSystemWeb.AddComapny" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -7,10 +7,10 @@
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Company</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="TextBox2" runat="server"></asp:TextBox>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="TextBox3" runat="server"></asp:TextBox>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
