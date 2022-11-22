@@ -51,6 +51,18 @@ namespace LegalSystemCore.Common
             return (ICaseStatusDAO)caseStatusDAO;
         }
 
+        public static IPaymentStatusDAO CreatePaymentStatusDAO()
+        {
+            IPaymentStatusDAO paymentStatusDAO = new PaymentDAOSqlImpl();
+            return (IPaymentStatusDAO)paymentStatusDAO;
+        }
+
+        public static IJudgementTypeDAO CreateJudgementTypeDAO()
+        {
+            IJudgementTypeDAO judgementTypeDAO = new JudgementTypeDAOSqlImpl();
+            return (IJudgementTypeDAO)judgementTypeDAO;
+        }
+
         public static IUserLoginDAO CreateUserLoginDAO()
         {
             IUserLoginDAO userLoginDAO = new UserLoginSqlDAOImpl();
