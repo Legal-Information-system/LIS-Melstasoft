@@ -8,7 +8,7 @@ using System.Text;
 namespace LegalSystemCore.Common
 {
     public class DAOFactory
-    {        
+    {
         public static ICompanyDAO CreateCompanyDAO()
         {
             ICompanyDAO companyDAO = new CompanySqlDAOImpl();
@@ -19,6 +19,12 @@ namespace LegalSystemCore.Common
         {
             ICompanyUnitDAO companyUnitDAO = new CompanyUnitSqlDAOImpl();
             return (ICompanyUnitDAO)companyUnitDAO;
+        }
+
+        public static IUserRoleDAO CreateUserRoleDAO()
+        {
+            IUserRoleDAO userRoleDAO = new UserRoleDAOSqlImpl();
+            return (IUserRoleDAO)userRoleDAO;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace LegalSystemWeb
 
 
             Clear();
-            //BindDataSource();
+            BindDataSource();
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)

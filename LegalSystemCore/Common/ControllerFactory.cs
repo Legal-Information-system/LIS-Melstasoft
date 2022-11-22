@@ -19,5 +19,11 @@ namespace LegalSystemCore.Common
             ICompanyUnitController companyUnitController = new CompanyUnitControllerImpl();
             return (ICompanyUnitController)companyUnitController;
         }
+
+        public static IUserRoleController CreateUserRoleController()
+        {
+            IUserRoleController userRoleController = new UserControllerImpl();
+            return (IUserRoleController)userRoleController;
+        }
     }
 }
