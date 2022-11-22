@@ -37,5 +37,11 @@ namespace LegalSystemCore.Common
             IUserRoleController userRoleController = new UserControllerImpl();
             return (IUserRoleController)userRoleController;
         }
+
+        public static ICaseActionController CreateCaseActionController()
+        {
+            ICaseActionController caseActionController = new CaseActionControllerImpl();
+            return (ICaseActionController)caseActionController;
+        }
     }
 }

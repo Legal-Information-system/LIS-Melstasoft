@@ -40,7 +40,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "INSERT INTO user_role (user_role_name,) " +
+            dbConnection.cmd.CommandText = "INSERT INTO user_role (user_role_name) " +
                                            "VALUES (@RoleName) SELECT SCOPE_IDENTITY()";
 
             dbConnection.cmd.Parameters.AddWithValue("@RoleName", userRole.RoleName);
@@ -60,8 +60,9 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandText = "UPDATE user_role SET user_role_name = @RoleName WHERE user_role_id = @RoleId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@RoleName", userRole.RoleName);
-
             dbConnection.cmd.Parameters.AddWithValue("@RoleId", userRole.RoleId);
+
+            String test = dbConnection.cmd.CommandText;
 
             output = dbConnection.cmd.ExecuteNonQuery();
 
