@@ -11,7 +11,7 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddCourt1
+    public partial class AddLocation
     {
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Literal Literal2;
 
         /// <summary>
-        /// txtCourtName control.
+        /// txtLocationName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCourtName;
+        protected global::System.Web.UI.WebControls.TextBox txtLocationName;
 
         /// <summary>
         /// RequiredFieldValidator15 control.
