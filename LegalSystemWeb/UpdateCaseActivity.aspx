@@ -5,8 +5,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="card o-hidden border-0 shadow-lg my-3">
-        <div class="card-header">
-            <h5>Update Case Activity</h5>
+        <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
+            <h5 class="text-light text-center bg-dark ">Update Case Activity</h5>
         </div>
         <div class="card-body">
 
@@ -30,7 +30,7 @@
 
                 <div class="row mb-5">
                     <div class="col-sm-6">
-                        <div class="card">
+                        <div class="card o-hidden border-0 shadow">
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="card">
+                        <div class="card o-hidden border-0 shadow">
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
@@ -259,7 +259,7 @@
 
                     <div class="row mb-3 ms-1">
                         <div class="col-sm-3">
-                            <asp:Button ID="btnUpdateActivity" runat="server" Text="Update Case" CssClass="btn btn-secondary btn-user btn-block" />
+                            <asp:Button ID="btnUpdateActivity" runat="server" Text="Update Case" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
                             <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" />
                         </div>
                     </div>

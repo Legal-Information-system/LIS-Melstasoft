@@ -46,14 +46,16 @@
     <Compile Include="Common\DataAccessObject.cs" />
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\DBFieldAttribute.cs" />
+    <Compile Include="Controller\CompanyController.cs" />
+    <Compile Include="Controller\CompanyUnitController.cs" />
+    <Compile Include="Domain\Company.cs" />
+    <Compile Include="Domain\CompanyUnit.cs" />
+    <Compile Include="Infrastructure\CompanyDAO.cs" />
+    <Compile Include="Infrastructure\CompanyUnitDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

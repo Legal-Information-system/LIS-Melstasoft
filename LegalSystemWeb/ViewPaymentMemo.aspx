@@ -13,13 +13,14 @@
         <div class="card-body table-responsive">
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                 CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                 <Columns>
-                    <asp:BoundField DataField="OrderID" HeaderText="Case ID" />
+                    <asp:BoundField DataField="OrderID" HeaderText="Case ID" ItemStyle-HorizontalAlign="center" />
                     <asp:BoundField DataField="CustomerID" HeaderText="Claim Amount" />
-                    <asp:BoundField DataField="EmployeeID" HeaderText="Total Paid Amount Upto Now" />
-                    <asp:BoundField DataField="Freight" HeaderText="Lawyer Name" />
-                    <asp:BoundField DataField="OrderDate" HeaderText="Actions" />
-                    <asp:BoundField DataField="ShipCity" HeaderText="Total Payable Amount" />
+                    <asp:BoundField DataField="EmployeeID" HeaderText="Total Paid Amount Upto Now" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="Freight" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="OrderDate" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="ShipCity" HeaderText="Total Payable Amount" ItemStyle-HorizontalAlign="center" />
                     <asp:TemplateField HeaderText="Uploaded Doc/Slip">
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEdit" runat="server">View Document</asp:LinkButton>
