@@ -31,5 +31,53 @@ namespace LegalSystemCore.Common
             IActivityDAO activityDAO = new ActivityDAOSqlImpl();
             return (IActivityDAO)activityDAO;
         }
+
+        public static ILocationDAO CreateLocationDAO()
+        {
+            ILocationDAO locationDAO = new LocationSqlDAOImpl();
+            return (ILocationDAO)locationDAO;
+        }
+
+        public static ICourtDAO CreateCourtDAO()
+        {
+            ICourtDAO courtDAO = new CourtSqlDAOImpl();
+            return (ICourtDAO)courtDAO;
+        }
+
+        public static IUserRoleDAO CreateUserRoleDAO()
+        {
+            IUserRoleDAO userRoleDAO = new UserRoleDAOSqlImpl();
+            return (IUserRoleDAO)userRoleDAO;
+        }
+
+        public static ICaseActionDAO CreateCaseActionDAO()
+        {
+            ICaseActionDAO caseActionDAO = new CaseActionDAOSqlImpl();
+            return (ICaseActionDAO)caseActionDAO;
+        }
+
+        public static ICaseStatusDAO CreateCaseStatusDAO()
+        {
+            ICaseStatusDAO caseStatusDAO = new CaseStatusDAOSqlImpl();
+            return (ICaseStatusDAO)caseStatusDAO;
+        }
+
+        public static IPaymentStatusDAO CreatePaymentStatusDAO()
+        {
+            IPaymentStatusDAO paymentStatusDAO = new PaymentDAOSqlImpl();
+            return (IPaymentStatusDAO)paymentStatusDAO;
+        }
+
+        public static IJudgementTypeDAO CreateJudgementTypeDAO()
+        {
+            IJudgementTypeDAO judgementTypeDAO = new JudgementTypeDAOSqlImpl();
+            return (IJudgementTypeDAO)judgementTypeDAO;
+        }
+
+        public static IUserLoginDAO CreateUserLoginDAO()
+        {
+            IUserLoginDAO userLoginDAO = new UserLoginSqlDAOImpl();
+            return(IUserLoginDAO)userLoginDAO;
+        }
     }
 }

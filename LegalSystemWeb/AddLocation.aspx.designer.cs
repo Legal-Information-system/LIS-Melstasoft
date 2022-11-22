@@ -11,26 +11,35 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddAction
+    public partial class AddLocation
     {
 
         /// <summary>
-        /// txtAction control.
+        /// Literal2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAction;
+        protected global::System.Web.UI.WebControls.Literal Literal2;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// txtLocationName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.TextBox txtLocationName;
+
+        /// <summary>
+        /// RequiredFieldValidator15 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator15;
 
         /// <summary>
         /// btnSave control.
@@ -42,12 +51,12 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
-        /// gvCaseAction control.
+        /// GridView2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCaseAction;
+        protected global::System.Web.UI.WebControls.GridView GridView2;
     }
 }

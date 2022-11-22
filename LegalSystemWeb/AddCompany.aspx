@@ -10,15 +10,15 @@
             <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="txtCompanyName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                    ControlToValidate="txtCompanyName" ErrorMessage="Email is Required">Email is Required</asp:RequiredFieldValidator>
+                    ControlToValidate="txtCompanyName" ErrorMessage="Email is Required" ValidationGroup="1">Email is Required</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="txtCompanyAddress" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
-                    ControlToValidate="txtCompanyAddress" ErrorMessage="Email is Required">*</asp:RequiredFieldValidator>
+                    ControlToValidate="txtCompanyAddress" ErrorMessage="Email is Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="1" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"

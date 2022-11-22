@@ -11,17 +11,17 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddAction
+    public partial class AddPaymentStatus
     {
 
         /// <summary>
-        /// txtAction control.
+        /// txtPStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAction;
+        protected global::System.Web.UI.WebControls.TextBox txtPStatus;
 
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -42,12 +42,12 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
-        /// gvCaseAction control.
+        /// gvPaymentStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCaseAction;
+        protected global::System.Web.UI.WebControls.GridView gvPaymentStatus;
     }
 }

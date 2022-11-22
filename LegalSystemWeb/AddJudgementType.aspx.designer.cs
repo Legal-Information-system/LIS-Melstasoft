@@ -11,17 +11,17 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddAction
+    public partial class AddJudgementType
     {
 
         /// <summary>
-        /// txtAction control.
+        /// txtJType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAction;
+        protected global::System.Web.UI.WebControls.TextBox txtJType;
 
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -42,12 +42,12 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
-        /// gvCaseAction control.
+        /// gvJudgementType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCaseAction;
+        protected global::System.Web.UI.WebControls.GridView gvJudgementType;
     }
 }
