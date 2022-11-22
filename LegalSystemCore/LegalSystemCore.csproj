@@ -47,10 +47,13 @@
     <Compile Include="Common\DBFieldAttribute.cs" />
     <Compile Include="Controller\CompanyController.cs" />
     <Compile Include="Controller\CompanyUnitController.cs" />
+    <Compile Include="Controller\UserRoleController.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\CompanyUnit.cs" />
+    <Compile Include="Domain\UserRole.cs" />
     <Compile Include="Infrastructure\CompanyDAO.cs" />
     <Compile Include="Infrastructure\CompanyUnitDAO.cs" />
+    <Compile Include="Infrastructure\UserRoleDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
