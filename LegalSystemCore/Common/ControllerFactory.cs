@@ -43,5 +43,11 @@ namespace LegalSystemCore.Common
             ICaseActionController caseActionController = new CaseActionControllerImpl();
             return (ICaseActionController)caseActionController;
         }
+
+        public static IUserLoginController CreateUserLoginController()
+        {
+            IUserLoginController userLoginController = new UserLoginControllerImpl();
+            return (IUserLoginController)userLoginController;
+        }
     }
 }
