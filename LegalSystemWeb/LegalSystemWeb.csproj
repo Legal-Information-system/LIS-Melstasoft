@@ -71,8 +71,10 @@
     <Content Include="AddCompany.aspx" />
     <Content Include="AddCompanyUnit.aspx" />
     <Content Include="AddCourt.aspx" />
+    <Content Include="AddCourtLocation.aspx" />
     <Content Include="AddJudgementType.aspx" />
     <Content Include="AddLawyer.aspx" />
+    <Content Include="AddLocation.aspx" />
     <Content Include="AddPaymentStatus.aspx" />
     <Content Include="AddUserRole.aspx" />
     <Content Include="ApprovePaymentMemo.aspx" />
@@ -199,6 +201,13 @@
     <Compile Include="AddCourt.aspx.designer.cs">
       <DependentUpon>AddCourt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddCourtLocation.aspx.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCourtLocation.aspx.designer.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddJudgementType.aspx.cs">
       <DependentUpon>AddJudgementType.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -212,6 +221,13 @@
     </Compile>
     <Compile Include="AddLawyer.aspx.designer.cs">
       <DependentUpon>AddLawyer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddLocation.aspx.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddLocation.aspx.designer.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddPaymentStatus.aspx.cs">
       <DependentUpon>AddPaymentStatus.aspx</DependentUpon>

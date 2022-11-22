@@ -20,6 +20,18 @@ namespace LegalSystemCore.Common
             return (ICompanyUnitController)companyUnitController;
         }
 
+        public static ILocationController CreateLocationController()
+        {
+            ILocationController locationController = new LocationControllerImpl();
+            return (ILocationController)locationController;
+        }
+
+        public static ICourtController CreateCourtController()
+        {
+            ICourtController courtController = new CourtControllerImpl();
+            return (ICourtController)courtController;
+        }
+
         public static IUserRoleController CreateUserRoleController()
         {
             IUserRoleController userRoleController = new UserControllerImpl();
@@ -30,6 +42,12 @@ namespace LegalSystemCore.Common
         {
             ICaseActionController caseActionController = new CaseActionControllerImpl();
             return (ICaseActionController)caseActionController;
+        }
+
+        public static IUserLoginController CreateUserLoginController()
+        {
+            IUserLoginController userLoginController = new UserLoginControllerImpl();
+            return (IUserLoginController)userLoginController;
         }
 
         public static ICaseStatusController CreateCaseStatusController()
