@@ -32,5 +32,11 @@ namespace LegalSystemCore.Common
             ICourtDAO courtDAO = new CourtSqlDAOImpl();
             return (ICourtDAO)courtDAO;
         }
+
+        public static IUserRoleDAO CreateUserRoleDAO()
+        {
+            IUserRoleDAO userRoleDAO = new UserRoleDAOSqlImpl();
+            return (IUserRoleDAO)userRoleDAO;
+        }
     }
 }

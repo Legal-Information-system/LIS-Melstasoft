@@ -73,6 +73,7 @@
     <Content Include="AddCourtLocation.aspx" />
     <Content Include="AddLawyer.aspx" />
     <Content Include="AddLocation.aspx" />
+    <Content Include="AddUserRole.aspx" />
     <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
     <Content Include="assets\demo\chart-bar-demo.js" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="AddLocation.aspx.designer.cs">
       <DependentUpon>AddLocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUserRole.aspx.cs">
+      <DependentUpon>AddUserRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddUserRole.aspx.designer.cs">
+      <DependentUpon>AddUserRole.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateAccount.aspx.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>

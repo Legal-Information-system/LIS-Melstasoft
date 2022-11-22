@@ -31,5 +31,11 @@ namespace LegalSystemCore.Common
             ICourtController courtController = new CourtControllerImpl();
             return (ICourtController)courtController;
         }
+
+        public static IUserRoleController CreateUserRoleController()
+        {
+            IUserRoleController userRoleController = new UserControllerImpl();
+            return (IUserRoleController)userRoleController;
+        }
     }
 }
