@@ -14,7 +14,7 @@
                 <asp:TextBox Style="width: 100%;" ID="TextBox3" runat="server"></asp:TextBox>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" />
+                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" OnClick="Button1_Click" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
