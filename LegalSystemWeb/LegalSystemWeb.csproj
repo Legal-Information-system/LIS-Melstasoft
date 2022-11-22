@@ -65,6 +65,12 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="AddAction.aspx" />
+    <Content Include="AddActivity.aspx" />
+    <Content Include="AddComapny.aspx" />
+    <Content Include="AddCompanyUnit.aspx" />
+    <Content Include="AddCourt.aspx" />
+    <Content Include="AddLawyer.aspx" />
     <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
     <Content Include="assets\demo\chart-bar-demo.js" />
@@ -146,6 +152,48 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddAction.aspx.cs">
+      <DependentUpon>AddAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddAction.aspx.designer.cs">
+      <DependentUpon>AddAction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddActivity.aspx.cs">
+      <DependentUpon>AddActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddActivity.aspx.designer.cs">
+      <DependentUpon>AddActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddComapny.aspx.cs">
+      <DependentUpon>AddComapny.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddComapny.aspx.designer.cs">
+      <DependentUpon>AddComapny.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCompanyUnit.aspx.cs">
+      <DependentUpon>AddCompanyUnit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCompanyUnit.aspx.designer.cs">
+      <DependentUpon>AddCompanyUnit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCourt.aspx.cs">
+      <DependentUpon>AddCourt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCourt.aspx.designer.cs">
+      <DependentUpon>AddCourt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddLawyer.aspx.cs">
+      <DependentUpon>AddLawyer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddLawyer.aspx.designer.cs">
+      <DependentUpon>AddLawyer.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateAccount.aspx.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>
