@@ -4,6 +4,7 @@ using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace LegalSystemCore.Controller
@@ -13,7 +14,7 @@ namespace LegalSystemCore.Controller
         {
             int Save(CompanyUnit companyUnit);
             int Update(CompanyUnit companyUnit);
-            List<CompanyUnit> GetCompanyUnitList();
+            List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
 
         }
 
@@ -58,7 +59,7 @@ namespace LegalSystemCore.Controller
                 }
             }
 
-            public List<CompanyUnit> GetCompanyUnitList()
+            public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
             {
                 Common.DbConnection dbConnection = null;
                 List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
@@ -66,8 +67,17 @@ namespace LegalSystemCore.Controller
                 {
                     dbConnection = new Common.DbConnection();
                     listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+                    if (withCompanyName)
+                    {
+                        ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                        List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
 
-                }
+                        foreach (var companyUnit in listCompanyUnit)
+                        {
+                            companyUnit.company = listCompany.Where(x => x.CompanyId == companyUnit.CompanyId ).Single();
+                        }
+                    }
+            }
                 catch (Exception)
                 {
                     dbConnection.RollBack();
