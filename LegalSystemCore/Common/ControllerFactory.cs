@@ -19,5 +19,17 @@ namespace LegalSystemCore.Common
             ICompanyUnitController companyUnitController = new CompanyUnitControllerImpl();
             return (ICompanyUnitController)companyUnitController;
         }
+
+        public static ILawyerController CreateLawyerController()
+        {
+            ILawyerController lawyerController = new LawyerControllerImpl();
+            return (ILawyerController)lawyerController;
+        }
+
+        public static IActivityController CreateAddActivity()
+        {
+            IActivityController activityController = new ActivityControllerImpl();
+            return (IActivityController)activityController;
+        }
     }
 }
