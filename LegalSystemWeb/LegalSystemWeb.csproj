@@ -67,6 +67,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="AddAction.aspx" />
     <Content Include="AddActivity.aspx" />
+    <Content Include="AddCaseNature.aspx" />
     <Content Include="AddCaseStatus.aspx" />
     <Content Include="AddCompany.aspx" />
     <Content Include="AddCompanyUnit.aspx" />
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="AddActivity.aspx.designer.cs">
       <DependentUpon>AddActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCaseNature.aspx.cs">
+      <DependentUpon>AddCaseNature.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCaseNature.aspx.designer.cs">
+      <DependentUpon>AddCaseNature.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddCaseStatus.aspx.cs">
       <DependentUpon>AddCaseStatus.aspx</DependentUpon>

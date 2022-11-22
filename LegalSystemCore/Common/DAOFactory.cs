@@ -77,7 +77,13 @@ namespace LegalSystemCore.Common
         public static IUserLoginDAO CreateUserLoginDAO()
         {
             IUserLoginDAO userLoginDAO = new UserLoginSqlDAOImpl();
-            return(IUserLoginDAO)userLoginDAO;
+            return (IUserLoginDAO)userLoginDAO;
+        }
+
+        public static ICaseNatureDAO CreateCaseNatureDAO()
+        {
+            ICaseNatureDAO caseNatureDAO = new CaseNatureSqlDAOImpl();
+            return ((ICaseNatureDAO)caseNatureDAO);
         }
     }
 }
