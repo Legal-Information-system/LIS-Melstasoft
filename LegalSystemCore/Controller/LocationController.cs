@@ -53,6 +53,11 @@ namespace LegalSystemCore.Controller
                 dbconnection.RollBack();
                 throw;
             }
+            finally
+            {
+                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                    dbconnection.Commit();
+            }
         }
 
         public List<Location> GetLocationList()

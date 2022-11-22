@@ -43,5 +43,11 @@ namespace LegalSystemCore.Common
             ICaseActionController caseActionController = new CaseActionControllerImpl();
             return (ICaseActionController)caseActionController;
         }
+
+        public static ICourtLocationController CreateCourtLocationController()
+        {
+            ICourtLocationController casecourtlocationController = new CourtLocationControllerImpl();
+            return (ICourtLocationController)casecourtlocationController;
+        }
     }
 }
