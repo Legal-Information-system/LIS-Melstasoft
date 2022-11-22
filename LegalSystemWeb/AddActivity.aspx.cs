@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace LegalSystemWeb
 {
-    public partial class ViewPaymentMemo : System.Web.UI.Page
+    public partial class AddActivity : System.Web.UI.Page
     {
         List<Orders> order = new List<Orders>();
         protected void Page_Load(object sender, EventArgs e)
@@ -27,8 +27,8 @@ namespace LegalSystemWeb
                 order.Add(new Orders(code + 5, "SUPRD", i + 4, 6.3 * i, "Charleroi", "Suprêmes délices", new DateTime(1953, 02, 18), "Belgium", "B-6000", false));
                 code += 5;
             }
-            this.GridView1.DataSource = order;
-            this.GridView1.DataBind();
+            this.GridView2.DataSource = order;
+            this.GridView2.DataBind();
         }
 
         [Serializable]
