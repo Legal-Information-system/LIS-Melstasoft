@@ -9,8 +9,7 @@ using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public class CompanyController
-    {
+    
         public interface ICompanyController
         {
             int Save(Company company);
@@ -19,7 +18,7 @@ namespace LegalSystemCore.Controller
 
         }
 
-        public class CompanyControllerimpl : ICompanyController
+        public class CompanyControllerImpl : ICompanyController
         {
             ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
 
@@ -86,5 +85,5 @@ namespace LegalSystemCore.Controller
             }
 
         }
-    }
+    
 }
