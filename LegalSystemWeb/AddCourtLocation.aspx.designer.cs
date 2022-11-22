@@ -11,44 +11,35 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class AddCourt1
+    public partial class AddCourt
     {
 
         /// <summary>
-        /// Literal2 control.
+        /// TextBox2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
 
         /// <summary>
-        /// txtCourtName control.
+        /// TextBox3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCourtName;
+        protected global::System.Web.UI.WebControls.TextBox TextBox3;
 
         /// <summary>
-        /// RequiredFieldValidator15 control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator15;
-
-        /// <summary>
-        /// btnSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
         /// GridView2 control.

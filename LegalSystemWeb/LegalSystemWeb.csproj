@@ -70,7 +70,9 @@
     <Content Include="AddCompany.aspx" />
     <Content Include="AddCompanyUnit.aspx" />
     <Content Include="AddCourt.aspx" />
+    <Content Include="AddCourtLocation.aspx" />
     <Content Include="AddLawyer.aspx" />
+    <Content Include="AddLocation.aspx" />
     <Content Include="AddUserRole.aspx" />
     <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
@@ -189,12 +191,26 @@
     <Compile Include="AddCourt.aspx.designer.cs">
       <DependentUpon>AddCourt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddCourtLocation.aspx.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCourtLocation.aspx.designer.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddLawyer.aspx.cs">
       <DependentUpon>AddLawyer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AddLawyer.aspx.designer.cs">
       <DependentUpon>AddLawyer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddLocation.aspx.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddLocation.aspx.designer.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddUserRole.aspx.cs">
       <DependentUpon>AddUserRole.aspx</DependentUpon>
