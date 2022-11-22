@@ -15,7 +15,6 @@
 </head>
 
 <body class="bg-image">
-
     <form id="form1" runat="server">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
@@ -23,42 +22,39 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-6">
-                                    <div class="card-header">
-                                        <h3 class="text-center font-weight-light my-3">Login</h3>
+                                <div class="card shadow-lg border-0 rounded-lg mt-6 bg-transparent">
+                                    <div class="card-header" style="background-color: #212529">
+                                        <h3 class="text-light text-center text-uppercase bg-dark">Login</h3>
                                     </div>
                                     <div class="card-body">
-
-                                        <div class="form-floating mb-1">
-                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" CssClass=""
+                                        <div class="form-outline" style="font-weight: 700">
+                                            <label class="form-label" for="inputEmail">Email address</label>
+                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control "></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
                                                 ControlToValidate="txtEmail" ErrorMessage="Email is Required">*</asp:RequiredFieldValidator>
                                             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"
                                                 ControlToValidate="txtEmail" ErrorMessage="Email is not valid" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">
                                                 *
                                             </asp:RegularExpressionValidator>
-                                            <label for="inputEmail">Email address</label>
+
                                         </div>
-                                        <div class="form-floating mb-1">
-                                            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control form-control-user" TextMode="Password"></asp:TextBox>
+                                        <div class="form-outline mb-4" style="font-weight: 700">
+                                            <label for="inputPassword" class="form-label">Password</label>
+                                            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control " TextMode="Password"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                                                 ControlToValidate="txtPassword" ErrorMessage="Password Required">*</asp:RequiredFieldValidator>
-                                            <label for="inputPassword">Password</label>
+
                                         </div>
-                                        <div class="form-floating mb-1">
-                                            <asp:CheckBox ID="chbxRememberMe" runat="server" />
-                                            Remember Me
-                                        </div>
-                                        <div class="form-floating">
+                                        <div class="form-outline mb-4">
                                             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" />
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <div class="form-group d-flex justify-content-center">
                                             <a class="small" href="#"></a>
-                                            <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary btn-user btn-block" />
+                                            <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary btn-block" Width="400px" Font-Bold="true" />
                                         </div>
 
                                     </div>
-                                    <div class="card-footer text-center py-3">
+                                    <div class="card-footer text-center py-3" style="background-color: #212529">
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +80,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
     </form>
-
 </body>
 </html>
 
