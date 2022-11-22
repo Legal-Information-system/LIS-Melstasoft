@@ -67,7 +67,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="AddAction.aspx" />
     <Content Include="AddActivity.aspx" />
-    <Content Include="AddComapny.aspx" />
+    <Content Include="AddCompany.aspx" />
     <Content Include="AddCompanyUnit.aspx" />
     <Content Include="AddCourt.aspx" />
     <Content Include="AddLawyer.aspx" />
@@ -167,12 +167,12 @@
     <Compile Include="AddActivity.aspx.designer.cs">
       <DependentUpon>AddActivity.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AddComapny.aspx.cs">
-      <DependentUpon>AddComapny.aspx</DependentUpon>
+    <Compile Include="AddCompany.aspx.cs">
+      <DependentUpon>AddCompany.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AddComapny.aspx.designer.cs">
-      <DependentUpon>AddComapny.aspx</DependentUpon>
+    <Compile Include="AddCompany.aspx.designer.cs">
+      <DependentUpon>AddCompany.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddCompanyUnit.aspx.cs">
       <DependentUpon>AddCompanyUnit.aspx</DependentUpon>
