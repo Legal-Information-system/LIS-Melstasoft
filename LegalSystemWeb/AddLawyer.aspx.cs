@@ -58,7 +58,7 @@ namespace LegalSystemWeb
 
 
             Clear();
-            //BindDataSource();
+            BindDataSource();
         }
         private void Clear()
         {

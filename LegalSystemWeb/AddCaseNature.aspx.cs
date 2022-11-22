@@ -3,57 +3,54 @@ using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml.Linq;
-using Activity = LegalSystemCore.Domain.Activity;
 
 namespace LegalSystemWeb
 {
-    public partial class AddActivity : System.Web.UI.Page
+    public partial class AddCaseNature : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDataSource();
-        }
 
+
+            BindDataSource();
+
+        }
         private void BindDataSource()
         {
-            IActivityController activityController = ControllerFactory.CreateAddActivity();
-
-            GridView2.DataSource = activityController.GetActivityList();
+            ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
+            GridView2.DataSource = caseNatureController.GetCaseNatureList();
             GridView2.DataBind();
-
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
-            IActivityController activityController = ControllerFactory.CreateAddActivity();
+            ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
 
             if (btnSave.Text == "Update")
             {
                 int rowIndex = (int)ViewState["updatedRowIndex"];
-                Activity activity = new Activity();
-                activity.ActivityId = rowIndex;
-                activity.ActivityName = txtAddActivity.Text;
+                CaseNature caseNature = new CaseNature();
 
+                caseNature.CaseNatureId = rowIndex;
 
+                caseNature.CaseNatureName = txtNatureName.Text;
 
                 //lawyerController.Update(lawyer);
-                btnSave.Text = "Add";
+                btnSave.Text = "Save";
             }
             else
             {
-                Activity activity = new Activity();
-                activity.ActivityName = txtAddActivity.Text;
+                CaseNature caseNature = new CaseNature();
+
+                caseNature.CaseNatureName = txtNatureName.Text;
+                caseNature.CaseNatureId = caseNatureController.Save(caseNature);
 
 
-                activity.ActivityId = activityController.Save(activity);
             }
 
 
@@ -62,7 +59,7 @@ namespace LegalSystemWeb
         }
         private void Clear()
         {
-            txtAddActivity.Text = string.Empty;
+            txtNatureName.Text = string.Empty;
 
 
         }

@@ -45,6 +45,7 @@
     <Compile Include="Common\DataAccessObject.cs" />
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\DBFieldAttribute.cs" />
+    <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\UserLoginController.cs" />
     <Compile Include="Controller\CourtController.cs" />
     <Compile Include="Controller\LocationController.cs" />
@@ -59,12 +60,14 @@
     <Compile Include="Domain\CaseAction.cs" />
     <Compile Include="Controller\LawyerController.cs" />
     <Compile Include="Domain\Activity.cs" />
+    <Compile Include="Domain\CaseNature.cs" />
     <Compile Include="Domain\Lawyer.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\CompanyUnit.cs" />
     <Compile Include="Domain\Court.cs" />
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\UserLogin.cs" />
+    <Compile Include="Infrastructure\CaseNatureDAO.cs" />
     <Compile Include="Infrastructure\UserLoginDAO.cs" />
     <Compile Include="Infrastructure\CourtDAO.cs" />
     <Compile Include="Infrastructure\LocationDAO.cs" />
