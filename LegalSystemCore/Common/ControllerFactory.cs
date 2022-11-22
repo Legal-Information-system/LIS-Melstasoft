@@ -67,5 +67,17 @@ namespace LegalSystemCore.Common
             IJudgementTypeController judgementTypeController = new JudgementTypeControllerImpl();
             return (IJudgementTypeController)judgementTypeController;
         }
+
+        public static ILawyerController CreateLawyerController()
+        {
+            ILawyerController lawyerController = new LawyerControllerImpl();
+            return (ILawyerController)lawyerController;
+        }
+
+        public static IActivityController CreateAddActivity()
+        {
+            IActivityController activityController = new ActivityControllerImpl();
+            return (IActivityController)activityController;
+        }
     }
 }
