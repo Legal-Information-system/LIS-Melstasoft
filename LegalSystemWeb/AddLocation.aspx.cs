@@ -62,5 +62,18 @@ namespace LegalSystemWeb
             txtLocationName.Text = string.Empty;
 
         }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            ILocationController locationController = ControllerFactory.CreateLocationController();
+
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            txtLocationName.Text = locationList[rowIndex].location;
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = locationList[rowIndex].LocationId;
+        }
     }
 }

@@ -5,27 +5,38 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="height: 40px;"></div>
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
-        <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Court</h2>
+        <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Court Location</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox2" runat="server"></asp:TextBox>
+
+            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal2" runat="server" Text="Court Name"></asp:Literal>
+                </div>
+                <asp:DropDownList ID="ddlCourt" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                <asp:RequiredFieldValidator class="row" ID="RequiredFieldValidator1" runat="server" Style="padding-left: 12px;"
+                    ControlToValidate="ddlCourt" ErrorMessage="Court Name is Required">* Court Name is Required</asp:RequiredFieldValidator>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
-                <asp:TextBox Style="width: 100%;" ID="TextBox3" runat="server"></asp:TextBox>
+            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal1" runat="server" Text=" Court Location"></asp:Literal>
+                </div>
+                <asp:DropDownList ID="ddlLocation" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                <asp:RequiredFieldValidator class="row" ID="RequiredFieldValidator15" runat="server" Style="padding-left: 12px;"
+                    ControlToValidate="ddlLocation" ErrorMessage="Location Name is Required">* Location Name is Required </asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <Columns>
-                        <asp:BoundField DataField="OrderID" HeaderText="Court Id" />
-                        <asp:BoundField DataField="CustomerID" HeaderText="Court Name" />
-                        <asp:BoundField DataField="EmployeeID" HeaderText="Court Location" />
+                        <asp:BoundField DataField="CourtId" HeaderText="Court Id" />
+                        <asp:BoundField DataField="court.CourtName" HeaderText="Court Name" />
+                        <asp:BoundField DataField="location.location" HeaderText="Court Location" />
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
+                                <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>

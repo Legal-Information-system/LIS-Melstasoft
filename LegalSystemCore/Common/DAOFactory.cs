@@ -62,6 +62,12 @@ namespace LegalSystemCore.Common
             return (ICaseStatusDAO)caseStatusDAO;
         }
 
+        public static ICourtLocationDAO CreatCourtLocationDAO()
+        {
+            ICourtLocationDAO courtlocationDAO = new CourtLocationSqlImpl();
+            return (ICourtLocationDAO)courtlocationDAO;
+        }
+
         public static IPaymentStatusDAO CreatePaymentStatusDAO()
         {
             IPaymentStatusDAO paymentStatusDAO = new PaymentDAOSqlImpl();

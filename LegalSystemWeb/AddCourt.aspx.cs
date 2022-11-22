@@ -61,5 +61,18 @@ namespace LegalSystemWeb
             txtCourtName.Text = string.Empty;
 
         }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            ICourtController courtController = ControllerFactory.CreateCourtController();
+
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            txtCourtName.Text = courtList[rowIndex].CourtName;
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = courtList[rowIndex].CourtId;
+        }
     }
 }
