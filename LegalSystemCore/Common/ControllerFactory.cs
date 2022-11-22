@@ -79,5 +79,11 @@ namespace LegalSystemCore.Common
             IActivityController activityController = new ActivityControllerImpl();
             return (IActivityController)activityController;
         }
+
+        public static ICaseNatureController CreateCaseNatureController()
+        {
+            ICaseNatureController caseNatureController = new CaseNatureControllerImpl();
+            return (ICaseNatureController)caseNatureController;
+        }
     }
 }
