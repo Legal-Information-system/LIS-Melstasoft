@@ -67,10 +67,13 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="AddAction.aspx" />
     <Content Include="AddActivity.aspx" />
+    <Content Include="AddCaseStatus.aspx" />
     <Content Include="AddCompany.aspx" />
     <Content Include="AddCompanyUnit.aspx" />
     <Content Include="AddCourt.aspx" />
+    <Content Include="AddJudgementType.aspx" />
     <Content Include="AddLawyer.aspx" />
+    <Content Include="AddPaymentStatus.aspx" />
     <Content Include="AddUserRole.aspx" />
     <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
@@ -168,6 +171,13 @@
     <Compile Include="AddActivity.aspx.designer.cs">
       <DependentUpon>AddActivity.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddCaseStatus.aspx.cs">
+      <DependentUpon>AddCaseStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCaseStatus.aspx.designer.cs">
+      <DependentUpon>AddCaseStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddCompany.aspx.cs">
       <DependentUpon>AddCompany.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,12 +199,26 @@
     <Compile Include="AddCourt.aspx.designer.cs">
       <DependentUpon>AddCourt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddJudgementType.aspx.cs">
+      <DependentUpon>AddJudgementType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddJudgementType.aspx.designer.cs">
+      <DependentUpon>AddJudgementType.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddLawyer.aspx.cs">
       <DependentUpon>AddLawyer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AddLawyer.aspx.designer.cs">
       <DependentUpon>AddLawyer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddPaymentStatus.aspx.cs">
+      <DependentUpon>AddPaymentStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddPaymentStatus.aspx.designer.cs">
+      <DependentUpon>AddPaymentStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddUserRole.aspx.cs">
       <DependentUpon>AddUserRole.aspx</DependentUpon>

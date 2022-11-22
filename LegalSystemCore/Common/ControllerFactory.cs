@@ -31,5 +31,23 @@ namespace LegalSystemCore.Common
             ICaseActionController caseActionController = new CaseActionControllerImpl();
             return (ICaseActionController)caseActionController;
         }
+
+        public static ICaseStatusController CreateCaseStatusController()
+        {
+            ICaseStatusController caseStatusController = new CaseStatusController();
+            return (ICaseStatusController)caseStatusController;
+        }
+
+        public static IPaymentStatusController CreatePaymentStatusController()
+        {
+            IPaymentStatusController paymentStatusController = new PaymentStatusControllerImpl();
+            return (IPaymentStatusController)paymentStatusController;
+        }
+
+        public static IJudgementTypeController CreateJudgementTypeController()
+        {
+            IJudgementTypeController judgementTypeController = new JudgementTypeControllerImpl();
+            return (IJudgementTypeController)judgementTypeController;
+        }
     }
 }

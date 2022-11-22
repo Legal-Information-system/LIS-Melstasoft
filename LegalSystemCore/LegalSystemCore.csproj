@@ -46,18 +46,25 @@
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\DBFieldAttribute.cs" />
     <Compile Include="Controller\CaseActionController.cs" />
+    <Compile Include="Controller\CaseStatusController.cs" />
     <Compile Include="Controller\CompanyController.cs" />
     <Compile Include="Controller\CompanyUnitController.cs" />
+    <Compile Include="Controller\JudgementTypeController.cs" />
+    <Compile Include="Controller\PaymentStatusController.cs" />
     <Compile Include="Controller\UserRoleController.cs" />
     <Compile Include="Domain\CaseAction.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\CompanyUnit.cs" />
+    <Compile Include="Domain\JudgementType.cs" />
+    <Compile Include="Domain\PaymentStatus.cs" />
     <Compile Include="Domain\UserRole.cs" />
     <Compile Include="Infrastructure\CaseActionDAO.cs" />
     <Compile Include="Domain\CaseStatus.cs" />
     <Compile Include="Infrastructure\CaseStatusDAO.cs" />
     <Compile Include="Infrastructure\CompanyDAO.cs" />
     <Compile Include="Infrastructure\CompanyUnitDAO.cs" />
+    <Compile Include="Infrastructure\JudgementTypeDAO.cs" />
+    <Compile Include="Infrastructure\PaymentStatusDAO.cs" />
     <Compile Include="Infrastructure\UserRoleDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
