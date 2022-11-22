@@ -3,51 +3,53 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICourtController
+    public interface ICaseStatusController
     {
-        int Save(Court court);
-        int Update(Court court);
-        List<Court> GetCourtList();
-
+        int Save(CaseStatus caseStatus);
+        int Update(CaseStatus caseStatus);
+        List<CaseStatus> GetCaseStatusList();
     }
-    public class CourtControllerImpl : ICourtController
+
+    public class CaseStatusController : ICaseStatusController
     {
-        ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
-        public int Save(Court court)
+        ICaseStatusDAO caseStatusDAO = DAOFactory.CreateCaseStatusDAO();
+
+        public List<CaseStatus> GetCaseStatusList()
         {
-            Common.DbConnection dbconnection = null;
+            DbConnection dbConnection = null;
+            List<CaseStatus> listCaseStatus = new List<CaseStatus>();
             try
             {
-                dbconnection = new Common.DbConnection();
-                return courtDAO.Save(court, dbconnection);
+                dbConnection = new DbConnection();
+                listCaseStatus = caseStatusDAO.GetCaseStatusList(dbConnection);
             }
             catch (Exception)
             {
-                dbconnection.RollBack();
+                dbConnection.RollBack();
                 throw;
             }
             finally
             {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
                 {
-                    dbconnection.Commit();
+                    dbConnection.Commit();
                 }
             }
+            return listCaseStatus;
         }
 
-        public int Update(Court court)
+        public int Save(CaseStatus caseStatus)
         {
-            Common.DbConnection dbConnection = null;
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                return courtDAO.Update(court, dbConnection);
+                dbConnection = new DbConnection();
+                return caseStatusDAO.Save(caseStatus, dbConnection);
             }
             catch (Exception)
             {
@@ -63,15 +65,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Court> GetCourtList()
+        public int Update(CaseStatus caseStatus)
         {
-            Common.DbConnection dbConnection = null;
-            List<Court> listcourt = new List<Court>();
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                listcourt = courtDAO.GetCourtList(dbConnection);
-
+                dbConnection = new DbConnection();
+                return caseStatusDAO.Update(caseStatus, dbConnection);
             }
             catch (Exception)
             {
@@ -85,7 +85,6 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listcourt;
         }
     }
 }

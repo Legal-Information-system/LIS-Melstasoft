@@ -20,6 +20,17 @@ namespace LegalSystemCore.Common
             ICompanyUnitDAO companyUnitDAO = new CompanyUnitSqlDAOImpl();
             return (ICompanyUnitDAO)companyUnitDAO;
         }
+        public static ILawyerDAO CreateLawyerDAO()
+        {
+            ILawyerDAO lawyerDAO = new LawyerSqlDAOImpl();
+            return (ILawyerDAO)lawyerDAO;
+        }
+
+        public static IActivityDAO CreateActivityDAO()
+        {
+            IActivityDAO activityDAO = new ActivityDAOSqlImpl();
+            return (IActivityDAO)activityDAO;
+        }
 
         public static ILocationDAO CreateLocationDAO()
         {
@@ -49,6 +60,18 @@ namespace LegalSystemCore.Common
         {
             ICaseStatusDAO caseStatusDAO = new CaseStatusDAOSqlImpl();
             return (ICaseStatusDAO)caseStatusDAO;
+        }
+
+        public static IPaymentStatusDAO CreatePaymentStatusDAO()
+        {
+            IPaymentStatusDAO paymentStatusDAO = new PaymentDAOSqlImpl();
+            return (IPaymentStatusDAO)paymentStatusDAO;
+        }
+
+        public static IJudgementTypeDAO CreateJudgementTypeDAO()
+        {
+            IJudgementTypeDAO judgementTypeDAO = new JudgementTypeDAOSqlImpl();
+            return (IJudgementTypeDAO)judgementTypeDAO;
         }
 
         public static IUserLoginDAO CreateUserLoginDAO()

@@ -8,17 +8,17 @@
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Activity</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
             <div class="col-sm-6" style="width: 70%">
-                <asp:TextBox Style="width: 90%;" ID="TextBox1" runat="server"></asp:TextBox>
+                <asp:TextBox Style="width: 90%;" ID="txtAddActivity" runat="server"></asp:TextBox>
             </div>
             <div class="col-sm-6" style="width: 30%">
-                <asp:Button ID="Button1" runat="server" Text="Add" Style="width: 80%;" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <Columns>
-                        <asp:BoundField DataField="OrderID" HeaderText="Activity Id" />
-                        <asp:BoundField DataField="CustomerID" HeaderText="Activity" />
+                        <asp:BoundField DataField="ActivityId" HeaderText="Activity Id" />
+                        <asp:BoundField DataField="ActivityName" HeaderText="Activity" />
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>

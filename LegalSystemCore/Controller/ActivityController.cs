@@ -3,29 +3,27 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICourtController
+    public interface IActivityController
     {
-        int Save(Court court);
-        int Update(Court court);
-        List<Court> GetCourtList();
-
+        int Save(Activity activity);
+        List<Activity> GetActivityList();
     }
-    public class CourtControllerImpl : ICourtController
+
+    public class ActivityControllerImpl : IActivityController
     {
-        ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
-        public int Save(Court court)
+        IActivityDAO activityDAO = DAOFactory.CreateActivityDAO();
+        public int Save(Activity activity)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return courtDAO.Save(court, dbconnection);
+                return activityDAO.Save(activity, dbconnection);
             }
             catch (Exception)
             {
@@ -41,36 +39,15 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(Court court)
+        public List<Activity> GetActivityList()
         {
             Common.DbConnection dbConnection = null;
-            try
-            {
-                dbConnection = new Common.DbConnection();
-                return courtDAO.Update(court, dbConnection);
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbConnection.Commit();
-                }
-            }
-        }
+            List<Activity> listActivity = new List<Activity>();
 
-        public List<Court> GetCourtList()
-        {
-            Common.DbConnection dbConnection = null;
-            List<Court> listcourt = new List<Court>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listcourt = courtDAO.GetCourtList(dbConnection);
+                listActivity = activityDAO.GetActivityList(dbConnection);
 
             }
             catch (Exception)
@@ -85,7 +62,8 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listcourt;
+            return listActivity;
         }
+
     }
 }
