@@ -7,12 +7,18 @@
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Lawyer</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
-            <div class="col-sm-6" style="width: 100%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
+            <div style="text-align: start; padding-left: 42px; margin-bottom: 5px;">
+                <asp:Literal ID="Literal2" runat="server" Text="Lawyer Name"></asp:Literal>
+            </div>
+            <div class="col-sm-6" style="width: 100%; padding-left: 40px; padding-right: 40px; margin-bottom: 0px;">
                 <asp:TextBox Style="width: 100%;" ID="txtName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                     ControlToValidate="txtName" ErrorMessage="Name is Required">Name is Required </asp:RequiredFieldValidator>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal1" runat="server" Text="E-mail Address"></asp:Literal>
+                </div>
                 <asp:TextBox Style="width: 100%;" ID="txtEmail" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
                     ControlToValidate="txtEmail" ErrorMessage="Email Required">Email is Required</asp:RequiredFieldValidator>
@@ -20,7 +26,10 @@
                     ControlToValidate="txtEmail" ErrorMessage="Invalid email address"
                     ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">!</asp:RegularExpressionValidator>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal3" runat="server" Text="Contact Number"></asp:Literal>
+                </div>
                 <asp:TextBox Style="width: 100%;" ID="txtContact" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
                     ControlToValidate="txtContact" ErrorMessage="Contact no. is Required">Contact no. is Required</asp:RequiredFieldValidator>
