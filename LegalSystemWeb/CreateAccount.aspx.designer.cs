@@ -87,15 +87,6 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlUserType;
 
         /// <summary>
-        /// RequiredFieldValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-
-        /// <summary>
         /// Literal3 control.
         /// </summary>
         /// <remarks>
@@ -105,13 +96,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Literal Literal3;
 
         /// <summary>
-        /// ddlCompanyName control.
+        /// ddlCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompany;
 
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -132,13 +123,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Literal Literal4;
 
         /// <summary>
-        /// ddlCompanyUnitName control.
+        /// ddlCompanyUnit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyUnitName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyUnit;
 
         /// <summary>
         /// RequiredFieldValidator5 control.

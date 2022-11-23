@@ -26,7 +26,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into user_login (user_name,password,company_id,company_unit_id,user_role_id) " +
+            dbConnection.cmd.CommandText = "Insert into user_login (user_login_name,user_password,company_id,company_unit_id,user_role_id) " +
                                            "values (@UserName,@Password,@CompanyId,@CompanyUnitId,@UserRoleId) SELECT SCOPE_IDENTITY() ";
 
 
@@ -51,7 +51,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Update user_login set user_name = @UserName ,password = @Password, company_id= @CompanyId, company_unit_id = @CompanyUnitId, user_role_id = @UserRoleId WHERE user_id = @UserId ";
+            dbConnection.cmd.CommandText = "Update user_login set user_login_name = @UserName ,user_password = @Password, company_id= @CompanyId, company_unit_id = @CompanyUnitId, user_role_id = @UserRoleId WHERE user_login_id = @UserId ";
 
 
             dbConnection.cmd.Parameters.AddWithValue("@UserId", userLogin.UserId);

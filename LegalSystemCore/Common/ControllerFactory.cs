@@ -44,6 +44,12 @@ namespace LegalSystemCore.Common
             return (ICaseActionController)caseActionController;
         }
 
+        public static ICourtLocationController CreateCourtLocationController()
+        {
+            ICourtLocationController casecourtlocationController = new CourtLocationControllerImpl();
+            return (ICourtLocationController)casecourtlocationController;
+        }
+
         public static IUserLoginController CreateUserLoginController()
         {
             IUserLoginController userLoginController = new UserLoginControllerImpl();
@@ -78,6 +84,12 @@ namespace LegalSystemCore.Common
         {
             IActivityController activityController = new ActivityControllerImpl();
             return (IActivityController)activityController;
+        }
+
+        public static ICaseNatureController CreateCaseNatureController()
+        {
+            ICaseNatureController caseNatureController = new CaseNatureControllerImpl();
+            return (ICaseNatureController)caseNatureController;
         }
     }
 }
