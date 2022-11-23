@@ -16,7 +16,7 @@ namespace LegalSystemCore.Controller
         int Save(UserLogin userLogin);
         int Update(UserLogin userLogin);
         List<UserLogin> GetUserLoginList();
-
+        UserLogin GetUserLogin(UserLogin userLogin);
     }
 
     public class UserLoginControllerImpl : IUserLoginController
@@ -90,6 +90,33 @@ namespace LegalSystemCore.Controller
                 }
             }
             return listUserLogin;
+        }
+
+        public UserLogin GetUserLogin(UserLogin userLogin)
+        {
+            Common.DbConnection dbConnection = null;
+            
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                userLogin = userLoginDAO.GetUserLogin(dbConnection,userLogin);
+                
+                
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return userLogin;
         }
 
     }

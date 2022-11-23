@@ -68,7 +68,7 @@ namespace LegalSystemCore.Infrastructure
 
             if (companyId != null)
             {
-                query = query + " " + " where company_id=" + companyId;
+                query = query + " " + " where company_id = " + companyId;
             }
 
             dbConnection.cmd.CommandText = query;
