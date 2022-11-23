@@ -61,6 +61,7 @@
     <Compile Include="Domain\CaseAction.cs" />
     <Compile Include="Controller\LawyerController.cs" />
     <Compile Include="Domain\Activity.cs" />
+    <Compile Include="Domain\CaseMaster.cs" />
     <Compile Include="Domain\CaseNature.cs" />
     <Compile Include="Domain\Lawyer.cs" />
     <Compile Include="Domain\Company.cs" />
