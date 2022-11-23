@@ -12381,3 +12381,27 @@ body {
     font-size: 0.75rem;
     border-radius: 0.25rem !important;
 }
+
+/*Check box list styles*/
+
+.checkbox.checkboxlist input[type="checkbox"] {
+    position: absolute;
+    margin-top: 0.45rem;
+}
+
+.checkbox.checkboxlist label {
+    margin-bottom: 0;
+    margin-left: 1.5rem;
+    display: inline-block;
+    vertical-align: top;
+}
+
+fieldset legend {
+    font-size: inherit;
+}
+
+fieldset .checkbox {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+}

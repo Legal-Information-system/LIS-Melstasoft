@@ -16,7 +16,7 @@ namespace LegalSystemCore.Infrastructure
         List<PaymentStatus> GetPaymentStatusList(DbConnection dbConnection);
     }
 
-    public class PaymentDAOSqlImpl : IPaymentStatusDAO
+    public class PaymentStatusDAOSqlImpl : IPaymentStatusDAO
     {
         public List<PaymentStatus> GetPaymentStatusList(DbConnection dbConnection)
         {
