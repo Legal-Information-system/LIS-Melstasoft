@@ -13,7 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddPaymentStatus : System.Web.UI.Page
     {
-        List<PaymentStatus> paymentStatus = new List<PaymentStatus>();
+        List<PaymentStatus> paymentStatusList = new List<PaymentStatus>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace LegalSystemWeb
         {
             IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
 
-            paymentStatus = paymentStatusController.GetPaymentStatusList();
+            paymentStatusList = paymentStatusController.GetPaymentStatusList();
             gvPaymentStatus.DataSource = paymentStatusController.GetPaymentStatusList();
             gvPaymentStatus.DataBind();
         }
@@ -59,13 +59,25 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            txtPStatus.Text = paymentStatus[rowIndex].StatusName;
+            txtPStatus.Text = paymentStatusList[rowIndex].StatusName;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = paymentStatus[rowIndex].StatusId;
+            ViewState["updatedRowIndex"] = paymentStatusList[rowIndex].StatusId;
         }
         private void Clear()
         {
             txtPStatus.Text = string.Empty;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+
+            IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            PaymentStatus paStatus = new PaymentStatus();
+            paStatus.StatusId = paymentStatusList[rowIndex].StatusId;
+            paymentStatusController.Delete(paStatus);
+            BindDataSource();
         }
     }
 }

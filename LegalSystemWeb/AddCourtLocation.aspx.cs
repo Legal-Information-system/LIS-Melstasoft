@@ -19,10 +19,10 @@ namespace LegalSystemWeb
         {
             if (!IsPostBack)
             {
-                BindDataSource();
                 BindCourtList();
                 BindLocationList();
             }
+            BindDataSource();
         }
 
         private void BindDataSource()
@@ -67,14 +67,14 @@ namespace LegalSystemWeb
 
             if (btnSave.Text == "Update")
             {
-                //int rowIndex = (int)ViewState["updatedRowIndex"];
-                //CourtLocation courtlocation = new CourtLocation();
-                //courtlocation.CourtId = rowIndex;
-                //courtlocation.LocationId = courtlocation.LocationId;
+                int courtId = (int)ViewState["updatedRowIndex1"];
+                int locationId = (int)ViewState["updatedRowIndex2"];
+                CourtLocation courtlocation = new CourtLocation();
+                courtlocation.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                courtlocation.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
 
-
-                //courtController.Update(court);
-                //btnSave.Text = "Save";
+                courtLocationController.Update(courtlocation, courtId, locationId);
+                btnSave.Text = "Save";
             }
             else
             {
@@ -93,13 +93,15 @@ namespace LegalSystemWeb
         {
             ICourtLocationController courLocationtController = ControllerFactory.CreateCourtLocationController();
 
-            //GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
-            //int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            //ddlCourt.SelectedValue = courtList[rowIndex].CourtId;
-            //btnSave.Text = "Update";
-            //ViewState["updatedRowIndex"] = courtList[rowIndex].CourtId;
+            ddlCourt.SelectedValue = Convert.ToString(courtlocation[rowIndex].CourtId);
+            ddlLocation.SelectedValue = Convert.ToString(courtlocation[rowIndex].LocationId);
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex1"] = courtlocation[rowIndex].CourtId;
+            ViewState["updatedRowIndex2"] = courtlocation[rowIndex].LocationId;
         }
     }
 }

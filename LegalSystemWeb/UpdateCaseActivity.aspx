@@ -19,7 +19,7 @@
                                 <asp:Literal ID="Literal16" runat="server" Text="Case Number"></asp:Literal>
                             </div>
                             <div class="col-md-6">
-                                <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server"
                                     ControlToValidate="ddlCase" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>

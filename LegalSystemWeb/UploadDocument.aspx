@@ -35,7 +35,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-6" style="display: flex; flex-direction: column">
-                            <asp:FileUpload ID="Uploader" runat="server" />
+                            <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" />
                         </div>
 
                     </div>

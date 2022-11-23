@@ -72,7 +72,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<UserLogin> listUserLogin = new List<UserLogin>();
 
-            dbConnection.cmd.CommandText = "select * from user_login";
+            dbConnection.cmd.CommandText = "select * from user_login WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

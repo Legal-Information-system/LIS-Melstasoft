@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="height: 40px;"></div>
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
-        <div class="card-header d-flex align-items-center justify-content-center" style=" height: 50px">
+        <div class="card-header d-flex align-items-center justify-content-center" style="height: 50px">
             <h2 style="text-align: center; margin-bottom: 80px; margin-top: 80px;">Add Company Unit</h2>
         </div>
         <div class="card-body m-5">
@@ -22,7 +22,7 @@
                 <div class="row mb-3 mt-5">
                     <div class="col-3 align-middle d-flex">
 
-                        <asp:Literal ID="Literal3" runat="server" Text="Company Unit Name"></asp:Literal>
+                    <asp:Literal ID="Literal3" runat="server" Text="Company Unit Name"></asp:Literal>
 
                     </div>
                     <div class="col-sm-6 d-flex">
