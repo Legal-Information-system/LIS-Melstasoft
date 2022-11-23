@@ -80,7 +80,7 @@ namespace LegalSystemCore.Common
             return (ILawyerController)lawyerController;
         }
 
-        public static IActivityController CreateAddActivity()
+        public static IActivityController CreateActivityController()
         {
             IActivityController activityController = new ActivityControllerImpl();
             return (IActivityController)activityController;
@@ -90,6 +90,18 @@ namespace LegalSystemCore.Common
         {
             ICaseNatureController caseNatureController = new CaseNatureControllerImpl();
             return (ICaseNatureController)caseNatureController;
+        }
+
+        public static IPaymentController CreatePaymentController()
+        {
+            IPaymentController paymentController = new PaymentControllerImpl();
+            return (IPaymentController)paymentController;
+        }
+
+        public static IPaymentActivityController CreatePaymentActivityController()
+        {
+            IPaymentActivityController paymentActivityController = new PaymentActivityControllerImpl();
+            return (IPaymentActivityController)paymentActivityController;
         }
     }
 }
