@@ -103,5 +103,11 @@ namespace LegalSystemCore.Common
             IPaymentActivityDAO paymentActivityDAO = new PaymentActivityDAOSqlImpl();
             return ((IPaymentActivityDAO)paymentActivityDAO);
         }
+
+        public static ICaseMasterDAO CreateCaseMasterDAO()
+        {
+            ICaseMasterDAO caseMasterDAO = new CaseMasterDAOSqlImpl();
+            return ((ICaseMasterDAO)caseMasterDAO);
+        }
     }
 }

@@ -9,14 +9,14 @@ namespace LegalSystemCore.Infrastructure
 {
     public interface IPaymentActivityDAO
     {
-        int Save(PaymentActivity paymentActivity, DbConnection dbConnection);
+        void Save(PaymentActivity paymentActivity, DbConnection dbConnection);
         int Update(PaymentActivity paymentActivity, DbConnection dbConnection);
         int Delete(PaymentActivity paymentActivity, DbConnection dbConnection);
         List<PaymentActivity> GetPaymentActivityList(DbConnection dbConnection);
     }
     public class PaymentActivityDAOSqlImpl : IPaymentActivityDAO
     {
-        public int Save(PaymentActivity paymentActivity, DbConnection dbConnection)
+        public void Save(PaymentActivity paymentActivity, DbConnection dbConnection)
         {
             int output = 0;
 
@@ -24,7 +24,7 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             dbConnection.cmd.CommandText = "Insert into payment_activity (activity_id,payment_id) " +
-                                           "values (@ActivityId,@PaymentId) SELECT SCOPE_IDENTITY() ";
+                                           "values (@ActivityId,@PaymentId) ";
 
 
 
@@ -34,10 +34,8 @@ namespace LegalSystemCore.Infrastructure
 
 
 
-            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+            dbConnection.cmd.ExecuteScalar();
 
-
-            return output;
         }
 
 

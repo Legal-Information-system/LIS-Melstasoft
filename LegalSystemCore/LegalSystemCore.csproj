@@ -45,6 +45,7 @@
     <Compile Include="Common\DataAccessObject.cs" />
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\DBFieldAttribute.cs" />
+    <Compile Include="Controller\CaseMasterController.cs" />
     <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\PaymentActivityController.cs" />
     <Compile Include="Controller\PaymentController.cs" />

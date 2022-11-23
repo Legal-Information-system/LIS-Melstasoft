@@ -10,7 +10,7 @@ namespace LegalSystemCore.Controller
 {
     public interface IPaymentActivityController
     {
-        int Save(PaymentActivity paymentActivity);
+        void Save(PaymentActivity paymentActivity);
         int Update(PaymentActivity paymentActivity);
         int Delete(PaymentActivity paymentActivity);
         List<PaymentActivity> GetPaymentActivityList();
@@ -18,15 +18,15 @@ namespace LegalSystemCore.Controller
 
     public class PaymentActivityControllerImpl : IPaymentActivityController
     {
-        IPaymentActivityDAO PaymentActivityDAO = DAOFactory.CreatePaymentActivityDAO();
+        IPaymentActivityDAO paymentActivityDAO = DAOFactory.CreatePaymentActivityDAO();
 
-        public int Save(PaymentActivity paymentActivity)
+        public void Save(PaymentActivity paymentActivity)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return PaymentActivityDAO.Save(paymentActivity, dbConnection);
+                paymentActivityDAO.Save(paymentActivity, dbConnection);
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new DbConnection();
-                return PaymentActivityDAO.Update(paymentActivity, dbConnection);
+                return paymentActivityDAO.Update(paymentActivity, dbConnection);
             }
             catch (Exception)
             {
@@ -70,7 +70,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new DbConnection();
-                return PaymentActivityDAO.Delete(paymentActivity, dbConnection);
+                return paymentActivityDAO.Delete(paymentActivity, dbConnection);
             }
             catch (Exception)
             {
@@ -92,7 +92,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new DbConnection();
-                listPaymentActivity = PaymentActivityDAO.GetPaymentActivityList(dbConnection);
+                listPaymentActivity = paymentActivityDAO.GetPaymentActivityList(dbConnection);
             }
             catch (Exception)
             {

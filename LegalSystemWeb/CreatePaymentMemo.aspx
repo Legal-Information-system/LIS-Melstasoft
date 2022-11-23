@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-sm-6" style="display: flex; flex-direction: column">
                                         <div class="checkbox checkboxlist">
-                                            <asp:CheckBoxList ID="cblActivity" runat="server" RepeatDirection="Vertical">
+                                            <asp:CheckBoxList ID="cblActivity" AutoPostBack="True" CellPadding="5" CellSpacing="5" RepeatColumns="2" RepeatDirection="Vertical" TextAlign="Right" OnSelectedIndexChanged="Check_Clicked" runat="server">
                                             </asp:CheckBoxList>
                                         </div>
                                     </div>
