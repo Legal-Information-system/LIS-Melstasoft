@@ -11,6 +11,8 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(Activity activity, DbConnection dbConnection);
         List<Activity> GetActivityList(DbConnection dbConnection);
+
+        int Delete(Activity activity, DbConnection dbConnection);
     }
     public class ActivityDAOSqlImpl : IActivityDAO
     {
@@ -51,6 +53,20 @@ namespace LegalSystemCore.Infrastructure
             return GetActivityList;
         }
 
+        public int Delete(Activity activity, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE activity SET is_active = 0 WHERE activity_id = @ActivityId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@ActivityId", activity.ActivityId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
 
     }
 }

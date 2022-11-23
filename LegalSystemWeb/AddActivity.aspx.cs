@@ -63,8 +63,19 @@ namespace LegalSystemWeb
         private void Clear()
         {
             txtAddActivity.Text = string.Empty;
+        }
 
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
 
+            IActivityController activityController = ControllerFactory.CreateAddActivity();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            //Activity activity = new Activity();
+            //activity.ActivityId = caseActionList[rowIndex].ActionId;
+
+            //activityController.Delete(caseAction);
+            BindDataSource();
         }
     }
 }
