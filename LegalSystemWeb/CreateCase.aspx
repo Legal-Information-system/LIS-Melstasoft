@@ -136,7 +136,7 @@
                             <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
                                     ControlToValidate="ddlAttorney" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
                         </div>
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
+                        <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
                             <asp:Literal ID="Literal14" runat="server" Text="Counselor"></asp:Literal>
                             <asp:DropDownList runat="server" ID="ddlCounselor" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
@@ -145,12 +145,29 @@
                         </div>
                     </div>
                     <%--===========--%>
-                    <div class="row mb-3">
+                    <%--                    <div class="row mb-3">
                         <div class="col-md-6">
                             <asp:Button ID="btnDocUpload" runat="server" Text="Next" OnClientClick="btnDocUpload_CLick" CssClass="btn btn-primary btn-user btn-block" OnClick="btnDocUpload_Click1" />
                         </div>
 
 
+
+                    </div>--%>
+                    <div class="row mb-5 mt-3">
+                        <div class="col-sm-6" style="display: flex; flex-direction: column">
+                            <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" />
+                            <asp:Label ID="lblListOfUploadedFiles" runat="server" />
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-sm-6">
+
+                            <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
+                            <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" />
+
+                        </div>
                     </div>
                 </div>
 

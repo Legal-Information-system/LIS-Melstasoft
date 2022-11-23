@@ -19,5 +19,22 @@ namespace LegalSystemWeb
         {
             Response.Redirect("CreateCase.aspx");
         }
+
+        protected void btnUploadedFile_Click(object sender, EventArgs e)
+        {
+
+            HttpFileCollection uploadFiles = Request.Files;
+            for (int i = 0; i < uploadFiles.Count; i++)
+            {
+                HttpPostedFile uploadFile = uploadFiles[i];
+                if (uploadFile.ContentLength > 0)
+                {
+                    uploadFile.SaveAs(Server.MapPath("~/FilesUploaded/") + uploadFile.FileName);
+                    lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+                }
+            }
+
+
+        }
     }
 }
