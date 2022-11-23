@@ -8,13 +8,13 @@ namespace LegalSystemCore.Domain
 {
     public class UserLogin
     {
-        [DBField("user_id")]
+        [DBField("user_login_id")]
         public int UserId { get; set; }
 
-        [DBField("user_name")]
+        [DBField("user_login_name")]
         public string UserName { get; set; }
 
-        [DBField("password")]
+        [DBField("user_password")]
         public string Password { get; set; }
 
         [DBField("company_id")]
@@ -22,9 +22,9 @@ namespace LegalSystemCore.Domain
 
         [DBField("company_unit_id")]
 
-        public string CompanyUnitId { get; set;}
+        public string CompanyUnitId { get; set; }
 
         [DBField("user_role_id")]
-        public string UserRoleId { get; set;}
+        public string UserRoleId { get; set; }
     }
 }

@@ -8,19 +8,18 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Security;
 namespace LegalSystemWeb
 {
     public partial class CreateAccount : System.Web.UI.Page
     {
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 BindUserRoles();
                 BindCompanyList();
-                
+
             }
             BindCompanyUnitList();
 
@@ -52,21 +51,25 @@ namespace LegalSystemWeb
         private void BindCompanyUnitList()
         {
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
-            ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(ddlCompany.SelectedValue);
-            ddlCompanyUnit.DataValueField = "CompanyUnitId";
-            ddlCompanyUnit.DataTextField = "CompanyUnitName";
+            if (ddlCompany.SelectedValue != "")
+            {
+                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(ddlCompany.SelectedValue);
+                ddlCompanyUnit.DataValueField = "CompanyUnitId";
+                ddlCompanyUnit.DataTextField = "CompanyUnitName";
 
-            ddlCompanyUnit.DataBind();
+                ddlCompanyUnit.DataBind();
+
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            
+
             IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
 
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
-            userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text,"SHA1");
+            userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1");
             userLogin.CompanyId = ddlCompany.SelectedValue;
             userLogin.CompanyUnitId = ddlCompanyUnit.SelectedValue;
             userLogin.UserRoleId = ddlUserType.SelectedValue;
@@ -76,7 +79,7 @@ namespace LegalSystemWeb
 
 
             Clear();
-            
+
         }
 
         private void Clear()
