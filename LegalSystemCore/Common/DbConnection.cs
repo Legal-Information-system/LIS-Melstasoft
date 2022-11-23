@@ -17,7 +17,7 @@ namespace LegalSystemCore.Common
 
         public DbConnection()
         {
-            con = new SqlConnection("Data Source=10.2.5.72;Initial Catalog=LIS_DB;Persist Security Info=True;User ID=sa;Password=Bell123");
+            con = new SqlConnection("Data Source=CHARITH\\SQLEXPRESS;Initial Catalog=LIS;Integrated Security=True");
             cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.Text;
