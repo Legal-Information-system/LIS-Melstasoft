@@ -13,7 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddUserRole : System.Web.UI.Page
     {
-        List<UserRole> userRoles = new List<UserRole>();
+        List<UserRole> userRoleList = new List<UserRole>();
         protected void Page_Load(object sender, EventArgs e)
         {
             BindDataSource();
@@ -22,7 +22,7 @@ namespace LegalSystemWeb
         {
             IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
 
-            userRoles = userRoleController.GetUserRoleList();
+            userRoleList = userRoleController.GetUserRoleList();
             gvUserRole.DataSource = userRoleController.GetUserRoleList();
             gvUserRole.DataBind();
 
@@ -57,19 +57,32 @@ namespace LegalSystemWeb
         protected void btnEdit_Click(object sender, EventArgs e)
         {
 
-            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+            //GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            txtRoleName.Text = userRoles[rowIndex].RoleName;
+            txtRoleName.Text = userRoleList[rowIndex].RoleName;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = userRoles[rowIndex].RoleId; ;
+            ViewState["updatedRowIndex"] = userRoleList[rowIndex].RoleId; ;
         }
 
 
         private void Clear()
         {
             txtRoleName.Text = string.Empty;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            UserRole userRole = new UserRole();
+            userRole.RoleId = userRoleList[rowIndex].RoleId;
+
+            userRoleController.Delete(userRole);
+            BindDataSource();
         }
     }
 }

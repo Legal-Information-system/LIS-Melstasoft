@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <asp:TextBox ID="txtAction" Style="width: 100%;" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="text-danger"
-                    ControlToValidate="txtAction" ErrorMessage="Email is Required" ValidationGroup="1">This field is Required</asp:RequiredFieldValidator>
+                    ControlToValidate="txtAction" ErrorMessage="This field is Required" ValidationGroup="1">This field is Required</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-3">
                 <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="1" />
@@ -36,7 +36,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btndelete" runat="server">Delete</asp:LinkButton>
+                                <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_Click">Delete</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

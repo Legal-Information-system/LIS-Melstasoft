@@ -13,6 +13,8 @@ namespace LegalSystemCore.Controller
     {
         int Save(JudgementType judgementType);
         int Update(JudgementType judgementType);
+        int Delete(JudgementType judgementType);
+
         List<JudgementType> GetJudgementTypeList();
     }
 
@@ -87,5 +89,28 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
+
+        public int Delete(JudgementType judgementType)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return JudgementTypeDAO.Delete(judgementType, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
     }
 }

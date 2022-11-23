@@ -13,7 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddCaseStatus : System.Web.UI.Page
     {
-        List<CaseStatus> caseStatus = new List<CaseStatus>();
+        List<CaseStatus> caseStatusList = new List<CaseStatus>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace LegalSystemWeb
         {
             ICaseStatusController caseStatusController = ControllerFactory.CreateCaseStatusController();
 
-            caseStatus = caseStatusController.GetCaseStatusList();
+            caseStatusList = caseStatusController.GetCaseStatusList();
             gvCaseStatus.DataSource = caseStatusController.GetCaseStatusList();
             gvCaseStatus.DataBind();
         }
@@ -60,14 +60,25 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            txtCase.Text = caseStatus[rowIndex].StatusName;
+            txtCase.Text = caseStatusList[rowIndex].StatusName;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = caseStatus[rowIndex].StatusId;
+            ViewState["updatedRowIndex"] = caseStatusList[rowIndex].StatusId;
         }
 
         private void Clear()
         {
             txtCase.Text = string.Empty;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICaseStatusController caseStatusController = ControllerFactory.CreateCaseStatusController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            CaseStatus caStatus = new CaseStatus();
+            caStatus.StatusId = caseStatusList[rowIndex].StatusId;
+            caseStatusController.Delete(caStatus);
+            BindDataSource();
         }
     }
 }

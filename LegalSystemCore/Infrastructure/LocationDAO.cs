@@ -57,11 +57,26 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
+        public int Delete(Location location, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE locationc SET is_active = 0 WHERE locationc_id = @LocationId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@LocationId", location.LocationId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
         public List<Location> GetLocationList(DbConnection dbConnection)
         {
             List<Location> listLocation = new List<Location>();
 
-            dbConnection.cmd.CommandText = "select * from locationc";
+            dbConnection.cmd.CommandText = "select * from locationc WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

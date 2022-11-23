@@ -7,7 +7,10 @@
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Lawyer</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
-            <div class="col-sm-6" style="width: 100%; padding-left: 40px; padding-right: 40px; margin-bottom: 20px;">
+            <div style="text-align: start; padding-left: 42px; margin-bottom: 5px;">
+                <asp:Literal ID="Literal2" runat="server" Text="Lawyer Name"></asp:Literal>
+            </div>
+            <div class="col-sm-6" style="width: 100%; padding-left: 40px; padding-right: 40px; margin-bottom: 0px;">
                 <asp:TextBox Style="width: 100%;" ID="txtName" runat="server"></asp:TextBox>
                 <div class="d-flex text-danger">
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
@@ -15,6 +18,11 @@
                 </div>
 
             </div>
+            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal1" runat="server" Text="E-mail Address"></asp:Literal>
+                </div>
+                <asp:TextBox Style="width: 100%;" ID="txtEmail" runat="server"></asp:TextBox>
             <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="txtEmail" runat="server" ValidationGroup="1"></asp:TextBox>
                 <div class="d-flex text-danger">
@@ -26,6 +34,11 @@
                         ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ValidationGroup="1">Email is not valid</asp:RegularExpressionValidator>
                 </div>
             </div>
+            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal3" runat="server" Text="Contact Number"></asp:Literal>
+                </div>
+                <asp:TextBox Style="width: 100%;" ID="txtContact" runat="server"></asp:TextBox>
             <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
                 <asp:TextBox Style="width: 100%;" ID="txtContact" runat="server" ValidationGroup="1"></asp:TextBox>
                 <div class="d-flex text-danger">

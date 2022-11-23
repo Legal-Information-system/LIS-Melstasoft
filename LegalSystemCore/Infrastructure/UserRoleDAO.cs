@@ -11,6 +11,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(UserRole userRole, DbConnection dbConnection);
         int Update(UserRole userRole, DbConnection dbConnection);
+        int Delete(UserRole userRole, DbConnection dbConnection);
         List<UserRole> GetUserRoleList(DbConnection dbConnection);
     }
 
@@ -23,7 +24,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from user_role";
+            dbConnection.cmd.CommandText = "select * from user_role WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -62,10 +63,22 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@RoleName", userRole.RoleName);
             dbConnection.cmd.Parameters.AddWithValue("@RoleId", userRole.RoleId);
 
-            String test = dbConnection.cmd.CommandText;
-
             output = dbConnection.cmd.ExecuteNonQuery();
 
+            return output;
+        }
+
+        public int Delete(UserRole userRole, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE user_role SET is_active = 0 WHERE user_role_id = @RoleId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@RoleId", userRole.RoleId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
         }
