@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UploadDocument.aspx.cs" Inherits="LegalSystemWeb.UploadDocument" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -36,6 +38,10 @@
                     <div class="row mb-3">
                         <div class="col-sm-6" style="display: flex; flex-direction: column">
                             <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" />
+                            <div class="mt-3">
+                                <asp:Button runat="server" ID="btnUploadedFile" Text="Upload Files" CssClass="btn btn-primary btn-user btn-block" Width="150px" OnClick="btnUploadedFile_Click" />
+                            </div>
+                            <asp:Label ID="lblListOfUploadedFiles" runat="server" />
                         </div>
 
                     </div>
