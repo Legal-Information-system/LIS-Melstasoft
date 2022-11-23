@@ -13,10 +13,11 @@
             <div class="col-sm-6" style="width: 70%">
                 <asp:TextBox Style="width: 90%;" ID="txtLocationName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator class="row" ID="RequiredFieldValidator15" runat="server" Style="padding-left: 42px;"
-                    ControlToValidate="txtLocationName" ErrorMessage="Location Name is Required">* Location Name is Required</asp:RequiredFieldValidator>
+                    ControlToValidate="txtLocationName" ErrorMessage="Location Name is Required" ValidationGroup="1">
+                    * Location Name is Required</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%">
-                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnsave_Click" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnsave_Click" ValidationGroup="1" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
@@ -26,7 +27,7 @@
                         <asp:BoundField DataField="location" HeaderText="Location" />
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
+                                <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>

@@ -57,9 +57,7 @@ namespace LegalSystemCore.Controller
             finally
             {
                 if (dbconnection.con.State == System.Data.ConnectionState.Open)
-                {
                     dbconnection.Commit();
-                }
             }
         }
 
