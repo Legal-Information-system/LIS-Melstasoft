@@ -11,6 +11,7 @@ namespace LegalSystemCore.Controller
     public interface ILawyerController
     {
         int Save(Lawyer lawyer);
+        int Update(Lawyer lawyer);
         List<Lawyer> GetLawyerList();
 
     }
@@ -63,6 +64,28 @@ namespace LegalSystemCore.Controller
                 }
             }
             return listLawyer;
+        }
+
+        public int Update(Lawyer lawyer)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return lawyerDAO.Update(lawyer, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
         }
     }
 }

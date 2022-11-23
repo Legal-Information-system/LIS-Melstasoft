@@ -15,7 +15,7 @@ namespace LegalSystemWeb
 {
     public partial class AddActivity : System.Web.UI.Page
     {
-
+        List<Activity> activitiesList = new List<Activity>();
         protected void Page_Load(object sender, EventArgs e)
         {
             BindDataSource();
@@ -24,7 +24,7 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             IActivityController activityController = ControllerFactory.CreateAddActivity();
-
+            activitiesList = activityController.GetActivityList();
             GridView2.DataSource = activityController.GetActivityList();
             GridView2.DataBind();
 
@@ -44,7 +44,7 @@ namespace LegalSystemWeb
 
 
 
-                //lawyerController.Update(lawyer);
+                activityController.Update(activity);
                 btnSave.Text = "Add";
             }
             else
@@ -65,6 +65,16 @@ namespace LegalSystemWeb
             txtAddActivity.Text = string.Empty;
 
 
+        }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            txtAddActivity.Text = activitiesList[rowIndex].ActivityName;
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = activitiesList[rowIndex].ActivityId;
         }
     }
 }
