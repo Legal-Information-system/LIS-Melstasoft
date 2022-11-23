@@ -10,13 +10,13 @@
                 <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
                     <h3 class="text-light text-center bg-dark ">Create Case</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body form-group">
 
-                    <div class="row mb-3">
-                        <div class="col-sm-6" style="display: flex; flex-direction: column">
+                    <div class="row mb-3 ">
+                        <div class="col-sm-6 dropdown" style="display: flex; flex-direction: column">
 
                             <asp:Literal ID="Literal1" runat="server" Text="Company"></asp:Literal>
-                            <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlCompany" runat="server" CssClass="form-control" Style="margin-top: 5px"></asp:DropDownList>
                             <%--     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                 ControlToValidate="ddlCompany" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
                         </div>
@@ -155,8 +155,8 @@
                 </div>
 
             </div>
-            </div>
         </div>
+    </div>
 </asp:Content>
 
 
