@@ -12,7 +12,7 @@
                 <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
                     <asp:Literal ID="Literal2" runat="server" Text="Court Name"></asp:Literal>
                 </div>
-                <asp:DropDownList ID="ddlCourt" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                <asp:DropDownList ID="ddlCourt" runat="server" CssClass="btn btn-primary dropdown-toggle w-100" ValidationGroup="1"></asp:DropDownList>
                 <asp:RequiredFieldValidator class="row" ID="RequiredFieldValidator1" runat="server" Style="padding-left: 12px;"
                     ControlToValidate="ddlCourt" ErrorMessage="Court Name is Required">* Court Name is Required</asp:RequiredFieldValidator>
             </div>
@@ -20,12 +20,12 @@
                 <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
                     <asp:Literal ID="Literal1" runat="server" Text=" Court Location"></asp:Literal>
                 </div>
-                <asp:DropDownList ID="ddlLocation" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                <asp:DropDownList ID="ddlLocation" runat="server" CssClass="btn btn-primary dropdown-toggle w-100" ValidationGroup="1"></asp:DropDownList>
                 <asp:RequiredFieldValidator class="row" ID="RequiredFieldValidator15" runat="server" Style="padding-left: 12px;"
                     ControlToValidate="ddlLocation" ErrorMessage="Location Name is Required">* Location Name is Required </asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
+                <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="1" />
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
