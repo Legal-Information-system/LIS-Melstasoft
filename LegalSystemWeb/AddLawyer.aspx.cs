@@ -13,7 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddLawyer : System.Web.UI.Page
     {
-        List<Lawyer> lawyer = new List<Lawyer>();
+        List<Lawyer> lawyerList = new List<Lawyer>();
         protected void Page_Load(object sender, EventArgs e)
         {
             BindDataSource();
@@ -24,7 +24,7 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
 
 
-            lawyer = lawyerController.GetLawyerList();
+            lawyerList = lawyerController.GetLawyerList();
             GridView2.DataSource = lawyerController.GetLawyerList(); ;
             GridView2.DataBind();
         }
@@ -43,8 +43,8 @@ namespace LegalSystemWeb
                 lawyer.LawyerContact = txtContact.Text;
 
 
-                //lawyerController.Update(lawyer);
-                btnSave.Text = "Save";
+                lawyerController.Update(lawyer);
+                btnSave.Text = "Add";
             }
             else
             {
@@ -67,5 +67,19 @@ namespace LegalSystemWeb
             txtContact.Text = string.Empty;
 
         }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            txtName.Text = lawyerList[rowIndex].LawyerName;
+            txtEmail.Text = lawyerList[rowIndex].LawyerEmail;
+            txtContact.Text = lawyerList[rowIndex].LawyerContact;
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = lawyerList[rowIndex].LawyerId;
+
+        }
+
+
     }
 }

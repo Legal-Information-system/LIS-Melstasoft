@@ -6,17 +6,16 @@
     <div style="height: 40px;"></div>
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Activity</h2>
-        <div class="row mb-5" style="text-align: center;">
-            <div class="col-sm-3">
-                Activity : 
+        <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
+            <div class="col-sm-6" style="width: 70%">
+                <asp:TextBox Style="width: 90%;" ID="txtAddActivity" runat="server"></asp:TextBox>
+                <div class="d-flex text-danger">
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtAddActivity" runat="server" ErrorMessage="RequiredFieldValidator" ValidationGroup="1">Required</asp:RequiredFieldValidator>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <asp:TextBox Style="width: 100%;" ID="txtAddActivity" runat="server"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="text-danger"
-                    ControlToValidate="txtAddActivity" ErrorMessage="This field is Required" ValidationGroup="1">This field is Required</asp:RequiredFieldValidator>
-            </div>
-            <div class="col-sm-3">
+            <div class="col-sm-6" style="width: 30%">
                 <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="1" />
+
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
@@ -26,7 +25,7 @@
                         <asp:BoundField DataField="ActivityName" HeaderText="Activity" />
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
+                                <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>

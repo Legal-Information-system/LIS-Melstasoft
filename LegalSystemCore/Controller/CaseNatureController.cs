@@ -11,6 +11,7 @@ namespace LegalSystemCore.Controller
     public interface ICaseNatureController
     {
         int Save(CaseNature caseNature);
+        int Update(CaseNature caseNature);
         List<CaseNature> GetCaseNatureList();
     }
 
@@ -65,7 +66,27 @@ namespace LegalSystemCore.Controller
             }
             return listCaseNature;
         }
-
+        public int Update(CaseNature caseNature)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return caseNatureDAO.Update(caseNature, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
 
 
     }

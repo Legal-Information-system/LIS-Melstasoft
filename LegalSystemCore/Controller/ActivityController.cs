@@ -11,6 +11,7 @@ namespace LegalSystemCore.Controller
     public interface IActivityController
     {
         int Save(Activity activity);
+        int Update(Activity activity);
         List<Activity> GetActivityList();
     }
 
@@ -63,6 +64,28 @@ namespace LegalSystemCore.Controller
                 }
             }
             return listActivity;
+        }
+
+        public int Update(Activity activity)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return activityDAO.Update(activity, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
         }
 
     }
