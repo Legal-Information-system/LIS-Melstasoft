@@ -10,6 +10,7 @@ namespace LegalSystemCore.Infrastructure
     public interface ILawyerDAO
     {
         int Save(Lawyer lawyer, DbConnection dbConnection);
+        int Update(Lawyer lawyer, DbConnection dbConnection);
         List<Lawyer> GetLawyerList(DbConnection dbConnection);
 
     }
@@ -54,6 +55,23 @@ namespace LegalSystemCore.Infrastructure
 
             return lawyerList;
 
+        }
+        public int Update(Lawyer lawyer, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update lawyer set lawyer_name = @LawerName ,l_email = @LawerEmail,l_contact=@LawerContact WHERE lawyer_id = @LawerId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@LawerId", lawyer.LawyerId);
+            dbConnection.cmd.Parameters.AddWithValue("@LawerName", lawyer.LawyerName);
+            dbConnection.cmd.Parameters.AddWithValue("@LawerEmail", lawyer.LawyerEmail);
+            dbConnection.cmd.Parameters.AddWithValue("@LawerContact", lawyer.LawyerContact);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
     }
 }

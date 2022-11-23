@@ -75,7 +75,7 @@ namespace LegalSystemWeb
             txtCompanyName.Text = companyList[rowIndex].CompanyName;
             txtCompanyAddress.Text = companyList[rowIndex].CompanyAddress;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = companyList[rowIndex].CompanyId; ;
+            ViewState["updatedRowIndex"] = companyList[rowIndex].CompanyId;
         }
 
         private void Clear()

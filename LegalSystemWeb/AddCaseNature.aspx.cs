@@ -13,6 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddCaseNature : System.Web.UI.Page
     {
+        List<CaseNature> casesList = new List<CaseNature>();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,6 +24,7 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
+            casesList = caseNatureController.GetCaseNatureList();
             GridView2.DataSource = caseNatureController.GetCaseNatureList();
             GridView2.DataBind();
         }
@@ -40,8 +42,8 @@ namespace LegalSystemWeb
 
                 caseNature.CaseNatureName = txtNatureName.Text;
 
-                //lawyerController.Update(lawyer);
-                btnSave.Text = "Save";
+                caseNatureController.Update(caseNature);
+                btnSave.Text = "Add";
             }
             else
             {
@@ -62,6 +64,18 @@ namespace LegalSystemWeb
             txtNatureName.Text = string.Empty;
 
 
+        }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            txtNatureName.Text = casesList[rowIndex].CaseNatureName;
+            btnSave.Text = "Update";
+            ViewState["updatedRowIndex"] = casesList[rowIndex].CaseNatureId;
         }
     }
 }
