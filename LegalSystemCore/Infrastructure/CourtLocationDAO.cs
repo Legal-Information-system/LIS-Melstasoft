@@ -10,7 +10,7 @@ namespace LegalSystemCore.Infrastructure
     public interface ICourtLocationDAO
     {
         int Save(CourtLocation courtlocation, DbConnection dbConnection);
-        int Update(CourtLocation courtlocation, DbConnection dbConnection);
+        int Update(CourtLocation courtlocation, int courtId, int locationid, DbConnection dbConnectIon);
         List<CourtLocation> GetCourtLocationList(DbConnection dbConnection);
     }
     public class CourtLocationSqlImpl : ICourtLocationDAO
@@ -37,16 +37,18 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public int Update(CourtLocation courtlocation, DbConnection dbConnection)
+        public int Update(CourtLocation courtlocation, int courtId, int locationId, DbConnection dbConnection)
         {
             int output = 0;
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Update court_locationc set court_id = @CourtId ,locationc_id = @LocationId WHERE court_id = @CourtId AND locationc_id=@LocationId";
+            dbConnection.cmd.CommandText = "Update court_locationc set court_id = @CourtNewId ,locationc_id = @locationNewId WHERE court_id = @CourtId AND locationc_id=@locationId";
 
-            dbConnection.cmd.Parameters.AddWithValue("@CourtId", courtlocation.CourtId);
-            dbConnection.cmd.Parameters.AddWithValue("@location_id", courtlocation.LocationId);
+            dbConnection.cmd.Parameters.AddWithValue("@CourtNewId", courtlocation.CourtId);
+            dbConnection.cmd.Parameters.AddWithValue("@locationNewId", courtlocation.LocationId);
+            dbConnection.cmd.Parameters.AddWithValue("@CourtId", courtId);
+            dbConnection.cmd.Parameters.AddWithValue("@locationId", locationId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 

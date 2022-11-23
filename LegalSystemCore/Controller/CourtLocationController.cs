@@ -12,7 +12,7 @@ namespace LegalSystemCore.Controller
     public interface ICourtLocationController
     {
         int Save(CourtLocation courtlocation);
-        int Update(CourtLocation courtlocation);
+        int Update(CourtLocation courtlocation, int courtId, int locationId);
         List<CourtLocation> GetCourtLocationList();
     }
 
@@ -83,13 +83,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(CourtLocation courtlocation)
+        public int Update(CourtLocation courtlocation, int courtId, int locationId)
         {
             Common.DbConnection dbConnection = null;
             try
             {
                 dbConnection = new Common.DbConnection();
-                return courtlocationDAO.Update(courtlocation, dbConnection);
+                return courtlocationDAO.Update(courtlocation, courtId, locationId, dbConnection);
             }
             catch (Exception)
             {

@@ -14,6 +14,8 @@ namespace LegalSystemCore.Infrastructure
         int Save(UserLogin userLogin, DbConnection dbConnection);
         int Update(UserLogin userLogin, DbConnection dbConnection);
         List<UserLogin> GetUserLoginList(DbConnection dbConnection);
+
+        UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin);
     }
 
     public class UserLoginSqlDAOImpl : IUserLoginDAO
@@ -79,6 +81,22 @@ namespace LegalSystemCore.Infrastructure
 
 
             return listUserLogin;
+        }
+
+        public UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin)
+        {
+
+            dbConnection.cmd.CommandText = "select * from user_login  where user_login_name = @UserName AND user_password = @Password";
+
+            dbConnection.cmd.Parameters.AddWithValue("@UserName", userLogin.UserName);
+            dbConnection.cmd.Parameters.AddWithValue("@Password", userLogin.Password);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            userLogin = dataAccessObject.GetSingleOject<UserLogin>(dbConnection.dr);
+            dbConnection.dr.Close();
+            return userLogin;
         }
     }
 
