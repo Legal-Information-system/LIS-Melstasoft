@@ -17,8 +17,11 @@ namespace LegalSystemWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindCompanyList();
-            BindDataSource();
+            if (!IsPostBack)
+            {
+                BindCompanyList();
+                BindDataSource();
+            }
         }
 
         private void BindDataSource()
@@ -36,8 +39,7 @@ namespace LegalSystemWeb
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
             ddlCompany.DataSource = companyController.GetCompanyList();
             ddlCompany.DataValueField = "CompanyId";
-            ddlCompany.DataTextField = "CompanyId";
-            //ddlCompany.DataTextField = "CompanyName";
+            ddlCompany.DataTextField = "CompanyName";
 
             ddlCompany.DataBind();
         }
