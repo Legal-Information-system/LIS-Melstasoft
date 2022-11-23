@@ -61,7 +61,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<Court> listCourt = new List<Court>();
 
-            dbConnection.cmd.CommandText = "select * from court";
+            dbConnection.cmd.CommandText = "select * from court WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

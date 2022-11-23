@@ -63,7 +63,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<Company> listCompany = new List<Company>();
 
-            dbConnection.cmd.CommandText = "select * from company";
+            dbConnection.cmd.CommandText = "select * from company WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

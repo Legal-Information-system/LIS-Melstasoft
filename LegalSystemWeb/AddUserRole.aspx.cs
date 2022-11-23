@@ -57,7 +57,7 @@ namespace LegalSystemWeb
         protected void btnEdit_Click(object sender, EventArgs e)
         {
 
-            GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
+            //GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
@@ -70,6 +70,19 @@ namespace LegalSystemWeb
         private void Clear()
         {
             txtRoleName.Text = string.Empty;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            UserRole userRole = new UserRole();
+            userRole.RoleId = userRoles[rowIndex].RoleId;
+
+            userRoleController.Delete(userRole);
+            BindDataSource();
         }
     }
 }

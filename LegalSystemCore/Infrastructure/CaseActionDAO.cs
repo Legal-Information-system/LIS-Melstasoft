@@ -22,7 +22,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from case_action";
+            dbConnection.cmd.CommandText = "select * from case_action WHERE is_active = 1";
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
             listCaseAction = dataAccessObject.ReadCollection<CaseAction>(dbConnection.dr);

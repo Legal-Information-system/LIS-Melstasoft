@@ -45,7 +45,7 @@ namespace LegalSystemCore.Infrastructure
 
             List<Lawyer> lawyerList = new List<Lawyer>();
 
-            dbConnection.cmd.CommandText = "select * from lawyer";
+            dbConnection.cmd.CommandText = "select * from lawyer WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

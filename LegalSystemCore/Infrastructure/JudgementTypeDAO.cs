@@ -23,7 +23,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from judgement_type";
+            dbConnection.cmd.CommandText = "select * from judgement_type WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
