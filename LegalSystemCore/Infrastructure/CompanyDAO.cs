@@ -12,6 +12,8 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(Company company, DbConnection dbConnection);
         int Update(Company company, DbConnection dbConnection);
+        int Delete(Company company, DbConnection dbConnection);
+
         List<Company> GetCompanyList(DbConnection dbConnection);
     }
 
@@ -72,6 +74,21 @@ namespace LegalSystemCore.Infrastructure
 
 
             return listCompany;
+        }
+
+        public int Delete(Company company, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE company SET is_active = 0 WHERE company_id = @CompanyId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
     }
 

@@ -11,6 +11,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(Court court, DbConnection dbConnection);
         int Update(Court court, DbConnection dbConnection);
+        int Delete(Court court, DbConnection dbConnection);
         List<Court> GetCourtList(DbConnection dbConnection);
     }
     public class CourtSqlDAOImpl : ICourtDAO
@@ -51,6 +52,20 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@courtId", court.CourtId);
             dbConnection.cmd.Parameters.AddWithValue("@court", court.CourtName);
 
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+        public int Delete(Court court, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE court SET is_active = 0 WHERE court_id = @CourtId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CourtId", court.CourtId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 

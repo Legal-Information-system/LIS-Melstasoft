@@ -12,6 +12,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(PaymentStatus paymentStatus, DbConnection dbConnection);
         int Update(PaymentStatus paymentStatus, DbConnection dbConnection);
+        int Delete(PaymentStatus paymentStatus, DbConnection dbConnection);
         List<PaymentStatus> GetPaymentStatusList(DbConnection dbConnection);
     }
 
@@ -59,6 +60,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandText = "UPDATE payment_status SET payment_status_name = @StatusName WHERE payment_status_id = @StatusId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@StatusName", paymentStatus.StatusName);
+            dbConnection.cmd.Parameters.AddWithValue("@StatusId", paymentStatus.StatusId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int Delete(PaymentStatus paymentStatus, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE payment_status SET is_active = 0 WHERE payment_status_id = @StatusId ";
+
             dbConnection.cmd.Parameters.AddWithValue("@StatusId", paymentStatus.StatusId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
