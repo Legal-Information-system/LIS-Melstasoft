@@ -12,6 +12,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(CaseStatus caseStatus);
         int Update(CaseStatus caseStatus);
+        int Delete(CaseStatus caseStatus);
         List<CaseStatus> GetCaseStatusList();
     }
 
@@ -86,5 +87,28 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
+
+        public int Delete(CaseStatus caseStatus)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return caseStatusDAO.Delete(caseStatus, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
     }
 }

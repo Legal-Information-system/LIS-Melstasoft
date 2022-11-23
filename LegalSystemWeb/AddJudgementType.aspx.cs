@@ -13,7 +13,7 @@ namespace LegalSystemWeb
 {
     public partial class AddJudgementType : System.Web.UI.Page
     {
-        List<JudgementType> judgementType = new List<JudgementType>();
+        List<JudgementType> judgementTypeList = new List<JudgementType>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace LegalSystemWeb
         {
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
 
-            judgementType = judgementTypeController.GetJudgementTypeList();
+            judgementTypeList = judgementTypeController.GetJudgementTypeList();
             gvJudgementType.DataSource = judgementTypeController.GetJudgementTypeList();
             gvJudgementType.DataBind();
         }
@@ -60,14 +60,26 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            txtJType.Text = judgementType[rowIndex].JTypeName;
+            txtJType.Text = judgementTypeList[rowIndex].JTypeName;
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = judgementType[rowIndex].JTypeId;
+            ViewState["updatedRowIndex"] = judgementTypeList[rowIndex].JTypeId;
         }
 
         private void Clear()
         {
             txtJType.Text = string.Empty;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            JudgementType judgementType = new JudgementType();
+            judgementType.JTypeId = judgementTypeList[rowIndex].JTypeId; ;
+
+            judgementTypeController.Delete(judgementType);
+            BindDataSource();
         }
     }
 }

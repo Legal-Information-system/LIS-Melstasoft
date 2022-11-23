@@ -42,7 +42,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<CaseNature> GetCaseNatureList = new List<CaseNature>();
 
-            dbConnection.cmd.CommandText = "select * from case_nature";
+            dbConnection.cmd.CommandText = "select * from case_nature WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

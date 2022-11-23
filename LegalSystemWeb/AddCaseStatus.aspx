@@ -36,7 +36,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btndelete" runat="server">Delete</asp:LinkButton>
+                                <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_Click">Delete</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
