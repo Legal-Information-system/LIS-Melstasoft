@@ -12,6 +12,8 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(JudgementType judgementType, DbConnection dbConnection);
         int Update(JudgementType judgementType, DbConnection dbConnection);
+        int Delete(JudgementType judgementType, DbConnection dbConnection);
+
         List<JudgementType> GetJudgementTypeList(DbConnection dbConnection);
     }
 
@@ -23,7 +25,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from judgement_type";
+            dbConnection.cmd.CommandText = "select * from judgement_type WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -59,6 +61,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandText = "UPDATE judgement_type SET judgement_type_name = @JTypeName WHERE judgement_type_id = @JTypeId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@JTypeName", judgementType.JTypeName);
+            dbConnection.cmd.Parameters.AddWithValue("@JTypeId", judgementType.JTypeId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int Delete(JudgementType judgementType, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE judgement_type SET is_active = 0 WHERE judgement_type_id = @JTypeId ";
+
             dbConnection.cmd.Parameters.AddWithValue("@JTypeId", judgementType.JTypeId);
 
             output = dbConnection.cmd.ExecuteNonQuery();

@@ -12,6 +12,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(UserRole userRole);
         int Update(UserRole userRole);
+        int Delete(UserRole userRole);
         List<UserRole> GetUserRoleList();
     }
 
@@ -86,5 +87,29 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
+
+
+        public int Delete(UserRole userRole)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return userRoleDAO.Delete(userRole, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
     }
 }

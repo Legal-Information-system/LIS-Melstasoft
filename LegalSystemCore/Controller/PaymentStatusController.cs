@@ -13,6 +13,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(PaymentStatus paymentStatus);
         int Update(PaymentStatus paymentStatus);
+        int Delete(PaymentStatus paymentStatus);
         List<PaymentStatus> GetPaymentStatusList();
     }
 
@@ -73,6 +74,28 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 return PaymentStatusDAO.Update(paymentStatus, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int Delete(PaymentStatus paymentStatus)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return PaymentStatusDAO.Delete(paymentStatus, dbConnection);
             }
             catch (Exception)
             {

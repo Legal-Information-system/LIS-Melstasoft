@@ -12,6 +12,7 @@
     <meta name="author" content="" />
     <title>Dashboard - Melstacorp Legal</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="Scripts/Site.js"></script>
@@ -104,7 +105,7 @@
                                     <a class="nav-link" href="AddLawyer.aspx">Add Lawyer</a>
                                     <a class="nav-link" href="AddUserRole.aspx">Add User Role</a>
                                     <a class="nav-link" href="AddCourt.aspx">Add Court</a>
-                                    <a class="nav-link" href="">Add Case Nature</a>
+                                    <a class="nav-link" href="AddCaseNature.aspx">Add Case Nature</a>
                                     <a class="nav-link" href="AddAction.aspx">Add Action</a>
                                     <a class="nav-link" href="AddActivity.aspx">Add Activity</a>
                                     <a class="nav-link" href="AddJudgementType.aspx">Add Judgement Type</a>

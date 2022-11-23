@@ -41,7 +41,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<Activity> GetActivityList = new List<Activity>();
 
-            dbConnection.cmd.CommandText = "select * from activity";
+            dbConnection.cmd.CommandText = "select * from activity WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

@@ -11,6 +11,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(CaseStatus caseStatus, DbConnection dbConnection);
         int Update(CaseStatus caseStatus, DbConnection dbConnection);
+        int Delete(CaseStatus caseStatus, DbConnection dbConnection);
         List<CaseStatus> GetCaseStatusList(DbConnection dbConnection);
     }
 
@@ -22,7 +23,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from case_status";
+            dbConnection.cmd.CommandText = "select * from case_status WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -58,6 +59,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandText = "UPDATE case_status SET case_status_name = @StatusName WHERE case_status_id = @StatusId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@StatusName", caseStatus.StatusName);
+            dbConnection.cmd.Parameters.AddWithValue("@StatusId", caseStatus.StatusId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int Delete(CaseStatus caseStatus, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE case_status SET is_active = 0 WHERE case_status_id = @StatusId ";
+
             dbConnection.cmd.Parameters.AddWithValue("@StatusId", caseStatus.StatusId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
