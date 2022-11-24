@@ -12,6 +12,9 @@ namespace LegalSystemCore.Infrastructure
         int Save(CourtLocation courtlocation, DbConnection dbConnection);
         int Update(CourtLocation courtlocation, int courtId, int locationid, DbConnection dbConnectIon);
         List<CourtLocation> GetCourtLocationList(DbConnection dbConnection);
+        List<CourtLocation> GetCourtLocationListFilter(int courtId, DbConnection dbConnection);
+
+
     }
     public class CourtLocationSqlImpl : ICourtLocationDAO
     {
@@ -60,6 +63,21 @@ namespace LegalSystemCore.Infrastructure
             List<CourtLocation> listcourtlocation = new List<CourtLocation>();
 
             dbConnection.cmd.CommandText = "select * from court_locationc WHERE is_active = 1";
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            listcourtlocation = dataAccessObject.ReadCollection<CourtLocation>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+
+            return listcourtlocation;
+        }
+
+        public List<CourtLocation> GetCourtLocationListFilter(int courtId, DbConnection dbConnection)
+        {
+            List<CourtLocation> listcourtlocation = new List<CourtLocation>();
+
+            dbConnection.cmd.CommandText = "select * from court_locationc WHERE is_active = 1 AND court_id =" + courtId;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

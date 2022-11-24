@@ -12,38 +12,44 @@
                 </div>
                 <div class="card-body form-group">
 
-                    <div class="row mb-3 ">
-                        <div class="col-sm-6 dropdown" style="display: flex; flex-direction: column">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3 ">
+                                <div class="col-sm-6 dropdown" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal1" runat="server" Text="Company"></asp:Literal>
-                            <asp:DropDownList ID="ddlCompany" runat="server" CssClass="form-control" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
-                ControlToValidate="ddlCompany" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
-                        </div>
+                                    <asp:Literal ID="Literal1" runat="server" Text="Company"></asp:Literal>
+                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
+                                        ControlToValidate="ddlCompany" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
 
-                        <div class="col-sm-6" style="display: flex; flex-direction: column">
+                                <div class="col-sm-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal2" runat="server" Text="Company Unit"></asp:Literal>
-                            <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                ControlToValidate="ddlCompanyUnit" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
-                        </div>
-                    </div>
+                                    <asp:Literal ID="Literal2" runat="server" Text="Company Unit"></asp:Literal>
+                                    <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                                        ControlToValidate="ddlCompanyUnit" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
                     <%--=========--%>
                     <div class="form-group row ">
                         <div class="col-md-6" style="display: flex; flex-direction: column">
 
                             <asp:Literal ID="Literal5" runat="server" Text="Nature Of Case"></asp:Literal>
-                            <asp:DropDownList ID="ddlNatureOfCase" runat="server" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
-                ControlToValidate="ddlNatureOfCase" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
+                            <asp:DropDownList ID="ddlNatureOfCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"
+                                ControlToValidate="ddlNatureOfCase" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                         </div>
                         <div class="col-md-6">
 
                             <asp:Literal ID="ltLastName" runat="server" Text="Case Description"></asp:Literal>
                             <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtCaseDescription" TextMode="MultiLine" Style="margin-top: 5px"></asp:TextBox>
-                            <%--    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" 
-                    ControlToValidate="txtCaseDescription" ErrorMessage="Required"  ValidationGroup="1" >*</asp:RequiredFieldValidator>--%>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
+                                ControlToValidate="txtCaseDescription" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                         </div>
                     </div>
 
@@ -53,8 +59,11 @@
 
                             <asp:Literal ID="Literal3" runat="server" Text="Claim Amount"></asp:Literal>
                             <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtClaimAmount" Style="margin-top: 5px"></asp:TextBox>
-                            <%--               <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
-                    ControlToValidate="txtClaimAmount" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
+                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
+                            </asp:RegularExpressionValidator>--%>
                         </div>
 
                     </div>
@@ -68,17 +77,17 @@
 
                             <asp:Literal ID="Literal15" runat="server" Text="Company Side"></asp:Literal>
                             <asp:RadioButtonList ID="rbIsPlantiff" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px">
-                                <asp:ListItem Value="P" CssClass="form-check-input" Style="margin-right: 50px">Plantiff</asp:ListItem>
-                                <asp:ListItem Value="D" CssClass="form-check-input">Difendant</asp:ListItem>
+                                <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">Plantiff</asp:ListItem>
+                                <asp:ListItem Value="0" CssClass="form-check-input">Difendant</asp:ListItem>
                             </asp:RadioButtonList>
 
                         </div>
                         <div class="col-md-6">
 
                             <asp:Literal ID="Literal6" runat="server" Text="Other Side"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtDifendant" Style="margin-top: 5px"></asp:TextBox>
-                            <%--                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" 
-                    ControlToValidate="txtDifendant" ErrorMessage="Required"  ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
+                            <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtOtherside" Style="margin-top: 5px"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server"
+                                ControlToValidate="txtOtherside" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                         </div>
 
                     </div>
@@ -89,23 +98,26 @@
 
 
                     <%--===========--%>
-                    <div class="row mb-3">
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3">
+                                <div class="col-md-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal9" runat="server" Text="Court"></asp:Literal>
-                            <asp:DropDownList runat="server" ID="ddlCourt" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--           <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" 
-                    ControlToValidate="ddlCourt" ErrorMessage="Required"  ValidationGroup="1" >*</asp:RequiredFieldValidator>--%>
-                        </div>
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
+                                    <asp:Literal ID="Literal9" runat="server" Text="Court"></asp:Literal>
+                                    <asp:DropDownList runat="server" ID="ddlCourt" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px" AutoPostBack="true" OnSelectedIndexChanged="ddlCourt_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"
+                                        ControlToValidate="ddlCourt" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                                <div class="col-md-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal10" runat="server" Text="Location"></asp:Literal>
-                            <asp:DropDownList runat="server" ID="ddlLocation" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--                   <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" 
-                    ControlToValidate="ddlLocation" ErrorMessage="Required"  ValidationGroup="1" >*</asp:RequiredFieldValidator>--%>
-                        </div>
-                    </div>
-
+                                    <asp:Literal ID="Literal10" runat="server" Text="Location"></asp:Literal>
+                                    <asp:DropDownList runat="server" ID="ddlLocation" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server"
+                                        ControlToValidate="ddlLocation" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
 
 
                     <%--===========--%>
@@ -114,8 +126,8 @@
 
                             <asp:Literal ID="Literal11" runat="server" Text="Case Number"></asp:Literal>
                             <asp:TextBox runat="server" ID="txtCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
-                            <%--     <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
-                                    ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
+                                ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                         </div>
 
                         <div class="col-md-6">
@@ -128,22 +140,26 @@
                     </div>
 
                     <%--===========--%>
-                    <div class="row mb-3">
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
+                    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3">
+                                <div class="col-md-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal13" runat="server" Text="Assigning Attorney "></asp:Literal>
-                            <asp:DropDownList runat="server" ID="ddlAttorney" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
-                            <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
-                                    ControlToValidate="ddlAttorney" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
-                        </div>
-                        <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
+                                    <asp:Literal ID="Literal13" runat="server" Text="Assigning Attorney "></asp:Literal>
+                                    <asp:DropDownList runat="server" ID="ddlAttorney" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
+                                        ControlToValidate="ddlAttorney" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal14" runat="server" Text="Counselor"></asp:Literal>
-                            <asp:DropDownList runat="server" ID="ddlCounselor" CssClass="btn btn-primary dropdown-toggle" Style="margin-top: 5px"></asp:DropDownList>
+                                    <asp:Literal ID="Literal14" runat="server" Text="Counselor"></asp:Literal>
+                                    <asp:DropDownList runat="server" ID="ddlCounselor" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
 
 
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                     <%--===========--%>
                     <%--                    <div class="row mb-3">
                         <div class="col-md-6">
@@ -165,7 +181,7 @@
                         <div class="col-sm-6">
 
                             <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
-                            <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" />
+                            <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
 
                         </div>
                     </div>

@@ -109,5 +109,17 @@ namespace LegalSystemCore.Common
             ICaseMasterDAO caseMasterDAO = new CaseMasterDAOSqlImpl();
             return ((ICaseMasterDAO)caseMasterDAO);
         }
+
+        public static IDocumentDAO CreateDocumentDAO()
+        {
+            IDocumentDAO documentDAO = new DocumentDAOSqlImpl();
+            return (IDocumentDAO)documentDAO;
+        }
+
+        public static IDocumentCaseDAO CreateDocumentCaseDAO()
+        {
+            IDocumentCaseDAO documentCaseDAO = new DocumentCaseDAOSqlImpl();
+            return (IDocumentCaseDAO)documentCaseDAO;
+        }
     }
 }
