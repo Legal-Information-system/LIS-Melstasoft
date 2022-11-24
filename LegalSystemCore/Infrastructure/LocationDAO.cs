@@ -29,7 +29,7 @@ namespace LegalSystemCore.Infrastructure
 
             //dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
             dbConnection.cmd.Parameters.AddWithValue("@locationc_id", location.LocationId);
-            dbConnection.cmd.Parameters.AddWithValue("@locationc_name", location.location);
+            dbConnection.cmd.Parameters.AddWithValue("@locationc_name", location.locationName);
 
 
             output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
@@ -49,7 +49,7 @@ namespace LegalSystemCore.Infrastructure
 
 
             dbConnection.cmd.Parameters.AddWithValue("@locationId", location.LocationId);
-            dbConnection.cmd.Parameters.AddWithValue("@location", location.location);
+            dbConnection.cmd.Parameters.AddWithValue("@location", location.locationName);
 
 
             output = dbConnection.cmd.ExecuteNonQuery();

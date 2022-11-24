@@ -38,7 +38,7 @@ namespace LegalSystemWeb
                 int rowIndex = (int)ViewState["updatedRowIndex"];
                 Location location = new Location();
                 location.LocationId = rowIndex;
-                location.location = txtLocationName.Text;
+                location.locationName = txtLocationName.Text;
 
 
                 locationController.Update(location);
@@ -47,7 +47,7 @@ namespace LegalSystemWeb
             else
             {
                 Location location = new Location();
-                location.location = txtLocationName.Text;
+                location.locationName = txtLocationName.Text;
 
                 location.LocationId = locationController.Save(location);
             }
@@ -71,7 +71,7 @@ namespace LegalSystemWeb
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            txtLocationName.Text = locationList[rowIndex].location;
+            txtLocationName.Text = locationList[rowIndex].locationName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = locationList[rowIndex].LocationId;
         }
