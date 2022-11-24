@@ -70,7 +70,7 @@ namespace LegalSystemCore.Common
 
         public static IPaymentStatusDAO CreatePaymentStatusDAO()
         {
-            IPaymentStatusDAO paymentStatusDAO = new PaymentDAOSqlImpl();
+            IPaymentStatusDAO paymentStatusDAO = new PaymentStatusDAOSqlImpl();
             return (IPaymentStatusDAO)paymentStatusDAO;
         }
 
@@ -90,6 +90,24 @@ namespace LegalSystemCore.Common
         {
             ICaseNatureDAO caseNatureDAO = new CaseNatureSqlDAOImpl();
             return ((ICaseNatureDAO)caseNatureDAO);
+        }
+
+        public static IPaymentDAO CreatePaymentDAO()
+        {
+            IPaymentDAO paymentDAO = new PaymentDAOSqlImpl();
+            return ((IPaymentDAO)paymentDAO);
+        }
+
+        public static IPaymentActivityDAO CreatePaymentActivityDAO()
+        {
+            IPaymentActivityDAO paymentActivityDAO = new PaymentActivityDAOSqlImpl();
+            return ((IPaymentActivityDAO)paymentActivityDAO);
+        }
+
+        public static ICaseMasterDAO CreateCaseMasterDAO()
+        {
+            ICaseMasterDAO caseMasterDAO = new CaseMasterDAOSqlImpl();
+            return ((ICaseMasterDAO)caseMasterDAO);
         }
     }
 }

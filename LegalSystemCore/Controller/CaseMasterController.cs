@@ -3,33 +3,28 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 
-
 namespace LegalSystemCore.Controller
 {
-
-    public interface IUserLoginController
+    public interface ICaseMasterController
     {
-        int Save(UserLogin userLogin);
-        int Update(UserLogin userLogin);
-        List<UserLogin> GetUserLoginList();
-        UserLogin GetUserLogin(UserLogin userLogin);
+        int Save(CaseMaster caseMaster);
+        int Update(CaseMaster caseMaster);
+        List<CaseMaster> GetCaseMasterList();
+
     }
-
-    public class UserLoginControllerImpl : IUserLoginController
+    public class CaseMasterControllerImpl : ICaseMasterController
     {
-        IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
-
-        public int Save(UserLogin userLogin)
+        ICaseMasterDAO caseMasterDAO = DAOFactory.CreateCaseMasterDAO();
+        public int Save(CaseMaster caseMaster)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return userLoginDAO.Save(userLogin, dbconnection);
+                return caseMasterDAO.Save(caseMaster, dbconnection);
             }
             catch (Exception)
             {
@@ -45,36 +40,39 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(UserLogin userLogin)
+
+
+        public int Update(CaseMaster caseMaster)
         {
-            Common.DbConnection dbconnection = null;
+            Common.DbConnection dbConnection = null;
             try
             {
-                dbconnection = new Common.DbConnection();
-                return userLoginDAO.Update(userLogin, dbconnection);
+                dbConnection = new Common.DbConnection();
+                return caseMasterDAO.Update(caseMaster, dbConnection);
             }
             catch (Exception)
             {
-                dbconnection.RollBack();
+                dbConnection.RollBack();
                 throw;
             }
             finally
             {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
                 {
-                    dbconnection.Commit();
+                    dbConnection.Commit();
                 }
             }
         }
 
-        public List<UserLogin> GetUserLoginList()
+        public List<CaseMaster> GetCaseMasterList()
         {
             Common.DbConnection dbConnection = null;
-            List<UserLogin> listUserLogin = new List<UserLogin>();
+            List<CaseMaster> listCaseMaster = new List<CaseMaster>();
+
             try
             {
                 dbConnection = new Common.DbConnection();
-                listUserLogin = userLoginDAO.GetUserLoginList(dbConnection);
+                listCaseMaster = caseMasterDAO.GetCaseMasterList(dbConnection);
 
             }
             catch (Exception)
@@ -89,36 +87,7 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listUserLogin;
+            return listCaseMaster;
         }
-
-        public UserLogin GetUserLogin(UserLogin userLogin)
-        {
-            Common.DbConnection dbConnection = null;
-            
-            try
-            {
-                dbConnection = new Common.DbConnection();
-                userLogin = userLoginDAO.GetUserLogin(dbConnection,userLogin);
-                
-                
-
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbConnection.Commit();
-                }
-            }
-            return userLogin;
-        }
-
     }
-
 }

@@ -28,14 +28,11 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-outline" style="font-weight: 700">
-                                            <label class="form-label" for="inputEmail">Email address</label>
-                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control "></asp:TextBox>
+                                            <label class="form-label" for="inputUserName">User Name</label>
+                                            <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control "></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
-                                                ControlToValidate="txtEmail" ErrorMessage="Email is Required">*</asp:RequiredFieldValidator>
-                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"
-                                                ControlToValidate="txtEmail" ErrorMessage="Email is not valid" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">
-                                                *
-                                            </asp:RegularExpressionValidator>
+                                                ControlToValidate="txtUserName" ErrorMessage="Username is Required">*</asp:RequiredFieldValidator>
+                                            
 
                                         </div>
                                         <div class="form-outline mb-4" style="font-weight: 700">
@@ -50,7 +47,7 @@
                                         </div>
                                         <div class="form-group d-flex justify-content-center">
                                             <a class="small" href="#"></a>
-                                            <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary btn-block" Width="400px" Font-Bold="true" />
+                                            <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary btn-block" Width="400px" Font-Bold="true" OnClick="btnLogin_Click" />
                                         </div>
 
                                     </div>

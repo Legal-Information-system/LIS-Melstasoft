@@ -20,8 +20,8 @@ namespace LegalSystemWeb
             if (!IsPostBack)
             {
                 BindCompanyList();
-                BindDataSource();
             }
+            BindDataSource();
         }
 
         private void BindDataSource()
@@ -53,6 +53,8 @@ namespace LegalSystemWeb
                 int rowIndex = (int)ViewState["updatedRowIndex"];
                 CompanyUnit companyUnit = new CompanyUnit();
                 companyUnit.CompanyUnitName = txtCompanyUnitName.Text;
+                companyUnit.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                companyUnit.CompanyUnitId = rowIndex;
 
 
 
@@ -66,6 +68,7 @@ namespace LegalSystemWeb
                 string test = ddlCompany.SelectedValue;
                 companyUnit.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
                 companyUnit.CompanyUnitId = companyUnitController.Save(companyUnit);
+
             }
 
 
@@ -88,7 +91,7 @@ namespace LegalSystemWeb
             txtCompanyUnitName.Text = companyUnitList[rowIndex].CompanyUnitName;
             ddlCompany.SelectedValue = Convert.ToString(companyUnitList[rowIndex].CompanyId);
             btnSave.Text = "Update";
-            ViewState["updatedRowIndex"] = companyUnitList[rowIndex].CompanyId; ;
+            ViewState["updatedRowIndex"] = companyUnitList[rowIndex].CompanyUnitId; ;
         }
 
         private void Clear()

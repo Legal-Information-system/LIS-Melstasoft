@@ -65,11 +65,11 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            String query = "select * from company_unit ";
+            String query = "select * from company_unit WHERE is_active = 1";
 
             if (companyId != null)
             {
-                query = query + " " + " where company_id=" + companyId;
+                query = query + " " + " AND company_id=" + companyId;
             }
 
             dbConnection.cmd.CommandText = query;

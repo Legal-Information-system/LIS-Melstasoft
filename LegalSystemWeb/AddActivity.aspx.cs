@@ -23,7 +23,7 @@ namespace LegalSystemWeb
 
         private void BindDataSource()
         {
-            IActivityController activityController = ControllerFactory.CreateAddActivity();
+            IActivityController activityController = ControllerFactory.CreateActivityController();
             activitiesList = activityController.GetActivityList();
             GridView2.DataSource = activityController.GetActivityList();
             GridView2.DataBind();
@@ -33,7 +33,7 @@ namespace LegalSystemWeb
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
-            IActivityController activityController = ControllerFactory.CreateAddActivity();
+            IActivityController activityController = ControllerFactory.CreateActivityController();
 
             if (btnSave.Text == "Update")
             {
@@ -68,7 +68,7 @@ namespace LegalSystemWeb
         protected void btndelete_Click(object sender, EventArgs e)
         {
 
-            IActivityController activityController = ControllerFactory.CreateAddActivity();
+            IActivityController activityController = ControllerFactory.CreateActivityController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
             Activity activity = new Activity();
