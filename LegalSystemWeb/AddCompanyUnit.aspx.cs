@@ -97,5 +97,16 @@ namespace LegalSystemWeb
             ddlCompany.ClearSelection();
 
         }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            CompanyUnit companyUnit = new CompanyUnit();
+            companyUnit.CompanyUnitId = companyUnitList[rowIndex].CompanyUnitId;
+            companyUnitController.Delete(companyUnit);
+            BindDataSource();
+        }
     }
 }

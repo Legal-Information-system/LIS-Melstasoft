@@ -71,10 +71,10 @@ namespace LegalSystemWeb
             IActivityController activityController = ControllerFactory.CreateAddActivity();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            //Activity activity = new Activity();
-            //activity.ActivityId = caseActionList[rowIndex].ActionId;
+            Activity activity = new Activity();
+            activity.ActivityId = activitiesList[rowIndex].ActivityId;
 
-            //activityController.Delete(caseAction);
+            activityController.Delete(activity);
             BindDataSource();
         }
 

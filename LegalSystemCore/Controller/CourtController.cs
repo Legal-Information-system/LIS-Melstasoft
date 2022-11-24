@@ -12,6 +12,7 @@ namespace LegalSystemCore.Controller
     public interface ICourtController
     {
         int Save(Court court);
+        int Delete(Court court);
         int Update(Court court);
         List<Court> GetCourtList();
 
@@ -48,6 +49,28 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new Common.DbConnection();
                 return courtDAO.Update(court, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int Delete(Court court)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return courtDAO.Delete(court, dbConnection);
             }
             catch (Exception)
             {

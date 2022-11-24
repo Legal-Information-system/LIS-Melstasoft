@@ -39,15 +39,16 @@
                 </div>
             </div>
 
-            <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
+            <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 0px;">
 
-                <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
-                    <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                <div class="table-responsive" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                    <asp:GridView Style="margin-top: 30px; width: 100%" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                         <Columns>
                             <asp:BoundField DataField="CompanyId" HeaderText="Company Id" ItemStyle-CssClass="display: none;">
                                 <ItemStyle CssClass="display: none;"></ItemStyle>
                             </asp:BoundField>
+                            <asp:BoundField DataField="CompanyUnitName" HeaderText="Company Unit Name" />
                             <asp:TemplateField HeaderText="Company Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("company.CompanyName") %>'></asp:TextBox>
@@ -56,7 +57,7 @@
                                     <asp:Label ID="Label1" runat="server" Text='<%# Bind("company.CompanyName") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="CompanyUnitName" HeaderText="Company Unit Name" />
+
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnEdit" runat="server">Edit</asp:LinkButton>
@@ -64,7 +65,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btndelete" runat="server">Delete</asp:LinkButton>
+                                    <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_Click">Delete</asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

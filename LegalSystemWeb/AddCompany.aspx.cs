@@ -1,6 +1,7 @@
 ﻿using LegalSystemCore;
 using LegalSystemCore.Common;
 using LegalSystemCore.Controller;
+using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,17 @@ namespace LegalSystemWeb
             txtCompanyName.Text = string.Empty;
             txtCompanyAddress.Text = string.Empty;
 
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICompanyController companyController = ControllerFactory.CreateCompanyController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            Company company = new Company();
+            company.CompanyId = companyList[rowIndex].CompanyId;
+            companyController.Delete(company);
+            BindDataSource();
         }
     }
 }
