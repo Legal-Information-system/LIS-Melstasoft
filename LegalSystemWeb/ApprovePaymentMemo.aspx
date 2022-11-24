@@ -11,14 +11,6 @@
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Case ID:</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="lblCompany" runat="server" Text="Id"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
                             <p>Company :</p>
                         </div>
                         <div class="col-md-6">
@@ -41,6 +33,12 @@
                             <asp:Label ID="Label1" runat="server" Text="Description"></asp:Label>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card" style="width: 500px; margin-right: auto">
+                <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <p>Nature Of Case :</p>
@@ -68,67 +66,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card" style="width: 500px; margin-right: auto">
-                <div class="card-body" style="padding-left: 30px;">
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Judge Name :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label19" runat="server" Text="Judge Name"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Company Representator :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label20" runat="server" Text="Representive"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Action Taken :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label21" runat="server" Text="Action Taken"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Next Date :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label22" runat="server" Text="Next Date"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Next Action :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label23" runat="server" Text="Next Action"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Total Payable :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label24" runat="server" Text="Total Payable"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p>Remarks :</p>
-                        </div>
-                        <div class="col-md-6">
-                            <asp:Label ID="Label25" runat="server" Text="Remarks"></asp:Label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
+            <asp:GridView Style="margin-top: 30px;" ID="gvPaymentDetails" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                <Columns>
+                    <asp:BoundField DataField="" HeaderText="Judge Name" />
+                    <asp:BoundField DataField="" HeaderText="Company Representer" />
+                    <asp:BoundField DataField="" HeaderText="Action Taken" />
+                    <asp:BoundField DataField="" HeaderText="Next Date" />
+                    <asp:BoundField DataField="" HeaderText="Next Action" />
+                    <asp:BoundField DataField="" HeaderText="Remarks" />
+                </Columns>
+            </asp:GridView>
+        </div>
+        <div class="col-sm-6" style="text-align: center; padding-top: 20px;">
+            <label style="">Please add Remark :</label>
+        </div>
+        <div class="col-sm-6" style="text-align: left">
+            <asp:TextBox ID="txtPStatus" Style="width: 77%; margin-top: 20px;" runat="server"></asp:TextBox>
         </div>
         <div style="text-align: center; margin-top: 30px;">
             <asp:Button ID="Button1" runat="server" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
