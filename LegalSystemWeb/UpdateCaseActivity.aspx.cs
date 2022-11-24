@@ -17,7 +17,8 @@ namespace LegalSystemWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDataSource();
+            if (!IsPostBack)
+                BindDataSource();
         }
 
         private void BindDataSource()

@@ -14,6 +14,7 @@ namespace LegalSystemCore.Controller
         int Save(CourtLocation courtlocation);
         int Update(CourtLocation courtlocation, int courtId, int locationId);
         List<CourtLocation> GetCourtLocationList();
+        List<CourtLocation> GetCourtLocationListFilter(int withCourtId);
     }
 
     public class CourtLocationControllerImpl : ICourtLocationController
@@ -59,6 +60,40 @@ namespace LegalSystemCore.Controller
                 }
             }
             return listcourtlocation;
+        }
+
+        public List<CourtLocation> GetCourtLocationListFilter(int withCourtId)
+        {
+            DbConnection dbConnection = null;
+            List<CourtLocation> listCourtLocation = new List<CourtLocation>();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                listCourtLocation = courtlocationDAO.GetCourtLocationListFilter(withCourtId, dbConnection);
+
+
+                ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
+                List<Location> listLocatioin = locationDAO.GetLocationList(dbConnection);
+
+                foreach (var courtLocation in listCourtLocation)
+                {
+                    courtLocation.location = listLocatioin.Where(x => x.LocationId == courtLocation.LocationId).Single();
+                }
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCourtLocation;
         }
 
         public int Save(CourtLocation courtlocation)

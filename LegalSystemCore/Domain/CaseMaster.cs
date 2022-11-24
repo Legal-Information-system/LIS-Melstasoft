@@ -24,7 +24,7 @@ namespace LegalSystemCore.Domain
         public string CaseDescription { get; set; }
 
         [DBField("claim_amount")]
-        public float ClaimAmount { get; set; }
+        public decimal ClaimAmount { get; set; }
 
         [DBField("is_plaintif")]
         public int IsPlentif { get; set; }

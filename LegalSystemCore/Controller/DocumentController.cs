@@ -9,28 +9,27 @@ using System.Threading.Tasks;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICaseMasterController
+    public interface IDocumentController
     {
-        int Save(CaseMaster caseMaster);
-        int Update(CaseMaster caseMaster);
-        int Delete(CaseMaster caseMaster);
-        List<CaseMaster> GetCaseMasterList();
-        CaseMaster GetCaseMaster(string caseNumber);
+        int Save(Document document);
+        int Update(Document document);
+        int Delete(Document document);
+        List<Document> GetDocumentList();
+        Document GetDocument(int documentId);
     }
 
-    public class CaseMasterControllerImpl : ICaseMasterController
+    public class DocumentControllerImpl : IDocumentController
     {
+        IDocumentDAO documentDAO = DAOFactory.CreateDocumentDAO();
 
-        ICaseMasterDAO caseMasterDAO = DAOFactory.CreateCaseMasterDAO();
-
-        public CaseMaster GetCaseMaster(string caseNumber)
+        public Document GetDocument(int documentId)
         {
             DbConnection dbConnection = null;
-            CaseMaster caseMaster = new CaseMaster();
+            Document document = new Document();
             try
             {
                 dbConnection = new DbConnection();
-                caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+                document = documentDAO.GetDocument(documentId, dbConnection);
             }
             catch (Exception)
             {
@@ -44,17 +43,17 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return caseMaster;
+            return document;
         }
 
-        public List<CaseMaster> GetCaseMasterList()
+        public List<Document> GetDocumentList()
         {
             DbConnection dbConnection = null;
-            List<CaseMaster> listCaseMaster = new List<CaseMaster>();
+            List<Document> listDocument = new List<Document>();
             try
             {
                 dbConnection = new DbConnection();
-                listCaseMaster = caseMasterDAO.GetCaseMasterList(dbConnection);
+                listDocument = documentDAO.GetDocumentList(dbConnection);
             }
             catch (Exception)
             {
@@ -68,38 +67,16 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listCaseMaster;
+            return listDocument;
         }
 
-        public int Save(CaseMaster caseMaster)
+        public int Save(Document document)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return caseMasterDAO.Save(caseMaster, dbConnection);
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbConnection.Commit();
-                }
-            }
-        }
-
-        public int Update(CaseMaster caseMaster)
-        {
-            DbConnection dbConnection = null;
-            try
-            {
-                dbConnection = new DbConnection();
-                return caseMasterDAO.Update(caseMaster, dbConnection);
+                return documentDAO.Save(document, dbConnection);
             }
             catch (Exception)
             {
@@ -115,13 +92,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Delete(CaseMaster caseMaster)
+        public int Update(Document document)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return caseMasterDAO.Delete(caseMaster, dbConnection);
+                return documentDAO.Update(document, dbConnection);
             }
             catch (Exception)
             {
@@ -137,5 +114,26 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int Delete(Document document)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentDAO.Delete(document, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
     }
 }
