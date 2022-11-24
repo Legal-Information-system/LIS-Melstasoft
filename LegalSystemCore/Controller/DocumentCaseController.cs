@@ -9,28 +9,27 @@ using System.Threading.Tasks;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICaseMasterController
+    public interface IDocumentCaseController
     {
-        int Save(CaseMaster caseMaster);
-        int Update(CaseMaster caseMaster);
-        int Delete(CaseMaster caseMaster);
-        List<CaseMaster> GetCaseMasterList();
-        CaseMaster GetCaseMaster(string caseNumber);
+        int Save(DocumentCase documentCase);
+        int Update(DocumentCase documentCase);
+        int Delete(DocumentCase documentCase);
+        List<DocumentCase> GetDocumentList();
+        DocumentCase GetDocument(int documentCaseId);
     }
 
-    public class CaseMasterControllerImpl : ICaseMasterController
+    public class DocumentCaseControllerImpl : IDocumentCaseController
     {
+        IDocumentCaseDAO documentCaseDAO = DAOFactory.CreateDocumentCaseDAO();
 
-        ICaseMasterDAO caseMasterDAO = DAOFactory.CreateCaseMasterDAO();
-
-        public CaseMaster GetCaseMaster(string caseNumber)
+        public DocumentCase GetDocument(int documentCaseId)
         {
             DbConnection dbConnection = null;
-            CaseMaster caseMaster = new CaseMaster();
+            DocumentCase documentCase = new DocumentCase();
             try
             {
                 dbConnection = new DbConnection();
-                caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+                documentCase = documentCaseDAO.GetDocumentCase(documentCaseId, dbConnection);
             }
             catch (Exception)
             {
@@ -44,17 +43,17 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return caseMaster;
+            return documentCase;
         }
 
-        public List<CaseMaster> GetCaseMasterList()
+        public List<DocumentCase> GetDocumentList()
         {
             DbConnection dbConnection = null;
-            List<CaseMaster> listCaseMaster = new List<CaseMaster>();
+            List<DocumentCase> listDocumentCase = new List<DocumentCase>();
             try
             {
                 dbConnection = new DbConnection();
-                listCaseMaster = caseMasterDAO.GetCaseMasterList(dbConnection);
+                listDocumentCase = documentCaseDAO.GetDocumentCaseList(dbConnection);
             }
             catch (Exception)
             {
@@ -68,38 +67,16 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listCaseMaster;
+            return listDocumentCase;
         }
 
-        public int Save(CaseMaster caseMaster)
+        public int Save(DocumentCase documentCase)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return caseMasterDAO.Save(caseMaster, dbConnection);
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbConnection.Commit();
-                }
-            }
-        }
-
-        public int Update(CaseMaster caseMaster)
-        {
-            DbConnection dbConnection = null;
-            try
-            {
-                dbConnection = new DbConnection();
-                return caseMasterDAO.Update(caseMaster, dbConnection);
+                return documentCaseDAO.Save(documentCase, dbConnection);
             }
             catch (Exception)
             {
@@ -115,13 +92,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Delete(CaseMaster caseMaster)
+        public int Update(DocumentCase documentCase)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return caseMasterDAO.Delete(caseMaster, dbConnection);
+                return documentCaseDAO.Update(documentCase, dbConnection);
             }
             catch (Exception)
             {
@@ -137,5 +114,26 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int Delete(DocumentCase documentCase)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentCaseDAO.Delete(documentCase, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
     }
 }

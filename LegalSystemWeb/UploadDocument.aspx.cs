@@ -29,6 +29,9 @@ namespace LegalSystemWeb
                 HttpPostedFile uploadFile = uploadFiles[i];
                 if (uploadFile.ContentLength > 0)
                 {
+
+
+
                     uploadFile.SaveAs(Server.MapPath("~/FilesUploaded/") + uploadFile.FileName);
                     lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
                 }

@@ -92,6 +92,24 @@ namespace LegalSystemCore.Common
             return (ICaseNatureController)caseNatureController;
         }
 
+        public static ICaseMasterController CreateCaseMasterController()
+        {
+            ICaseMasterController caseMasterController = new CaseMasterControllerImpl();
+            return (ICaseMasterController)caseMasterController;
+        }
+
+        public static IDocumentController CreateDocumentController()
+        {
+            IDocumentController documentController = new DocumentControllerImpl();
+            return (IDocumentController)documentController;
+        }
+
+        public static IDocumentCaseController CreateDocumentCaseController()
+        {
+            IDocumentCaseController documentCaseController = new DocumentCaseControllerImpl();
+            return (IDocumentCaseController)documentCaseController;
+        }
+
         public static IPaymentController CreatePaymentController()
         {
             IPaymentController paymentController = new PaymentControllerImpl();
@@ -104,10 +122,5 @@ namespace LegalSystemCore.Common
             return (IPaymentActivityController)paymentActivityController;
         }
 
-        public static ICaseMasterController CreateCaseMasterController()
-        {
-            ICaseMasterController caseMasterController = new CaseMasterControllerImpl();
-            return (ICaseMasterController)caseMasterController;
-        }
     }
 }

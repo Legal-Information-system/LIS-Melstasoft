@@ -20,12 +20,12 @@ namespace LegalSystemWeb
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();  
+            IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1"); ;
             userLogin = userLoginController.GetUserLogin(userLogin);
-            if(userLogin.UserId == 0)
+            if (userLogin.UserId == 0)
             {
                 txtPassword.Text = string.Empty;
             }
@@ -33,6 +33,7 @@ namespace LegalSystemWeb
             {
                 Session["User_Id"] = userLogin.UserId;
                 Session["User_Role_Id"] = userLogin.UserRoleId;
+                Session["User_Name"] = userLogin.UserName;
                 Response.Redirect("Dashboard.aspx");
             }
         }

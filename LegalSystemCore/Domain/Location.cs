@@ -12,7 +12,7 @@ namespace LegalSystemCore.Domain
         public int LocationId { get; set; }
 
         [DBField("locationc_name")]
-        public string location { get; set; }
+        public string locationName { get; set; }
 
     }
 }

@@ -4,7 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container" id="mainContainer">
@@ -26,8 +25,10 @@
                             <div class="col my-3 py-1" style="display: flex; flex-direction: column">
 
                                 <asp:Literal ID="Literal5" runat="server" Text="Password"></asp:Literal>
-                                <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtPassword"></asp:TextBox>
+                                <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtPassword" TextMode="Password"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPassword" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                                <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="RegularExpressionValidator" ControlToValidate="txtPassword"></asp:RegularExpressionValidator>--%><asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
                             </div>
                             <div class="col my-3 py-1" style="display: flex; flex-direction: column">
                                 <asp:Literal ID="Literal2" runat="server" Text="User Type"></asp:Literal>
