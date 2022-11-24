@@ -103,14 +103,15 @@
                                     <a class="nav-link" href="AddCompany.aspx">Add Company</a>
                                     <a class="nav-link" href="AddCompanyUnit.aspx">Add Company Unit</a>
                                     <a class="nav-link" href="AddLawyer.aspx">Add Lawyer</a>
-                                    <a class="nav-link" href="AddUserRole.aspx">Add User Role</a>
+                                    <%--<a class="nav-link" href="AddUserRole.aspx">Add User Role</a>--%>
                                     <a class="nav-link" href="AddCourt.aspx">Add Court</a>
+                                    <a class="nav-link" href="AddLocation.aspx">Add Location</a>
+                                    <a class="nav-link" href="AddCourtLocation.aspx">Add Court Location</a>
                                     <a class="nav-link" href="AddCaseNature.aspx">Add Case Nature</a>
                                     <a class="nav-link" href="AddAction.aspx">Add Action</a>
                                     <a class="nav-link" href="AddActivity.aspx">Add Activity</a>
                                     <a class="nav-link" href="AddJudgementType.aspx">Add Judgement Type</a>
-                                    <a class="nav-link" href="AddCaseStatus.aspx">Add Case Status</a>
-                                    <a class="nav-link" href="AddPaymentStatus.aspx">Add Payment Status</a>
+
                                 </nav>
                             </div>
 

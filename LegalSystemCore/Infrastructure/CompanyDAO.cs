@@ -14,7 +14,7 @@ namespace LegalSystemCore.Infrastructure
 
         int Delete(Company company, DbConnection dbConnection);
         int Update(Company company, DbConnection dbConnection);
-
+        Company GetCompany(int id, DbConnection dbConnection);
         List<Company> GetCompanyList(DbConnection dbConnection);
     }
 
@@ -60,6 +60,21 @@ namespace LegalSystemCore.Infrastructure
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
+        }
+
+        public Company GetCompany(int id, DbConnection dbConnection)
+        {
+            Company company = new Company();
+
+            dbConnection.cmd.CommandText = "select * from company WHERE company_id = @CompanyId AND is_active = 1";
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyId", id);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            company = dataAccessObject.GetSingleOject<Company>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return company;
         }
 
         public List<Company> GetCompanyList(DbConnection dbConnection)

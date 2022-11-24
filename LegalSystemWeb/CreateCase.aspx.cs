@@ -124,8 +124,8 @@ namespace LegalSystemWeb
         {
 
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-
             lawyerList = lawyerController.GetLawyerList();
+
             ddlAttorney.DataSource = lawyerList;
             ddlAttorney.DataValueField = "LawyerId";
             ddlAttorney.DataTextField = "LawyerName";
@@ -133,7 +133,7 @@ namespace LegalSystemWeb
             ddlAttorney.Items.Insert(0, new ListItem("-- select Attorney --", ""));
 
 
-            ddlCounselor.DataSource = lawyerController.GetLawyerList();
+            ddlCounselor.DataSource = lawyerList;
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
@@ -164,11 +164,13 @@ namespace LegalSystemWeb
             if (ddlCounselor.SelectedValue != "")
                 caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
 
-            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]); ;
+            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
             caseMaster.CreatedDate = DateTime.Now;
             caseMaster.CaseStatusId = 1;
 
             caseMasterController.Save(caseMaster);
+
+            UploadFiles();
 
             Clear();
         }
@@ -177,6 +179,38 @@ namespace LegalSystemWeb
         protected void btnDocUpload_Click1(object sender, EventArgs e)
         {
             Response.Redirect("UploadDocument.aspx");
+        }
+
+
+        private void UploadFiles()
+        {
+            IDocumentController documentController = ControllerFactory.CreateDocumentController();
+            IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
+
+            Document document = new Document();
+            DocumentCase documentCase = new DocumentCase();
+
+            if (Uploader.HasFile)
+            {
+                HttpFileCollection uploadFiles = Request.Files;
+                for (int i = 0; i < uploadFiles.Count; i++)
+                {
+                    HttpPostedFile uploadFile = uploadFiles[i];
+                    if (uploadFile.ContentLength > 0)
+                    {
+                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+
+                        document.DocumentType = "case";
+                        documentCase.DocumentId = documentController.Save(document);
+
+                        documentCase.DocumentName = uploadFile.FileName;
+                        documentCase.CaseNumber = txtCaseNumber.Text;
+                        documentCase.DocumentDescription = "";
+                        documentCaseController.Save(documentCase);
+                    }
+                }
+            }
         }
 
         protected void ddlCourt_SelectedIndexChanged(object sender, EventArgs e)
@@ -197,6 +231,21 @@ namespace LegalSystemWeb
             txtClaimAmount.Text = string.Empty;
             txtOtherside.Text = string.Empty;
             txtPreCaseNumber.Text = string.Empty;
+            ddlCompany.SelectedIndex = 0;
+            ddlNatureOfCase.SelectedIndex = 0;
+            ddlCourt.SelectedIndex = 0;
+            ddlAttorney.SelectedIndex = 0;
+            ddlCounselor.SelectedIndex = 0;
+            ddlCompanyUnit.Items.Clear();
+            ddlLocation.Items.Clear();
+            //rbIsPlantiff.SelectedItem.Clear();
         }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+
     }
 }

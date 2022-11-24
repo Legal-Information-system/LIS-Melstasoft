@@ -35,7 +35,7 @@
 
             <div class="row mb-3">
                 <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
-                    <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" />
+                    <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="vg1" />
                 </div>
             </div>
 

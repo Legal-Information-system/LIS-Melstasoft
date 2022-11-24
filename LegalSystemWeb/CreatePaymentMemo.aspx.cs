@@ -54,7 +54,7 @@ namespace LegalSystemWeb
         private void BindCaseList()
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-            ddlCaseNo.DataSource = caseMasterController.GetCaseMasterList();
+            ddlCaseNo.DataSource = caseMasterController.GetCaseMasterList(true);
             ddlCaseNo.DataValueField = "CaseNumber";
             ddlCaseNo.DataTextField = "CaseNumber";
             ddlCaseNo.DataBind();

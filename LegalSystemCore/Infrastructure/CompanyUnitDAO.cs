@@ -12,6 +12,7 @@ namespace LegalSystemCore.Infrastructure
         int Save(CompanyUnit companyUnit, DbConnection dbConnection);
         int Delete(CompanyUnit companyUnit, DbConnection dbConnection);
         int Update(CompanyUnit companyUnit, DbConnection dbConnection);
+        CompanyUnit GetCompanyUnit(int id, DbConnection dbConnection);
         List<CompanyUnit> GetCompanyUnitList(DbConnection dbConnection, string CompanyId = null);
     }
 
@@ -59,6 +60,21 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
+        public CompanyUnit GetCompanyUnit(int id, DbConnection dbConnection)
+        {
+            CompanyUnit companyUnit = new CompanyUnit();
+
+            dbConnection.cmd.CommandText = "select * from company_unit WHERE company_unit_id = @CompanyUnitId AND is_active = 1";
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", id);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            companyUnit = dataAccessObject.GetSingleOject<CompanyUnit>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return companyUnit;
+        }
+
         public List<CompanyUnit> GetCompanyUnitList(DbConnection dbConnection, string companyId = null)
         {
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
@@ -88,7 +104,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE activity_id = @CompanyUnitId ";
+            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE company_unit_id = @CompanyUnitId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", companyUnit.CompanyUnitId);
 
