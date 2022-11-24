@@ -5,15 +5,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-            <div class="card o-hidden border-0 shadow-lg my-3">
-                <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
-                    <h5 class="text-light text-center bg-dark ">Update Case Activity</h5>
-                </div>
-                <div class="card-body">
 
-                    <form class="user">
+    <div class="card o-hidden border-0 shadow-lg my-3">
+        <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
+            <h5 class="text-light text-center bg-dark ">Update Case Activity</h5>
+        </div>
+        <div class="card-body">
+
+            <form class="user">
+
+
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                    <ContentTemplate>
 
                         <div class="row mb-3 ms-1">
                             <div class="col-sm-6">
@@ -22,8 +25,8 @@
                                         <asp:Literal ID="Literal16" runat="server" Text="Case Number"></asp:Literal>
                                     </div>
                                     <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server"
+                                        <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" AutoPostBack="true" OnSelectedIndexChanged="BindCaseDeatils"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="1"
                                             ControlToValidate="ddlCase" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
@@ -40,7 +43,7 @@
                                                 <p>Company</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblCompany" runat="server" Text="Company Name"></asp:Label>
+                                                <asp:Label ID="lblCompany" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -48,7 +51,7 @@
                                                 <p>Case Description</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblDescription" runat="server" Text="Case Description"></asp:Label>
+                                                <asp:Label ID="lblDescription" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -56,7 +59,7 @@
                                                 <p>Plaintiff</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblPlaintiff" runat="server" Text="Plaintiff Name"></asp:Label>
+                                                <asp:Label ID="lblPlaintiff" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +73,7 @@
                                                 <p>Company Unit</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblCompanyUnit" runat="server" Text="Company Unit Name"></asp:Label>
+                                                <asp:Label ID="lblCompanyUnit" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -78,7 +81,7 @@
                                                 <p>Nature of Case</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblNature" runat="server" Text="Nature of the Case"></asp:Label>
+                                                <asp:Label ID="lblNature" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -86,7 +89,7 @@
                                                 <p>Difendant</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <asp:Label ID="lblDefendant" runat="server" Text="Difendant Name"></asp:Label>
+                                                <asp:Label ID="lblDefendant" runat="server" Text="N/A"></asp:Label>
                                             </div>
                                         </div>
                                     </div>
@@ -94,96 +97,103 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3 ms-1">
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal17" runat="server" Text="Date"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-user" TextMode="Date"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
-                                            ControlToValidate="txtDate" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
 
-                        <div class="row mb-3 ms-1">
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
                             <div class="col-sm-6">
-                                <asp:Literal ID="Literal2" runat="server" Text="Appeared Lawyer(Company Side)"></asp:Literal>
+                                <asp:Literal ID="Literal17" runat="server" Text="Date"></asp:Literal>
                             </div>
-                            <div class="col-sm-6">
-                                <asp:Literal ID="Literal4" runat="server" Text="Appeared Lawyer(Other Side)"></asp:Literal>
+                            <div class="col-md-6">
+                                <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-user" TextMode="Date"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ValidationGroup="1"
+                                    ControlToValidate="txtDate" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row mb-3 ms-1">
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal1" runat="server" Text="Assigning Attorney"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlAssignAttorney" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                                            ControlToValidate="ddlAssignAttorney" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
-                                <div class="row mb-5">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal6" runat="server" Text="Counselor"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlCounselor" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
-                                            ControlToValidate="ddlCounselor" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal3" runat="server" Text="Name"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:TextBox ID="txtOtherLawyer" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
-                                            ControlToValidate="txtOtherLawyer" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <asp:Literal ID="Literal2" runat="server" Text="Appeared Lawyer(Company Side)"></asp:Literal>
+                    </div>
+                    <div class="col-sm-6">
+                        <asp:Literal ID="Literal4" runat="server" Text="Appeared Lawyer(Other Side)"></asp:Literal>
+                    </div>
+                </div>
 
-                        <div class="row mb-3 ms-1">
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
                             <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal5" runat="server" Text="Judge Name"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:TextBox ID="txtJudgeName" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
-                                            ControlToValidate="txtJudgeName" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
+                                <asp:Literal ID="Literal1" runat="server" Text="Assigning Attorney"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:DropDownList ID="ddlAssignAttorney" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="1"
+                                    ControlToValidate="ddlAssignAttorney" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
                         </div>
+                        <div class="row mb-5">
+                            <div class="col-sm-6">
+                                <asp:Literal ID="Literal6" runat="server" Text="Counselor"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:DropDownList ID="ddlCounselor" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="1"
+                                    ControlToValidate="ddlCounselor" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <asp:Literal ID="Literal3" runat="server" Text="Name"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:TextBox ID="txtOtherLawyer" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="1"
+                                    ControlToValidate="txtOtherLawyer" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="row mb-3 ms-1">
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <div class="row">
                             <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal7" runat="server" Text="Company Representer"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:TextBox ID="txtCompanyRepresenter" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"
-                                            ControlToValidate="txtCompanyRepresenter" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
+                                <asp:Literal ID="Literal5" runat="server" Text="Judge Name"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:TextBox ID="txtJudgeName" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="1"
+                                    ControlToValidate="txtJudgeName" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <asp:Literal ID="Literal7" runat="server" Text="Company Representer"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:TextBox ID="txtCompanyRepresenter" runat="server" CssClass="form-control form-control-user"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="1"
+                                    ControlToValidate="txtCompanyRepresenter" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
 
                         <div class="row mb-3 ms-1">
                             <div class="col-sm-6">
@@ -193,7 +203,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <asp:DropDownList ID="ddlActionTaken" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="1"
                                             ControlToValidate="ddlActionTaken" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
@@ -221,7 +231,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <asp:DropDownList ID="ddlNextAction" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="1"
                                             ControlToValidate="ddlNextAction" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
@@ -230,13 +240,14 @@
 
                         <div class="row mb-3 ms-1">
                             <div class="col-sm-3">
-                                <asp:Literal ID="Literal12" runat="server" Text="Remarks"></asp:Literal>
+                                <asp:Literal ID="Literal12" runat="server" Text="Action Remarks"></asp:Literal>
                             </div>
                             <div class="col-md-9">
                                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control form-control-user" TextMode="MultiLine"></asp:TextBox>
                             </div>
                         </div>
-                        <%if (ddlActionTaken.SelectedItem.Text == "Action One" && ddlNextAction.SelectedItem.Text == "Action One")
+
+                        <%if (ddlActionTaken.SelectedItem.Text == "Judgement" && ddlNextAction.SelectedItem.Text == "Case Close")
                             {  %>
 
                         <div id="case-close">
@@ -245,11 +256,9 @@
                                     <asp:Literal ID="Literal15" runat="server" Text="Judgement"></asp:Literal>
                                 </div>
                                 <div class="col-md-9">
-                                    <asp:RadioButtonList ID="rbIsPlantiff" runat="server" RepeatDirection="Vertical" CssClass="margin-left:10px">
-                                        <asp:ListItem Value="P" CssClass="form-check-input">Flavour of the Company</asp:ListItem>
-                                        <asp:ListItem Value="P" CssClass="form-check-input">Flavour of the Other Party</asp:ListItem>
-                                        <asp:ListItem Value="D" CssClass="form-check-input">Other</asp:ListItem>
-                                    </asp:RadioButtonList>
+                                    <asp:DropDownList ID="ddlJudgement" runat="server" CssClass="btn btn-outline-dark dropdown-toggle">
+                                    </asp:DropDownList>
+
                                 </div>
                             </div>
 
@@ -264,19 +273,27 @@
 
                             <div class="row mb-3 ms-1">
                                 <div class="col-sm-3">
-                                    <asp:Button ID="btnUpdateActivity" runat="server" Text="Update Case" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
-                                    <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" />
+                                    <asp:Literal ID="Literal13" runat="server" Text="Case Close Remarks"></asp:Literal>
+                                </div>
+                                <div class="col-md-9">
+                                    <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control form-control-user" TextMode="MultiLine"></asp:TextBox>
                                 </div>
                             </div>
-
                         </div>
-
                         <%} %>
-                    </form>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-3">
+                        <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnReset_Click" />
+                        <asp:Button ID="btnUpdateActivity" runat="server" Text="Update Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnUpdateActivity_Click" />
+                    </div>
                 </div>
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+            </form>
+        </div>
+    </div>
+
 
 
 </asp:Content>

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LegalSystemCore.Infrastructure
 {
-    public interface IUpdateCaseDAO
+    public interface ICaseActivityDAO
     {
         int Save(CaseActivity caseActivity, DbConnection dbConnection);
         int Update(CaseActivity caseActivity, DbConnection dbConnection);
@@ -16,24 +16,24 @@ namespace LegalSystemCore.Infrastructure
 
     }
 
-    public class UpdateCaseDAOSqlImpl : IUpdateCaseDAO
+    public class CaseActivityDAOSqlImpl : ICaseActivityDAO
     {
-        public CaseActivity GetActivityCase(string caseActivitys, DbConnection dbConnection)
-        {
-            CaseActivity caseActivity = new CaseActivity();
+        //public CaseActivity GetActivityCase(string caseActivitys, DbConnection dbConnection)
+        //{
+        //    CaseActivity caseActivity = new CaseActivity();
 
-            dbConnection = new DbConnection();
+        //    dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from case_activity WHERE case_number =" + caseActivitys + "AND is_active = 1";
+        //    dbConnection.cmd.CommandText = "select * from case_activity WHERE case_number =" + caseActivitys + "AND is_active = 1";
 
-            dbConnection.dr = dbConnection.cmd.ExecuteReader();
-            DataAccessObject dataAccessObject = new DataAccessObject();
-            caseActivity = dataAccessObject.GetSingleOject<CaseActivity>(dbConnection.dr);
-            dbConnection.dr.Close();
+        //    dbConnection.dr = dbConnection.cmd.ExecuteReader();
+        //    DataAccessObject dataAccessObject = new DataAccessObject();
+        //    caseActivity = dataAccessObject.GetSingleOject<CaseActivity>(dbConnection.dr);
+        //    dbConnection.dr.Close();
 
 
-            return caseActivity;
-        }
+        //    return caseActivity;
+        //}
 
         public int Save(CaseActivity caseActivity, DbConnection dbConnection)
         {
@@ -41,8 +41,9 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, company_rep, action_taken_id, next_date, remarks, " +
-                "next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId,@OtherSideLawyer,@JudgeName,@CompanyRep,@ActionTakenId,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId)";
+            dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, company_rep, " +
+                "action_taken_id, next_date, remarks, next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId,@OtherSideLawyer," +
+                "@JudgeName,@CompanyRep,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId)";
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseActivity.CaseNumber);
             dbConnection.cmd.Parameters.AddWithValue("@ActivityDate", caseActivity.ActivityDate);
@@ -67,7 +68,19 @@ namespace LegalSystemCore.Infrastructure
         }
         public List<CaseActivity> GetCaseActivityList(DbConnection dbConnection)
         {
-            throw new NotImplementedException();
+            List<CaseActivity> caseActivityList = new List<CaseActivity>();
+
+            dbConnection = new DbConnection();
+
+            dbConnection.cmd.CommandText = "select * from case_activity is_active = 1";
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            caseActivityList = dataAccessObject.ReadCollection<CaseActivity>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+
+            return caseActivityList;
         }
         public int Update(CaseActivity caseActivity, DbConnection dbConnection)
         {

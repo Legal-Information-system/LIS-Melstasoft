@@ -13,6 +13,8 @@ namespace LegalSystemCore.Infrastructure
 
         int Delete(CaseNature caseNature, DbConnection dbConnection);
         int Update(CaseNature caseNature, DbConnection dbConnection);
+        CaseNature GetCaseNature(int id, DbConnection dbConnection);
+
         List<CaseNature> GetCaseNatureList(DbConnection dbConnection);
     }
 
@@ -29,14 +31,8 @@ namespace LegalSystemCore.Infrastructure
                                            "values (@CaseNatureName) SELECT SCOPE_IDENTITY() ";
 
 
-
             dbConnection.cmd.Parameters.AddWithValue("@CaseNatureName", caseNature.CaseNatureName);
-
-
-
-
             output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
-
 
             return output;
         }
@@ -53,6 +49,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.dr.Close();
 
             return GetCaseNatureList;
+        }
+
+        public CaseNature GetCaseNature(int id, DbConnection dbConnection)
+        {
+            CaseNature caseNature = new CaseNature();
+            dbConnection.cmd.CommandText = "select * from case_nature WHERE case_nature_id = @CaseNatureId AND is_active = 1";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNatureId", id);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            caseNature = dataAccessObject.GetSingleOject<CaseNature>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return caseNature;
         }
 
         public int Update(CaseNature caseNature, DbConnection dbConnection)
