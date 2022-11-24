@@ -2,6 +2,7 @@
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace LegalSystemCore.Infrastructure
 {
     public interface ICaseActivityDAO
     {
-        int Save(CaseActivity caseActivity, DbConnection dbConnection);
+        int Save(CaseActivity caseActivity, bool withNextDate, DbConnection dbConnection);
         int Update(CaseActivity caseActivity, DbConnection dbConnection);
         int Delete(CaseActivity caseActivityte, DbConnection dbConnection);
         List<CaseActivity> GetCaseActivityList(DbConnection dbConnection);
@@ -35,15 +36,27 @@ namespace LegalSystemCore.Infrastructure
         //    return caseActivity;
         //}
 
-        public int Save(CaseActivity caseActivity, DbConnection dbConnection)
+        public int Save(CaseActivity caseActivity, bool withNextDate, DbConnection dbConnection)
         {
             int output = 0;
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, company_rep, " +
-                "action_taken_id, next_date, remarks, next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId,@OtherSideLawyer," +
-                "@JudgeName,@CompanyRep,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId)";
+
+            if (!withNextDate)
+            {
+                dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, " +
+                   "company_rep, action_taken_id, remarks, next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId," +
+                   "@OtherSideLawyer,@JudgeName,@CompanyRep,@ActionTakenId,@Remarks,@NextActionId,@CreateUserId)";
+            }
+            else
+            {
+                dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, " +
+                    "company_rep, action_taken_id, next_date, remarks, next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId," +
+                    "@OtherSideLawyer,@JudgeName,@CompanyRep,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId)";
+            }
+
+
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseActivity.CaseNumber);
             dbConnection.cmd.Parameters.AddWithValue("@ActivityDate", caseActivity.ActivityDate);
@@ -53,10 +66,15 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@JudgeName", caseActivity.JudgeName);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyRep", caseActivity.CompanyRep);
             dbConnection.cmd.Parameters.AddWithValue("@ActionTakenId", caseActivity.ActionTakenId);
-            dbConnection.cmd.Parameters.AddWithValue("@NextDate", caseActivity.NextDate);
             dbConnection.cmd.Parameters.AddWithValue("@Remarks", caseActivity.Remarks);
             dbConnection.cmd.Parameters.AddWithValue("@NextActionId", caseActivity.NextActionId);
             dbConnection.cmd.Parameters.AddWithValue("@CreateUserId", caseActivity.CreateUserId);
+
+            if (withNextDate)
+                dbConnection.cmd.Parameters.AddWithValue("@NextDate", caseActivity.NextDate);
+            else
+                dbConnection.cmd.Parameters.AddWithValue("@NextDate", DateTime.Now);
+
 
             output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
 

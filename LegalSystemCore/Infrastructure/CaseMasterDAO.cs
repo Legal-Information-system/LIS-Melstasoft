@@ -11,8 +11,9 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(CaseMaster caseMaster, DbConnection dbConnection);
         int Update(CaseMaster caseMaster, DbConnection dbConnection);
+        int CaseClose(CaseMaster caseMaster, DbConnection dbConnection);
         int Delete(CaseMaster caseMaster, DbConnection dbConnection);
-        List<CaseMaster> GetCaseMasterList(DbConnection dbConnection);
+        List<CaseMaster> GetCaseMasterList(bool withclosed, DbConnection dbConnection);
         CaseMaster GetCaseMaster(string caseNumber, DbConnection dbConnection);
     }
 
@@ -35,12 +36,15 @@ namespace LegalSystemCore.Infrastructure
             return caseMaster;
         }
 
-        public List<CaseMaster> GetCaseMasterList(DbConnection dbConnection)
+        public List<CaseMaster> GetCaseMasterList(bool withclosed, DbConnection dbConnection)
         {
             List<CaseMaster> listCaseMaster = new List<CaseMaster>();
 
             dbConnection = new DbConnection();
-            dbConnection.cmd.CommandText = "select * from case_master WHERE is_active = 1";
+            if (withclosed)
+                dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 1 AND is_active = 1";
+            else
+                dbConnection.cmd.CommandText = "select * from case_master WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -115,6 +119,29 @@ namespace LegalSystemCore.Infrastructure
             //dbConnection.cmd.Parameters.AddWithValue("@ClosedUserId", caseMaster.ClosedUserId);
 
             output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+
+            return output;
+        }
+
+        public int CaseClose(CaseMaster caseMaster, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update case_master SET case_status_id = @CaseStatusId, judgement_type = @JudgementTypeId, case_outcome = @CaseOutcome, " +
+                "closed_remarks = @ClosedRemarks, closed_date = @ClosedDate, close_by_user = @ClosedUserId WHERE case_number = @CaseNumber ";
+
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseStatusId", caseMaster.CaseStatusId);
+            dbConnection.cmd.Parameters.AddWithValue("@JudgementTypeId", caseMaster.JudgementTypeId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseOutcome", caseMaster.CaseOutcome);
+            dbConnection.cmd.Parameters.AddWithValue("@ClosedRemarks", caseMaster.ClosedRemarks);
+            dbConnection.cmd.Parameters.AddWithValue("@ClosedDate", caseMaster.ClosedDate);
+            dbConnection.cmd.Parameters.AddWithValue("@ClosedUserId", caseMaster.ClosedUserId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseMaster.CaseNumber);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
         }

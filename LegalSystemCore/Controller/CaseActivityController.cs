@@ -10,7 +10,7 @@ namespace LegalSystemCore.Controller
 {
     public interface ICaseActivityController
     {
-        int Save(CaseActivity caseActivity);
+        int Save(CaseActivity caseActivity, bool withNextDate);
         int Update(CaseActivity caseActivity);
         List<CaseActivity> GetUpdateCaseList();
     }
@@ -42,13 +42,13 @@ namespace LegalSystemCore.Controller
             return listCaseActivity;
         }
 
-        public int Save(CaseActivity caseActivity)
+        public int Save(CaseActivity caseActivity, bool withNextDate)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return caseActivityDAO.Save(caseActivity, dbConnection);
+                return caseActivityDAO.Save(caseActivity, withNextDate, dbConnection);
             }
             catch (Exception)
             {

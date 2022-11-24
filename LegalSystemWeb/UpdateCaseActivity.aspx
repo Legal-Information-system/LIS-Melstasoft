@@ -276,7 +276,7 @@
                                     <asp:Literal ID="Literal13" runat="server" Text="Case Close Remarks"></asp:Literal>
                                 </div>
                                 <div class="col-md-9">
-                                    <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control form-control-user" TextMode="MultiLine"></asp:TextBox>
+                                    <asp:TextBox ID="txtCaseCloseRemarks" runat="server" CssClass="form-control form-control-user" TextMode="MultiLine"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

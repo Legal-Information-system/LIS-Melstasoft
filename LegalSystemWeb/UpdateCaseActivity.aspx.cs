@@ -42,7 +42,7 @@ namespace LegalSystemWeb
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
 
-            ddlCase.DataSource = caseMasterController.GetCaseMasterList();
+            ddlCase.DataSource = caseMasterController.GetCaseMasterList(true);
             ddlCase.DataValueField = "CaseNumber";
             ddlCase.DataTextField = "CaseNumber";
             ddlCase.DataBind();
@@ -165,6 +165,8 @@ namespace LegalSystemWeb
 
             CultureInfo provider = new CultureInfo("en-US");
 
+            bool nextdate = false;
+
             caseActivity.CaseNumber = ddlCase.SelectedValue;
             caseActivity.CreateUserId = Convert.ToInt32(Session["User_Id"]);
             caseActivity.ActivityDate = DateTime.Parse(txtDate.Text, provider, DateTimeStyles.AdjustToUniversal);
@@ -175,15 +177,31 @@ namespace LegalSystemWeb
             caseActivity.CompanyRep = txtCompanyRepresenter.Text;
             caseActivity.ActionTakenId = Convert.ToInt32(ddlActionTaken.SelectedValue);
             caseActivity.NextActionId = Convert.ToInt32(ddlNextAction.SelectedValue);
-            caseActivity.NextDate = DateTime.Parse(txtNextDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+            if (txtNextDate.Text != "")
+            {
+                caseActivity.NextDate = DateTime.Parse(txtNextDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                nextdate = true;
+            }
             caseActivity.Remarks = txtRemarks.Text;
 
-            caseActivityController.Save(caseActivity);
+            caseActivityController.Save(caseActivity, nextdate);
 
-            if(ddlJudgement.SelectedValue != "")
+            if (ddlJudgement.SelectedValue != "")
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+                CaseMaster caseMaster = new CaseMaster();
 
+                caseMaster.CaseStatusId = 2;
+                caseMaster.JudgementTypeId = Convert.ToInt32(ddlJudgement.SelectedValue);
+                caseMaster.CaseOutcome = txtOutcome.Text;
+                caseMaster.ClosedRemarks = txtCaseCloseRemarks.Text;
+                caseMaster.ClosedDate = DateTime.Now;
+                caseMaster.ClosedUserId = Convert.ToInt32(Session["User_Id"]);
+                caseMaster.CaseNumber = ddlCase.SelectedValue;
+
+                caseMasterController.CaseClose(caseMaster);
+
+                BindCaseList();
             }
 
             Clear();
@@ -204,7 +222,7 @@ namespace LegalSystemWeb
             ddlCounselor.SelectedIndex = 0;
             ddlActionTaken.SelectedIndex = 0;
             ddlNextAction.SelectedIndex = 0;
-            ddlJudgement.Items.Clear();
+            ddlJudgement.SelectedIndex = 0;
 
             lblCompany.Text = "N/A";
             lblCompanyUnit.Text = "N/A";
