@@ -20,9 +20,16 @@ namespace LegalSystemWeb
         {
             if (!IsPostBack)
             {
-                BindActivityList();
-                BindLawyerList();
-                BindCaseList();
+                if (Session["User_Id"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    BindActivityList();
+                    BindLawyerList();
+                    BindCaseList();
+                }
             }
         }
 
@@ -50,31 +57,10 @@ namespace LegalSystemWeb
             ddlCaseNo.DataSource = caseMasterController.GetCaseMasterList();
             ddlCaseNo.DataValueField = "CaseNumber";
             ddlCaseNo.DataTextField = "CaseNumber";
+            ddlCaseNo.DataBind();
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            IPaymentController paymentController = ControllerFactory.CreatePaymentController();
-            IPaymentActivityController paymentActivityController = ControllerFactory.CreatePaymentActivityController();
 
-            Payment payment = new Payment();
-
-            PaymentActivity paymentActivity = new PaymentActivity();
-
-            payment.CaseNumber = ddlCaseNo.SelectedValue;
-            payment.LawyerId = Convert.ToInt32(ddlLawyerName.SelectedValue);
-            payment.Amount = Convert.ToInt32(txtTotalPayableAmount);
-            payment.PaymentId = paymentController.Save(payment);
-            foreach (Activity activity in listActivity)
-            {
-                paymentActivity.ActivityId = activity.ActivityId;
-                paymentActivity.PaymentId = payment.PaymentId;
-                paymentActivityController.Save(paymentActivity);
-            }
-
-            Clear();
-
-        }
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
@@ -87,17 +73,41 @@ namespace LegalSystemWeb
             ddlCaseNo.ClearSelection();
         }
 
-        public void Check_Clicked(Object sender, EventArgs e)
+
+
+
+
+        protected void btnSave_Click(object sender, EventArgs e)
         {
-            listActivity.Clear();
+            IPaymentController paymentController = ControllerFactory.CreatePaymentController();
+            IPaymentActivityController paymentActivityController = ControllerFactory.CreatePaymentActivityController();
+
+            Payment payment = new Payment();
+
+            PaymentActivity paymentActivity = new PaymentActivity();
+
+            payment.CaseNumber = Convert.ToString(ddlCaseNo.SelectedValue);
+            payment.LawyerId = Convert.ToInt32(ddlLawyerName.SelectedValue);
+            payment.Amount = Convert.ToInt32(txtTotalPayableAmount.Text);
+            payment.CreatedDate = System.DateTime.Now;
+            payment.CreateUserId = Convert.ToInt32(Session["User_Id"]);
+            payment.Remarks = txtRemarks.Text;
+            payment.PaymentStatusId = 1;
+            payment.PaymentId = paymentController.Save(payment);
+
             for (int i = 0; i < cblActivity.Items.Count; i++)
             {
                 if (cblActivity.Items[i].Selected)
                 {
-                    activity.ActivityId = Convert.ToInt32(cblActivity.Items[i].Value);
-                    listActivity.Add(activity);
+                    paymentActivity.ActivityId = Convert.ToInt32(cblActivity.Items[i].Value);
+                    paymentActivity.PaymentId = payment.PaymentId;
+                    paymentActivityController.Save(paymentActivity);
                 }
             }
+
+
+            Clear();
+
         }
     }
 }
