@@ -14,6 +14,19 @@ namespace LegalSystemCore.Controller
     }
     public class CaseActivityControllerImpl : ICaseActivityController
     {
+        public List<CaseActivity> GetUpdateCaseList()
+        {
+            throw new NotImplementedException();
+        }
 
+        public int Save(CaseActivity updateCase)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(CaseActivity updateCase)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
