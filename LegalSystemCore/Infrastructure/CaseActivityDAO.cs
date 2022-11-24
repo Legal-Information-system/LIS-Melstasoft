@@ -13,7 +13,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(CaseActivity caseActivity, DbConnection dbConnection);
         int Delete(CaseActivity caseActivityte, DbConnection dbConnection);
         List<CaseActivity> GetCaseActivityList(DbConnection dbConnection);
-        CaseActivity GetActivityCase(string caseActivitys, DbConnection dbConnection);
+
     }
 
     public class UpdateCaseDAOSqlImpl : IUpdateCaseDAO
@@ -61,5 +61,19 @@ namespace LegalSystemCore.Infrastructure
 
             return output;
         }
+        public int Delete(CaseActivity caseActivityte, DbConnection dbConnection)
+        {
+            throw new NotImplementedException();
+        }
+        public List<CaseActivity> GetCaseActivityList(DbConnection dbConnection)
+        {
+            throw new NotImplementedException();
+        }
+        public int Update(CaseActivity caseActivity, DbConnection dbConnection)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
