@@ -16,6 +16,7 @@ namespace LegalSystemCore.Controller
         int Save(CompanyUnit companyUnit);
         int Delete(CompanyUnit companyUnit);
         int Update(CompanyUnit companyUnit);
+        CompanyUnit GetCompanyUnit(int unitId);
         List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
         List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId);
 
@@ -89,6 +90,31 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+        }
+
+        public CompanyUnit GetCompanyUnit(int unitId)
+        {
+            Common.DbConnection dbConnection = null;
+            CompanyUnit companyUnit = new CompanyUnit();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                companyUnit = companyUnitDAO.GetCompanyUnit(unitId, dbConnection);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return companyUnit;
         }
 
         public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
