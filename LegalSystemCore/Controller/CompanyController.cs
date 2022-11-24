@@ -1,4 +1,5 @@
 ﻿using LegalSystemCore.Common;
+using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace LegalSystemCore.Controller
     public interface ICompanyController
     {
         int Save(Company company);
+        int Delete(Company company);
         int Update(Company company);
         List<Company> GetCompanyList();
 
@@ -90,7 +92,27 @@ namespace LegalSystemCore.Controller
             }
             return listCompany;
         }
-
+        public int Delete(Company company)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return companyDAO.Delete(company, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
     }
 
 }

@@ -49,6 +49,8 @@
     <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\DocumentCaseController.cs" />
     <Compile Include="Controller\DocumentController.cs" />
+    <Compile Include="Controller\PaymentActivityController.cs" />
+    <Compile Include="Controller\PaymentController.cs" />
     <Compile Include="Controller\UserLoginController.cs" />
     <Compile Include="Controller\CourtController.cs" />
     <Compile Include="Controller\CourtLocationController.cs" />
@@ -75,11 +77,15 @@
     <Compile Include="Domain\Court.cs" />
     <Compile Include="Domain\CourtLocation.cs" />
     <Compile Include="Domain\Location.cs" />
+    <Compile Include="Domain\Payment.cs" />
+    <Compile Include="Domain\PaymentActivity.cs" />
     <Compile Include="Domain\UserLogin.cs" />
     <Compile Include="Infrastructure\CaseMasterDAO.cs" />
     <Compile Include="Infrastructure\CaseNatureDAO.cs" />
     <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
     <Compile Include="Infrastructure\DocumentDAO.cs" />
+    <Compile Include="Infrastructure\PaymentActivityDAO.cs" />
+    <Compile Include="Infrastructure\PaymentDAO.cs" />
     <Compile Include="Infrastructure\UserLoginDAO.cs" />
     <Compile Include="Infrastructure\CourtDAO.cs" />
     <Compile Include="Infrastructure\CourtLocationDAO.cs" />

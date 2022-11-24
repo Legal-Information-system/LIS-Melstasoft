@@ -10,6 +10,7 @@ namespace LegalSystemCore.Infrastructure
     public interface ICompanyUnitDAO
     {
         int Save(CompanyUnit companyUnit, DbConnection dbConnection);
+        int Delete(CompanyUnit companyUnit, DbConnection dbConnection);
         int Update(CompanyUnit companyUnit, DbConnection dbConnection);
         List<CompanyUnit> GetCompanyUnitList(DbConnection dbConnection, string CompanyId = null);
     }
@@ -80,6 +81,20 @@ namespace LegalSystemCore.Infrastructure
 
 
             return listCompanyUnit;
+        }
+        public int Delete(CompanyUnit companyUnit, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE activity_id = @CompanyUnitId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", companyUnit.CompanyUnitId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
     }
 }

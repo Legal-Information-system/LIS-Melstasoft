@@ -10,13 +10,14 @@ using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    
-        public interface ICompanyUnitController
-        {
-            int Save(CompanyUnit companyUnit);
-            int Update(CompanyUnit companyUnit);
-            List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
-            List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId);
+
+    public interface ICompanyUnitController
+    {
+        int Save(CompanyUnit companyUnit);
+        int Delete(CompanyUnit companyUnit);
+        int Update(CompanyUnit companyUnit);
+        List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
+        List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId);
 
     }
 
@@ -31,6 +32,28 @@ namespace LegalSystemCore.Controller
             {
                 dbconnection = new Common.DbConnection();
                 return companyUnitDAO.Save(companyUnit, dbconnection);
+            }
+            catch (Exception)
+            {
+                dbconnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbconnection.Commit();
+                }
+            }
+        }
+
+        public int Delete(CompanyUnit companyUnit)
+        {
+            Common.DbConnection dbconnection = null;
+            try
+            {
+                dbconnection = new Common.DbConnection();
+                return companyUnitDAO.Delete(companyUnit, dbconnection);
             }
             catch (Exception)
             {
@@ -68,63 +91,63 @@ namespace LegalSystemCore.Controller
             }
         }
 
-            public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
+        public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
+        {
+            Common.DbConnection dbConnection = null;
+            List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
+            try
             {
-                Common.DbConnection dbConnection = null;
-                List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
-                try
+                dbConnection = new Common.DbConnection();
+                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+                if (withCompanyName)
                 {
-                    dbConnection = new Common.DbConnection();
-                    listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
-                    if (withCompanyName)
-                    {
-                        ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
-                        List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
+                    ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                    List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
 
-                        foreach (var companyUnit in listCompanyUnit)
-                        {
-                            companyUnit.company = listCompany.Where(x => x.CompanyId == companyUnit.CompanyId ).Single();
-                        }
-                    }
-            }
-                catch (Exception)
-                {
-                    dbConnection.RollBack();
-                    throw;
-                }
-                finally
-                {
-                    if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                    foreach (var companyUnit in listCompanyUnit)
                     {
-                        dbConnection.Commit();
+                        companyUnit.company = listCompany.Where(x => x.CompanyId == companyUnit.CompanyId).Single();
                     }
                 }
-                return listCompanyUnit;
             }
-            public List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId)
+            catch (Exception)
             {
-                Common.DbConnection dbConnection = null;
-                List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
-                try
-                {
-                    dbConnection = new Common.DbConnection();
-                    listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection,withCompanyId);
-                    
-                }
-                catch (Exception)
-                {
-                    dbConnection.RollBack();
-                    throw;
-                }
-                finally
-                {
-                    if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                    {
-                        dbConnection.Commit();
-                    }
-                }
-                return listCompanyUnit;
+                dbConnection.RollBack();
+                throw;
             }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCompanyUnit;
+        }
+        public List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId)
+        {
+            Common.DbConnection dbConnection = null;
+            List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection, withCompanyId);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCompanyUnit;
+        }
 
     }
 

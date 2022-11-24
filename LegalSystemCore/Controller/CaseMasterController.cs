@@ -135,6 +135,7 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+            return listCaseMaster;
         }
 
     }

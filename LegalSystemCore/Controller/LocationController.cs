@@ -13,6 +13,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(Location location);
         int Update(Location location);
+        int Delete(Location location);
         List<Location> GetLocationList();
 
     }
@@ -58,6 +59,28 @@ namespace LegalSystemCore.Controller
             {
                 if (dbconnection.con.State == System.Data.ConnectionState.Open)
                     dbconnection.Commit();
+            }
+        }
+
+        public int Delete(Location location)
+        {
+            Common.DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                return locationDAO.Delete(location, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
             }
         }
 

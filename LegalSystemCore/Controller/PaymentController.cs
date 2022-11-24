@@ -3,52 +3,30 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public interface ICourtController
+    public interface IPaymentController
     {
-        int Save(Court court);
-        int Delete(Court court);
-        int Update(Court court);
-        List<Court> GetCourtList();
-
+        int Save(Payment payment);
+        int Update(Payment payment);
+        int Delete(Payment payment);
+        List<Payment> GetPaymentList();
     }
-    public class CourtControllerImpl : ICourtController
+
+    public class PaymentControllerImpl : IPaymentController
     {
-        ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
-        public int Save(Court court)
-        {
-            Common.DbConnection dbconnection = null;
-            try
-            {
-                dbconnection = new Common.DbConnection();
-                return courtDAO.Save(court, dbconnection);
-            }
-            catch (Exception)
-            {
-                dbconnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbconnection.Commit();
-                }
-            }
-        }
+        IPaymentDAO PaymentDAO = DAOFactory.CreatePaymentDAO();
 
-        public int Update(Court court)
+        public int Save(Payment payment)
         {
-            Common.DbConnection dbConnection = null;
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                return courtDAO.Update(court, dbConnection);
+                dbConnection = new DbConnection();
+                return PaymentDAO.Save(payment, dbConnection);
             }
             catch (Exception)
             {
@@ -64,13 +42,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Delete(Court court)
+        public int Update(Payment payment)
         {
-            Common.DbConnection dbConnection = null;
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                return courtDAO.Delete(court, dbConnection);
+                dbConnection = new DbConnection();
+                return PaymentDAO.Update(payment, dbConnection);
             }
             catch (Exception)
             {
@@ -86,15 +64,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Court> GetCourtList()
+        public int Delete(Payment payment)
         {
-            Common.DbConnection dbConnection = null;
-            List<Court> listcourt = new List<Court>();
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                listcourt = courtDAO.GetCourtList(dbConnection);
-
+                dbConnection = new DbConnection();
+                return PaymentDAO.Delete(payment, dbConnection);
             }
             catch (Exception)
             {
@@ -108,7 +84,29 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listcourt;
+        }
+        public List<Payment> GetPaymentList()
+        {
+            DbConnection dbConnection = null;
+            List<Payment> listPayment = new List<Payment>();
+            try
+            {
+                dbConnection = new DbConnection();
+                listPayment = PaymentDAO.GetPaymentList(dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listPayment;
         }
     }
 }
