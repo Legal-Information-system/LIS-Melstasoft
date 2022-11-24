@@ -88,7 +88,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE activity_id = @CompanyUnitId ";
+            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE company_unit_id = @CompanyUnitId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", companyUnit.CompanyUnitId);
 
