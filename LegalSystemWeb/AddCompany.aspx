@@ -7,15 +7,21 @@
     <div class="card" style="width: 70%; margin-left: auto; margin-right: auto">
         <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Add Company</h2>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
-            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 40px; padding-right: 10px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal1" runat="server" Text="Company Name"></asp:Literal>
+                </div>
                 <asp:TextBox Style="width: 100%;" ID="txtCompanyName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                    ControlToValidate="txtCompanyName" ErrorMessage="Email is Required" ValidationGroup="1">Email is Required</asp:RequiredFieldValidator>
+                    ControlToValidate="txtCompanyName" ErrorMessage="Email is Required" ValidationGroup="1">This field is Required</asp:RequiredFieldValidator>
             </div>
-            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 20px;">
+            <div class="col-sm-6" style="width: 50%; padding-left: 10px; padding-right: 40px; margin-bottom: 0px;">
+                <div style="text-align: start; padding-left: 2px; margin-bottom: 5px;">
+                    <asp:Literal ID="Literal2" runat="server" Text="Address"></asp:Literal>
+                </div>
                 <asp:TextBox Style="width: 100%;" ID="txtCompanyAddress" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
-                    ControlToValidate="txtCompanyAddress" ErrorMessage="Email is Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                    ControlToValidate="txtCompanyAddress" ErrorMessage="Email is Required" ValidationGroup="1">This field is required</asp:RequiredFieldValidator>
             </div>
             <div class="col-sm-6" style="width: 30%; margin-left: auto; margin-right: auto">
                 <asp:Button ID="btnSave" runat="server" Text="Add" Style="width: 80%;" OnClick="btnSave_Click" ValidationGroup="1" />
@@ -34,7 +40,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btndelete" runat="server">Delete</asp:LinkButton>
+                                <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_Click">Delete</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

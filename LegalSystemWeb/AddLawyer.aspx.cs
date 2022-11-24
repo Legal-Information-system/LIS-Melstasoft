@@ -79,7 +79,17 @@ namespace LegalSystemWeb
             ViewState["updatedRowIndex"] = lawyerList[rowIndex].LawyerId;
 
         }
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
+            Lawyer lawyer = new Lawyer();
+            lawyer.LawyerId = lawyerList[rowIndex].LawyerId; ;
+
+            lawyerController.Delete(lawyer);
+            BindDataSource();
+        }
 
     }
 }

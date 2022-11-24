@@ -75,5 +75,17 @@ namespace LegalSystemWeb
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = locationList[rowIndex].LocationId;
         }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ILocationController locationController = ControllerFactory.CreateLocationController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            Location location = new Location();
+            location.LocationId = locationList[rowIndex].LocationId; ;
+
+            locationController.Delete(location);
+            BindDataSource();
+        }
     }
 }

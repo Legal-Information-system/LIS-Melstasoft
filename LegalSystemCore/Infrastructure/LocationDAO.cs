@@ -10,6 +10,7 @@ namespace LegalSystemCore.Infrastructure
     public interface ILocationDAO
     {
         int Save(Location location, DbConnection dbConnection);
+        int Delete(Location location, DbConnection dbConnection);
         int Update(Location location, DbConnection dbConnection);
         List<Location> GetLocationList(DbConnection dbConnection);
     }

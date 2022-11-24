@@ -10,6 +10,8 @@ namespace LegalSystemCore.Infrastructure
     public interface ICaseNatureDAO
     {
         int Save(CaseNature caseNature, DbConnection dbConnection);
+
+        int Delete(CaseNature caseNature, DbConnection dbConnection);
         int Update(CaseNature caseNature, DbConnection dbConnection);
         List<CaseNature> GetCaseNatureList(DbConnection dbConnection);
     }
@@ -66,6 +68,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@CaseNatureId", caseNature.CaseNatureId);
             dbConnection.cmd.Parameters.AddWithValue("@CaseNatureName", caseNature.CaseNatureName);
 
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int Delete(CaseNature caseNature, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE case_nature SET is_active = 0 WHERE case_nature_id = @natureId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@natureId", caseNature.CaseNatureId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 

@@ -74,5 +74,16 @@ namespace LegalSystemWeb
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = courtList[rowIndex].CourtId;
         }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICourtController courtController = ControllerFactory.CreateCourtController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            Court court = new Court();
+            court.CourtId = courtList[rowIndex].CourtId;
+            courtController.Delete(court);
+            BindDataSource();
+        }
     }
 }

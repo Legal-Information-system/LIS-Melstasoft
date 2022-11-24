@@ -77,5 +77,17 @@ namespace LegalSystemWeb
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = casesList[rowIndex].CaseNatureId;
         }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            CaseNature caseNature = new CaseNature();
+            caseNature.CaseNatureId = casesList[rowIndex].CaseNatureId;
+
+            caseNatureController.Delete(caseNature);
+            BindDataSource();
+        }
     }
 }

@@ -11,8 +11,9 @@ namespace LegalSystemCore.Infrastructure
     public interface ICompanyDAO
     {
         int Save(Company company, DbConnection dbConnection);
-        int Update(Company company, DbConnection dbConnection);
+
         int Delete(Company company, DbConnection dbConnection);
+        int Update(Company company, DbConnection dbConnection);
 
         List<Company> GetCompanyList(DbConnection dbConnection);
     }
