@@ -45,6 +45,7 @@
     <Compile Include="Common\DataAccessObject.cs" />
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\DBFieldAttribute.cs" />
+    <Compile Include="Controller\CaseActivityController.cs" />
     <Compile Include="Controller\CaseMasterController.cs" />
     <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\DocumentCaseController.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Domain\CaseAction.cs" />
     <Compile Include="Controller\LawyerController.cs" />
     <Compile Include="Domain\Activity.cs" />
+    <Compile Include="Domain\CaseActivity.cs" />
     <Compile Include="Domain\CaseMaster.cs" />
     <Compile Include="Domain\CaseNature.cs" />
     <Compile Include="Domain\Document.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Domain\Payment.cs" />
     <Compile Include="Domain\PaymentActivity.cs" />
     <Compile Include="Domain\UserLogin.cs" />
+    <Compile Include="Infrastructure\CaseActivityDAO.cs" />
     <Compile Include="Infrastructure\CaseMasterDAO.cs" />
     <Compile Include="Infrastructure\CaseNatureDAO.cs" />
     <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
