@@ -353,8 +353,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="FilesUploaded\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="SystemDocuments\CaseMaster\" />
+    <Folder Include="SystemDocuments\PaymentMemo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
