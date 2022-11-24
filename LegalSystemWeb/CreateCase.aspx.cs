@@ -170,6 +170,8 @@ namespace LegalSystemWeb
 
             caseMasterController.Save(caseMaster);
 
+            UploadFiles();
+
             Clear();
         }
 
@@ -197,6 +199,49 @@ namespace LegalSystemWeb
             txtClaimAmount.Text = string.Empty;
             txtOtherside.Text = string.Empty;
             txtPreCaseNumber.Text = string.Empty;
+            ddlCompany.SelectedIndex = 0;
+            ddlNatureOfCase.SelectedIndex = 0;
+            ddlCourt.SelectedIndex = 0;
+            ddlAttorney.SelectedIndex = 0;
+            ddlCounselor.SelectedIndex = 0;
+            ddlCompanyUnit.Items.Clear();
+            ddlLocation.Items.Clear();
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        private void UploadFiles()
+        {
+            IDocumentController documentController = ControllerFactory.CreateDocumentController();
+            IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
+
+            Document document = new Document();
+            DocumentCase documentCase = new DocumentCase();
+
+            if (Uploader.HasFile)
+            {
+                HttpFileCollection uploadFiles = Request.Files;
+                for (int i = 0; i < uploadFiles.Count; i++)
+                {
+                    HttpPostedFile uploadFile = uploadFiles[i];
+                    if (uploadFile.ContentLength > 0)
+                    {
+                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+
+                        document.DocumentType = "case";
+                        documentCase.DocumentId = documentController.Save(document);
+
+                        documentCase.DocumentName = uploadFile.FileName;
+                        documentCase.CaseNumber = txtCaseNumber.Text;
+                        documentCase.DocumentDescription = "";
+                        documentCaseController.Save(documentCase);
+                    }
+                }
+            }
         }
     }
 }

@@ -180,7 +180,7 @@
 
                         <div class="col-sm-6">
 
-                            <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
+                            <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnBack_Click" />
                             <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
 
                         </div>
