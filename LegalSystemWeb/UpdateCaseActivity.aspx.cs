@@ -180,6 +180,12 @@ namespace LegalSystemWeb
 
             caseActivityController.Save(caseActivity);
 
+            if(ddlJudgement.SelectedValue != "")
+            {
+                ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+
+            }
+
             Clear();
         }
 
