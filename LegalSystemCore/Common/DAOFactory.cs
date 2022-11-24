@@ -110,12 +110,6 @@ namespace LegalSystemCore.Common
             return ((ICaseMasterDAO)caseMasterDAO);
         }
 
-        public static ICaseMasterDAO CreateCaseMasterDAO()
-        {
-            ICaseMasterDAO caseMasterDAO = new CaseMasterDAOSqlImpl();
-            return (ICaseMasterDAO)caseMasterDAO;
-        }
-
         public static IDocumentDAO CreateDocumentDAO()
         {
             IDocumentDAO documentDAO = new DocumentDAOSqlImpl();

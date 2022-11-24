@@ -122,10 +122,5 @@ namespace LegalSystemCore.Common
             return (IPaymentActivityController)paymentActivityController;
         }
 
-        public static ICaseMasterController CreateCaseMasterController()
-        {
-            ICaseMasterController caseMasterController = new CaseMasterControllerImpl();
-            return (ICaseMasterController)caseMasterController;
-        }
     }
 }
