@@ -24,21 +24,20 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Insert into payment_master (case_number,lawyer_id,amount,remarks,payment_status_id,created_date,create_user_id,action_taken_date,action_remarks,action_taken_user_id) " +
-                                           "values (@CaseNumber,@LawyerId,@Amount,@remarks,@PaymentStatusId,@CreatedDate,@CreateUserId,@ActionTakenDate,@ActionRemarks,@ActionTakenUserId) SELECT SCOPE_IDENTITY() ";
+            dbConnection.cmd.CommandText = "Insert into payment_master (case_number,lawyer_id,amount,payment_status_id,created_date,create_user_id,remarks) " +
+                                           "values (@CaseNumber,@LawyerId,@Amount,@PaymentStatusId,@CreatedDate,@CreateUserId,@Remark) SELECT SCOPE_IDENTITY() ";
 
 
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", payment.CaseNumber);
             dbConnection.cmd.Parameters.AddWithValue("@LawyerId", payment.LawyerId);
             dbConnection.cmd.Parameters.AddWithValue("@Amount", payment.Amount);
-            dbConnection.cmd.Parameters.AddWithValue("@Remarks", payment.Remarks);
             dbConnection.cmd.Parameters.AddWithValue("@PaymentStatusId", payment.PaymentStatusId);
             dbConnection.cmd.Parameters.AddWithValue("@CreatedDate", payment.CreatedDate);
             dbConnection.cmd.Parameters.AddWithValue("@CreateUserId", payment.CreateUserId);
-            dbConnection.cmd.Parameters.AddWithValue("@ActionTakenDate", payment.ActionTakenDate);
-            dbConnection.cmd.Parameters.AddWithValue("@ActionRemarks", payment.ActionRemarks);
-            dbConnection.cmd.Parameters.AddWithValue("@ActionTakenUserId", payment.ActionTakenUserId);
+            dbConnection.cmd.Parameters.AddWithValue("@Remark", payment.Remarks);
+
+
 
 
 
