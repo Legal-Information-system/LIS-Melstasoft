@@ -71,6 +71,7 @@ namespace LegalSystemWeb
         {
             txtTotalPayableAmount.Text = string.Empty;
             ddlCaseNo.ClearSelection();
+            txtRemarks.Text = string.Empty;
         }
 
 
@@ -104,19 +105,22 @@ namespace LegalSystemWeb
                     paymentActivityController.Save(paymentActivity);
                 }
             }
+            UploadFiles(payment.PaymentId);
 
 
             Clear();
 
         }
 
-        private void UploadFiles()
+        private void UploadFiles(int paymentId)
         {
             IDocumentController documentController = ControllerFactory.CreateDocumentController();
-            IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
+
+            IDocumentPaymentController documentPaymentController = ControllerFactory.CreateDocumentPaymentController();
 
             Document document = new Document();
-            DocumentCase documentCase = new DocumentCase();
+            DocumentPayment documentPayment = new DocumentPayment();
+
 
             if (Uploader.HasFile)
             {
@@ -126,16 +130,16 @@ namespace LegalSystemWeb
                     HttpPostedFile uploadFile = uploadFiles[i];
                     if (uploadFile.ContentLength > 0)
                     {
-                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/PaymentMemo/RequestPayments/") + uploadFile.FileName);
                         //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
 
-                        document.DocumentType = "case";
-                        documentCase.DocumentId = documentController.Save(document);
+                        document.DocumentType = "payment";
+                        documentPayment.DocumentId = documentController.Save(document);
 
-                        documentCase.DocumentName = uploadFile.FileName;
-                        documentCase.CaseNumber = txtCaseNumber.Text;
-                        documentCase.DocumentDescription = "";
-                        documentCaseController.Save(documentCase);
+                        documentPayment.DocumentName = uploadFile.FileName;
+                        documentPayment.PaymentId = paymentId;
+                        documentPayment.DocumentDescription = "";
+                        documentPaymentController.Save(documentPayment);
                     }
                 }
             }

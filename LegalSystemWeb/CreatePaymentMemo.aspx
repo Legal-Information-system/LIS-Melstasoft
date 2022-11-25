@@ -4,10 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container mw-100 my-4">
+    <div class="container my-5">
         <div class="row justify-content-center">
 
-            <div class="card o-hidden border-0 shadow-lg p-0" style="padding-left: unset; padding-right: unset; width: 1000px; top: 43px; left: 236px;">
+            <div class="card o-hidden border-0 shadow-lg p-0 my-3" style="padding-left: unset; padding-right: unset; width: 1000px;">
                 <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
                     <h3 class="text-light text-center bg-dark">Create Payment Invoice</h3>
                 </div>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-sm-6" style="display: flex; flex-direction: row">
 
-                                <asp:DropDownList ID="ddlCaseNo" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlCaseNo" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCaseNo" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                             </div>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-sm-6" style="display: flex; flex-direction: row">
 
-                                <asp:DropDownList ID="ddlLawyerName" runat="server" CssClass="btn btn-primary dropdown-toggle w-100"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlLawyerName" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlLawyerName" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                             </div>
@@ -100,14 +100,14 @@
                             </div>
 
                         </div>
-
-                        <div class="row mb-2 mt-4 ">
-                            <div class="d-flex justify-content-start ">
-                                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
-                                <asp:Button ID="btnReset" runat="server" Text="Reset" ValidationGroup="1" />
+                        <div class="row mb-3 ms-1">
+                            <div class="col-sm-3">
+                                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" Text="Reset" ValidationGroup="1" />
+                                <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary btn-user btn-block" Text="Save" OnClick="btnSave_Click" />
                             </div>
-
                         </div>
+
+
                     </form>
                 </div>
             </div>

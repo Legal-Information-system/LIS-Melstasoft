@@ -50,6 +50,7 @@
     <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\DocumentCaseController.cs" />
     <Compile Include="Controller\DocumentController.cs" />
+    <Compile Include="Controller\DocumentPaymentController.cs" />
     <Compile Include="Controller\PaymentActivityController.cs" />
     <Compile Include="Controller\PaymentController.cs" />
     <Compile Include="Controller\UserLoginController.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Infrastructure\CaseNatureDAO.cs" />
     <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
     <Compile Include="Infrastructure\DocumentDAO.cs" />
+    <Compile Include="Infrastructure\DocumentPaymentDAO.cs" />
     <Compile Include="Infrastructure\PaymentActivityDAO.cs" />
     <Compile Include="Infrastructure\PaymentDAO.cs" />
     <Compile Include="Infrastructure\UserLoginDAO.cs" />
