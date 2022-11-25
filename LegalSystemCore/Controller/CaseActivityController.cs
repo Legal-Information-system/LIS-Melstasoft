@@ -12,13 +12,13 @@ namespace LegalSystemCore.Controller
     {
         int Save(CaseActivity caseActivity, bool withNextDate);
         int Update(CaseActivity caseActivity);
-        List<CaseActivity> GetUpdateCaseList();
+        List<CaseActivity> GetUpdateCaseList(bool withMatchData);
     }
     public class CaseActivityControllerImpl : ICaseActivityController
     {
         ICaseActivityDAO caseActivityDAO = DAOFactory.CreateCaseActivityDAO();
 
-        public List<CaseActivity> GetUpdateCaseList()
+        public List<CaseActivity> GetUpdateCaseList(bool withMatchData)
         {
             DbConnection dbConnection = null;
             List<CaseActivity> listCaseActivity = new List<CaseActivity>();
@@ -26,6 +26,23 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 listCaseActivity = caseActivityDAO.GetCaseActivityList(dbConnection);
+
+                if (withMatchData)
+                {
+                    ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+                    List<Lawyer> lawyerlist = lawyerController.GetLawyerList();
+
+                    ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
+                    List<CaseAction> caseActionsList = caseActionController.GetCaseActionList();
+
+                    foreach (var caseActivity in listCaseActivity)
+                    {
+                        caseActivity.assignAttorney = lawyerlist.Where(l => l.LawyerId == caseActivity.AssignAttorneyId).Single();
+                        caseActivity.counsilor = lawyerlist.Where(l => l.LawyerId == caseActivity.CounsilorId).Single();
+                        caseActivity.actionTaken = caseActionsList.Where(l => l.ActionId == caseActivity.ActionTakenId).Single();
+                        caseActivity.nextAction = caseActionsList.Where(l => l.ActionId == caseActivity.NextActionId).Single();
+                    }
+                }
             }
             catch (Exception)
             {

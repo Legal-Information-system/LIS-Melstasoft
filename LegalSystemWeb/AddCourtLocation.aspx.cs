@@ -55,7 +55,7 @@ namespace LegalSystemWeb
             locationList = locationController.GetLocationList();
             ddlLocation.DataSource = locationController.GetLocationList();
             ddlLocation.DataValueField = "LocationId";
-            ddlLocation.DataTextField = "location";
+            ddlLocation.DataTextField = "locationName";
             ddlLocation.DataBind();
 
         }
