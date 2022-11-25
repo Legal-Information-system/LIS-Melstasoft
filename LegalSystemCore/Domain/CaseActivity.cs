@@ -8,13 +8,14 @@ namespace LegalSystemCore.Domain
 {
     public class CaseActivity
     {
-        [DBField("case_activit_id")]
+        [DBField("case_activity_id")]
         public int CaseActivitId { get; set; }
 
         [DBField("case_number")]
         public string CaseNumber { get; set; }
         [DBField("activity_date")]
         public DateTime ActivityDate { get; set; }
+        public string ActivityDateString { get; set; }
 
         [DBField("assign_attorney_id")]
         public int AssignAttorneyId { get; set; }
@@ -35,7 +36,7 @@ namespace LegalSystemCore.Domain
 
         [DBField("next_date")]
         public DateTime NextDate { get; set; }
-
+        public string NextDateString { get; set; }
 
         [DBField("remarks")]
         public string Remarks { get; set; }
@@ -48,6 +49,12 @@ namespace LegalSystemCore.Domain
 
         [DBField("is_active")]
         public int IsActive { get; set; }
+
+
+        public Lawyer assignAttorney { get; set; }
+        public Lawyer counsilor { get; set; }
+        public CaseAction actionTaken { get; set; }
+        public CaseAction nextAction { get; set; }
 
     }
 }

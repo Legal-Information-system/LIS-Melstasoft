@@ -56,6 +56,38 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 listCaseMaster = caseMasterDAO.GetCaseMasterList(withoutclosed, dbConnection);
+
+                ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.company = listCompany.Where(x => x.CompanyId == caseMaster.CompanyId).Single();
+                }
+
+                ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
+                List<CompanyUnit> listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.companyUnit = listCompanyUnit.Where(x => x.CompanyUnitId == caseMaster.CompanyUnitId).Single();
+                }
+
+                ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
+                List<CaseNature> listCaseNature = caseNatureDAO.GetCaseNatureList(dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.caseNature = listCaseNature.Where(x => x.CaseNatureId == caseMaster.CaseNatureId).Single();
+                }
+
+                ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
+                List<Location> listLocation = locationDAO.GetLocationList(dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.location = listLocation.Where(x => x.LocationId == caseMaster.LocationId).Single();
+                }
             }
             catch (Exception)
             {

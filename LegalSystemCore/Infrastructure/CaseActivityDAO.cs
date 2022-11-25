@@ -90,7 +90,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from case_activity is_active = 1";
+            dbConnection.cmd.CommandText = "select * from case_activity WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
