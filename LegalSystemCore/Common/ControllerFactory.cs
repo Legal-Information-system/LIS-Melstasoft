@@ -128,5 +128,11 @@ namespace LegalSystemCore.Common
             return (ICaseActivityController)caseActivityController;
         }
 
+        public static IDocumentPaymentController CreateDocumentPaymentController()
+        {
+            IDocumentPaymentController documentPaymentController = new DocumentPaymentControllerImpl();
+            return (IDocumentPaymentController)documentPaymentController;
+        }
+
     }
 }
