@@ -13,7 +13,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(CaseMaster caseMaster, DbConnection dbConnection);
         int CaseClose(CaseMaster caseMaster, DbConnection dbConnection);
         int Delete(CaseMaster caseMaster, DbConnection dbConnection);
-        List<CaseMaster> GetCaseMasterList(bool withclosed, DbConnection dbConnection);
+        List<CaseMaster> GetCaseMasterList(bool withoutclosed, DbConnection dbConnection);
         CaseMaster GetCaseMaster(string caseNumber, DbConnection dbConnection);
     }
 
@@ -36,12 +36,12 @@ namespace LegalSystemCore.Infrastructure
             return caseMaster;
         }
 
-        public List<CaseMaster> GetCaseMasterList(bool withclosed, DbConnection dbConnection)
+        public List<CaseMaster> GetCaseMasterList(bool withoutclosed, DbConnection dbConnection)
         {
             List<CaseMaster> listCaseMaster = new List<CaseMaster>();
 
             dbConnection = new DbConnection();
-            if (withclosed)
+            if (withoutclosed)
                 dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 1 AND is_active = 1";
             else
                 dbConnection.cmd.CommandText = "select * from case_master WHERE is_active = 1";
