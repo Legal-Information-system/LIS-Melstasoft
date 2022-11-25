@@ -355,7 +355,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="SystemDocuments\CaseMaster\" />
-    <Folder Include="SystemDocuments\PaymentMemo\" />
+    <Folder Include="SystemDocuments\PaymentMemo\PaidPayments\" />
+    <Folder Include="SystemDocuments\PaymentMemo\RequestPayments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
