@@ -63,7 +63,7 @@
                                 Dashboard
                             </a>
                             <a class="nav-link" href="CreateCase.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
                                 Create Case
                             </a>
                             <a class="nav-link" href="UpdateCaseActivity.aspx">
@@ -71,19 +71,20 @@
                                 Update Case Activity
                             </a>
                             <a class="nav-link" href="CreatePaymentMemo.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-credit-card"></i></div>
                                 Payment Memo
                             </a>
 
                             <div class="sb-sidenav-menu-heading">Head</div>
-                            <a class="nav-link" href="ViewPaymentMemo.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                View Payment Memo
-                            </a>
 
                             <a class="nav-link" href="ViewCases.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 ViewCases
+                            </a>
+
+                            <a class="nav-link" href="ViewPaymentMemo.aspx">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                View Payment Memo
                             </a>
 
                             <div class="sb-sidenav-menu-heading">Admin</div>

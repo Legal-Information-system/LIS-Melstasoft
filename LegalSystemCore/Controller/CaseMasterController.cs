@@ -15,7 +15,7 @@ namespace LegalSystemCore.Controller
         int Update(CaseMaster caseMaster);
         int CaseClose(CaseMaster caseMaster);
         int Delete(CaseMaster caseMaster);
-        List<CaseMaster> GetCaseMasterList(bool withclosed);
+        List<CaseMaster> GetCaseMasterList(bool withoutclosed);
         CaseMaster GetCaseMaster(string caseNumber);
     }
 
@@ -48,14 +48,14 @@ namespace LegalSystemCore.Controller
             return caseMaster;
         }
 
-        public List<CaseMaster> GetCaseMasterList(bool withclosed)
+        public List<CaseMaster> GetCaseMasterList(bool withoutclosed)
         {
             DbConnection dbConnection = null;
             List<CaseMaster> listCaseMaster = new List<CaseMaster>();
             try
             {
                 dbConnection = new DbConnection();
-                listCaseMaster = caseMasterDAO.GetCaseMasterList(withclosed, dbConnection);
+                listCaseMaster = caseMasterDAO.GetCaseMasterList(withoutclosed, dbConnection);
             }
             catch (Exception)
             {
