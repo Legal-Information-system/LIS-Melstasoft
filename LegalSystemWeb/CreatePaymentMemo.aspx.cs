@@ -109,5 +109,36 @@ namespace LegalSystemWeb
             Clear();
 
         }
+
+        private void UploadFiles()
+        {
+            IDocumentController documentController = ControllerFactory.CreateDocumentController();
+            IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
+
+            Document document = new Document();
+            DocumentCase documentCase = new DocumentCase();
+
+            if (Uploader.HasFile)
+            {
+                HttpFileCollection uploadFiles = Request.Files;
+                for (int i = 0; i < uploadFiles.Count; i++)
+                {
+                    HttpPostedFile uploadFile = uploadFiles[i];
+                    if (uploadFile.ContentLength > 0)
+                    {
+                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+
+                        document.DocumentType = "case";
+                        documentCase.DocumentId = documentController.Save(document);
+
+                        documentCase.DocumentName = uploadFile.FileName;
+                        documentCase.CaseNumber = txtCaseNumber.Text;
+                        documentCase.DocumentDescription = "";
+                        documentCaseController.Save(documentCase);
+                    }
+                }
+            }
+        }
     }
 }

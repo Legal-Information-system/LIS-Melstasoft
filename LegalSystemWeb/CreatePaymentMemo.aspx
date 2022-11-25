@@ -93,7 +93,10 @@
 
                             </div>
                             <div class="col-sm-6" style="display: flex; flex-direction: row">
-                                <asp:Button ID="btnUpload" runat="server" Text="Upload Document" CssClass="btn btn-primary btn-user btn-block" />
+                                <div class="col-sm-6" style="display: flex; flex-direction: column">
+                                    <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" />
+                                    <asp:Label ID="lblListOfUploadedFiles" runat="server" />
+                                </div>
                             </div>
 
                         </div>
