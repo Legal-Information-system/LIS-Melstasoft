@@ -33,7 +33,7 @@
                     <Columns>
                         <asp:BoundField DataField="CourtId" HeaderText="Court Id" />
                         <asp:BoundField DataField="court.CourtName" HeaderText="Court Name" />
-                        <asp:BoundField DataField="location.location" HeaderText="Court Location" />
+                        <asp:BoundField DataField="location.locationName" HeaderText="Court Location" />
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>

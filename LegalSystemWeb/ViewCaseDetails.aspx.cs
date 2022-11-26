@@ -17,15 +17,28 @@ namespace LegalSystemWeb
     {
         CaseMaster caseMaster = new CaseMaster();
         string caseNumber;
+        int UserId, companyId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (Session["User_Id"] == null)
             {
-                SetCaseMasterData();
-                caseNumber = Request.QueryString["CaseNumber"].ToString();
-                BindCaseActivityList(caseNumber);
-                BindDocumentList(caseNumber);
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                if (Session["User_Role_Id"].ToString() == "3")
+                    Response.Redirect("404.aspx");
+                else
+                {
+                    if (!IsPostBack)
+                    {
+                        SetCaseMasterData();
+                        caseNumber = Request.QueryString["CaseNumber"].ToString();
+                        BindCaseActivityList(caseNumber);
+                        BindDocumentList(caseNumber);
+                    }
+                }
             }
         }
 
@@ -33,6 +46,26 @@ namespace LegalSystemWeb
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
             caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString());
+
+            UserId = Convert.ToInt32(Session["User_Role_Id"]);
+            companyId = Convert.ToInt32(Session["company_id"].ToString());
+            int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+
+            if (UserId == 4)
+            {
+                if (caseMaster.CompanyId != companyId)
+                {
+                    Response.Redirect("404.aspx");
+                }
+            }
+
+            if (UserId == 5)
+            {
+                if (caseMaster.CompanyUnitId != companyUnitId)
+                {
+                    Response.Redirect("404.aspx");
+                }
+            }
 
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();

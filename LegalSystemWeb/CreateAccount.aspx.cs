@@ -15,15 +15,27 @@ namespace LegalSystemWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (Session["User_Id"] == null)
             {
-                BindUserRoles();
-                BindCompanyList();
-
+                Response.Redirect("Login.aspx");
             }
-            BindCompanyUnitList();
+            else
+            {
+                if (Session["User_Role_Id"].ToString() != "1")
+                {
+                    Response.Redirect("404.aspx");
+                }
+                else
+                {
+                    if (!IsPostBack)
+                    {
+                        BindUserRoles();
+                        BindCompanyList();
 
-
+                    }
+                    BindCompanyUnitList();
+                }
+            }
 
         }
 

@@ -17,12 +17,27 @@ namespace LegalSystemWeb
         List<Location> locationList = new List<Location>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (Session["User_Id"] == null)
             {
-                BindCourtList();
-                BindLocationList();
+                Response.Redirect("Login.aspx");
             }
-            BindDataSource();
+            else
+            {
+                if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                {
+                    if (!IsPostBack)
+                    {
+                        BindCourtList();
+                        BindLocationList();
+                    }
+                    BindDataSource();
+                }
+                else
+                {
+                    Response.Redirect("404.aspx");
+                }
+
+            }
         }
 
         private void BindDataSource()

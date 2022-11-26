@@ -4,6 +4,7 @@ using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -17,23 +18,30 @@ namespace LegalSystemWeb
         List<JudgementType> judgementTypeList = new List<JudgementType>(4);
         List<Lawyer> lawyerList = new List<Lawyer>(4);
         List<CaseAction> caseActionList = new List<CaseAction>(4);
-
+        int UserId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            if (Session["User_Id"] == null)
             {
-                if (Session["User_Id"] == null)
-                {
-                    Response.Redirect("Login.aspx");
-                }
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                if (Session["User_Role_Id"].ToString() == "3")
+                    Response.Redirect("404.aspx");
                 else
                 {
-                    BindCaseList();
-                    BindLawyerList();
-                    BindActionList();
-                    BindJudgementList();
+                    if (!IsPostBack)
+                    {
+                        BindCaseList();
+                        BindLawyerList();
+                        BindActionList();
+                        BindJudgementList();
+                    }
                 }
+
             }
 
         }
@@ -41,8 +49,19 @@ namespace LegalSystemWeb
         private void BindCaseList()
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterList(true);
 
-            ddlCase.DataSource = caseMasterController.GetCaseMasterList(true);
+            int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+            int companyId = Convert.ToInt32(Session["company_id"].ToString());
+            UserId = Convert.ToInt32(Session["User_Role_Id"]);
+
+
+            if (UserId == 4)
+                caseMasterList = caseMasterList.Where(c => c.CompanyId == companyId).ToList();
+            if (UserId == 5)
+                caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
+
+            ddlCase.DataSource = caseMasterList;
             ddlCase.DataValueField = "CaseNumber";
             ddlCase.DataTextField = "CaseNumber";
             ddlCase.DataBind();
