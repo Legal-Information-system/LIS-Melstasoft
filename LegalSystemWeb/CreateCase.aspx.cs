@@ -1,4 +1,5 @@
-﻿using LegalSystemCore.Common;
+﻿using LegalSystemCore;
+using LegalSystemCore.Common;
 using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
@@ -24,21 +25,24 @@ namespace LegalSystemWeb
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (!IsPostBack)
+
+            if (Session["User_Id"] == null)
             {
-                if (Session["User_Id"] == null)
-                {
-                    Response.Redirect("Login.aspx");
-                }
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                if (Session["User_Role_Id"].ToString() == "3")
+                    Response.Redirect("404.aspx");
                 else
                 {
-                    //UserId = Convert.ToInt32(Session["User_Id"]);
-                    //UserRoleId = Convert.ToInt32(Session["User_Role_Id"]);
-                    //serName = (string)Session["User_Name"];
-                    BindCompanyList();
-                    BindCaseNatureList();
-                    BindCourtList();
-                    BindLawyerList();
+                    if (!IsPostBack)
+                    {
+                        BindCompanyList();
+                        BindCaseNatureList();
+                        BindCourtList();
+                        BindLawyerList();
+                    }
                 }
             }
         }
@@ -46,7 +50,15 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
-            ddlCompany.DataSource = companyController.GetCompanyList();
+            List<Company> companyList = companyController.GetCompanyList();
+
+            int companyId = Convert.ToInt32(Session["company_id"].ToString());
+            UserId = Convert.ToInt32(Session["User_Role_Id"]);
+
+            if (UserId == 4 || UserId == 5)
+                companyList = companyList.Where(c => c.CompanyId == companyId).ToList();
+
+            ddlCompany.DataSource = companyList;
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
             ddlCompany.DataBind();
@@ -58,7 +70,15 @@ namespace LegalSystemWeb
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             if (ddlCompany.SelectedValue != "")
             {
-                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(ddlCompany.SelectedValue);
+                List<CompanyUnit> companyUnitList = companyUnitController.GetCompanyUnitListFilter(ddlCompany.SelectedValue);
+
+                int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+                UserId = Convert.ToInt32(Session["User_Role_Id"]);
+
+                if (UserId == 5)
+                    companyUnitList = companyUnitList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
+
+                ddlCompanyUnit.DataSource = companyUnitList;
                 ddlCompanyUnit.DataValueField = "CompanyUnitId";
                 ddlCompanyUnit.DataTextField = "CompanyUnitName";
 

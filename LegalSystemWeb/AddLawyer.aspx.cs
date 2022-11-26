@@ -16,7 +16,21 @@ namespace LegalSystemWeb
         List<Lawyer> lawyerList = new List<Lawyer>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDataSource();
+            if (Session["User_Id"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                {
+                    BindDataSource();
+                }
+                else
+                {
+                    Response.Redirect("404.aspx");
+                }
+            }
         }
 
         private void BindDataSource()

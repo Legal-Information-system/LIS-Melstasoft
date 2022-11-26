@@ -12,7 +12,14 @@ namespace LegalSystemWeb
         List<Orders> order = new List<Orders>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDataSource();
+            if (Session["User_Id"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                BindDataSource();
+            }
         }
 
         private void BindDataSource()

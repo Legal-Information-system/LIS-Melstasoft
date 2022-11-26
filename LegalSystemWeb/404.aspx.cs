@@ -7,18 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace LegalSystemWeb
 {
-    public partial class ApprovePaymentMemo : System.Web.UI.Page
+    public partial class _404 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["User_Id"] == null)
-            {
-                Response.Redirect("Login.aspx");
-            }
-            else
-            {
 
-            }
         }
     }
 }
