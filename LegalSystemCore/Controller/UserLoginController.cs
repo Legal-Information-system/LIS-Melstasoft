@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
-
+using System.Web;
 
 namespace LegalSystemCore.Controller
 {
@@ -33,6 +33,7 @@ namespace LegalSystemCore.Controller
             }
             catch (Exception)
             {
+                HttpContext.Current.Response.Redirect("500.aspx");
                 dbconnection.RollBack();
                 throw;
             }
@@ -55,6 +56,7 @@ namespace LegalSystemCore.Controller
             }
             catch (Exception)
             {
+                HttpContext.Current.Response.Redirect("500.aspx");
                 dbconnection.RollBack();
                 throw;
             }
@@ -79,6 +81,7 @@ namespace LegalSystemCore.Controller
             }
             catch (Exception)
             {
+                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -95,17 +98,18 @@ namespace LegalSystemCore.Controller
         public UserLogin GetUserLogin(UserLogin userLogin)
         {
             Common.DbConnection dbConnection = null;
-            
+
             try
             {
                 dbConnection = new Common.DbConnection();
-                userLogin = userLoginDAO.GetUserLogin(dbConnection,userLogin);
-                
-                
+                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLogin);
+
+
 
             }
             catch (Exception)
             {
+                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }

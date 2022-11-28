@@ -24,7 +24,7 @@
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <Columns>
                         <asp:BoundField DataField="LocationId" HeaderText="Location Id" />
-                        <asp:BoundField DataField="location" HeaderText="Location" />
+                        <asp:BoundField DataField="locationName" HeaderText="Location" />
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_Click">Edit</asp:LinkButton>
