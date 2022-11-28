@@ -13,7 +13,10 @@ namespace LegalSystemCore.Infrastructure
         int Save(PaymentStatus paymentStatus, DbConnection dbConnection);
         int Update(PaymentStatus paymentStatus, DbConnection dbConnection);
         int Delete(PaymentStatus paymentStatus, DbConnection dbConnection);
+
+        PaymentStatus GetPaymentStatus(int paymentId, DbConnection dbConnection);
         List<PaymentStatus> GetPaymentStatusList(DbConnection dbConnection);
+
     }
 
     public class PaymentStatusDAOSqlImpl : IPaymentStatusDAO
@@ -80,6 +83,23 @@ namespace LegalSystemCore.Infrastructure
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
+        }
+
+        public PaymentStatus GetPaymentStatus(int paymentStatusId, DbConnection dbConnection)
+        {
+            PaymentStatus paymentStatus = new PaymentStatus();
+
+            dbConnection = new DbConnection();
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "select * from payment_status WHERE is_active = 1 AND payment_status_id=@StatusId";
+            dbConnection.cmd.Parameters.AddWithValue("@StatusId", paymentStatusId);
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            paymentStatus = dataAccessObject.GetSingleOject<PaymentStatus>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return paymentStatus;
         }
     }
 }

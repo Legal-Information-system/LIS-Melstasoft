@@ -174,7 +174,7 @@ namespace LegalSystemWeb
             caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
             caseMaster.CaseDescription = txtCaseDescription.Text;
             string clamount = txtClaimAmount.Text;
-            caseMaster.ClaimAmount = Convert.ToDecimal(txtClaimAmount.Text);
+            caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
             caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
             caseMaster.OtherParty = txtOtherside.Text;
             caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);

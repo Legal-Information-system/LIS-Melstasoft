@@ -14,6 +14,10 @@ namespace LegalSystemCore.Controller
         int Update(Payment payment);
         int Delete(Payment payment);
         List<Payment> GetPaymentList();
+
+        Payment GetPayment(int paymentId);
+
+        int UpdatePaymentStatus(Payment payment);
     }
 
     public class PaymentControllerImpl : IPaymentController
@@ -108,5 +112,52 @@ namespace LegalSystemCore.Controller
             }
             return listPayment;
         }
+
+        public Payment GetPayment(int paymentId)
+        {
+            DbConnection dbConnection = null;
+            Payment payment = new Payment();
+            try
+            {
+                dbConnection = new DbConnection();
+                payment = PaymentDAO.GetPayment(paymentId, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return payment;
+        }
+
+        public int UpdatePaymentStatus(Payment payment)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return PaymentDAO.UpdateStatus(payment, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
     }
+
 }

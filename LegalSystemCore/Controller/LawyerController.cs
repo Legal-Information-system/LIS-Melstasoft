@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace LegalSystemCore.Controller
 {
     public interface ILawyerController
@@ -14,6 +15,8 @@ namespace LegalSystemCore.Controller
         int Delete(Lawyer lawyer);
         int Update(Lawyer lawyer);
         List<Lawyer> GetLawyerList();
+
+        Lawyer GetLawyer(int lawyerId);
 
     }
     public class LawyerControllerImpl : ILawyerController
@@ -109,6 +112,30 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+        }
+
+        public Lawyer GetLawyer(int lawyerId)
+        {
+            DbConnection dbConnection = null;
+            Lawyer lawyer = new Lawyer();
+            try
+            {
+                dbConnection = new DbConnection();
+                lawyer = lawyerDAO.GetLawyer(lawyerId, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return lawyer;
         }
     }
 }

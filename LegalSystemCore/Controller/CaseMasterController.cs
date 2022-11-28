@@ -17,6 +17,8 @@ namespace LegalSystemCore.Controller
         int Delete(CaseMaster caseMaster);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed);
         CaseMaster GetCaseMaster(string caseNumber);
+
+        CaseMaster GetCaseMasterWithPaid(String caseNumber);
     }
 
     public class CaseMasterControllerImpl : ICaseMasterController
@@ -189,6 +191,31 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+        }
+
+        public CaseMaster GetCaseMasterWithPaid(String caseNumber)
+        {
+            DbConnection dbConnection = null;
+            CaseMaster caseMaster = new CaseMaster();
+            try
+            {
+                dbConnection = new DbConnection();
+                caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+                caseMaster.totalPaidAmoutToPresent = caseMasterDAO.GetCaseMasterWithTotalPaidAmount(caseNumber, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return caseMaster;
         }
 
     }

@@ -15,20 +15,16 @@
                 CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                 <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                 <Columns>
-                    <asp:BoundField DataField="OrderID" HeaderText="Case ID" ItemStyle-HorizontalAlign="center" />
-                    <asp:BoundField DataField="CustomerID" HeaderText="Claim Amount" />
-                    <asp:BoundField DataField="EmployeeID" HeaderText="Total Paid Amount Upto Now" ItemStyle-HorizontalAlign="center" />
-                    <asp:BoundField DataField="Freight" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
-                    <asp:BoundField DataField="OrderDate" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
-                    <asp:BoundField DataField="ShipCity" HeaderText="Total Payable Amount" ItemStyle-HorizontalAlign="center" />
-                    <asp:TemplateField HeaderText="Uploaded Doc/Slip">
+                    <asp:BoundField DataField="PaymentId" HeaderText="Payment Id" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="CaseNumber" HeaderText="Case Number" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="lawyer.LawyerName" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="Actions" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="Amount" HeaderText="Requested Payment Amount" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="caseMaster.payableAmount" HeaderText="Total Payable Amount" ItemStyle-HorizontalAlign="center" />
+                    <asp:BoundField DataField="paymentStatus.StatusName" HeaderText="Status" ItemStyle-HorizontalAlign="center" />
+                    <asp:TemplateField HeaderText="View Details" ItemStyle-HorizontalAlign="center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnEdit" runat="server">View Document</asp:LinkButton>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="View Details">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="btndelete" runat="server">View Details</asp:LinkButton>
+                            <asp:LinkButton ID="btnView" runat="server" OnClick="btnView_Click">View Details</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

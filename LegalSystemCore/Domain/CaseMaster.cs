@@ -24,7 +24,7 @@ namespace LegalSystemCore.Domain
         public string CaseDescription { get; set; }
 
         [DBField("claim_amount")]
-        public decimal ClaimAmount { get; set; }
+        public double ClaimAmount { get; set; }
 
         [DBField("is_plaintif")]
         public int IsPlentif { get; set; }
@@ -82,7 +82,10 @@ namespace LegalSystemCore.Domain
 
         public Location location { get; set; }
 
+        [DBField("total_paid_amount")]
+        public double totalPaidAmoutToPresent { get; set; }
 
+        public double payableAmount { get; set; }
 
     }
 }

@@ -12,7 +12,8 @@ namespace LegalSystemCore.Infrastructure
         void Save(PaymentActivity paymentActivity, DbConnection dbConnection);
         int Update(PaymentActivity paymentActivity, DbConnection dbConnection);
         int Delete(PaymentActivity paymentActivity, DbConnection dbConnection);
-        List<PaymentActivity> GetPaymentActivityList(DbConnection dbConnection);
+        List<PaymentActivity> GetPaymentActivityList(DbConnection dbConnection, int paymentId = -1);
+
     }
     public class PaymentActivityDAOSqlImpl : IPaymentActivityDAO
     {
@@ -78,11 +79,19 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<PaymentActivity> GetPaymentActivityList(DbConnection dbConnection)
+        public List<PaymentActivity> GetPaymentActivityList(DbConnection dbConnection, int paymentId = -1)
         {
             List<PaymentActivity> paymentActivityList = new List<PaymentActivity>();
 
-            dbConnection.cmd.CommandText = "select * from payment_activity WHERE is_active = 1";
+            if (paymentId == -1)
+            {
+                dbConnection.cmd.CommandText = "select * from payment_activity WHERE is_active = 1";
+            }
+            else
+            {
+                dbConnection.cmd.CommandText = "select * from payment_activity WHERE is_active = 1 AND payment_id = @PaymentId";
+                dbConnection.cmd.Parameters.AddWithValue("@PaymentId", paymentId);
+            }
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -91,6 +100,8 @@ namespace LegalSystemCore.Infrastructure
 
             return paymentActivityList;
         }
+
+
 
     }
 }
