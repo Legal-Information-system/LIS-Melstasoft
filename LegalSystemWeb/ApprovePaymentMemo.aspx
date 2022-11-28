@@ -6,88 +6,130 @@
     <div style="height: 40px;"></div>
     <div class="row mb-5">
         <h2 style="text-align: center; margin-bottom: 40px;">Payment Case Details</h2>
-        <div class="col-sm-6">
-            <div class="card" style="width: 500px; margin-left: auto;">
+        <div class="col-sm-6 mb-3 ">
+            <div class="card d-flex justify-content-end" style="margin-left: auto;">
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Company :</p>
+                            <p>Payment Id :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="lblDescription" runat="server" Text="Company Name"></asp:Label>
+                            <asp:Label ID="lblPaymentId" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Company Unit :</p>
+                            <p>Case Number :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="lblPlaintiff" runat="server" Text="Unit Name"></asp:Label>
+                            <asp:Label ID="lblCaseNumber" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Case Description :</p>
+                            <p>Lawyer Name :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="Label1" runat="server" Text="Description"></asp:Label>
+                            <asp:Label ID="lblLawyerName" runat="server" Text="N/A"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <p>Requested Payment Amount :</p>
+                        </div>
+                        <div class="col-md-6">
+                            <asp:Label ID="lblRequestedPaymentAmount" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card" style="width: 500px; margin-right: auto">
+
+        <div class="col-sm-6 mb-3 container-fluid">
+            <div class="card d-flex justify-content-start" style="margin-right: auto">
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Nature Of Case :</p>
+                            <p>Remarks :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="Label2" runat="server" Text="Nature Of Case"></asp:Label>
+                            <asp:Label ID="lblRemarks" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Plentiff :</p>
+                            <p>Payment Status :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="Label3" runat="server" Text="Plentiff"></asp:Label>
+                            <asp:Label ID="lblPaymentStatus" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <p>Defendant :</p>
+                            <p>Created Date :</p>
                         </div>
                         <div class="col-md-6">
-                            <asp:Label ID="Label4" runat="server" Text="Defendant"></asp:Label>
+                            <asp:Label ID="lblCreatedDate" runat="server" Text="N/A"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <p>Created By :</p>
+                        </div>
+                        <div class="col-md-6">
+                            <asp:Label ID="lblCreatedBy" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
-            <asp:GridView Style="margin-top: 30px;" ID="gvPaymentDetails" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
-                <Columns>
-                    <asp:BoundField DataField="" HeaderText="Judge Name" />
-                    <asp:BoundField DataField="" HeaderText="Company Representer" />
-                    <asp:BoundField DataField="" HeaderText="Action Taken" />
-                    <asp:BoundField DataField="" HeaderText="Next Date" />
-                    <asp:BoundField DataField="" HeaderText="Next Action" />
-                    <asp:BoundField DataField="" HeaderText="Remarks" />
-                </Columns>
-            </asp:GridView>
+
+        <div class="d-flex justify-content-center">
+
+            <div class="card mb-4 ">
+
+                <div class="card-header">
+                    Documents
+                </div>
+
+                <div class="card-body table-responsive">
+                    <asp:GridView ID="gvDocuments" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
+                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                        <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
+                        <Columns>
+                            <asp:BoundField DataField="DocumentPaymentId" HeaderText="Id" ItemStyle-HorizontalAlign="center" />
+                            <asp:BoundField DataField="DocumentName" HeaderText="Name" ItemStyle-HorizontalAlign="center" />
+                            <asp:TemplateField ItemStyle-HorizontalAlign="center" HeaderText="Download Link">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block"
+                                        AutoPostBack="true" runat="server">
+                                    Download File
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+
+            </div>
         </div>
-        <div class="col-sm-6" style="text-align: center; padding-top: 20px;">
-            <label style="">Please add Remark :</label>
+        <div id="UpdateStatus">
+            <%if (lblPaymentStatus.Text == "Pending")
+                { %>
+            <div class="row mb-5">
+                <div class="col-sm-4" style="text-align: end; padding-top: 20px;">
+                    <label style="">Please add Remark :</label>
+                </div>
+                <div class="col-sm-8" style="text-align: left">
+                    <asp:TextBox ID="txtRemarks" Style="width: 65%; margin-left: auto; margin-top: 20px;" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <asp:Button ID="btnApprove" runat="server" OnClick="btnApprove_Click" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
+                <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" Style="width: 250px; margin-left: 10px; height: 40px;" />
+            </div>
+            <%} %>
         </div>
-        <div class="col-sm-6" style="text-align: left">
-            <asp:TextBox ID="txtPStatus" Style="width: 77%; margin-top: 20px;" runat="server"></asp:TextBox>
-        </div>
-        <div style="text-align: center; margin-top: 30px;">
-            <asp:Button ID="Button1" runat="server" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
-            <asp:Button ID="Button2" runat="server" Text="Reject" Style="width: 250px; margin-left: 10px; height: 40px;" />
-        </div>
+
     </div>
 </asp:Content>

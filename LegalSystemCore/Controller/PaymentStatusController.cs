@@ -15,6 +15,8 @@ namespace LegalSystemCore.Controller
         int Update(PaymentStatus paymentStatus);
         int Delete(PaymentStatus paymentStatus);
         List<PaymentStatus> GetPaymentStatusList();
+
+        PaymentStatus GetPaymentStatus(int paymentStatusId);
     }
 
     public class PaymentStatusControllerImpl : IPaymentStatusController
@@ -109,6 +111,30 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+        }
+
+        public PaymentStatus GetPaymentStatus(int paymentStatusId)
+        {
+            DbConnection dbConnection = null;
+            PaymentStatus paymentStatus = new PaymentStatus();
+            try
+            {
+                dbConnection = new DbConnection();
+                paymentStatus = PaymentStatusDAO.GetPaymentStatus(paymentStatusId, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return paymentStatus;
         }
     }
 }

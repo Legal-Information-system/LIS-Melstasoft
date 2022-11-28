@@ -14,6 +14,11 @@ namespace LegalSystemCore.Infrastructure
         int Update(Payment payment, DbConnection dbConnection);
         int Delete(Payment payment, DbConnection dbConnection);
         List<Payment> GetPaymentList(DbConnection dbConnection);
+
+        Payment GetPayment(int paymentId, DbConnection dbConnection);
+
+        int UpdateStatus(Payment payment, DbConnection dbConnection);
+
     }
     public class PaymentDAOSqlImpl : IPaymentDAO
     {
@@ -72,6 +77,7 @@ namespace LegalSystemCore.Infrastructure
 
             output = dbConnection.cmd.ExecuteNonQuery();
 
+
             return output;
         }
 
@@ -104,5 +110,41 @@ namespace LegalSystemCore.Infrastructure
             return paymentList;
         }
 
+        public Payment GetPayment(int paymentId, DbConnection dbConnection)
+        {
+            Payment payment = new Payment();
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "select * from payment_master WHERE is_active = 1 AND payment_id = @PaymentId";
+            dbConnection.cmd.Parameters.AddWithValue("@PaymentId", paymentId);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            payment = dataAccessObject.GetSingleOject<Payment>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return payment;
+        }
+
+        public int UpdateStatus(Payment payment, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update payment_master set payment_status_id = @PaymentStatusId, action_remarks = @ActionRemarks, action_taken_date=@ActionTakenDate, action_taken_user_id = @ActionTakenUserId WHERE payment_id = @PaymentId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@PaymentStatusId", payment.PaymentStatusId);
+            dbConnection.cmd.Parameters.AddWithValue("@ActionTakenDate", payment.ActionTakenDate);
+            dbConnection.cmd.Parameters.AddWithValue("@ActionRemarks", payment.ActionRemarks);
+            dbConnection.cmd.Parameters.AddWithValue("@ActionTakenUserId", payment.ActionTakenUserId);
+            dbConnection.cmd.Parameters.AddWithValue("@PaymentId", payment.PaymentId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+
+            return output;
+        }
     }
 }

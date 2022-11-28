@@ -14,6 +14,8 @@ namespace LegalSystemCore.Infrastructure
         List<Activity> GetActivityList(DbConnection dbConnection);
 
         int Delete(Activity activity, DbConnection dbConnection);
+
+        Activity GetActivity(DbConnection dbConnection, int activityId);
     }
     public class ActivityDAOSqlImpl : IActivityDAO
     {
@@ -84,6 +86,20 @@ namespace LegalSystemCore.Infrastructure
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
+        }
+
+        public Activity GetActivity(DbConnection dbConnection, int activityId)
+        {
+            Activity activity = new Activity();
+            dbConnection.cmd.CommandText = "select * from activity WHERE activity_id = @ActivityId";
+            dbConnection.cmd.Parameters.AddWithValue("@ActivityId", activityId);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            activity = dataAccessObject.GetSingleOject<Activity>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return activity;
         }
 
     }

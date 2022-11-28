@@ -14,6 +14,8 @@ namespace LegalSystemCore.Infrastructure
         int Update(Lawyer lawyer, DbConnection dbConnection);
         List<Lawyer> GetLawyerList(DbConnection dbConnection);
 
+        Lawyer GetLawyer(int lawyerId, DbConnection dbConnection);
+
     }
 
     public class LawyerSqlDAOImpl : ILawyerDAO
@@ -88,6 +90,22 @@ namespace LegalSystemCore.Infrastructure
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
+        }
+
+        public Lawyer GetLawyer(int lawyerId, DbConnection dbConnection)
+        {
+            Lawyer lawyer = new Lawyer();
+
+            dbConnection = new DbConnection();
+            dbConnection.cmd.CommandText = "select * from lawyer WHERE lawyer_id = @LawyerId AND is_active = 1";
+            dbConnection.cmd.Parameters.AddWithValue("@LawyerId", lawyerId);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            lawyer = dataAccessObject.GetSingleOject<Lawyer>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return lawyer;
         }
     }
 }

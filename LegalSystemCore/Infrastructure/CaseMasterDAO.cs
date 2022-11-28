@@ -2,7 +2,9 @@
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace LegalSystemCore.Infrastructure
@@ -15,6 +17,9 @@ namespace LegalSystemCore.Infrastructure
         int Delete(CaseMaster caseMaster, DbConnection dbConnection);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed, DbConnection dbConnection);
         CaseMaster GetCaseMaster(string caseNumber, DbConnection dbConnection);
+
+        double GetCaseMasterWithTotalPaidAmount(String caseNumber, DbConnection dbConnection);
+
     }
 
     public class CaseMasterDAOSqlImpl : ICaseMasterDAO
@@ -164,6 +169,28 @@ namespace LegalSystemCore.Infrastructure
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
+        }
+
+        public double GetCaseMasterWithTotalPaidAmount(String caseNumber, DbConnection dbConnection)
+        {
+            int output = 0;
+            double totalPaidAmount;
+
+            CaseMaster caseMaster = new CaseMaster();
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "SELECT * FROM case_master WHERE case_number = @CaseNumber";
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseNumber);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            caseMaster = dataAccessObject.GetSingleOject<CaseMaster>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            totalPaidAmount = caseMaster.totalPaidAmoutToPresent;
+
+            return totalPaidAmount;
         }
     }
 }

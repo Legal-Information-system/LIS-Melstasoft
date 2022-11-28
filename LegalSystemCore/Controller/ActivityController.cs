@@ -15,6 +15,8 @@ namespace LegalSystemCore.Controller
         List<Activity> GetActivityList();
 
         int Delete(Activity activity);
+
+        Activity GetActivity(int activityId);
     }
 
     public class ActivityControllerImpl : IActivityController
@@ -110,6 +112,31 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
+        }
+
+        public Activity GetActivity(int activityId)
+        {
+            Common.DbConnection dbConnection = null;
+            Activity activity = new Activity();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                activity = activityDAO.GetActivity(dbConnection, activityId);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return activity;
         }
 
     }
