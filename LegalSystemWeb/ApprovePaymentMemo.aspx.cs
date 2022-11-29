@@ -44,19 +44,54 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
 
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            CaseMaster caseMaster = new CaseMaster();
+
 
             payment = paymentController.GetPayment(paymentId);
 
-            lblPaymentId.Text = payment.PaymentId.ToString();
-            lblCreatedDate.Text = payment.CreatedDate.ToString();
-            lblCaseNumber.Text = payment.CaseNumber.ToString();
-            lblCreatedBy.Text = payment.CreateUserId.ToString();
-            payment.lawyer = lawyerController.GetLawyer(payment.LawyerId);
-            lblLawyerName.Text = payment.lawyer.LawyerName.ToString();
-            payment.paymentStatus = paymentStatusController.GetPaymentStatus(payment.PaymentStatusId);
-            lblPaymentStatus.Text = payment.paymentStatus.StatusName;
-            lblRemarks.Text = payment.Remarks.ToString();
-            lblRequestedPaymentAmount.Text = payment.Amount.ToString();
+            if (payment.PaymentId == 0)
+            {
+                Response.Redirect("404.aspx");
+            }
+            else
+            {
+                lblPaymentId.Text = payment.PaymentId.ToString();
+                lblCreatedDate.Text = payment.CreatedDate.ToString();
+                lblCaseNumber.Text = payment.CaseNumber.ToString();
+                lblCreatedBy.Text = payment.CreateUserId.ToString();
+                payment.lawyer = lawyerController.GetLawyer(payment.LawyerId);
+                lblLawyerName.Text = payment.lawyer.LawyerName.ToString();
+                payment.paymentStatus = paymentStatusController.GetPaymentStatus(payment.PaymentStatusId);
+                lblPaymentStatus.Text = payment.paymentStatus.StatusName;
+                lblRemarks.Text = payment.Remarks.ToString();
+                lblRequestedPaymentAmount.Text = payment.Amount.ToString();
+
+                caseMaster = caseMasterController.GetCaseMasterWithPaid(payment.CaseNumber);
+                payment.caseMaster = caseMaster;
+
+
+                int UserRoleId = Convert.ToInt32(Session["User_Role_Id"]);
+                int companyId = Convert.ToInt32(Session["company_id"].ToString());
+                int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+
+                if (UserRoleId == 4)
+                {
+                    if (payment.caseMaster.CompanyId != companyId)
+                    {
+                        Response.Redirect("404.aspx");
+                    }
+                }
+
+                if (UserRoleId == 5)
+                {
+                    if (payment.caseMaster.CompanyUnitId != companyUnitId)
+                    {
+                        Response.Redirect("404.aspx");
+                    }
+                }
+            }
+
 
         }
 

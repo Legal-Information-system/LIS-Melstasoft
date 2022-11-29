@@ -26,9 +26,16 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    BindActivityList();
-                    BindLawyerList();
-                    BindCaseList();
+                    if (Session["User_Role_Id"].ToString() == "3" || Session["User_Role_Id"].ToString() == "2")
+                    {
+                        Response.Redirect("404.aspx");
+                    }
+                    else
+                    {
+                        BindActivityList();
+                        BindLawyerList();
+                        BindCaseList();
+                    }
                 }
             }
         }
@@ -49,15 +56,31 @@ namespace LegalSystemWeb
             ddlLawyerName.DataValueField = "LawyerId";
             ddlLawyerName.DataTextField = "LawyerName";
             ddlLawyerName.DataBind();
+            ddlLawyerName.Items.Insert(0, new ListItem("-- select lawyer --", ""));
+
         }
 
         private void BindCaseList()
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-            ddlCaseNo.DataSource = caseMasterController.GetCaseMasterList(true);
+            List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterList(true);
+
+            int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+            int companyId = Convert.ToInt32(Session["company_id"].ToString());
+            int UserRoleId = Convert.ToInt32(Session["User_Role_Id"].ToString());
+
+            if (UserRoleId == 4)
+                caseMasterList = caseMasterList.Where(c => c.CompanyId == companyId).ToList();
+            if (UserRoleId == 5)
+                caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
+
+            ddlCaseNo.DataSource = caseMasterList;
             ddlCaseNo.DataValueField = "CaseNumber";
             ddlCaseNo.DataTextField = "CaseNumber";
             ddlCaseNo.DataBind();
+
+            ddlCaseNo.Items.Insert(0, new ListItem("-- select case --", ""));
+
         }
 
 

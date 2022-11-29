@@ -69,6 +69,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
+
+                            <% if (Session["User_Role_Id"].ToString() != "2")
+                                {
+                            %>
                             <a class="nav-link" href="CreateCase.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
                                 Create Case
@@ -82,12 +86,14 @@
                                 Payment Memo
                             </a>
 
+                            <%} %>
+                            <%} %>
                             <a class="nav-link" href="ViewCases.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 ViewCases
                             </a>
 
-                            <%} %>
+
 
                             <a class="nav-link" href="ViewPaymentMemo.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -101,10 +107,16 @@
 
                             <div class="sb-sidenav-menu-heading">Admin</div>
 
+                            <% if (Session["User_Role_Id"].ToString() != "2")
+                                {
+                            %>
                             <a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Create Account
                             </a>
+
+                            <%} %>
+
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>

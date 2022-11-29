@@ -11,7 +11,7 @@
             <asp:Label ID="lblCaseNumber" runat="server" Text="N/A"></asp:Label></h4>
 
         <div class="col-sm-6 mb-3">
-            <div class="card" style="width: 500px; margin-left: auto;">
+            <div class="card" style="width: 85%; margin-left: auto;">
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-1">
                         <div class="col-sm-6">
@@ -108,79 +108,79 @@
             </div>
         </div>
         <div class="col-sm-6 mb-3">
-            <div class="card" style="width: 500px; margin-right: auto">
+            <div class="card" style="width: 85%; margin-right: auto">
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Company Unit</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblCompanyUnit" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Nature of Case</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblNature" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Previous Case Number</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblPrevCase" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Difendant</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblDefendant" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Assign Attorney</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblAttorney" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Counsilor</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblCounsilor" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Case Description</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblDescription" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <%if (lblStatus.Text == "Closed")
                         { %>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Closed Remarks</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblCLoseRemarks" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <p>Closed User</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <asp:Label ID="lblCloseUser" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>

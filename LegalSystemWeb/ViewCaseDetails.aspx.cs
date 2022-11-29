@@ -27,18 +27,18 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
-                    Response.Redirect("404.aspx");
-                else
+                //if (Session["User_Role_Id"].ToString() == "3")
+                //    Response.Redirect("404.aspx");
+                //else
+                //{
+                if (!IsPostBack)
                 {
-                    if (!IsPostBack)
-                    {
-                        SetCaseMasterData();
-                        caseNumber = Request.QueryString["CaseNumber"].ToString();
-                        BindCaseActivityList(caseNumber);
-                        BindDocumentList(caseNumber);
-                    }
+                    SetCaseMasterData();
+                    caseNumber = Request.QueryString["CaseNumber"].ToString();
+                    BindCaseActivityList(caseNumber);
+                    BindDocumentList(caseNumber);
                 }
+                //}
             }
         }
 

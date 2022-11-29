@@ -102,8 +102,8 @@
                         </div>
                         <div class="row mb-3 ms-1">
                             <div class="col-sm-3">
-                                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" Text="Reset" ValidationGroup="1" />
-                                <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary btn-user btn-block" Text="Save" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" Text="Reset" />
+                                <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary btn-user btn-block" Text="Save" OnClick="btnSave_Click" ValidationGroup="1" />
                             </div>
                         </div>
 
