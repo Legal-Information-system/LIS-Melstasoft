@@ -116,6 +116,8 @@
         <div id="UpdateStatus">
             <%if (lblPaymentStatus.Text == "Pending")
                 { %>
+            <%if (Session["User_Role_Id"].ToString() == "3")
+                { %>
             <div class="row mb-5">
                 <div class="col-sm-4" style="text-align: end; padding-top: 20px;">
                     <label style="">Please add Remark :</label>
@@ -128,6 +130,7 @@
                 <asp:Button ID="btnApprove" runat="server" OnClick="btnApprove_Click" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
                 <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" Style="width: 250px; margin-left: 10px; height: 40px;" />
             </div>
+            <%} %>
             <%} %>
         </div>
 

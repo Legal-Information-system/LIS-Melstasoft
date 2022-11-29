@@ -30,13 +30,19 @@ namespace LegalSystemWeb
         {
             IPaymentController paymentController = ControllerFactory.CreatePaymentController();
             List<Payment> listPayment = paymentController.GetPaymentList();
+
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
             CaseMaster caseMaster = new CaseMaster();
+
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+
             IPaymentActivityController paymentActivityController = ControllerFactory.CreatePaymentActivityController();
             List<PaymentActivity> listPaymentActivity = new List<PaymentActivity>();
+
             IActivityController activityController = ControllerFactory.CreateActivityController();
+
             IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
+
             foreach (Payment payment in listPayment)
             {
                 caseMaster = caseMasterController.GetCaseMasterWithPaid(payment.CaseNumber);
@@ -59,6 +65,21 @@ namespace LegalSystemWeb
                 }
 
             }
+
+            int UserRoleId = Convert.ToInt32(Session["User_Role_Id"]);
+            int companyId = Convert.ToInt32(Session["company_id"].ToString());
+            int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
+
+            if (UserRoleId == 4 || UserRoleId == 5)
+            {
+                listPayment = listPayment.Where(c => c.caseMaster.CompanyId == companyId).ToList();
+            }
+
+            if (UserRoleId == 5)
+            {
+                listPayment = listPayment.Where(c => c.caseMaster.CompanyUnitId == companyUnitId).ToList();
+            }
+
             this.GridView1.DataSource = listPayment;
             listGloabalPayment = listPayment;
             this.GridView1.DataBind();
