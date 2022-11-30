@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LegalSystemCore.Common;
+using LegalSystemCore.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,17 @@ namespace LegalSystemWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            lblUserName.Text = Session["User_Name"].ToString();
+        }
 
+        protected void btnLogut_Click(object sender, EventArgs e)
+        {
+            if (Session["User_Id"] != null)
+            {
+                Session.Abandon();
+                Response.Redirect("Login.aspx");
+
+            }
         }
     }
 }

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +41,80 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Common\ControllerFactory.cs" />
+    <Compile Include="Common\DAOFactory.cs" />
+    <Compile Include="Common\DataAccessObject.cs" />
+    <Compile Include="Common\DbConnection.cs" />
+    <Compile Include="Common\DBFieldAttribute.cs" />
+    <Compile Include="Controller\CaseActivityController.cs" />
+    <Compile Include="Controller\CaseMasterController.cs" />
+    <Compile Include="Controller\CaseNatureController.cs" />
+    <Compile Include="Controller\DashboardCardController.cs" />
+    <Compile Include="Controller\DocumentCaseController.cs" />
+    <Compile Include="Controller\DocumentController.cs" />
+    <Compile Include="Controller\DocumentPaymentController.cs" />
+    <Compile Include="Controller\PaymentActivityController.cs" />
+    <Compile Include="Controller\PaymentController.cs" />
+    <Compile Include="Controller\UserLoginController.cs" />
+    <Compile Include="Controller\CourtController.cs" />
+    <Compile Include="Controller\CourtLocationController.cs" />
+    <Compile Include="Controller\LocationController.cs" />
+    <Compile Include="Controller\CaseActionController.cs" />
+    <Compile Include="Controller\CaseStatusController.cs" />
+    <Compile Include="Controller\ActivityController.cs" />
+    <Compile Include="Controller\CompanyController.cs" />
+    <Compile Include="Controller\CompanyUnitController.cs" />
+    <Compile Include="Controller\JudgementTypeController.cs" />
+    <Compile Include="Controller\PaymentStatusController.cs" />
+    <Compile Include="Controller\UserRoleController.cs" />
+    <Compile Include="Domain\CaseAction.cs" />
+    <Compile Include="Controller\LawyerController.cs" />
+    <Compile Include="Domain\Activity.cs" />
+    <Compile Include="Domain\CaseActivity.cs" />
+    <Compile Include="Domain\CaseMaster.cs" />
+    <Compile Include="Domain\CaseNature.cs" />
+    <Compile Include="Domain\DashboardCard.cs" />
+    <Compile Include="Domain\Document.cs" />
+    <Compile Include="Domain\DocumentCase.cs" />
+    <Compile Include="Domain\DocumentPayment.cs" />
+    <Compile Include="Domain\Lawyer.cs" />
+    <Compile Include="Domain\Company.cs" />
+    <Compile Include="Domain\CompanyUnit.cs" />
+    <Compile Include="Domain\Court.cs" />
+    <Compile Include="Domain\CourtLocation.cs" />
+    <Compile Include="Domain\Location.cs" />
+    <Compile Include="Domain\Payment.cs" />
+    <Compile Include="Domain\PaymentActivity.cs" />
+    <Compile Include="Domain\UserLogin.cs" />
+    <Compile Include="Infrastructure\CaseActivityDAO.cs" />
+    <Compile Include="Infrastructure\CaseMasterDAO.cs" />
+    <Compile Include="Infrastructure\CaseNatureDAO.cs" />
+    <Compile Include="Infrastructure\DashboardCardDAO.cs" />
+    <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
+    <Compile Include="Infrastructure\DocumentDAO.cs" />
+    <Compile Include="Infrastructure\DocumentPaymentDAO.cs" />
+    <Compile Include="Infrastructure\PaymentActivityDAO.cs" />
+    <Compile Include="Infrastructure\PaymentDAO.cs" />
+    <Compile Include="Infrastructure\UserLoginDAO.cs" />
+    <Compile Include="Infrastructure\CourtDAO.cs" />
+    <Compile Include="Infrastructure\CourtLocationDAO.cs" />
+    <Compile Include="Infrastructure\LocationDAO.cs" />
+    <Compile Include="Domain\JudgementType.cs" />
+    <Compile Include="Domain\PaymentStatus.cs" />
+    <Compile Include="Domain\UserRole.cs" />
+    <Compile Include="Infrastructure\CaseActionDAO.cs" />
+    <Compile Include="Domain\CaseStatus.cs" />
+    <Compile Include="Infrastructure\CaseStatusDAO.cs" />
+    <Compile Include="Infrastructure\ActivityDAO.cs" />
+    <Compile Include="Infrastructure\CompanyDAO.cs" />
+    <Compile Include="Infrastructure\CompanyUnitDAO.cs" />
+    <Compile Include="Infrastructure\JudgementTypeDAO.cs" />
+    <Compile Include="Infrastructure\PaymentStatusDAO.cs" />
+    <Compile Include="Infrastructure\UserRoleDAO.cs" />
+    <Compile Include="Infrastructure\LawyerDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

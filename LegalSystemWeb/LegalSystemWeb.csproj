@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LIS\LIS-Melstasoft\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -58,13 +62,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="401.html" />
-    <Content Include="404.html" />
-    <Content Include="500.html" />
+    <Content Include="404.aspx" />
+    <Content Include="500.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="AddAction.aspx" />
+    <Content Include="AddActivity.aspx" />
+    <Content Include="AddCaseNature.aspx" />
+    <Content Include="AddCaseStatus.aspx" />
+    <Content Include="AddCompany.aspx" />
+    <Content Include="AddCompanyUnit.aspx" />
+    <Content Include="AddCourt.aspx" />
+    <Content Include="AddCourtLocation.aspx" />
+    <Content Include="AddJudgementType.aspx" />
+    <Content Include="AddLawyer.aspx" />
+    <Content Include="AddLocation.aspx" />
+    <Content Include="AddPaymentStatus.aspx" />
+    <Content Include="AddUserRole.aspx" />
+    <Content Include="ApprovePaymentMemo.aspx" />
     <Content Include="assets\demo\chart-area-demo.js" />
     <Content Include="assets\demo\chart-bar-demo.js" />
     <Content Include="assets\demo\chart-pie-demo.js" />
@@ -72,31 +90,26 @@
     <Content Include="assets\img\error-404-monochrome.svg" />
     <Content Include="bin\LegalSystemWeb.dll" />
     <Content Include="bin\LegalSystemWeb.pdb" />
-    <Content Include="charts.html" />
+    <Content Include="CreateAccount.aspx" />
     <Content Include="CreateCase.aspx" />
     <Content Include="CreatePaymentMemo.aspx" />
     <Content Include="css\styles.css" />
     <Content Include="Dashboard.aspx" />
-    <Content Include="index.html" />
     <Content Include="js\datatables-simple-demo.js" />
     <Content Include="js\scripts.js" />
-    <Content Include="layout-sidenav-light.html" />
-    <Content Include="layout-static.html" />
-    <Content Include="login.html" />
+    <Content Include="Login.aspx" />
     <Content Include="obj\Debug\LegalSystemWeb.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\LegalSystemWeb.dll" />
     <Content Include="obj\Debug\LegalSystemWeb.pdb" />
-    <Content Include="password.html" />
-    <Content Include="register.html" />
     <Content Include="Styles\Site.css" />
-    <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
-    <Content Include="tables.html" />
-    <Content Include="Test.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="ViewCaseDetails.aspx" />
+    <Content Include="ViewCases.aspx" />
+    <Content Include="ViewPaymentMemo.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -106,6 +119,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="500.aspx.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="500.aspx.designer.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+    </Compile>
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -141,6 +168,111 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddAction.aspx.cs">
+      <DependentUpon>AddAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddAction.aspx.designer.cs">
+      <DependentUpon>AddAction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddActivity.aspx.cs">
+      <DependentUpon>AddActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddActivity.aspx.designer.cs">
+      <DependentUpon>AddActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCaseNature.aspx.cs">
+      <DependentUpon>AddCaseNature.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCaseNature.aspx.designer.cs">
+      <DependentUpon>AddCaseNature.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCaseStatus.aspx.cs">
+      <DependentUpon>AddCaseStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCaseStatus.aspx.designer.cs">
+      <DependentUpon>AddCaseStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCompany.aspx.cs">
+      <DependentUpon>AddCompany.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCompany.aspx.designer.cs">
+      <DependentUpon>AddCompany.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCompanyUnit.aspx.cs">
+      <DependentUpon>AddCompanyUnit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCompanyUnit.aspx.designer.cs">
+      <DependentUpon>AddCompanyUnit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCourt.aspx.cs">
+      <DependentUpon>AddCourt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCourt.aspx.designer.cs">
+      <DependentUpon>AddCourt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddCourtLocation.aspx.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCourtLocation.aspx.designer.cs">
+      <DependentUpon>AddCourtLocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddJudgementType.aspx.cs">
+      <DependentUpon>AddJudgementType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddJudgementType.aspx.designer.cs">
+      <DependentUpon>AddJudgementType.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddLawyer.aspx.cs">
+      <DependentUpon>AddLawyer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddLawyer.aspx.designer.cs">
+      <DependentUpon>AddLawyer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddLocation.aspx.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddLocation.aspx.designer.cs">
+      <DependentUpon>AddLocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddPaymentStatus.aspx.cs">
+      <DependentUpon>AddPaymentStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddPaymentStatus.aspx.designer.cs">
+      <DependentUpon>AddPaymentStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUserRole.aspx.cs">
+      <DependentUpon>AddUserRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddUserRole.aspx.designer.cs">
+      <DependentUpon>AddUserRole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateAccount.aspx.cs">
+      <DependentUpon>CreateAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateAccount.aspx.designer.cs">
+      <DependentUpon>CreateAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovePaymentMemo.aspx.cs">
+      <DependentUpon>ApprovePaymentMemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApprovePaymentMemo.aspx.designer.cs">
+      <DependentUpon>ApprovePaymentMemo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreateCase.aspx.cs">
       <DependentUpon>CreateCase.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -162,15 +294,15 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -180,13 +312,6 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Test.aspx.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Test.aspx.designer.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-    </Compile>
     <Compile Include="UpdateCaseActivity.aspx.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,10 +319,34 @@
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewCaseDetails.aspx.cs">
+      <DependentUpon>ViewCaseDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewCaseDetails.aspx.designer.cs">
+      <DependentUpon>ViewCaseDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCases.aspx.cs">
+      <DependentUpon>ViewCases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewCases.aspx.designer.cs">
+      <DependentUpon>ViewCases.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPaymentMemo.aspx.cs">
+      <DependentUpon>ViewPaymentMemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewPaymentMemo.aspx.designer.cs">
+      <DependentUpon>ViewPaymentMemo.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="SystemDocuments\CaseMaster\" />
+    <Folder Include="SystemDocuments\PaymentMemo\PaidPayments\" />
+    <Folder Include="SystemDocuments\PaymentMemo\RequestPayments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
@@ -205,6 +354,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LegalSystemCore\LegalSystemCore.csproj">
+      <Project>{40318980-c02b-4bf3-bed3-863aed4f456a}</Project>
+      <Name>LegalSystemCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

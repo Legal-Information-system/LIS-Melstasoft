@@ -15,6 +15,24 @@ namespace LegalSystemWeb
     {
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+
+        /// <summary>
         /// Literal16 control.
         /// </summary>
         /// <remarks>
@@ -276,6 +294,15 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
 
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// Literal8 control.
         /// </summary>
         /// <remarks>
@@ -375,13 +402,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Literal Literal15;
 
         /// <summary>
-        /// rbIsPlantiff control.
+        /// ddlJudgement control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rbIsPlantiff;
+        protected global::System.Web.UI.WebControls.DropDownList ddlJudgement;
 
         /// <summary>
         /// Literal11 control.
@@ -402,13 +429,22 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.TextBox txtOutcome;
 
         /// <summary>
-        /// btnUpdateActivity control.
+        /// Literal13 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpdateActivity;
+        protected global::System.Web.UI.WebControls.Literal Literal13;
+
+        /// <summary>
+        /// txtCaseCloseRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCaseCloseRemarks;
 
         /// <summary>
         /// btnReset control.
@@ -418,5 +454,14 @@ namespace LegalSystemWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReset;
+
+        /// <summary>
+        /// btnUpdateActivity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdateActivity;
     }
 }
