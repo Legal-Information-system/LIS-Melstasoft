@@ -98,10 +98,10 @@ namespace LegalSystemWeb
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            //if (listStudent == null && ViewState["listStudent"] != null)
-            //    listStudent = (List<Student>)ViewState["listStudent"];
-            //else
-            //    listStudent = new List<Student>();
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
 
             txtCompanyUnitName.Text = companyUnitList[rowIndex].CompanyUnitName;
             ddlCompany.SelectedValue = Convert.ToString(companyUnitList[rowIndex].CompanyId);
@@ -120,11 +120,20 @@ namespace LegalSystemWeb
         {
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             CompanyUnit companyUnit = new CompanyUnit();
             companyUnit.CompanyUnitId = companyUnitList[rowIndex].CompanyUnitId;
             companyUnitController.Delete(companyUnit);
             BindDataSource();
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

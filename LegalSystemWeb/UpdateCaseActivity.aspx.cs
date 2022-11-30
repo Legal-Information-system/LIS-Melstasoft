@@ -134,7 +134,7 @@ namespace LegalSystemWeb
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
-            ddlCounselor.Items.Insert(0, new ListItem("-- select counsilor --", ""));
+            ddlCounselor.Items.Insert(0, new ListItem("-- select counselor --", ""));
 
         }
 

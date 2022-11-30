@@ -114,6 +114,12 @@ namespace LegalSystemWeb
             payment.ActionTakenDate = DateTime.Now;
             payment.PaymentStatusId = 2;
             paymentController.UpdatePaymentStatus(payment);
+
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            CaseMaster caseMaster = new CaseMaster();
+            caseMaster.CaseNumber = lblCaseNumber.Text;
+            caseMaster.payableAmount = Convert.ToDouble(lblRequestedPaymentAmount.Text);
+            caseMasterController.UpdateCasePaidAmount(caseMaster);
         }
 
         protected void btnReject_Click(object sender, EventArgs e)

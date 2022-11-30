@@ -19,7 +19,7 @@ namespace LegalSystemCore.Infrastructure
         CaseMaster GetCaseMaster(string caseNumber, DbConnection dbConnection);
 
         double GetCaseMasterWithTotalPaidAmount(String caseNumber, DbConnection dbConnection);
-
+        int UpdateCasePaidAmount(CaseMaster caseMaster, DbConnection dbConnection);
     }
 
     public class CaseMasterDAOSqlImpl : ICaseMasterDAO
@@ -191,6 +191,33 @@ namespace LegalSystemCore.Infrastructure
             totalPaidAmount = caseMaster.totalPaidAmoutToPresent;
 
             return totalPaidAmount;
+        }
+
+        public int UpdateCasePaidAmount(CaseMaster caseMaster, DbConnection dbConnection)
+        {
+            int output = 0;
+            CaseMaster caseMaster1 = new CaseMaster();
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandText = "select * from case_master WHERE case_number = @CaseNumber AND is_active = 1";
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseMaster.CaseNumber);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            caseMaster1 = dataAccessObject.GetSingleOject<CaseMaster>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            caseMaster.totalPaidAmoutToPresent = caseMaster1.totalPaidAmoutToPresent + caseMaster.payableAmount;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandText = "Update case_master SET total_paid_amount = @totalPaidAmoutToPresent WHERE case_number = @CaseNumber ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@totalPaidAmoutToPresent", caseMaster.totalPaidAmoutToPresent);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseMaster.CaseNumber);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
     }
 }

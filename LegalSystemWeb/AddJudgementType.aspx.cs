@@ -73,7 +73,10 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (gvJudgementType.PageIndex != 0)
+            {
+                rowIndex = (gvJudgementType.PageSize + rowIndex) * (gvJudgementType.PageIndex);
+            }
             txtJType.Text = judgementTypeList[rowIndex].JTypeName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = judgementTypeList[rowIndex].JTypeId;
@@ -88,12 +91,21 @@ namespace LegalSystemWeb
         {
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (gvJudgementType.PageIndex != 0)
+            {
+                rowIndex = (gvJudgementType.PageSize + rowIndex) * (gvJudgementType.PageIndex);
+            }
             JudgementType judgementType = new JudgementType();
             judgementType.JTypeId = judgementTypeList[rowIndex].JTypeId; ;
 
             judgementTypeController.Delete(judgementType);
             BindDataSource();
+        }
+
+        protected void gvJudgementType_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            gvJudgementType.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

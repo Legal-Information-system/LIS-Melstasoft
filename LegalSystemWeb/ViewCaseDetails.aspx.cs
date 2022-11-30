@@ -93,8 +93,8 @@ namespace LegalSystemWeb
                 List<Location> locationList = locationController.GetLocationList();
                 locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
 
-                List<Lawyer> assignList = lawyerController.GetLawyerList();
-                assignList = assignList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
+                List<Lawyer> lawyerList = lawyerController.GetLawyerList();
+                List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
 
                 List<UserLogin> userClosedList = userLoginController.GetUserLoginList();
                 List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
@@ -132,7 +132,7 @@ namespace LegalSystemWeb
 
                 if (caseMaster.CounsilorId > 0)
                 {
-                    List<Lawyer> counsilorList = assignList.Where(l => l.LawyerId == caseMaster.CounsilorId).ToList();
+                    List<Lawyer> counsilorList = lawyerList.Where(l => l.LawyerId == caseMaster.CounsilorId).ToList();
                     lblCounsilor.Text = counsilorList[0].LawyerName;
                 }
 
@@ -158,7 +158,7 @@ namespace LegalSystemWeb
             }
             catch (Exception)
             {
-                Response.Redirect("404.aspx");
+                Response.Redirect("500.aspx");
             }
 
         }

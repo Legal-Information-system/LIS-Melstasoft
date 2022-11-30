@@ -131,7 +131,7 @@
                                 <asp:Literal ID="Literal1" runat="server" Text="Assigning Attorney"></asp:Literal>
                             </div>
                             <div class="col-md-6">
-                                <asp:DropDownList ID="ddlAssignAttorney" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlAssignAttorney" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="1"
                                     ControlToValidate="ddlAssignAttorney" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
@@ -141,7 +141,7 @@
                                 <asp:Literal ID="Literal6" runat="server" Text="Counselor"></asp:Literal>
                             </div>
                             <div class="col-md-6">
-                                <asp:DropDownList ID="ddlCounselor" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlCounselor" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="1"
                                     ControlToValidate="ddlCounselor" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>

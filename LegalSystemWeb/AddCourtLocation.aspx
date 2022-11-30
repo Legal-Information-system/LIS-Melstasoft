@@ -29,7 +29,7 @@
             </div>
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
                     <Columns>
                         <asp:BoundField DataField="CourtId" HeaderText="Court Id" />
                         <asp:BoundField DataField="court.CourtName" HeaderText="Court Name" />

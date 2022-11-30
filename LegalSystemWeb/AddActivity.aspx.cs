@@ -84,7 +84,10 @@ namespace LegalSystemWeb
 
             IActivityController activityController = ControllerFactory.CreateActivityController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             Activity activity = new Activity();
             activity.ActivityId = activitiesList[rowIndex].ActivityId;
 
@@ -96,10 +99,19 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             txtAddActivity.Text = activitiesList[rowIndex].ActivityName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = activitiesList[rowIndex].ActivityId;
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

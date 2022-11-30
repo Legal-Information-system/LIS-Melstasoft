@@ -82,8 +82,12 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
-
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
 
             txtNatureName.Text = casesList[rowIndex].CaseNatureName;
             btnSave.Text = "Update";
@@ -94,12 +98,21 @@ namespace LegalSystemWeb
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             CaseNature caseNature = new CaseNature();
             caseNature.CaseNatureId = casesList[rowIndex].CaseNatureId;
 
             caseNatureController.Delete(caseNature);
             BindDataSource();
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

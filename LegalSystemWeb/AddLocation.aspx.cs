@@ -84,7 +84,10 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             txtLocationName.Text = locationList[rowIndex].locationName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = locationList[rowIndex].LocationId;
@@ -94,12 +97,21 @@ namespace LegalSystemWeb
         {
             ILocationController locationController = ControllerFactory.CreateLocationController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             Location location = new Location();
             location.LocationId = locationList[rowIndex].LocationId; ;
 
             locationController.Delete(location);
             BindDataSource();
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

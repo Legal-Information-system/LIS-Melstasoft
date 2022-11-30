@@ -27,7 +27,7 @@
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="gvUserRole" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="gvUserRole_OnPageIndexChanged">
                     <Columns>
                         <asp:BoundField DataField="RoleId" HeaderText="Role Id" />
                         <asp:BoundField DataField="RoleName" HeaderText="Role Name" />

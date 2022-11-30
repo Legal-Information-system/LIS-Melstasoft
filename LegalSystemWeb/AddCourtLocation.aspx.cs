@@ -111,12 +111,21 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             ddlCourt.SelectedValue = Convert.ToString(courtlocation[rowIndex].CourtId);
             ddlLocation.SelectedValue = Convert.ToString(courtlocation[rowIndex].LocationId);
             btnSave.Text = "Update";
             ViewState["updatedRowIndex1"] = courtlocation[rowIndex].CourtId;
             ViewState["updatedRowIndex2"] = courtlocation[rowIndex].LocationId;
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }
