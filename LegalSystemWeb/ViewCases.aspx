@@ -23,7 +23,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <asp:GridView ID="datatablesSimple" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="datatablesSimple_PageIndexChanging">
                         <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
 
                         <Columns>

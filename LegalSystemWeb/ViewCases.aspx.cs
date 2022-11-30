@@ -91,10 +91,19 @@ namespace LegalSystemWeb
             datatablesSimple.DataBind();
         }
 
+        protected void datatablesSimple_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            datatablesSimple.PageIndex = e.NewPageIndex;
+            this.BindCaseList();
+        }
+
         protected void btnView_Click(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (datatablesSimple.PageIndex != 0)
+            {
+                rowIndex = (datatablesSimple.PageSize + rowIndex) * (datatablesSimple.PageIndex);
+            }
 
             BindCaseList();
 

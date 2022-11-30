@@ -80,6 +80,8 @@
                                 <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">Plaintiff</asp:ListItem>
                                 <asp:ListItem Value="0" CssClass="form-check-input">Defendant</asp:ListItem>
                             </asp:RadioButtonList>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
+                                ControlToValidate="rbIsPlantiff" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                         </div>
                         <div class="col-md-6">
