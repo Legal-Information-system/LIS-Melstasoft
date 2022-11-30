@@ -174,9 +174,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row mb-3 ms-1">
                     <div class="col-sm-6">
                         <div class="row">
                             <div class="col-sm-6">
@@ -202,9 +200,22 @@
                                         <asp:Literal ID="Literal8" runat="server" Text="Action Taken"></asp:Literal>
                                     </div>
                                     <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlActionTaken" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlActionTaken" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"></asp:DropDownList>
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="1"
                                             ControlToValidate="ddlActionTaken" ErrorMessage="Required">*</asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <asp:Literal ID="Literal10" runat="server" Text="Next Action"></asp:Literal>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <asp:DropDownList ID="ddlNextAction" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="1"
+                                            ControlToValidate="ddlNextAction" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </div>
@@ -218,21 +229,6 @@
                                     </div>
                                     <div class="col-md-6">
                                         <asp:TextBox ID="txtNextDate" runat="server" CssClass="form-control form-control-user" TextMode="Date"></asp:TextBox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3 ms-1">
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal10" runat="server" Text="Next Action"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlNextAction" AutoPostBack="true" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="1"
-                                            ControlToValidate="ddlNextAction" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </div>
