@@ -136,7 +136,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5">
-                            <p>Difendant</p>
+                            <p>Defendant</p>
                         </div>
                         <div class="col-md-7">
                             <asp:Label ID="lblDefendant" runat="server" Text="N/A"></asp:Label>

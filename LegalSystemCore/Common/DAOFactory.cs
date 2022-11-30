@@ -133,5 +133,11 @@ namespace LegalSystemCore.Common
             IDocumentPaymentDAO documentPaymentDAO = new DocumentPaymentDAOSqlImpl();
             return ((IDocumentPaymentDAO)documentPaymentDAO);
         }
+
+        public static IDashboardCardDAO CreateDashboardCardDAO()
+        {
+            IDashboardCardDAO dashboardCardDAO = new DashboardCardDAOImpl();
+            return ((IDashboardCardDAO)dashboardCardDAO);
+        }
     }
 }

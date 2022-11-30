@@ -43,7 +43,7 @@
 
                 <div class="table-responsive" style="width: 100%; padding-left: 0px; padding-right: 0px;">
                     <asp:GridView Style="margin-top: 30px; width: 100%" ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
                         <Columns>
                             <asp:BoundField DataField="CompanyId" HeaderText="Company Id" ItemStyle-CssClass="display: none;">
                                 <ItemStyle CssClass="display: none;"></ItemStyle>

@@ -83,7 +83,10 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             txtCourtName.Text = courtList[rowIndex].CourtName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = courtList[rowIndex].CourtId;
@@ -93,11 +96,20 @@ namespace LegalSystemWeb
         {
             ICourtController courtController = ControllerFactory.CreateCourtController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-
+            if (GridView2.PageIndex != 0)
+            {
+                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
+            }
             Court court = new Court();
             court.CourtId = courtList[rowIndex].CourtId;
             courtController.Delete(court);
             BindDataSource();
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            GridView2.PageIndex = e.NewPageIndex;
+            this.BindDataSource();
         }
     }
 }

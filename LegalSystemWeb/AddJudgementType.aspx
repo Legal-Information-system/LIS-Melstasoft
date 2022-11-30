@@ -25,7 +25,7 @@
 
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
                 <asp:GridView Style="margin-top: 30px;" ID="gvJudgementType" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="gvJudgementType_OnPageIndexChanged">
                     <Columns>
                         <asp:BoundField DataField="JTypeId" HeaderText="Type Id" />
                         <asp:BoundField DataField="JTypeName" HeaderText="Name" />

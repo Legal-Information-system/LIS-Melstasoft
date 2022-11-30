@@ -19,6 +19,8 @@ namespace LegalSystemCore.Controller
         CaseMaster GetCaseMaster(string caseNumber);
 
         CaseMaster GetCaseMasterWithPaid(String caseNumber);
+        int UpdateCasePaidAmount(CaseMaster caseMaster);
+
     }
 
     public class CaseMasterControllerImpl : ICaseMasterController
@@ -216,6 +218,28 @@ namespace LegalSystemCore.Controller
                 }
             }
             return caseMaster;
+        }
+
+        public int UpdateCasePaidAmount(CaseMaster caseMaster)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return caseMasterDAO.UpdateCasePaidAmount(caseMaster, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
         }
 
     }

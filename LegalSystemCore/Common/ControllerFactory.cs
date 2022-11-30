@@ -134,5 +134,11 @@ namespace LegalSystemCore.Common
             return (IDocumentPaymentController)documentPaymentController;
         }
 
+        public static IDashboardCardController CreateDashboardCardController()
+        {
+            IDashboardCardController dashboardCardController = new DashBoardCardControllerSqlImpl();
+            return (IDashboardCardController)dashboardCardController;
+        }
+
     }
 }
