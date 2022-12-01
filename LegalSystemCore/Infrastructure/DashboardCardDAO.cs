@@ -81,8 +81,12 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
+            DateTime prev = new DateTime();
+            prev = DateTime.Now;
+            prev = prev.AddMonths(-1);
+
             dbConnection.cmd.CommandText = "SELECT COUNT(created_date) AS case_count, DAY(created_date) AS month_day FROM case_master " +
-                "WHERE MONTH(created_date) = " + DateTime.Now.Month +
+                "WHERE MONTH(created_date) = " + DateTime.Now.Month + "OR MONTH(created_date) = " + prev.Month +
                 "GROUP BY DAY(created_date);";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
@@ -96,18 +100,22 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
+            DateTime prev = new DateTime();
+            prev = DateTime.Now;
+            prev = prev.AddMonths(-1);
+
             dbConnection = new DbConnection();
 
             if (unit)
             {
                 dbConnection.cmd.CommandText = "SELECT COUNT(created_date) AS case_count, DAY(created_date) AS month_day FROM case_master " +
-               "WHERE MONTH(created_date) = " + DateTime.Now.Month + "AND  company_unit_id =" + id +
+               "WHERE MONTH(created_date) = " + DateTime.Now.Month + "OR MONTH(created_date) = " + prev.Month + "AND  company_unit_id =" + id +
                "GROUP BY DAY(created_date);";
             }
             else
             {
                 dbConnection.cmd.CommandText = "SELECT COUNT(created_date) AS case_count, DAY(created_date) AS month_day FROM case_master " +
-               "WHERE MONTH(created_date) = " + DateTime.Now.Month + "AND  company_id =" + id +
+               "WHERE MONTH(created_date) = " + DateTime.Now.Month + "OR MONTH(created_date) = " + prev.Month + "AND  company_id =" + id +
                "GROUP BY DAY(created_date);";
             }
 
