@@ -11,59 +11,7 @@
 
     <div class="row">
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        Melsta Technology
-                    </div>
-                    <div class="text-center">
-                        50
-                    </div>
-                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        Melsta Technology
-                    </div>
-                    <div class="text-center">
-                        50
-                    </div>
-                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        Madulsima Plantation
-                    </div>
-                    <div class="text-center">
-                        25
-                    </div>
-                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        Melsta Technology
-                    </div>
-                    <div class="text-center">
-                        50
-                    </div>
-                    <a class="small text-white stretched-link" href="ViewCases.aspx"></a>
-                </div>
-            </div>
-        </div>
+        <asp:Literal ID="ltCompanyStatus" runat="server">  </asp:Literal>
 
     </div>
 
@@ -76,7 +24,7 @@
                     Progress for the Month
                 </div>
                 <div class="card-body">
-                    <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                    <canvas id="progressChart" width="100%" height="40"></canvas>
                 </div>
             </div>
         </div>
@@ -87,10 +35,12 @@
                     Claim amount limit exceeding Cases
                 </div>
                 <div class="card-body">
-                    <canvas id="myBarChart" width="100%" height="40"></canvas>
+                    <canvas id="amountChart" width="100%" height="40"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 </asp:Content>
