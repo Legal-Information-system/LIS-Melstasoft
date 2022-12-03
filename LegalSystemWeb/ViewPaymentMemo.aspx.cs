@@ -95,7 +95,7 @@ namespace LegalSystemWeb
             Response.Redirect("ApprovePaymentMemo.aspx?PaymentId=" + listGloabalPayment[rowIndex].PaymentId.ToString());
         }
 
-        protected void GridView1_PageIndexChanged(object sender, GridViewPageEventArgs e)
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
             BindDataSource();

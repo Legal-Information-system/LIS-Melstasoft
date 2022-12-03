@@ -64,9 +64,11 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "UPDATE locationc SET is_active = 0 WHERE locationc_id = @LocationId ";
-
+            dbConnection.cmd.CommandText = "UPDATE locationc SET is_active = 0 WHERE locationc_id = @LocationId";
             dbConnection.cmd.Parameters.AddWithValue("@LocationId", location.LocationId);
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            dbConnection.cmd.CommandText = "UPDATE court_locationc SET is_active = 0 WHERE locationc_id = @LocationId";
 
             output = dbConnection.cmd.ExecuteNonQuery();
 
