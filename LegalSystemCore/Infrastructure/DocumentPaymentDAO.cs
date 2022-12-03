@@ -24,7 +24,7 @@ namespace LegalSystemCore.Infrastructure
             DocumentPayment documentPayment = new DocumentPayment();
 
             dbConnection = new DbConnection();
-            dbConnection.cmd.CommandText = "select * from payment_document WHERE paymnent_document_id =" + documentPaymentId + "AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from payment_document WHERE paymnent_document_id =" + documentPaymentId;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

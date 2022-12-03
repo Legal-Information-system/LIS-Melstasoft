@@ -116,7 +116,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "select * from payment_master WHERE is_active = 1 AND payment_id = @PaymentId";
+            dbConnection.cmd.CommandText = "select * from payment_master WHERE payment_id = @PaymentId";
             dbConnection.cmd.Parameters.AddWithValue("@PaymentId", paymentId);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();

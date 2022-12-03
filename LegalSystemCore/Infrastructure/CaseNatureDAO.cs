@@ -54,7 +54,7 @@ namespace LegalSystemCore.Infrastructure
         public CaseNature GetCaseNature(int id, DbConnection dbConnection)
         {
             CaseNature caseNature = new CaseNature();
-            dbConnection.cmd.CommandText = "select * from case_nature WHERE case_nature_id = @CaseNatureId AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from case_nature WHERE case_nature_id = @CaseNatureId";
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNatureId", id);
 
