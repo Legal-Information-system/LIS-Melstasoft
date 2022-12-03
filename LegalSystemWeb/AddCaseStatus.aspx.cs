@@ -73,10 +73,11 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvCaseStatus.PageIndex != 0)
-            {
-                rowIndex = (gvCaseStatus.PageSize + rowIndex) * (gvCaseStatus.PageIndex);
-            }
+            int pageSize = gvCaseStatus.PageSize;
+            int pageIndex = gvCaseStatus.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             txtCase.Text = caseStatusList[rowIndex].StatusName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = caseStatusList[rowIndex].StatusId;
@@ -91,10 +92,11 @@ namespace LegalSystemWeb
         {
             ICaseStatusController caseStatusController = ControllerFactory.CreateCaseStatusController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvCaseStatus.PageIndex != 0)
-            {
-                rowIndex = (gvCaseStatus.PageSize + rowIndex) * (gvCaseStatus.PageIndex);
-            }
+            int pageSize = gvCaseStatus.PageSize;
+            int pageIndex = gvCaseStatus.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             CaseStatus caStatus = new CaseStatus();
             caStatus.StatusId = caseStatusList[rowIndex].StatusId;
             caseStatusController.Delete(caStatus);

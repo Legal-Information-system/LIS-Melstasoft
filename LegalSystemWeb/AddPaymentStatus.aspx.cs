@@ -72,10 +72,11 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvPaymentStatus.PageIndex != 0)
-            {
-                rowIndex = (gvPaymentStatus.PageSize + rowIndex) * (gvPaymentStatus.PageIndex);
-            }
+            int pageSize = gvPaymentStatus.PageSize;
+            int pageIndex = gvPaymentStatus.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             txtPStatus.Text = paymentStatusList[rowIndex].StatusName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = paymentStatusList[rowIndex].StatusId;
@@ -90,10 +91,11 @@ namespace LegalSystemWeb
 
             IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvPaymentStatus.PageIndex != 0)
-            {
-                rowIndex = (gvPaymentStatus.PageSize + rowIndex) * (gvPaymentStatus.PageIndex);
-            }
+            int pageSize = gvPaymentStatus.PageSize;
+            int pageIndex = gvPaymentStatus.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             PaymentStatus paStatus = new PaymentStatus();
             paStatus.StatusId = paymentStatusList[rowIndex].StatusId;
             paymentStatusController.Delete(paStatus);

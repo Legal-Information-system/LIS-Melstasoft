@@ -74,10 +74,11 @@ namespace LegalSystemWeb
             //GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvUserRole.PageIndex != 0)
-            {
-                rowIndex = (gvUserRole.PageSize + rowIndex) * (gvUserRole.PageIndex);
-            }
+            int pageSize = gvUserRole.PageSize;
+            int pageIndex = gvUserRole.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             txtRoleName.Text = userRoleList[rowIndex].RoleName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = userRoleList[rowIndex].RoleId; ;
@@ -94,10 +95,11 @@ namespace LegalSystemWeb
             IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvUserRole.PageIndex != 0)
-            {
-                rowIndex = (gvUserRole.PageSize + rowIndex) * (gvUserRole.PageIndex);
-            }
+            int pageSize = gvUserRole.PageSize;
+            int pageIndex = gvUserRole.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             UserRole userRole = new UserRole();
             userRole.RoleId = userRoleList[rowIndex].RoleId;
 

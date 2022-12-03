@@ -38,7 +38,7 @@ namespace LegalSystemWeb
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
 
             caseActionList = caseActionController.GetCaseActionList();
-            gvCaseAction.DataSource = caseActionController.GetCaseActionList();
+            gvCaseAction.DataSource = caseActionList;
             gvCaseAction.DataBind();
         }
 
@@ -73,10 +73,11 @@ namespace LegalSystemWeb
 
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvCaseAction.PageIndex != 0)
-            {
-                rowIndex = (gvCaseAction.PageSize + rowIndex) * (gvCaseAction.PageIndex);
-            }
+            int pageSize = gvCaseAction.PageSize;
+            int pageIndex = gvCaseAction.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             txtAction.Text = caseActionList[rowIndex].ActionName;
             btnSave.Text = "Update";
             ViewState["updatedRowIndex"] = caseActionList[rowIndex].ActionId;
@@ -91,10 +92,11 @@ namespace LegalSystemWeb
         {
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (gvCaseAction.PageIndex != 0)
-            {
-                rowIndex = (gvCaseAction.PageSize + rowIndex) * (gvCaseAction.PageIndex);
-            }
+            int pageSize = gvCaseAction.PageSize;
+            int pageIndex = gvCaseAction.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             CaseAction caseAction = new CaseAction();
             caseAction.ActionId = caseActionList[rowIndex].ActionId;
 
