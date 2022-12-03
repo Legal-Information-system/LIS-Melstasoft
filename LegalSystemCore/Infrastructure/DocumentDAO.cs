@@ -24,7 +24,7 @@ namespace LegalSystemCore.Infrastructure
             Document document = new Document();
 
             dbConnection = new DbConnection();
-            dbConnection.cmd.CommandText = "select * from document WHERE document_id =" + documentId + "AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from document WHERE document_id =" + documentId;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

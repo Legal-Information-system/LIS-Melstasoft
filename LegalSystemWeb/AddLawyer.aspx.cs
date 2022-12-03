@@ -86,10 +86,11 @@ namespace LegalSystemWeb
         {
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             txtName.Text = lawyerList[rowIndex].LawyerName;
             txtEmail.Text = lawyerList[rowIndex].LawyerEmail;
             txtContact.Text = lawyerList[rowIndex].LawyerContact;
@@ -101,10 +102,11 @@ namespace LegalSystemWeb
         {
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             Lawyer lawyer = new Lawyer();
             lawyer.LawyerId = lawyerList[rowIndex].LawyerId; ;
 

@@ -66,7 +66,7 @@ namespace LegalSystemCore.Infrastructure
         {
             Company company = new Company();
 
-            dbConnection.cmd.CommandText = "select * from company WHERE company_id = @CompanyId AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from company WHERE company_id = @CompanyId";
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", id);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
@@ -99,9 +99,10 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             dbConnection.cmd.CommandText = "UPDATE company SET is_active = 0 WHERE company_id = @CompanyId ";
-
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", company.CompanyId);
+            output = dbConnection.cmd.ExecuteNonQuery();
 
+            dbConnection.cmd.CommandText = "UPDATE company_unit SET is_active = 0 WHERE company_id = @CompanyId ";
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;

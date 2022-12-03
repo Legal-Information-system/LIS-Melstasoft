@@ -83,11 +83,10 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
 
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            rowIndex = (pageSize * pageIndex) + rowIndex;
 
             txtNatureName.Text = casesList[rowIndex].CaseNatureName;
             btnSave.Text = "Update";
@@ -98,10 +97,11 @@ namespace LegalSystemWeb
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             CaseNature caseNature = new CaseNature();
             caseNature.CaseNatureId = casesList[rowIndex].CaseNatureId;
 

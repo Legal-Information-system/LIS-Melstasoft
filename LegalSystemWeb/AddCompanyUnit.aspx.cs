@@ -98,10 +98,10 @@ namespace LegalSystemWeb
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
 
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
 
             txtCompanyUnitName.Text = companyUnitList[rowIndex].CompanyUnitName;
             ddlCompany.SelectedValue = Convert.ToString(companyUnitList[rowIndex].CompanyId);
@@ -120,10 +120,11 @@ namespace LegalSystemWeb
         {
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             CompanyUnit companyUnit = new CompanyUnit();
             companyUnit.CompanyUnitId = companyUnitList[rowIndex].CompanyUnitId;
             companyUnitController.Delete(companyUnit);

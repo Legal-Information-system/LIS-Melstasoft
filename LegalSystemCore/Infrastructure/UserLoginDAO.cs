@@ -86,7 +86,7 @@ namespace LegalSystemCore.Infrastructure
         public UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin)
         {
 
-            dbConnection.cmd.CommandText = "select * from user_login  where user_login_name = @UserName AND user_password = @Password";
+            dbConnection.cmd.CommandText = "select * from user_login  where user_login_name = @UserName AND user_password = @Password AND is_active = 1";
 
             dbConnection.cmd.Parameters.AddWithValue("@UserName", userLogin.UserName);
             dbConnection.cmd.Parameters.AddWithValue("@Password", userLogin.Password);
