@@ -97,7 +97,7 @@ namespace LegalSystemCore.Infrastructure
             Lawyer lawyer = new Lawyer();
 
             dbConnection = new DbConnection();
-            dbConnection.cmd.CommandText = "select * from lawyer WHERE lawyer_id = @LawyerId AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from lawyer WHERE lawyer_id = @LawyerId";
             dbConnection.cmd.Parameters.AddWithValue("@LawyerId", lawyerId);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();

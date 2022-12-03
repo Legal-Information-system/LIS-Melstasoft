@@ -100,10 +100,10 @@ namespace LegalSystemWeb
         protected void btnView_Click(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (datatablesSimple.PageIndex != 0)
-            {
-                rowIndex = (datatablesSimple.PageSize + rowIndex) * (datatablesSimple.PageIndex);
-            }
+            int pageSize = datatablesSimple.PageSize;
+            int pageIndex = datatablesSimple.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
 
             BindCaseList();
 

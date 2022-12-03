@@ -111,10 +111,11 @@ namespace LegalSystemWeb
             GridViewRow gv = (GridViewRow)((LinkButton)sender).NamingContainer;
 
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView2.PageIndex != 0)
-            {
-                rowIndex = (GridView2.PageSize + rowIndex) * (GridView2.PageIndex);
-            }
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             ddlCourt.SelectedValue = Convert.ToString(courtlocation[rowIndex].CourtId);
             ddlLocation.SelectedValue = Convert.ToString(courtlocation[rowIndex].LocationId);
             btnSave.Text = "Update";

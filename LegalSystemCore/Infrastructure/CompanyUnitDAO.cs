@@ -64,7 +64,7 @@ namespace LegalSystemCore.Infrastructure
         {
             CompanyUnit companyUnit = new CompanyUnit();
 
-            dbConnection.cmd.CommandText = "select * from company_unit WHERE company_unit_id = @CompanyUnitId AND is_active = 1";
+            dbConnection.cmd.CommandText = "select * from company_unit WHERE company_unit_id = @CompanyUnitId";
             dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", id);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();

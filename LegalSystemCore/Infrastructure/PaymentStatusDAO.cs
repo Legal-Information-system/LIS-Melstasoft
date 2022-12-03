@@ -92,7 +92,7 @@ namespace LegalSystemCore.Infrastructure
             dbConnection = new DbConnection();
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "select * from payment_status WHERE is_active = 1 AND payment_status_id=@StatusId";
+            dbConnection.cmd.CommandText = "select * from payment_status WHERE payment_status_id=@StatusId";
             dbConnection.cmd.Parameters.AddWithValue("@StatusId", paymentStatusId);
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

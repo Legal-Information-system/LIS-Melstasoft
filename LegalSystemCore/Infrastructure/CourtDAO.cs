@@ -63,10 +63,11 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "UPDATE court SET is_active = 0 WHERE court_id = @CourtId ";
-
+            dbConnection.cmd.CommandText = "UPDATE court SET is_active = 0 WHERE court_id = @CourtId";
             dbConnection.cmd.Parameters.AddWithValue("@CourtId", court.CourtId);
+            output = dbConnection.cmd.ExecuteNonQuery();
 
+            dbConnection.cmd.CommandText = "UPDATE court_locationc SET is_active = 0 WHERE court_id = @CourtId";
             output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;

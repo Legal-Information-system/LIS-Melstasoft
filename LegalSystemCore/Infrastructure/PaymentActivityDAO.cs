@@ -89,7 +89,7 @@ namespace LegalSystemCore.Infrastructure
             }
             else
             {
-                dbConnection.cmd.CommandText = "select * from payment_activity WHERE is_active = 1 AND payment_id = @PaymentId";
+                dbConnection.cmd.CommandText = "select * from payment_activity WHERE payment_id = @PaymentId";
                 dbConnection.cmd.Parameters.AddWithValue("@PaymentId", paymentId);
             }
 

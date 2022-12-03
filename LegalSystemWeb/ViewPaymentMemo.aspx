@@ -12,7 +12,7 @@
         </div>
         <div class="card-body table-responsive">
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-                CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanged="GridView1_PageIndexChanged">
+                CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView1_PageIndexChanging">
                 <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                 <Columns>
                     <asp:BoundField DataField="PaymentId" HeaderText="Payment Id" ItemStyle-HorizontalAlign="center" />

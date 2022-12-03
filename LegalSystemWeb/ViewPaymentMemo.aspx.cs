@@ -88,14 +88,15 @@ namespace LegalSystemWeb
         protected void btnView_Click(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
-            if (GridView1.PageIndex != 0)
-            {
-                rowIndex = (GridView1.PageSize + rowIndex) * (GridView1.PageIndex);
-            }
+            int pageSize = GridView1.PageSize;
+            int pageIndex = GridView1.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
             Response.Redirect("ApprovePaymentMemo.aspx?PaymentId=" + listGloabalPayment[rowIndex].PaymentId.ToString());
         }
 
-        protected void GridView1_PageIndexChanged(object sender, GridViewPageEventArgs e)
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
             BindDataSource();
