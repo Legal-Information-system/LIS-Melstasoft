@@ -14,7 +14,7 @@ namespace LegalSystemCore.Controller
         int Save(Court court);
         int Delete(Court court);
         int Update(Court court);
-        List<Court> GetCourtList();
+        List<Court> GetCourtList(bool with0);
 
     }
     public class CourtControllerImpl : ICourtController
@@ -86,14 +86,14 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Court> GetCourtList()
+        public List<Court> GetCourtList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<Court> listcourt = new List<Court>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listcourt = courtDAO.GetCourtList(dbConnection);
+                listcourt = courtDAO.GetCourtList(with0, dbConnection);
 
             }
             catch (Exception)

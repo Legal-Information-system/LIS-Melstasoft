@@ -162,7 +162,7 @@ namespace LegalSystemWeb
         {
 
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
-            judgementTypeList = judgementTypeController.GetJudgementTypeList();
+            judgementTypeList = judgementTypeController.GetJudgementTypeList(false);
 
             ddlJudgement.DataSource = judgementTypeList;
             ddlJudgement.DataValueField = "JTypeId";

@@ -38,8 +38,8 @@ namespace LegalSystemWeb
         {
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
 
-            judgementTypeList = judgementTypeController.GetJudgementTypeList();
-            gvJudgementType.DataSource = judgementTypeController.GetJudgementTypeList();
+            judgementTypeList = judgementTypeController.GetJudgementTypeList(false);
+            gvJudgementType.DataSource = judgementTypeList;
             gvJudgementType.DataBind();
         }
 

@@ -86,7 +86,7 @@ namespace LegalSystemCore.Controller
                 }
 
                 ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
-                List<Location> listLocation = locationDAO.GetLocationList(dbConnection);
+                List<Location> listLocation = locationDAO.GetLocationList(true, dbConnection);
 
                 foreach (var caseMaster in listCaseMaster)
                 {

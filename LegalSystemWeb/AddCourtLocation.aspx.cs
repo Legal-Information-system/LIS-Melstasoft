@@ -54,8 +54,8 @@ namespace LegalSystemWeb
 
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
-            courtList = courtController.GetCourtList();
-            ddlCourt.DataSource = courtController.GetCourtList();
+            courtList = courtController.GetCourtList(false);
+            ddlCourt.DataSource = courtList;
             ddlCourt.DataValueField = "CourtId";
             ddlCourt.DataTextField = "CourtName";
             ddlCourt.DataBind();
@@ -67,8 +67,8 @@ namespace LegalSystemWeb
 
             ILocationController locationController = ControllerFactory.CreateLocationController();
 
-            locationList = locationController.GetLocationList();
-            ddlLocation.DataSource = locationController.GetLocationList();
+            locationList = locationController.GetLocationList(false);
+            ddlLocation.DataSource = locationList;
             ddlLocation.DataValueField = "LocationId";
             ddlLocation.DataTextField = "locationName";
             ddlLocation.DataBind();

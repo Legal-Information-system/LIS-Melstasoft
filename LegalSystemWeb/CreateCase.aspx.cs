@@ -106,7 +106,7 @@ namespace LegalSystemWeb
 
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
-            courtList = courtController.GetCourtList();
+            courtList = courtController.GetCourtList(false);
             ddlCourt.DataSource = courtList;
             ddlCourt.DataValueField = "CourtId";
             ddlCourt.DataTextField = "CourtName";
