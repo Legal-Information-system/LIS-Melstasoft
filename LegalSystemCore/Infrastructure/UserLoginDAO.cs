@@ -13,7 +13,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(UserLogin userLogin, DbConnection dbConnection);
         int Update(UserLogin userLogin, DbConnection dbConnection);
-        List<UserLogin> GetUserLoginList(DbConnection dbConnection);
+        List<UserLogin> GetUserLoginList(bool with0, DbConnection dbConnection);
 
         UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin);
     }
@@ -68,11 +68,14 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<UserLogin> GetUserLoginList(DbConnection dbConnection)
+        public List<UserLogin> GetUserLoginList(bool with0, DbConnection dbConnection)
         {
             List<UserLogin> listUserLogin = new List<UserLogin>();
 
-            dbConnection.cmd.CommandText = "select * from user_login WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from user_login";
+            else
+                dbConnection.cmd.CommandText = "select * from user_login WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

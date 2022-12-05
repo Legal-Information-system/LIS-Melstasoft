@@ -37,9 +37,8 @@ namespace LegalSystemWeb
         {
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
 
-
-            lawyerList = lawyerController.GetLawyerList();
-            GridView2.DataSource = lawyerController.GetLawyerList(); ;
+            lawyerList = lawyerController.GetLawyerList(false);
+            GridView2.DataSource = lawyerList;
             GridView2.DataBind();
         }
 

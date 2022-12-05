@@ -13,20 +13,20 @@ namespace LegalSystemCore.Controller
         int Save(CaseAction caseAction);
         int Update(CaseAction caseAction);
         int Delete(CaseAction caseAction);
-        List<CaseAction> GetCaseActionList();
+        List<CaseAction> GetCaseActionList(bool with0);
     }
 
     public class CaseActionControllerImpl : ICaseActionController
     {
         ICaseActionDAO caseActionDAO = DAOFactory.CreateCaseActionDAO();
-        public List<CaseAction> GetCaseActionList()
+        public List<CaseAction> GetCaseActionList(bool with0)
         {
             DbConnection dbConnection = null;
             List<CaseAction> listCaseAction = new List<CaseAction>();
             try
             {
                 dbConnection = new DbConnection();
-                listCaseAction = caseActionDAO.GetCaseActionList(dbConnection);
+                listCaseAction = caseActionDAO.GetCaseActionList(with0, dbConnection);
             }
             catch (Exception)
             {

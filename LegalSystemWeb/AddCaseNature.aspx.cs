@@ -36,8 +36,8 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
-            casesList = caseNatureController.GetCaseNatureList();
-            GridView2.DataSource = caseNatureController.GetCaseNatureList();
+            casesList = caseNatureController.GetCaseNatureList(false);
+            GridView2.DataSource = casesList;
             GridView2.DataBind();
         }
         protected void btnSave_Click(object sender, EventArgs e)

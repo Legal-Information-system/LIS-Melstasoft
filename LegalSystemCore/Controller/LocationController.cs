@@ -14,7 +14,7 @@ namespace LegalSystemCore.Controller
         int Save(Location location);
         int Update(Location location);
         int Delete(Location location);
-        List<Location> GetLocationList();
+        List<Location> GetLocationList(bool with0);
 
     }
     public class LocationControllerImpl : ILocationController
@@ -84,14 +84,14 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Location> GetLocationList()
+        public List<Location> GetLocationList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<Location> listlocation = new List<Location>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listlocation = locationDAO.GetLocationList(dbConnection);
+                listlocation = locationDAO.GetLocationList(with0, dbConnection);
 
             }
             catch (Exception)

@@ -30,7 +30,7 @@ namespace LegalSystemCore.Controller
                 listcourtlocation = courtlocationDAO.GetCourtLocationList(dbConnection);
 
                 ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
-                List<Court> listCourt = courtDAO.GetCourtList(dbConnection);
+                List<Court> listCourt = courtDAO.GetCourtList(true, dbConnection);
 
                 foreach (var courtlocation in listcourtlocation)
                 {
@@ -38,7 +38,7 @@ namespace LegalSystemCore.Controller
                 }
 
                 ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
-                List<Location> listLocation = locationDAO.GetLocationList(dbConnection);
+                List<Location> listLocation = locationDAO.GetLocationList(true, dbConnection);
 
                 foreach (var courtlocation in listcourtlocation)
                 {
@@ -73,7 +73,7 @@ namespace LegalSystemCore.Controller
 
 
                 ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
-                List<Location> listLocatioin = locationDAO.GetLocationList(dbConnection);
+                List<Location> listLocatioin = locationDAO.GetLocationList(true, dbConnection);
 
                 foreach (var courtLocation in listCourtLocation)
                 {

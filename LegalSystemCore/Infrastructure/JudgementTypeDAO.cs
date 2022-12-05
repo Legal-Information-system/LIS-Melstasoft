@@ -14,18 +14,21 @@ namespace LegalSystemCore.Infrastructure
         int Update(JudgementType judgementType, DbConnection dbConnection);
         int Delete(JudgementType judgementType, DbConnection dbConnection);
 
-        List<JudgementType> GetJudgementTypeList(DbConnection dbConnection);
+        List<JudgementType> GetJudgementTypeList(bool with0, DbConnection dbConnection);
     }
 
     public class JudgementTypeDAOSqlImpl : IJudgementTypeDAO
     {
-        public List<JudgementType> GetJudgementTypeList(DbConnection dbConnection)
+        public List<JudgementType> GetJudgementTypeList(bool with0, DbConnection dbConnection)
         {
             List<JudgementType> listJudgementType = new List<JudgementType>();
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from judgement_type WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from judgement_type";
+            else
+                dbConnection.cmd.CommandText = "select * from judgement_type WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

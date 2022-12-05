@@ -66,12 +66,13 @@ namespace LegalSystemWeb
             {
                 StringBuilder cstextCard = new StringBuilder();
 
-                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">           <div class=\"card bg-primary text-white mb-4\">                <div class=\"card-body\">                    <div class=\"text-center\">  ");
+                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
                 cstextCard.Append(row["company_name"].ToString());
-                cstextCard.Append("</div>                   <div class=\"text-center\">   ");
+                cstextCard.Append("</div>   <div class=\"text-center\">");
                 cstextCard.Append(row["case_count"].ToString());
-                cstextCard.Append("</div>                   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx\"></a>               </div>           </div>       </div> ");
-
+                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
 
                 ltCompanyStatus.Text += cstextCard;
             }

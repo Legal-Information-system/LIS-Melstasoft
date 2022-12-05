@@ -13,7 +13,7 @@ namespace LegalSystemCore.Infrastructure
         int Delete(CompanyUnit companyUnit, DbConnection dbConnection);
         int Update(CompanyUnit companyUnit, DbConnection dbConnection);
         CompanyUnit GetCompanyUnit(int id, DbConnection dbConnection);
-        List<CompanyUnit> GetCompanyUnitList(DbConnection dbConnection, string CompanyId = null);
+        List<CompanyUnit> GetCompanyUnitList(bool with0, DbConnection dbConnection, string CompanyId = null);
     }
 
     public class CompanyUnitSqlDAOImpl : ICompanyUnitDAO
@@ -75,13 +75,17 @@ namespace LegalSystemCore.Infrastructure
             return companyUnit;
         }
 
-        public List<CompanyUnit> GetCompanyUnitList(DbConnection dbConnection, string companyId = null)
+        public List<CompanyUnit> GetCompanyUnitList(bool with0, DbConnection dbConnection, string companyId = null)
         {
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
 
             dbConnection = new DbConnection();
+            String query;
 
-            String query = "select * from company_unit WHERE is_active = 1";
+            if (with0)
+                query = "select * from company_unit";
+            else
+                query = "select * from company_unit WHERE is_active = 1";
 
             if (companyId != null)
             {

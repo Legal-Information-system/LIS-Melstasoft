@@ -15,7 +15,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(CaseNature caseNature, DbConnection dbConnection);
         CaseNature GetCaseNature(int id, DbConnection dbConnection);
 
-        List<CaseNature> GetCaseNatureList(DbConnection dbConnection);
+        List<CaseNature> GetCaseNatureList(bool with0, DbConnection dbConnection);
     }
 
     public class CaseNatureSqlDAOImpl : ICaseNatureDAO
@@ -37,11 +37,14 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<CaseNature> GetCaseNatureList(DbConnection dbConnection)
+        public List<CaseNature> GetCaseNatureList(bool with0, DbConnection dbConnection)
         {
             List<CaseNature> GetCaseNatureList = new List<CaseNature>();
 
-            dbConnection.cmd.CommandText = "select * from case_nature WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from case_nature";
+            else
+                dbConnection.cmd.CommandText = "select * from case_nature WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

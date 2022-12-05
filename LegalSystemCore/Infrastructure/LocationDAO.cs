@@ -12,7 +12,7 @@ namespace LegalSystemCore.Infrastructure
         int Save(Location location, DbConnection dbConnection);
         int Delete(Location location, DbConnection dbConnection);
         int Update(Location location, DbConnection dbConnection);
-        List<Location> GetLocationList(DbConnection dbConnection);
+        List<Location> GetLocationList(bool with0, DbConnection dbConnection);
     }
     public class LocationSqlDAOImpl : ILocationDAO
     {
@@ -75,11 +75,14 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<Location> GetLocationList(DbConnection dbConnection)
+        public List<Location> GetLocationList(bool with0, DbConnection dbConnection)
         {
             List<Location> listLocation = new List<Location>();
 
-            dbConnection.cmd.CommandText = "select * from locationc WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from locationc";
+            else
+                dbConnection.cmd.CommandText = "select * from locationc WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

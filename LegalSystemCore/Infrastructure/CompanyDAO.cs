@@ -15,7 +15,7 @@ namespace LegalSystemCore.Infrastructure
         int Delete(Company company, DbConnection dbConnection);
         int Update(Company company, DbConnection dbConnection);
         Company GetCompany(int id, DbConnection dbConnection);
-        List<Company> GetCompanyList(DbConnection dbConnection);
+        List<Company> GetCompanyList(bool with0, DbConnection dbConnection);
     }
 
     public class CompanySqlDAOImpl : ICompanyDAO
@@ -77,11 +77,14 @@ namespace LegalSystemCore.Infrastructure
             return company;
         }
 
-        public List<Company> GetCompanyList(DbConnection dbConnection)
+        public List<Company> GetCompanyList(bool with0, DbConnection dbConnection)
         {
             List<Company> listCompany = new List<Company>();
 
-            dbConnection.cmd.CommandText = "select * from company WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from company";
+            else
+                dbConnection.cmd.CommandText = "select * from company WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

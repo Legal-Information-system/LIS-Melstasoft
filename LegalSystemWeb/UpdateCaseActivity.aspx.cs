@@ -121,7 +121,7 @@ namespace LegalSystemWeb
         {
 
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-            lawyerList = lawyerController.GetLawyerList();
+            lawyerList = lawyerController.GetLawyerList(false);
 
             ddlAssignAttorney.DataSource = lawyerList;
             ddlAssignAttorney.DataValueField = "LawyerId";
@@ -142,7 +142,7 @@ namespace LegalSystemWeb
         {
 
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
-            caseActionList = caseActionController.GetCaseActionList();
+            caseActionList = caseActionController.GetCaseActionList(false);
 
             ddlActionTaken.DataSource = caseActionList;
             ddlActionTaken.DataValueField = "ActionId";
@@ -162,7 +162,7 @@ namespace LegalSystemWeb
         {
 
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
-            judgementTypeList = judgementTypeController.GetJudgementTypeList();
+            judgementTypeList = judgementTypeController.GetJudgementTypeList(false);
 
             ddlJudgement.DataSource = judgementTypeList;
             ddlJudgement.DataValueField = "JTypeId";

@@ -15,7 +15,7 @@ namespace LegalSystemCore.Controller
         int Delete(CaseNature caseNature);
         int Update(CaseNature caseNature);
         CaseNature GetCaseNature(int natureId);
-        List<CaseNature> GetCaseNatureList();
+        List<CaseNature> GetCaseNatureList(bool with0);
     }
 
     public class CaseNatureControllerImpl : ICaseNatureController
@@ -70,7 +70,7 @@ namespace LegalSystemCore.Controller
             return caseNature;
         }
 
-        public List<CaseNature> GetCaseNatureList()
+        public List<CaseNature> GetCaseNatureList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<CaseNature> listCaseNature = new List<CaseNature>();
@@ -78,7 +78,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new Common.DbConnection();
-                listCaseNature = caseNatureDAO.GetCaseNatureList(dbConnection);
+                listCaseNature = caseNatureDAO.GetCaseNatureList(with0, dbConnection);
 
             }
             catch (Exception)

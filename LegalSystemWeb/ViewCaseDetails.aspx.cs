@@ -87,23 +87,23 @@ namespace LegalSystemWeb
                 CaseNature caseNature = new CaseNature();
                 caseNature = caseNatureController.GetCaseNature(caseMaster.CaseStatusId);
 
-                List<Court> courtList = courtController.GetCourtList();
+                List<Court> courtList = courtController.GetCourtList(true);
                 courtList = courtList.Where(c => c.CourtId == caseMaster.CaseStatusId).ToList();
 
-                List<Location> locationList = locationController.GetLocationList();
+                List<Location> locationList = locationController.GetLocationList(true);
                 locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
 
-                List<Lawyer> lawyerList = lawyerController.GetLawyerList();
+                List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
                 List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
 
-                List<UserLogin> userClosedList = userLoginController.GetUserLoginList();
+                List<UserLogin> userClosedList = userLoginController.GetUserLoginList(true);
                 List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
 
 
                 if (caseMaster.JudgementTypeId > 0)
                 {
                     userClosedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
-                    List<JudgementType> judgementTypesList = judgementTypeController.GetJudgementTypeList();
+                    List<JudgementType> judgementTypesList = judgementTypeController.GetJudgementTypeList(true);
                     judgementTypesList = judgementTypesList.Where(l => l.JTypeId == caseMaster.JudgementTypeId).ToList();
 
                     lblJudgement.Text = judgementTypesList[0].JTypeName;

@@ -36,8 +36,8 @@ namespace LegalSystemWeb
         {
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
-            courtList = courtController.GetCourtList();
-            GridView2.DataSource = courtController.GetCourtList();
+            courtList = courtController.GetCourtList(false);
+            GridView2.DataSource = courtList;
             GridView2.DataBind();
 
         }
