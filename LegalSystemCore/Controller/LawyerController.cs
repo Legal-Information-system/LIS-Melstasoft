@@ -14,7 +14,7 @@ namespace LegalSystemCore.Controller
         int Save(Lawyer lawyer);
         int Delete(Lawyer lawyer);
         int Update(Lawyer lawyer);
-        List<Lawyer> GetLawyerList();
+        List<Lawyer> GetLawyerList(bool with0);
 
         Lawyer GetLawyer(int lawyerId);
 
@@ -44,7 +44,7 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Lawyer> GetLawyerList()
+        public List<Lawyer> GetLawyerList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<Lawyer> listLawyer = new List<Lawyer>();
@@ -52,7 +52,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new Common.DbConnection();
-                listLawyer = lawyerDAO.GetLawyerList(dbConnection);
+                listLawyer = lawyerDAO.GetLawyerList(with0, dbConnection);
 
             }
             catch (Exception)

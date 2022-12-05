@@ -93,10 +93,10 @@ namespace LegalSystemWeb
                 List<Location> locationList = locationController.GetLocationList(true);
                 locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
 
-                List<Lawyer> lawyerList = lawyerController.GetLawyerList();
+                List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
                 List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
 
-                List<UserLogin> userClosedList = userLoginController.GetUserLoginList();
+                List<UserLogin> userClosedList = userLoginController.GetUserLoginList(true);
                 List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
 
 

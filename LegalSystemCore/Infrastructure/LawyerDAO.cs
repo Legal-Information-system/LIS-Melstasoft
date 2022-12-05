@@ -12,7 +12,7 @@ namespace LegalSystemCore.Infrastructure
         int Save(Lawyer lawyer, DbConnection dbConnection);
         int Delete(Lawyer lawyer, DbConnection dbConnection);
         int Update(Lawyer lawyer, DbConnection dbConnection);
-        List<Lawyer> GetLawyerList(DbConnection dbConnection);
+        List<Lawyer> GetLawyerList(bool with0, DbConnection dbConnection);
 
         Lawyer GetLawyer(int lawyerId, DbConnection dbConnection);
 
@@ -44,12 +44,15 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<Lawyer> GetLawyerList(DbConnection dbConnection)
+        public List<Lawyer> GetLawyerList(bool with0, DbConnection dbConnection)
         {
 
             List<Lawyer> lawyerList = new List<Lawyer>();
 
-            dbConnection.cmd.CommandText = "select * from lawyer WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from lawyer";
+            else
+                dbConnection.cmd.CommandText = "select * from lawyer WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

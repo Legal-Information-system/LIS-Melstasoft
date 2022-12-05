@@ -15,7 +15,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(UserLogin userLogin);
         int Update(UserLogin userLogin);
-        List<UserLogin> GetUserLoginList();
+        List<UserLogin> GetUserLoginList(bool with0);
         UserLogin GetUserLogin(UserLogin userLogin);
     }
 
@@ -69,14 +69,14 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<UserLogin> GetUserLoginList()
+        public List<UserLogin> GetUserLoginList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<UserLogin> listUserLogin = new List<UserLogin>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listUserLogin = userLoginDAO.GetUserLoginList(dbConnection);
+                listUserLogin = userLoginDAO.GetUserLoginList(with0, dbConnection);
 
             }
             catch (Exception)

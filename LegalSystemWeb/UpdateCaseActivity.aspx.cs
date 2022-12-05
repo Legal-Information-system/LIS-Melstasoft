@@ -121,7 +121,7 @@ namespace LegalSystemWeb
         {
 
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-            lawyerList = lawyerController.GetLawyerList();
+            lawyerList = lawyerController.GetLawyerList(false);
 
             ddlAssignAttorney.DataSource = lawyerList;
             ddlAssignAttorney.DataValueField = "LawyerId";
