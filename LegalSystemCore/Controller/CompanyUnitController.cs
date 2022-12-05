@@ -17,8 +17,8 @@ namespace LegalSystemCore.Controller
         int Delete(CompanyUnit companyUnit);
         int Update(CompanyUnit companyUnit);
         CompanyUnit GetCompanyUnit(int unitId);
-        List<CompanyUnit> GetCompanyUnitList(bool withCompanyName);
-        List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId);
+        List<CompanyUnit> GetCompanyUnitList(bool with0, bool withCompanyName);
+        List<CompanyUnit> GetCompanyUnitListFilter(bool with0, string withCompanyId);
 
     }
 
@@ -117,18 +117,18 @@ namespace LegalSystemCore.Controller
             return companyUnit;
         }
 
-        public List<CompanyUnit> GetCompanyUnitList(bool withCompanyName)
+        public List<CompanyUnit> GetCompanyUnitList(bool with0, bool withCompanyName)
         {
             Common.DbConnection dbConnection = null;
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(with0, dbConnection);
                 if (withCompanyName)
                 {
                     ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
-                    List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
+                    List<Company> listCompany = companyDAO.GetCompanyList(false, dbConnection);
 
                     foreach (var companyUnit in listCompanyUnit)
                     {
@@ -150,14 +150,14 @@ namespace LegalSystemCore.Controller
             }
             return listCompanyUnit;
         }
-        public List<CompanyUnit> GetCompanyUnitListFilter(string withCompanyId)
+        public List<CompanyUnit> GetCompanyUnitListFilter(bool with0, string withCompanyId)
         {
             Common.DbConnection dbConnection = null;
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection, withCompanyId);
+                listCompanyUnit = companyUnitDAO.GetCompanyUnitList(with0, dbConnection, withCompanyId);
 
             }
             catch (Exception)

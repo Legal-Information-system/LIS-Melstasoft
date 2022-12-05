@@ -62,7 +62,7 @@ namespace LegalSystemCore.Controller
                 listCaseMaster = caseMasterDAO.GetCaseMasterList(withoutclosed, dbConnection);
 
                 ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
-                List<Company> listCompany = companyDAO.GetCompanyList(dbConnection);
+                List<Company> listCompany = companyDAO.GetCompanyList(true, dbConnection);
 
                 foreach (var caseMaster in listCaseMaster)
                 {
@@ -70,7 +70,7 @@ namespace LegalSystemCore.Controller
                 }
 
                 ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
-                List<CompanyUnit> listCompanyUnit = companyUnitDAO.GetCompanyUnitList(dbConnection);
+                List<CompanyUnit> listCompanyUnit = companyUnitDAO.GetCompanyUnitList(true, dbConnection);
 
                 foreach (var caseMaster in listCaseMaster)
                 {
@@ -78,7 +78,7 @@ namespace LegalSystemCore.Controller
                 }
 
                 ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
-                List<CaseNature> listCaseNature = caseNatureDAO.GetCaseNatureList(dbConnection);
+                List<CaseNature> listCaseNature = caseNatureDAO.GetCaseNatureList(true, dbConnection);
 
                 foreach (var caseMaster in listCaseMaster)
                 {
