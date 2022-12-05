@@ -142,7 +142,7 @@ namespace LegalSystemWeb
         {
 
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
-            caseActionList = caseActionController.GetCaseActionList();
+            caseActionList = caseActionController.GetCaseActionList(false);
 
             ddlActionTaken.DataSource = caseActionList;
             ddlActionTaken.DataValueField = "ActionId";

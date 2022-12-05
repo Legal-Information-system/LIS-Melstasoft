@@ -11,7 +11,7 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(Activity activity, DbConnection dbConnection);
         int Update(Activity activity, DbConnection dbConnection);
-        List<Activity> GetActivityList(DbConnection dbConnection);
+        List<Activity> GetActivityList(bool with0, DbConnection dbConnection);
 
         int Delete(Activity activity, DbConnection dbConnection);
 
@@ -42,11 +42,13 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<Activity> GetActivityList(DbConnection dbConnection)
+        public List<Activity> GetActivityList(bool with0, DbConnection dbConnection)
         {
             List<Activity> GetActivityList = new List<Activity>();
-
-            dbConnection.cmd.CommandText = "select * from activity WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from activity";
+            else
+                dbConnection.cmd.CommandText = "select * from activity WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -91,7 +93,10 @@ namespace LegalSystemCore.Infrastructure
         public Activity GetActivity(DbConnection dbConnection, int activityId)
         {
             Activity activity = new Activity();
+
             dbConnection.cmd.CommandText = "select * from activity WHERE activity_id = @ActivityId";
+
+
             dbConnection.cmd.Parameters.AddWithValue("@ActivityId", activityId);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();

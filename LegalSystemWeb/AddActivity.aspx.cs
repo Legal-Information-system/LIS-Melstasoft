@@ -38,8 +38,8 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             IActivityController activityController = ControllerFactory.CreateActivityController();
-            activitiesList = activityController.GetActivityList();
-            GridView2.DataSource = activityController.GetActivityList();
+            activitiesList = activityController.GetActivityList(false);
+            GridView2.DataSource = activitiesList;
             GridView2.DataBind();
 
         }

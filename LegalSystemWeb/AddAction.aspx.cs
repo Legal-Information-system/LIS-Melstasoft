@@ -37,7 +37,7 @@ namespace LegalSystemWeb
         {
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
 
-            caseActionList = caseActionController.GetCaseActionList();
+            caseActionList = caseActionController.GetCaseActionList(false);
             gvCaseAction.DataSource = caseActionList;
             gvCaseAction.DataBind();
         }

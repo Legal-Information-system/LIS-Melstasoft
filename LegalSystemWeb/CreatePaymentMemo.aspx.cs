@@ -43,7 +43,7 @@ namespace LegalSystemWeb
         private void BindActivityList()
         {
             IActivityController activityController = ControllerFactory.CreateActivityController();
-            cblActivity.DataSource = activityController.GetActivityList();
+            cblActivity.DataSource = activityController.GetActivityList(false);
             cblActivity.DataValueField = "ActivityId";
             cblActivity.DataTextField = "ActivityName";
             cblActivity.DataBind();

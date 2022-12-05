@@ -12,18 +12,22 @@ namespace LegalSystemCore.Infrastructure
         int Save(CaseAction caseAction, DbConnection dbConnection);
         int Update(CaseAction caseAction, DbConnection dbConnection);
         int Delete(CaseAction caseAction, DbConnection dbConnection);
-        List<CaseAction> GetCaseActionList(DbConnection dbConnection);
+        List<CaseAction> GetCaseActionList(bool with0, DbConnection dbConnection);
     }
 
     public class CaseActionDAOSqlImpl : ICaseActionDAO
     {
-        public List<CaseAction> GetCaseActionList(DbConnection dbConnection)
+        public List<CaseAction> GetCaseActionList(bool with0, DbConnection dbConnection)
         {
             List<CaseAction> listCaseAction = new List<CaseAction>();
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "select * from case_action WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from case_action";
+            else
+                dbConnection.cmd.CommandText = "select * from case_action WHERE is_active = 1";
+
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
             listCaseAction = dataAccessObject.ReadCollection<CaseAction>(dbConnection.dr);

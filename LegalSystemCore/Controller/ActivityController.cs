@@ -12,7 +12,7 @@ namespace LegalSystemCore.Controller
     {
         int Save(Activity activity);
         int Update(Activity activity);
-        List<Activity> GetActivityList();
+        List<Activity> GetActivityList(bool with0);
 
         int Delete(Activity activity);
 
@@ -44,7 +44,7 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Activity> GetActivityList()
+        public List<Activity> GetActivityList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<Activity> listActivity = new List<Activity>();
@@ -52,7 +52,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new Common.DbConnection();
-                listActivity = activityDAO.GetActivityList(dbConnection);
+                listActivity = activityDAO.GetActivityList(with0, dbConnection);
 
             }
             catch (Exception)

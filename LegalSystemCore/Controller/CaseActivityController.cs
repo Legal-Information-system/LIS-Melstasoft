@@ -33,7 +33,7 @@ namespace LegalSystemCore.Controller
                     List<Lawyer> lawyerlist = lawyerController.GetLawyerList();
 
                     ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
-                    List<CaseAction> caseActionsList = caseActionController.GetCaseActionList();
+                    List<CaseAction> caseActionsList = caseActionController.GetCaseActionList(true);
 
                     foreach (var caseActivity in listCaseActivity)
                     {
