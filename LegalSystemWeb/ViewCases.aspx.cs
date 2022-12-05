@@ -78,7 +78,7 @@ namespace LegalSystemWeb
             }
 
 
-            if (name != "All")
+            if (name != "All" & name != null)
             {
                 if (UserId != 5 && UserId != 4)
                 {
