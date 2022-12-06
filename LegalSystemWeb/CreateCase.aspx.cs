@@ -191,8 +191,9 @@ namespace LegalSystemWeb
             caseMasterController.Save(caseMaster);
 
             UploadFiles();
-
             Clear();
+
+            lblSuccessMsg.Text = "Record Updated Successfully!";
         }
 
 

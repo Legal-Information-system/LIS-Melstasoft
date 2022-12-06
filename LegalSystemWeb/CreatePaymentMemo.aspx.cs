@@ -148,6 +148,7 @@ namespace LegalSystemWeb
                 UploadFiles(payment.PaymentId);
                 lblCheckRequired.Text = "";
                 Clear();
+                lblSuccessMsg.Text = "Record Updated Successfully!";
             }
             else
             {

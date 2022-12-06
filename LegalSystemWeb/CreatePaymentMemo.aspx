@@ -53,8 +53,6 @@
                                 <div class="checkbox checkboxlist">
                                     <asp:CheckBoxList ID="cblActivity" CellPadding="5" CellSpacing="5" RepeatColumns="2" RepeatDirection="vertical" TextAlign="right" runat="server">
                                     </asp:CheckBoxList>
-                                    <asp:CustomValidator ID="CustomValidator1" ErrorMessage="Please select at least one item."
-                                        ForeColor="Red" ClientValidationFunction="ValidateCheckBoxList" runat="server" />
                                     <asp:Label ID="lblCheckRequired" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
@@ -109,7 +107,9 @@
                                 <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary btn-user btn-block" Text="Save" OnClick="btnSave_Click" ValidationGroup="1" />
                             </div>
                         </div>
-
+                        <div class="col-sm-6 m-3">
+                            <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                        </div>
 
                     </form>
                 </div>
@@ -117,20 +117,5 @@
 
         </div>
     </div>
-
-    <script type="text/javascript">
-        function ValidateCheckBoxList(sender, args) {
-            var checkBoxList = document.getElementById("<%=cblActivity.ClientID %>");
-            var checkboxes = checkBoxList.getElementsByTagName("input");
-            var isValid = false;
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    isValid = true;
-                    break;
-                }
-            }
-            args.IsValid = isValid;
-        }
-    </script>
 
 </asp:Content>

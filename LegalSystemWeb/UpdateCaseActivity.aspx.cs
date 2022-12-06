@@ -224,6 +224,8 @@ namespace LegalSystemWeb
             }
 
             Clear();
+            lblSuccessMsg.Text = "Record Updated Successfully!";
+
         }
 
 
