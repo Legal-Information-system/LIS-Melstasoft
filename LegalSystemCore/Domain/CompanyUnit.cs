@@ -6,6 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class CompanyUnit
     {
         [DBField("company_unit_id")]
@@ -18,7 +19,7 @@ namespace LegalSystemCore.Domain
         public string CompanyUnitName { get; set; }
 
         public Company company { get; set; }
-     
+
 
     }
 }

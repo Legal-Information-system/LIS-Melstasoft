@@ -53,6 +53,7 @@
                                 <div class="checkbox checkboxlist">
                                     <asp:CheckBoxList ID="cblActivity" CellPadding="5" CellSpacing="5" RepeatColumns="2" RepeatDirection="vertical" TextAlign="right" runat="server">
                                     </asp:CheckBoxList>
+                                    <asp:Label ID="lblCheckRequired" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +107,9 @@
                                 <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary btn-user btn-block" Text="Save" OnClick="btnSave_Click" ValidationGroup="1" />
                             </div>
                         </div>
-
+                        <div class="col-sm-6 m-3">
+                            <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                        </div>
 
                     </form>
                 </div>
