@@ -30,7 +30,7 @@ namespace LegalSystemCore.Infrastructure
             dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
                 "INNER JOIN company ON company.company_id = case_master.company_id " +
-                "WHERE case_master.case_status_id = 1" +
+                "WHERE case_master.case_status_id = 1 AND company.is_active = 1" +
                 "GROUP BY company.company_name;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);

@@ -66,12 +66,13 @@ namespace LegalSystemWeb
             {
                 StringBuilder cstextCard = new StringBuilder();
 
-                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">           <div class=\"card bg-primary text-white mb-4\">                <div class=\"card-body\">                    <div class=\"text-center\">  ");
+                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
                 cstextCard.Append(row["company_name"].ToString());
-                cstextCard.Append("</div>                   <div class=\"text-center\">   ");
+                cstextCard.Append("</div>   <div class=\"text-center\">");
                 cstextCard.Append(row["case_count"].ToString());
-                cstextCard.Append("</div>                   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx\"></a>               </div>           </div>       </div> ");
-
+                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
 
                 ltCompanyStatus.Text += cstextCard;
             }
@@ -102,8 +103,8 @@ namespace LegalSystemWeb
                     else per = per + "," + row["per"].ToString();
                 }
 
-                if (caseNumber == null) caseNumber = row["case_number"].ToString();
-                else caseNumber = caseNumber + "," + row["case_number"].ToString();
+                if (caseNumber == null) caseNumber = "'" + row["case_number"].ToString() + "'";
+                else caseNumber = caseNumber + ",'" + row["case_number"].ToString() + "'";
 
             }
 
@@ -171,12 +172,12 @@ namespace LegalSystemWeb
                 cstext1.Append("var myLineChart = new Chart(ctx, {");
                 cstext1.Append("type: 'bar',");
                 cstext1.Append("data: {");
-                cstext1.Append("labels: [" + dates + "],");
+                cstext1.Append("labels: [" + caseNumber + "],");
                 cstext1.Append("datasets: [{");
                 cstext1.Append("label: \"Percentage\",");
                 cstext1.Append("backgroundColor: \"rgba(0, 181, 204, 1)\",");
                 cstext1.Append("borderColor: \"rgba(0, 181, 204, 1)\",");
-                cstext1.Append("data: [" + caseCount + "],");
+                cstext1.Append("data: [" + per + "],");
                 cstext1.Append("}],");
                 cstext1.Append("},");
                 cstext1.Append("options: {");

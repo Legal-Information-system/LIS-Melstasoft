@@ -16,6 +16,7 @@ namespace LegalSystemWeb
     public partial class ViewCases : System.Web.UI.Page
     {
         int companyId, UserId;
+        string name;
         List<CaseMaster> caseMasterListO = new List<CaseMaster>();
         List<CaseMaster> caseMasterListC = new List<CaseMaster>();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
@@ -34,6 +35,7 @@ namespace LegalSystemWeb
                 //{
                 if (!IsPostBack)
                 {
+                    name = Request.QueryString["name"].ToString();
                     BindCaseStatus();
                 }
                 //}
@@ -57,6 +59,7 @@ namespace LegalSystemWeb
 
             caseMasterListO = caseMasterController.GetCaseMasterList(true);
             caseMasterList = caseMasterController.GetCaseMasterList(false);
+            caseMasterListC = caseMasterList.Where(x => x.CaseStatusId == 2).ToList();
 
             UserId = Convert.ToInt32(Session["User_Role_Id"]);
             companyId = Convert.ToInt32(Session["company_id"].ToString());
@@ -65,15 +68,29 @@ namespace LegalSystemWeb
             if (UserId == 4 || UserId == 5)
             {
                 caseMasterListO = caseMasterListO.Where(c => c.CompanyId == companyId).ToList();
-                caseMasterListC = caseMasterListC.Where(c => c.CompanyId != companyId).ToList();
+                caseMasterListC = caseMasterListC.Where(c => c.CompanyId == companyId).ToList();
             }
 
             if (UserId == 5)
             {
                 caseMasterListO = caseMasterListO.Where(c => c.CompanyUnitId == companyUnitId).ToList();
-                caseMasterListC = caseMasterListC.Where(c => c.CompanyUnitId != companyUnitId).ToList();
+                caseMasterListC = caseMasterListC.Where(c => c.CompanyUnitId == companyUnitId).ToList();
             }
-            caseMasterListC = caseMasterList.Where(x => x.CaseStatusId == 2).ToList();
+
+
+            if (name != "All" & name != null)
+            {
+                if (UserId != 5 && UserId != 4)
+                {
+                    caseMasterListO = caseMasterListO.Where(c => c.company.CompanyName == name).ToList();
+                    caseMasterListC = caseMasterListC.Where(c => c.company.CompanyName == name).ToList();
+                }
+                if (UserId == 4)
+                {
+                    caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+                    caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+                }
+            }
 
             datatablesSimple.DataSource = caseMasterListO;
             datatablesSimple.DataBind();

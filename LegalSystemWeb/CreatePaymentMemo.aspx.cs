@@ -43,7 +43,7 @@ namespace LegalSystemWeb
         private void BindActivityList()
         {
             IActivityController activityController = ControllerFactory.CreateActivityController();
-            cblActivity.DataSource = activityController.GetActivityList();
+            cblActivity.DataSource = activityController.GetActivityList(false);
             cblActivity.DataValueField = "ActivityId";
             cblActivity.DataTextField = "ActivityName";
             cblActivity.DataBind();
@@ -52,7 +52,7 @@ namespace LegalSystemWeb
         private void BindLawyerList()
         {
             ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
-            ddlLawyerName.DataSource = LawyerController.GetLawyerList();
+            ddlLawyerName.DataSource = LawyerController.GetLawyerList(false);
             ddlLawyerName.DataValueField = "LawyerId";
             ddlLawyerName.DataTextField = "LawyerName";
             ddlLawyerName.DataBind();

@@ -43,8 +43,8 @@ namespace LegalSystemWeb
         {
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
 
-            companyUnitList = companyUnitController.GetCompanyUnitList(true);
-            GridView2.DataSource = companyUnitController.GetCompanyUnitList(true);
+            companyUnitList = companyUnitController.GetCompanyUnitList(false, true);
+            GridView2.DataSource = companyUnitList;
             GridView2.DataBind();
 
         }
@@ -52,7 +52,7 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
-            ddlCompany.DataSource = companyController.GetCompanyList();
+            ddlCompany.DataSource = companyController.GetCompanyList(false);
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
 

@@ -50,7 +50,7 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
-            List<Company> companyList = companyController.GetCompanyList();
+            List<Company> companyList = companyController.GetCompanyList(false);
 
             int companyId = Convert.ToInt32(Session["company_id"].ToString());
             UserId = Convert.ToInt32(Session["User_Role_Id"]);
@@ -70,7 +70,7 @@ namespace LegalSystemWeb
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             if (ddlCompany.SelectedValue != "")
             {
-                List<CompanyUnit> companyUnitList = companyUnitController.GetCompanyUnitListFilter(ddlCompany.SelectedValue);
+                List<CompanyUnit> companyUnitList = companyUnitController.GetCompanyUnitListFilter(false, ddlCompany.SelectedValue);
 
                 int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
                 UserId = Convert.ToInt32(Session["User_Role_Id"]);
@@ -93,7 +93,7 @@ namespace LegalSystemWeb
         private void BindCaseNatureList()
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
-            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList();
+            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList(false);
             ddlNatureOfCase.DataValueField = "CaseNatureId";
             ddlNatureOfCase.DataTextField = "CaseNatureName";
             ddlNatureOfCase.DataBind();
@@ -106,7 +106,7 @@ namespace LegalSystemWeb
 
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
-            courtList = courtController.GetCourtList();
+            courtList = courtController.GetCourtList(false);
             ddlCourt.DataSource = courtList;
             ddlCourt.DataValueField = "CourtId";
             ddlCourt.DataTextField = "CourtName";
@@ -144,7 +144,7 @@ namespace LegalSystemWeb
         {
 
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-            lawyerList = lawyerController.GetLawyerList();
+            lawyerList = lawyerController.GetLawyerList(false);
 
             ddlAttorney.DataSource = lawyerList;
             ddlAttorney.DataValueField = "LawyerId";

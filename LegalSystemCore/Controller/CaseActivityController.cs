@@ -30,10 +30,10 @@ namespace LegalSystemCore.Controller
                 if (withMatchData)
                 {
                     ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-                    List<Lawyer> lawyerlist = lawyerController.GetLawyerList();
+                    List<Lawyer> lawyerlist = lawyerController.GetLawyerList(true);
 
                     ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
-                    List<CaseAction> caseActionsList = caseActionController.GetCaseActionList();
+                    List<CaseAction> caseActionsList = caseActionController.GetCaseActionList(true);
 
                     foreach (var caseActivity in listCaseActivity)
                     {

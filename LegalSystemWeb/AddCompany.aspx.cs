@@ -38,8 +38,8 @@ namespace LegalSystemWeb
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
 
-            companyList = companyController.GetCompanyList();
-            GridView2.DataSource = companyController.GetCompanyList();
+            companyList = companyController.GetCompanyList(false);
+            GridView2.DataSource = companyList;
             GridView2.DataBind();
 
         }

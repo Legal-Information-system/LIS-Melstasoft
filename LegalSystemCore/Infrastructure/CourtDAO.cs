@@ -12,7 +12,7 @@ namespace LegalSystemCore.Infrastructure
         int Save(Court court, DbConnection dbConnection);
         int Update(Court court, DbConnection dbConnection);
         int Delete(Court court, DbConnection dbConnection);
-        List<Court> GetCourtList(DbConnection dbConnection);
+        List<Court> GetCourtList(bool with0, DbConnection dbConnection);
     }
     public class CourtSqlDAOImpl : ICourtDAO
     {
@@ -73,11 +73,14 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<Court> GetCourtList(DbConnection dbConnection)
+        public List<Court> GetCourtList(bool with0, DbConnection dbConnection)
         {
             List<Court> listCourt = new List<Court>();
 
-            dbConnection.cmd.CommandText = "select * from court WHERE is_active = 1";
+            if (with0)
+                dbConnection.cmd.CommandText = "select * from court";
+            else
+                dbConnection.cmd.CommandText = "select * from court WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

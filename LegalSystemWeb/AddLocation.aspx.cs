@@ -37,8 +37,8 @@ namespace LegalSystemWeb
         {
             ILocationController locationController = ControllerFactory.CreateLocationController();
 
-            locationList = locationController.GetLocationList();
-            GridView2.DataSource = locationController.GetLocationList();
+            locationList = locationController.GetLocationList(false);
+            GridView2.DataSource = locationList;
             GridView2.DataBind();
 
         }

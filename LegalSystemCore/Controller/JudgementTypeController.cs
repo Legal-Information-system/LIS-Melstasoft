@@ -15,21 +15,21 @@ namespace LegalSystemCore.Controller
         int Update(JudgementType judgementType);
         int Delete(JudgementType judgementType);
 
-        List<JudgementType> GetJudgementTypeList();
+        List<JudgementType> GetJudgementTypeList(bool with0);
     }
 
     public class JudgementTypeControllerImpl : IJudgementTypeController
     {
         IJudgementTypeDAO JudgementTypeDAO = DAOFactory.CreateJudgementTypeDAO();
 
-        public List<JudgementType> GetJudgementTypeList()
+        public List<JudgementType> GetJudgementTypeList(bool with0)
         {
             DbConnection dbConnection = null;
             List<JudgementType> listJudgementType = new List<JudgementType>();
             try
             {
                 dbConnection = new DbConnection();
-                listJudgementType = JudgementTypeDAO.GetJudgementTypeList(dbConnection);
+                listJudgementType = JudgementTypeDAO.GetJudgementTypeList(with0, dbConnection);
             }
             catch (Exception)
             {
