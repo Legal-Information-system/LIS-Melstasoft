@@ -286,6 +286,9 @@
                         <asp:Button ID="btnUpdateActivity" runat="server" Text="Update Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnUpdateActivity_Click" />
                     </div>
                 </div>
+                <div class="col-sm-6 m-3">
+                    <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                </div>
             </form>
         </div>
     </div>

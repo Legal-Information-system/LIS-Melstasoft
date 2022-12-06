@@ -85,7 +85,7 @@ namespace LegalSystemWeb
                 companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
 
                 CaseNature caseNature = new CaseNature();
-                caseNature = caseNatureController.GetCaseNature(caseMaster.CaseStatusId);
+                caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
 
                 List<Court> courtList = courtController.GetCourtList(true);
                 courtList = courtList.Where(c => c.CourtId == caseMaster.CaseStatusId).ToList();

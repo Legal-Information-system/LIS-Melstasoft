@@ -191,8 +191,9 @@ namespace LegalSystemWeb
             caseMasterController.Save(caseMaster);
 
             UploadFiles();
-
             Clear();
+
+            lblSuccessMsg.Text = "Record Updated Successfully!";
         }
 
 
@@ -258,7 +259,8 @@ namespace LegalSystemWeb
             ddlCounselor.SelectedIndex = 0;
             ddlCompanyUnit.Items.Clear();
             ddlLocation.Items.Clear();
-            //rbIsPlantiff.SelectedItem.Clear();
+            rbIsPlantiff.Items[0].Selected = false;
+            rbIsPlantiff.Items[1].Selected = false;
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
