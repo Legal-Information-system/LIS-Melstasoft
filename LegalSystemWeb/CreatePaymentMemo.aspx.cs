@@ -97,10 +97,8 @@ namespace LegalSystemWeb
             ddlLawyerName.ClearSelection();
             txtRemarks.Text = string.Empty;
 
-            //for (int i = 0; i < cblActivity.Items.Count; i++)
-            //{
-            //    cblActivity.Items[i].Value; 
-            //}
+            cblActivity.Items.Clear();
+            BindActivityList();
         }
 
 

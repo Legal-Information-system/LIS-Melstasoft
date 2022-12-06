@@ -155,7 +155,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection = new DbConnection();
 
-            dbConnection.cmd.CommandText = "SELECT case_number, ((total_paid_amount/claim_amount)*100) AS per FROM case_master " +
+            dbConnection.cmd.CommandText = "SELECT case_number, ROUND((total_paid_amount/claim_amount)*100, 2) AS per FROM case_master " +
                 "WHERE case_status_id = 1 ORDER BY per DESC;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
@@ -173,13 +173,13 @@ namespace LegalSystemCore.Infrastructure
 
             if (unit)
             {
-                dbConnection.cmd.CommandText = "SELECT case_number, ((total_paid_amount/claim_amount)*100) AS per FROM case_master " +
+                dbConnection.cmd.CommandText = "SELECT case_number, ROUND((total_paid_amount/claim_amount)*100, 2) AS per FROM case_master " +
                "WHERE case_status_id = 1 AND company_unit_id =" + id +
                "ORDER BY per DESC ;";
             }
             else
             {
-                dbConnection.cmd.CommandText = "SELECT case_number, ((total_paid_amount/claim_amount)*100) AS per FROM case_master " +
+                dbConnection.cmd.CommandText = "SELECT case_number, ROUND((total_paid_amount/claim_amount)*100, 2) AS per FROM case_master " +
                "WHERE case_status_id = 1 AND company_id =" + id +
                "ORDER BY per DESC ;";
             }

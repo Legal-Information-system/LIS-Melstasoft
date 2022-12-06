@@ -89,7 +89,7 @@ namespace LegalSystemWeb
                 companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
 
                 CaseNature caseNature = new CaseNature();
-                caseNature = caseNatureController.GetCaseNature(caseMaster.CaseStatusId);
+                caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
 
                 lblCompany.Text = company.CompanyName;
                 lblCompanyUnit.Text = companyUnit.CompanyUnitName;

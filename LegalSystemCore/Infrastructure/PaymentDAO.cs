@@ -100,7 +100,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<Payment> paymentList = new List<Payment>();
 
-            dbConnection.cmd.CommandText = "select * from payment_master WHERE is_active = 1";
+            dbConnection.cmd.CommandText = "select * from payment_master WHERE is_active = 1 ORDER BY created_date DESC";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
