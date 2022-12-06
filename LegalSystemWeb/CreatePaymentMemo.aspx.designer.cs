@@ -87,6 +87,24 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.CheckBoxList cblActivity;
 
         /// <summary>
+        /// CustomValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+
+        /// <summary>
+        /// lblCheckRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCheckRequired;
+
+        /// <summary>
         /// Literal3 control.
         /// </summary>
         /// <remarks>

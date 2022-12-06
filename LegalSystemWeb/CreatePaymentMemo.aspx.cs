@@ -94,7 +94,13 @@ namespace LegalSystemWeb
         {
             txtTotalPayableAmount.Text = string.Empty;
             ddlCaseNo.ClearSelection();
+            ddlLawyerName.ClearSelection();
             txtRemarks.Text = string.Empty;
+
+            //for (int i = 0; i < cblActivity.Items.Count; i++)
+            //{
+            //    cblActivity.Items[i].Value; 
+            //}
         }
 
 
@@ -117,21 +123,36 @@ namespace LegalSystemWeb
             payment.CreateUserId = Convert.ToInt32(Session["User_Id"]);
             payment.Remarks = txtRemarks.Text;
             payment.PaymentStatusId = 1;
-            payment.PaymentId = paymentController.Save(payment);
+
+            int count = 0;
 
             for (int i = 0; i < cblActivity.Items.Count; i++)
             {
-                if (cblActivity.Items[i].Selected)
-                {
-                    paymentActivity.ActivityId = Convert.ToInt32(cblActivity.Items[i].Value);
-                    paymentActivity.PaymentId = payment.PaymentId;
-                    paymentActivityController.Save(paymentActivity);
-                }
+                if (cblActivity.Items[i].Selected) { count++; }
             }
-            UploadFiles(payment.PaymentId);
 
+            if (count > 0)
+            {
+                payment.PaymentId = paymentController.Save(payment);
 
-            Clear();
+                for (int i = 0; i < cblActivity.Items.Count; i++)
+                {
+                    if (cblActivity.Items[i].Selected)
+                    {
+                        paymentActivity.ActivityId = Convert.ToInt32(cblActivity.Items[i].Value);
+                        paymentActivity.PaymentId = payment.PaymentId;
+                        paymentActivityController.Save(paymentActivity);
+                    }
+                }
+
+                UploadFiles(payment.PaymentId);
+                lblCheckRequired.Text = "";
+                Clear();
+            }
+            else
+            {
+                lblCheckRequired.Text = "*";
+            }
 
         }
 
