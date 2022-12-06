@@ -95,6 +95,9 @@ namespace LegalSystemWeb
             datatablesSimple.DataSource = caseMasterListO;
             datatablesSimple.DataBind();
 
+            ViewState["ListCaseO"] = caseMasterListO;
+            ViewState["ListCaseC"] = caseMasterListC;
+
         }
 
         protected void ddlCaseStatus_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,7 +125,8 @@ namespace LegalSystemWeb
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
 
-            BindCaseList();
+            caseMasterListO = (List<CaseMaster>)ViewState["ListCaseO"];
+            caseMasterListC = (List<CaseMaster>)ViewState["ListCaseC"];
 
             string caseNumber;
 
