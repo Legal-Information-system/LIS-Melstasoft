@@ -50,7 +50,7 @@
                             </asp:BoundField>
                             <asp:TemplateField ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block" AutoPostBack="true" runat="server" OnClick="btnView_Click">View Details</asp:LinkButton>
+                                    <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block" runat="server" OnClick="btnView_Click">View Details</asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
