@@ -28,6 +28,7 @@ namespace LegalSystemWeb
             if (userLogin.UserId == 0)
             {
                 txtPassword.Text = string.Empty;
+                lblErrorMsg.Text = "Incorrect Username or Password!";
             }
             else
             {
