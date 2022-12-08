@@ -32,7 +32,7 @@
                                             <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control "></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server"
                                                 ControlToValidate="txtUserName" ErrorMessage="Username is Required">*</asp:RequiredFieldValidator>
-                                            
+
 
                                         </div>
                                         <div class="form-outline mb-4" style="font-weight: 700">
@@ -42,6 +42,7 @@
                                                 ControlToValidate="txtPassword" ErrorMessage="Password Required">*</asp:RequiredFieldValidator>
 
                                         </div>
+                                        <asp:Label ID="lblErrorMsg" runat="server" Text="" ForeColor="#800040" BackColor="#ffc6c6"></asp:Label>
                                         <div class="form-outline mb-4">
                                             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" />
                                         </div>
