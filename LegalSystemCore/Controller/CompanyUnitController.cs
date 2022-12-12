@@ -128,7 +128,7 @@ namespace LegalSystemCore.Controller
                 if (withCompanyName)
                 {
                     ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
-                    List<Company> listCompany = companyDAO.GetCompanyList(false, dbConnection);
+                    List<Company> listCompany = companyDAO.GetCompanyList(true, dbConnection);
 
                     foreach (var companyUnit in listCompanyUnit)
                     {
