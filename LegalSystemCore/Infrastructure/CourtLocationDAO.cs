@@ -10,8 +10,11 @@ namespace LegalSystemCore.Infrastructure
     public interface ICourtLocationDAO
     {
         int Save(CourtLocation courtlocation, DbConnection dbConnection);
+        int Delete(CourtLocation courtlocation, DbConnection dbConnection);
+        int Enable(CourtLocation courtlocation, DbConnection dbConnection);
+
         int Update(CourtLocation courtlocation, int courtId, int locationid, DbConnection dbConnectIon);
-        List<CourtLocation> GetCourtLocationList(DbConnection dbConnection);
+        List<CourtLocation> GetCourtLocationList(bool with0, DbConnection dbConnection);
         List<CourtLocation> GetCourtLocationListFilter(int courtId, DbConnection dbConnection);
 
 
@@ -40,6 +43,38 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
+        public int Delete(CourtLocation courtlocation, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update court_locationc set is_active = 0 WHERE court_id = @CourtId AND locationc_id=@locationId";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CourtId", courtlocation.CourtId);
+            dbConnection.cmd.Parameters.AddWithValue("@locationId", courtlocation.LocationId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int Enable(CourtLocation courtlocation, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update court_locationc set is_active = 1 WHERE court_id = @CourtId AND locationc_id=@locationId";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CourtId", courtlocation.CourtId);
+            dbConnection.cmd.Parameters.AddWithValue("@locationId", courtlocation.LocationId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
         public int Update(CourtLocation courtlocation, int courtId, int locationId, DbConnection dbConnection)
         {
             int output = 0;
@@ -58,11 +93,18 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<CourtLocation> GetCourtLocationList(DbConnection dbConnection)
+        public List<CourtLocation> GetCourtLocationList(bool with0, DbConnection dbConnection)
         {
             List<CourtLocation> listcourtlocation = new List<CourtLocation>();
 
-            dbConnection.cmd.CommandText = "select * from court_locationc WHERE is_active = 1";
+            String query;
+
+            if (with0)
+                query = "select * from court_locationc";
+            else
+                query = "select * from court_locationc WHERE is_active = 1";
+
+            dbConnection.cmd.CommandText = query;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

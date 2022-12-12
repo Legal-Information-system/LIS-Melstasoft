@@ -44,8 +44,8 @@ namespace LegalSystemWeb
         {
             ICourtLocationController courtlocationController = ControllerFactory.CreateCourtLocationController();
 
-            courtlocation = courtlocationController.GetCourtLocationList();
-            GridView2.DataSource = courtlocationController.GetCourtLocationList();
+            courtlocation = courtlocationController.GetCourtLocationList(false);
+            GridView2.DataSource = courtlocation;
             GridView2.DataBind();
         }
 
@@ -121,6 +121,24 @@ namespace LegalSystemWeb
             btnSave.Text = "Update";
             ViewState["updatedRowIndex1"] = courtlocation[rowIndex].CourtId;
             ViewState["updatedRowIndex2"] = courtlocation[rowIndex].LocationId;
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            ICourtLocationController courLocationtController = ControllerFactory.CreateCourtLocationController();
+
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = GridView2.PageSize;
+            int pageIndex = GridView2.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
+            CourtLocation cl = new CourtLocation();
+            cl.CourtId = courtlocation[rowIndex].CourtId; ;
+            cl.LocationId = courtlocation[rowIndex].LocationId;
+
+            courLocationtController.Delete(cl);
+            BindDataSource();
         }
 
         protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
