@@ -3,6 +3,7 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 
@@ -12,22 +13,24 @@ namespace LegalSystemCore.Controller
     public interface ICourtLocationController
     {
         int Save(CourtLocation courtlocation);
+        int Delete(CourtLocation courtlocation);
+
         int Update(CourtLocation courtlocation, int courtId, int locationId);
-        List<CourtLocation> GetCourtLocationList();
+        List<CourtLocation> GetCourtLocationList(bool with0);
         List<CourtLocation> GetCourtLocationListFilter(int withCourtId);
     }
 
     public class CourtLocationControllerImpl : ICourtLocationController
     {
         ICourtLocationDAO courtlocationDAO = DAOFactory.CreatCourtLocationDAO();
-        public List<CourtLocation> GetCourtLocationList()
+        public List<CourtLocation> GetCourtLocationList(bool with0)
         {
             Common.DbConnection dbConnection = null;
             List<CourtLocation> listcourtlocation = new List<CourtLocation>();
             try
             {
                 dbConnection = new Common.DbConnection();
-                listcourtlocation = courtlocationDAO.GetCourtLocationList(dbConnection);
+                listcourtlocation = courtlocationDAO.GetCourtLocationList(with0, dbConnection);
 
                 ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
                 List<Court> listCourt = courtDAO.GetCourtList(true, dbConnection);
@@ -64,7 +67,7 @@ namespace LegalSystemCore.Controller
 
         public List<CourtLocation> GetCourtLocationListFilter(int withCourtId)
         {
-            DbConnection dbConnection = null;
+            Common.DbConnection dbConnection = null;
             List<CourtLocation> listCourtLocation = new List<CourtLocation>();
             try
             {
@@ -98,11 +101,46 @@ namespace LegalSystemCore.Controller
 
         public int Save(CourtLocation courtlocation)
         {
+            Common.DbConnection dbConnection = null;
+            List<CourtLocation> courtLocationList = new List<CourtLocation>();
+            int flage = 0;
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                courtLocationList = courtlocationDAO.GetCourtLocationList(true, dbConnection);
+
+                foreach (var cl in courtLocationList)
+                {
+                    if (cl.CourtId == courtlocation.CourtId && cl.LocationId == courtlocation.LocationId)
+                        flage = 1;
+                }
+
+                if (flage == 0)
+                    return courtlocationDAO.Save(courtlocation, dbConnection);
+                else
+                    return courtlocationDAO.Enable(courtlocation, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int Delete(CourtLocation courtlocation)
+        {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return courtlocationDAO.Save(courtlocation, dbconnection);
+                return courtlocationDAO.Delete(courtlocation, dbconnection);
             }
             catch (Exception)
             {
