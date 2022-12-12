@@ -31,9 +31,9 @@ namespace LegalSystemWeb
                     {
                         BindUserRoles();
                         BindCompanyList();
-
+                        BindCompanyUnitList();
                     }
-                    BindCompanyUnitList();
+
                 }
             }
 
@@ -79,19 +79,39 @@ namespace LegalSystemWeb
 
             IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
 
+            List<UserLogin> userLoginList = new List<UserLogin>();
+            userLoginList = userLoginController.GetUserLoginList(true);
+
+            int flag = 0;
+
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1");
             userLogin.CompanyId = ddlCompany.SelectedValue;
             userLogin.CompanyUnitId = ddlCompanyUnit.SelectedValue;
             userLogin.UserRoleId = ddlUserType.SelectedValue;
-            userLogin.UserId = userLoginController.Save(userLogin);
 
+            foreach (var user in userLoginList)
+            {
+                if (user.UserName.ToLower() == userLogin.UserName.ToLower())
+                {
+                    flag = 1;
+                }
+            }
 
+            if (flag == 0)
+            {
+                userLogin.UserId = userLoginController.Save(userLogin);
 
-
-            Clear();
-
+                Clear();
+                lblErrorMsg.Text = "";
+                lblSuccessMsg.Text = "Record Updated Successfully!";
+            }
+            else
+            {
+                lblSuccessMsg.Text = "";
+                lblErrorMsg.Text = "User Already Exists!";
+            }
         }
 
         private void Clear()
@@ -101,6 +121,9 @@ namespace LegalSystemWeb
 
         }
 
-
+        protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindCompanyUnitList();
+        }
     }
 }

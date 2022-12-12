@@ -37,7 +37,7 @@
                             </div>
                             <div class="col my-3 py-1" style="display: flex; flex-direction: column">
                                 <asp:Literal ID="Literal3" runat="server" Text="Company Name: "></asp:Literal>
-                                <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-default dropdown-toggle" Style="margin-top: 5px" AutoPostBack="true"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-default dropdown-toggle" Style="margin-top: 5px" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged"></asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCompany" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
 
@@ -48,6 +48,13 @@
                             </div>
                             <div class="col d-flex flex-row justify-content-center">
                                 <asp:Button runat="server" ID="btnSubmit" CssClass="btn btn-primary" Text="Submit" OnClick="btnSubmit_Click" />
+                            </div>
+
+                            <div class="col-sm-6 m-3">
+                                <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                            </div>
+                            <div class="col-sm-6 m-3">
+                                <asp:Label ID="lblErrorMsg" runat="server" Text="" ForeColor="Red"></asp:Label>
                             </div>
 
 
