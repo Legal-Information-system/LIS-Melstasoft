@@ -25,6 +25,6 @@ namespace LegalSystemCore.Domain
         public string CompanyUnitId { get; set; }
 
         [DBField("user_role_id")]
-        public string UserRoleId { get; set; }
+        public int UserRoleId { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace LegalSystemWeb
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1");
             userLogin.CompanyId = ddlCompany.SelectedValue;
             userLogin.CompanyUnitId = ddlCompanyUnit.SelectedValue;
-            userLogin.UserRoleId = ddlUserType.SelectedValue;
+            userLogin.UserRoleId = Convert.ToInt32(ddlUserType.SelectedValue);
 
             foreach (var user in userLoginList)
             {
