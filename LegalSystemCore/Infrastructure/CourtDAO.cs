@@ -13,6 +13,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(Court court, DbConnection dbConnection);
         int Delete(Court court, DbConnection dbConnection);
         List<Court> GetCourtList(bool with0, DbConnection dbConnection);
+        Court GetCourt(int id, DbConnection dbConnection);
     }
     public class CourtSqlDAOImpl : ICourtDAO
     {
@@ -89,6 +90,20 @@ namespace LegalSystemCore.Infrastructure
 
 
             return listCourt;
+        }
+
+        public Court GetCourt(int id, DbConnection dbConnection)
+        {
+            Court court = new Court();
+
+            dbConnection.cmd.CommandText = "select * from court WHERE court_id =" + id;
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            court = dataAccessObject.GetSingleOject<Court>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return court;
         }
     }
 }

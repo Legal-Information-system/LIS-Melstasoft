@@ -92,6 +92,8 @@ namespace LegalSystemCore.Domain
         public UserLogin userCreate { get; set; }
         public UserLogin userClose { get; set; }
 
+        public JudgementType judgementType { get; set; }
+
         [DBField("total_paid_amount")]
         public double totalPaidAmoutToPresent { get; set; }
 

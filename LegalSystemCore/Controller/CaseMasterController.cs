@@ -49,25 +49,32 @@ namespace LegalSystemCore.Controller
                     IJudgementTypeDAO judgementTypeDAO = DAOFactory.CreateJudgementTypeDAO();
 
                     caseMaster.company = companyDAO.GetCompany(caseMaster.CompanyId, dbConnection);
-                    company = companyController.GetCompany(caseMaster.CompanyId);
+                    caseMaster.companyUnit = companyUnitDAO.GetCompanyUnit(caseMaster.CompanyUnitId, dbConnection);
+                    caseMaster.caseNature = caseNatureDAO.GetCaseNature(caseMaster.CaseNatureId, dbConnection);
 
-                    CompanyUnit companyUnit = new CompanyUnit();
-                    companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
+                    caseMaster.court = courtDAO.GetCourt(caseMaster.CourtId, dbConnection);
 
-                    CaseNature caseNature = new CaseNature();
-                    caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
 
-                    List<Court> courtList = courtController.GetCourtList(true);
-                    courtList = courtList.Where(c => c.CourtId == caseMaster.CaseStatusId).ToList();
+                    List<Location> locationList = locationDAO.GetLocationList(true, dbConnection);
+                    caseMaster.location = locationList.Where(l => l.LocationId == caseMaster.LocationId).Single();
 
-                    List<Location> locationList = locationController.GetLocationList(true);
-                    locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
+                    List<Lawyer> lawyerList = lawyerDAO.GetLawyerList(true, dbConnection);
+                    caseMaster.AssignAttorner = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).Single();
 
-                    List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
-                    List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
+                    if (caseMaster.CounsilorId > 0)
+                        caseMaster.Counsilor = lawyerList.Where(l => l.LawyerId == caseMaster.CounsilorId).Single();
 
-                    List<UserLogin> userClosedList = userLoginController.GetUserLoginList(true);
-                    List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
+                    List<UserLogin> userClosedList = userLoginDAO.GetUserLoginList(true, dbConnection);
+                    caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
+
+                    if (caseMaster.ClosedUserId > 0)
+                        caseMaster.userClose = userClosedList.Where(l => l.UserId == caseMaster.ClosedUserId).Single();
+
+                    if (caseMaster.JudgementTypeId > 0)
+                    {
+                        List<JudgementType> judgementTypesList = judgementTypeDAO.GetJudgementTypeList(true, dbConnection);
+                        caseMaster.judgementType = judgementTypesList.Where(l => l.JTypeId == caseMaster.JudgementTypeId).Single();
+                    }
                 }
 
             }

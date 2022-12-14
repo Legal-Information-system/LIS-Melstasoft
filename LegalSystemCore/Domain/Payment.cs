@@ -7,6 +7,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class Payment
     {
         [DBField("payment_id")]
