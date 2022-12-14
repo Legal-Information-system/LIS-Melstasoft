@@ -16,7 +16,7 @@ namespace LegalSystemCore.Controller
         int CaseClose(CaseMaster caseMaster);
         int Delete(CaseMaster caseMaster);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed);
-        CaseMaster GetCaseMaster(string caseNumber);
+        CaseMaster GetCaseMaster(string caseNumber, bool withDetails);
 
         CaseMaster GetCaseMasterWithPaid(String caseNumber);
         int UpdateCasePaidAmount(CaseMaster caseMaster);
@@ -28,7 +28,7 @@ namespace LegalSystemCore.Controller
 
         ICaseMasterDAO caseMasterDAO = DAOFactory.CreateCaseMasterDAO();
 
-        public CaseMaster GetCaseMaster(string caseNumber)
+        public CaseMaster GetCaseMaster(string caseNumber, bool withDetails)
         {
             DbConnection dbConnection = null;
             CaseMaster caseMaster = new CaseMaster();
@@ -36,6 +36,40 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+
+                if (withDetails)
+                {
+                    ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                    ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
+                    ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
+                    ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
+                    ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
+                    ILawyerDAO lawyerDAO = DAOFactory.CreateLawyerDAO();
+                    IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
+                    IJudgementTypeDAO judgementTypeDAO = DAOFactory.CreateJudgementTypeDAO();
+
+                    caseMaster.company = companyDAO.GetCompany(caseMaster.CompanyId, dbConnection);
+                    company = companyController.GetCompany(caseMaster.CompanyId);
+
+                    CompanyUnit companyUnit = new CompanyUnit();
+                    companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
+
+                    CaseNature caseNature = new CaseNature();
+                    caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
+
+                    List<Court> courtList = courtController.GetCourtList(true);
+                    courtList = courtList.Where(c => c.CourtId == caseMaster.CaseStatusId).ToList();
+
+                    List<Location> locationList = locationController.GetLocationList(true);
+                    locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
+
+                    List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
+                    List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
+
+                    List<UserLogin> userClosedList = userLoginController.GetUserLoginList(true);
+                    List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
+                }
+
             }
             catch (Exception)
             {

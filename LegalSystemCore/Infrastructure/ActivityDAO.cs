@@ -94,8 +94,8 @@ namespace LegalSystemCore.Infrastructure
         {
             Activity activity = new Activity();
 
+            dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandText = "select * from activity WHERE activity_id = @ActivityId";
-
 
             dbConnection.cmd.Parameters.AddWithValue("@ActivityId", activityId);
 

@@ -81,7 +81,16 @@ namespace LegalSystemCore.Domain
 
         public CaseNature caseNature { get; set; }
 
+        public Court court { get; set; }
+
         public Location location { get; set; }
+
+        public Lawyer AssignAttorner { get; set; }
+
+        public Lawyer Counsilor { get; set; }
+
+        public UserLogin userCreate { get; set; }
+        public UserLogin userClose { get; set; }
 
         [DBField("total_paid_amount")]
         public double totalPaidAmoutToPresent { get; set; }

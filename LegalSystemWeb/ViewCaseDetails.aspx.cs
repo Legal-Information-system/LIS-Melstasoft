@@ -47,7 +47,7 @@ namespace LegalSystemWeb
             try
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-                caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString());
+                caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString(), true);
 
                 UserId = Convert.ToInt32(Session["User_Role_Id"]);
                 companyId = Convert.ToInt32(Session["company_id"].ToString());

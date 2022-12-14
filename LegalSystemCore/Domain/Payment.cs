@@ -53,5 +53,7 @@ namespace LegalSystemCore.Domain
 
         public string Actions { get; set; }
 
+        public List<PaymentActivity> listPaymentActivity { get; set; }
+
     }
 }

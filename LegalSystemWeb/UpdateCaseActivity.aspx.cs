@@ -80,7 +80,7 @@ namespace LegalSystemWeb
                 ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
 
                 CaseMaster caseMaster = new CaseMaster();
-                caseMaster = caseMasterController.GetCaseMaster(ddlCase.SelectedValue);
+                caseMaster = caseMasterController.GetCaseMaster(ddlCase.SelectedValue, true);
 
                 Company company = new Company();
                 company = companyController.GetCompany(caseMaster.CompanyId);
