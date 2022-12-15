@@ -6,6 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class JudgementType
     {
         [DBField("judgement_type_id")]

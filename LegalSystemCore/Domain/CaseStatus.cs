@@ -6,6 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Infrastructure
 {
+    [Serializable]
     public class CaseStatus
     {
         [DBField("case_status_id")]

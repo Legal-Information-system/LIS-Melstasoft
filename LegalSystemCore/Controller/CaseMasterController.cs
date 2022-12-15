@@ -16,7 +16,7 @@ namespace LegalSystemCore.Controller
         int CaseClose(CaseMaster caseMaster);
         int Delete(CaseMaster caseMaster);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed);
-        CaseMaster GetCaseMaster(string caseNumber);
+        CaseMaster GetCaseMaster(string caseNumber, bool withDetails);
 
         CaseMaster GetCaseMasterWithPaid(String caseNumber);
         int UpdateCasePaidAmount(CaseMaster caseMaster);
@@ -28,7 +28,7 @@ namespace LegalSystemCore.Controller
 
         ICaseMasterDAO caseMasterDAO = DAOFactory.CreateCaseMasterDAO();
 
-        public CaseMaster GetCaseMaster(string caseNumber)
+        public CaseMaster GetCaseMaster(string caseNumber, bool withDetails)
         {
             DbConnection dbConnection = null;
             CaseMaster caseMaster = new CaseMaster();
@@ -36,6 +36,47 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+
+                if (withDetails)
+                {
+                    ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                    ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
+                    ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
+                    ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
+                    ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
+                    ILawyerDAO lawyerDAO = DAOFactory.CreateLawyerDAO();
+                    IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
+                    IJudgementTypeDAO judgementTypeDAO = DAOFactory.CreateJudgementTypeDAO();
+
+                    caseMaster.company = companyDAO.GetCompany(caseMaster.CompanyId, dbConnection);
+                    caseMaster.companyUnit = companyUnitDAO.GetCompanyUnit(caseMaster.CompanyUnitId, dbConnection);
+                    caseMaster.caseNature = caseNatureDAO.GetCaseNature(caseMaster.CaseNatureId, dbConnection);
+
+                    caseMaster.court = courtDAO.GetCourt(caseMaster.CourtId, dbConnection);
+
+
+                    List<Location> locationList = locationDAO.GetLocationList(true, dbConnection);
+                    caseMaster.location = locationList.Where(l => l.LocationId == caseMaster.LocationId).Single();
+
+                    List<Lawyer> lawyerList = lawyerDAO.GetLawyerList(true, dbConnection);
+                    caseMaster.AssignAttorner = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).Single();
+
+                    if (caseMaster.CounsilorId > 0)
+                        caseMaster.Counsilor = lawyerList.Where(l => l.LawyerId == caseMaster.CounsilorId).Single();
+
+                    List<UserLogin> userClosedList = userLoginDAO.GetUserLoginList(true, dbConnection);
+                    caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
+
+                    if (caseMaster.ClosedUserId > 0)
+                        caseMaster.userClose = userClosedList.Where(l => l.UserId == caseMaster.ClosedUserId).Single();
+
+                    if (caseMaster.JudgementTypeId > 0)
+                    {
+                        List<JudgementType> judgementTypesList = judgementTypeDAO.GetJudgementTypeList(true, dbConnection);
+                        caseMaster.judgementType = judgementTypesList.Where(l => l.JTypeId == caseMaster.JudgementTypeId).Single();
+                    }
+                }
+
             }
             catch (Exception)
             {
