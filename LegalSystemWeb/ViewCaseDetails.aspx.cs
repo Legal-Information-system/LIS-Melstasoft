@@ -47,7 +47,7 @@ namespace LegalSystemWeb
             try
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-                caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString());
+                caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString(), true);
 
                 UserId = Convert.ToInt32(Session["User_Role_Id"]);
                 companyId = Convert.ToInt32(Session["company_id"].ToString());
@@ -69,71 +69,36 @@ namespace LegalSystemWeb
                     }
                 }
 
-                ICompanyController companyController = ControllerFactory.CreateCompanyController();
-                ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
-                ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
-                ICourtController courtController = ControllerFactory.CreateCourtController();
-                ILocationController locationController = ControllerFactory.CreateLocationController();
-                ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-                IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
-                IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
-
-                Company company = new Company();
-                company = companyController.GetCompany(caseMaster.CompanyId);
-
-                CompanyUnit companyUnit = new CompanyUnit();
-                companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
-
-                CaseNature caseNature = new CaseNature();
-                caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
-
-                List<Court> courtList = courtController.GetCourtList(true);
-                courtList = courtList.Where(c => c.CourtId == caseMaster.CaseStatusId).ToList();
-
-                List<Location> locationList = locationController.GetLocationList(true);
-                locationList = locationList.Where(l => l.LocationId == caseMaster.LocationId).ToList();
-
-                List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
-                List<Lawyer> assignList = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).ToList();
-
-                List<UserLogin> userClosedList = userLoginController.GetUserLoginList(true);
-                List<UserLogin> userCreatedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
-
 
                 if (caseMaster.JudgementTypeId > 0)
                 {
-                    userClosedList = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).ToList();
-                    List<JudgementType> judgementTypesList = judgementTypeController.GetJudgementTypeList(true);
-                    judgementTypesList = judgementTypesList.Where(l => l.JTypeId == caseMaster.JudgementTypeId).ToList();
 
-                    lblJudgement.Text = judgementTypesList[0].JTypeName;
+                    lblJudgement.Text = caseMaster.judgementType.JTypeName;
                     lblCloseOutcome.Text = caseMaster.CaseOutcome;
                     if (caseMaster.ClosedRemarks != null)
                         if (caseMaster.ClosedRemarks != "")
                             lblCLoseRemarks.Text = caseMaster.ClosedRemarks;
-                    lblCloseUser.Text = userClosedList[0].UserName;
+                    lblCloseUser.Text = caseMaster.userClose.UserName;
                     lblCloseDate.Text = caseMaster.ClosedDate.ToString("dd/MM/yyyy");
                 }
 
-
-
                 lblCaseNumber.Text = Request.QueryString["CaseNumber"].ToString();
-                lblCompany.Text = company.CompanyName;
-                lblCompanyUnit.Text = companyUnit.CompanyUnitName;
+                lblCompany.Text = caseMaster.company.CompanyName;
+                lblCompanyUnit.Text = caseMaster.companyUnit.CompanyUnitName;
                 lblClaimAmount.Text = caseMaster.ClaimAmount.ToString();
                 lblCreateDate.Text = caseMaster.CreatedDate.ToString("dd/MM/yyyy");
                 lblDescription.Text = caseMaster.CaseDescription;
-                lblNature.Text = caseNature.CaseNatureName;
+                lblNature.Text = caseMaster.caseNature.CaseNatureName;
 
-                lblCourt.Text = courtList[0].CourtName;
-                lblLocationi.Text = locationList[0].locationName;
-                lblAttorney.Text = assignList[0].LawyerName;
-                lblUser.Text = userCreatedList[0].UserName;
+                lblCourt.Text = caseMaster.court.CourtName;
+                lblLocationi.Text = caseMaster.location.locationName;
+                lblAttorney.Text = caseMaster.AssignAttorner.LawyerName;
+                lblUser.Text = caseMaster.userCreate.UserName;
 
                 if (caseMaster.CounsilorId > 0)
                 {
-                    List<Lawyer> counsilorList = lawyerList.Where(l => l.LawyerId == caseMaster.CounsilorId).ToList();
-                    lblCounsilor.Text = counsilorList[0].LawyerName;
+
+                    lblCounsilor.Text = caseMaster.Counsilor.LawyerName;
                 }
 
                 if (caseMaster.PrevCaseNumber != null)
@@ -147,13 +112,13 @@ namespace LegalSystemWeb
 
                 if (caseMaster.IsPlentif == 1)
                 {
-                    lblPlaintiff.Text = company.CompanyName;
+                    lblPlaintiff.Text = caseMaster.company.CompanyName;
                     lblDefendant.Text = caseMaster.OtherParty; ;
                 }
                 else
                 {
                     lblPlaintiff.Text = caseMaster.OtherParty;
-                    lblDefendant.Text = company.CompanyName;
+                    lblDefendant.Text = caseMaster.company.CompanyName;
                 }
             }
             catch (Exception)
