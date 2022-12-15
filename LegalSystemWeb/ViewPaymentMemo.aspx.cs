@@ -29,38 +29,41 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             IPaymentController paymentController = ControllerFactory.CreatePaymentController();
-            List<Payment> listPayment = paymentController.GetPaymentList();
+            List<Payment> listPayment = paymentController.GetPaymentList(true);
+
 
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterList(true);
             CaseMaster caseMaster = new CaseMaster();
 
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
-
-            IPaymentActivityController paymentActivityController = ControllerFactory.CreatePaymentActivityController();
-            List<PaymentActivity> listPaymentActivity = new List<PaymentActivity>();
+            List<Lawyer> lawyerList = lawyerController.GetLawyerList(true);
 
             IActivityController activityController = ControllerFactory.CreateActivityController();
+            List<Activity> activityList = activityController.GetActivityList(true);
 
             IPaymentStatusController paymentStatusController = ControllerFactory.CreatePaymentStatusController();
+            List<PaymentStatus> paymentStatusList = paymentStatusController.GetPaymentStatusList();
 
             foreach (Payment payment in listPayment)
             {
-                caseMaster = caseMasterController.GetCaseMasterWithPaid(payment.CaseNumber);
-                payment.lawyer = lawyerController.GetLawyer(payment.LawyerId);
+                caseMaster = caseMasterList.Where(x => x.CaseNumber == payment.CaseNumber).Single();
+                payment.lawyer = lawyerList.Where(x => x.LawyerId == payment.LawyerId).Single();
                 caseMaster.payableAmount = caseMaster.ClaimAmount - caseMaster.totalPaidAmoutToPresent;
                 payment.caseMaster = caseMaster;
-                listPaymentActivity = paymentActivityController.GetPaymentActivityList(payment.PaymentId);
-                payment.paymentStatus = paymentStatusController.GetPaymentStatus(payment.PaymentStatusId);
-                foreach (PaymentActivity paymentActivity in listPaymentActivity)
+
+                payment.paymentStatus = paymentStatusList.Where(x => x.StatusId == payment.PaymentStatusId).Single();
+
+                foreach (var paymentActivity in payment.listPaymentActivity)
                 {
 
                     if (payment.Actions == null)
                     {
-                        payment.Actions = activityController.GetActivity(paymentActivity.ActivityId).ActivityName;
+                        payment.Actions = paymentActivity.activity.ActivityName;
                     }
                     else
                     {
-                        payment.Actions = payment.Actions + " , " + activityController.GetActivity(paymentActivity.ActivityId).ActivityName;
+                        payment.Actions = payment.Actions + " , " + paymentActivity.activity.ActivityName;
                     }
                 }
 

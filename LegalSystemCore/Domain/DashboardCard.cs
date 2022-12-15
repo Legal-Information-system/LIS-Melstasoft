@@ -5,6 +5,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class DashboardCard
     {
         public string Name { get; set; }

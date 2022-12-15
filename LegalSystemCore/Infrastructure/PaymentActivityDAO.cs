@@ -83,6 +83,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<PaymentActivity> paymentActivityList = new List<PaymentActivity>();
 
+            dbConnection.cmd.Parameters.Clear();
             if (paymentId == -1)
             {
                 dbConnection.cmd.CommandText = "select * from payment_activity WHERE is_active = 1";
