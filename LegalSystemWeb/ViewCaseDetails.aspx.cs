@@ -122,6 +122,7 @@ namespace LegalSystemWeb
                 lblCompanyUnit.Text = companyUnit.CompanyUnitName;
                 lblClaimAmount.Text = caseMaster.ClaimAmount.ToString();
                 lblCreateDate.Text = caseMaster.CreatedDate.ToString("dd/MM/yyyy");
+                lblCaseOpenDate.Text = caseMaster.CaseOpenDate.ToString("dd/MM/yyyy");
                 lblDescription.Text = caseMaster.CaseDescription;
                 lblNature.Text = caseNature.CaseNatureName;
 

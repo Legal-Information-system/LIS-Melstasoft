@@ -75,6 +75,10 @@ namespace LegalSystemCore.Domain
         [DBField("is_active")]
         public int IsActive { get; set; }
 
+        [DBField("case_open_date")]
+
+        public DateTime CaseOpenDate { get; set; }
+
         public Company company { get; set; }
 
         public CompanyUnit companyUnit { get; set; }

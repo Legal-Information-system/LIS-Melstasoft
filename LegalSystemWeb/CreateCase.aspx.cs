@@ -4,6 +4,7 @@ using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -167,11 +168,14 @@ namespace LegalSystemWeb
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
             CaseMaster caseMaster = new CaseMaster();
 
+            CultureInfo provider = new CultureInfo("en-US");
+
             caseMaster.CaseNumber = txtCaseNumber.Text;
             caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
             caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
             caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
             caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+            caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
             caseMaster.CaseDescription = txtCaseDescription.Text;
             string clamount = txtClaimAmount.Text;
             caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
@@ -259,6 +263,7 @@ namespace LegalSystemWeb
             ddlCounselor.SelectedIndex = 0;
             ddlCompanyUnit.Items.Clear();
             ddlLocation.Items.Clear();
+            txtCaseOpenDate.Text = string.Empty;
             rbIsPlantiff.Items[0].Selected = false;
             rbIsPlantiff.Items[1].Selected = false;
         }

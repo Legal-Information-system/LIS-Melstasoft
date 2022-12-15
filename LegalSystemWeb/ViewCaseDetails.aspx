@@ -160,10 +160,10 @@
                     </div>
                     <div class="row mb-1">
                         <div class="col-sm-5">
-                            <p>Case Description</p>
+                            <p>Case Open Date</p>
                         </div>
                         <div class="col-md-7">
-                            <asp:Label ID="lblDescription" runat="server" Text="N/A"></asp:Label>
+                            <asp:Label ID="lblCaseOpenDate" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <%if (lblStatus.Text == "Closed")
@@ -189,7 +189,18 @@
                 </div>
             </div>
         </div>
-
+        <div class="card" style="width: 85%; margin: auto; margin-bottom: 20px;">
+            <div class="card-body" style="padding-left: 30px;">
+                <div class="row mb-1">
+                    <div class="col-sm-5">
+                        <p>Case Description</p>
+                    </div>
+                    <div class="col-md-7">
+                        <asp:Label ID="lblDescription" runat="server" Text="N/A"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <hr />
         <div class="card mb-4">
             <div class="card-header">

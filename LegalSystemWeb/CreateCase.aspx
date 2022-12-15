@@ -65,6 +65,16 @@
                                 ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
                             </asp:RegularExpressionValidator>--%>
                         </div>
+                        <div class="col-md-6">
+
+                            <asp:Literal ID="Literal4" runat="server" Text="Case Open Date"></asp:Literal>
+                            <asp:TextBox runat="server" CssClass="form-control form-control-user" TextMode="Date" ID="txtCaseOpenDate"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
+                                ControlToValidate="txtCaseOpenDate" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
+                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
+                            </asp:RegularExpressionValidator>--%>
+                        </div>
 
                     </div>
 
