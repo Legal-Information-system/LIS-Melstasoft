@@ -6,6 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class PaymentActivity
     {
         [DBField("activity_id")]
@@ -16,5 +17,7 @@ namespace LegalSystemCore.Domain
 
         [DBField("is_active")]
         public int IsActive { get; set; }
+
+        public Activity activity { get; set; }
     }
 }

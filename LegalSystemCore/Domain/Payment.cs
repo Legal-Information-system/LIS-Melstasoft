@@ -7,6 +7,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class Payment
     {
         [DBField("payment_id")]
@@ -52,6 +53,8 @@ namespace LegalSystemCore.Domain
         public Lawyer lawyer { get; set; }
 
         public string Actions { get; set; }
+
+        public List<PaymentActivity> listPaymentActivity { get; set; }
 
     }
 }

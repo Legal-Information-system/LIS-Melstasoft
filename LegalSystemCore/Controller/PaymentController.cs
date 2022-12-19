@@ -13,7 +13,7 @@ namespace LegalSystemCore.Controller
         int Save(Payment payment);
         int Update(Payment payment);
         int Delete(Payment payment);
-        List<Payment> GetPaymentList();
+        List<Payment> GetPaymentList(bool withActiveity);
 
         Payment GetPayment(int paymentId);
 
@@ -89,7 +89,7 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
-        public List<Payment> GetPaymentList()
+        public List<Payment> GetPaymentList(bool withActiveity)
         {
             DbConnection dbConnection = null;
             List<Payment> listPayment = new List<Payment>();
@@ -97,6 +97,24 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 listPayment = PaymentDAO.GetPaymentList(dbConnection);
+                if (withActiveity)
+                {
+                    IPaymentActivityDAO paymentActuvityDao = DAOFactory.CreatePaymentActivityDAO();
+                    IActivityDAO activityDAO = DAOFactory.CreateActivityDAO();
+
+                    foreach (var payment in listPayment)
+                    {
+                        payment.listPaymentActivity = paymentActuvityDao.GetPaymentActivityList(dbConnection, payment.PaymentId);
+
+                        if (payment.listPaymentActivity.Count > 0)
+                        {
+                            foreach (var activity in payment.listPaymentActivity)
+                            {
+                                activity.activity = activityDAO.GetActivity(dbConnection, activity.ActivityId);
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception)
             {
@@ -112,6 +130,8 @@ namespace LegalSystemCore.Controller
             }
             return listPayment;
         }
+
+
 
         public Payment GetPayment(int paymentId)
         {
