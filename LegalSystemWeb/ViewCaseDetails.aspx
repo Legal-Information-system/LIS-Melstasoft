@@ -232,7 +232,7 @@
         <div class="card mb-4">
 
             <div class="card-header">
-                Documnets
+                Documents
             </div>
 
             <div class="card-body table-responsive">
@@ -246,7 +246,7 @@
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block"
                                     AutoPostBack="true" runat="server" OnClick="btnView_Click">
-                                    View File
+                                    Download
                                 </asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>

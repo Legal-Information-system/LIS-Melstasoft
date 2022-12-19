@@ -105,7 +105,7 @@ namespace LegalSystemWeb
 
                 Clear();
                 lblErrorMsg.Text = "";
-                lblSuccessMsg.Text = "Record Updated Successfully!";
+                lblSuccessMsg.Text = "User created Successfully!";
             }
             else
             {
