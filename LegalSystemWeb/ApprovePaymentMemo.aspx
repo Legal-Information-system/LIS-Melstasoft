@@ -102,7 +102,7 @@
                             <asp:TemplateField ItemStyle-HorizontalAlign="center" HeaderText="Download Link">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block"
-                                        AutoPostBack="true" runat="server">
+                                        AutoPostBack="true" runat="server" OnClick="btnView_Click">
                                     Download File
                                     </asp:LinkButton>
                                 </ItemTemplate>
@@ -130,6 +130,10 @@
                 <asp:Button ID="btnApprove" runat="server" OnClick="btnApprove_Click" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
                 <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" Style="width: 250px; margin-left: 10px; height: 40px;" />
             </div>
+            <div class="col-sm-6 m-3">
+                <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+            </div>
+
             <%} %>
             <%} %>
         </div>

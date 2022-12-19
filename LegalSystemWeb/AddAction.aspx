@@ -21,6 +21,16 @@
             </div>
 
         </div>
+        <div class="row mb-5" style="text-align: center">
+            <asp:Label ID="lblErrorMsg" runat="server" Text="" ForeColor="#800040" BackColor="#ffc6c6"></asp:Label>
+            <div class="form-outline mb-4">
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" />
+            </div>
+            <div class="form-group d-flex justify-content-center">
+                <a class="small" href="#"></a>
+                <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary btn-block" Width="400px" Font-Bold="true" OnClick="btnLogin_Click" />
+            </div>
+        </div>
         <div class="row mb-5" style="text-align: center; width: 100%; padding-left: 20px;">
 
             <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
