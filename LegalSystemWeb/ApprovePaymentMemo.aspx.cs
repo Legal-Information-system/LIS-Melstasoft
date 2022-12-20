@@ -14,6 +14,7 @@ namespace LegalSystemWeb
     public partial class ApprovePaymentMemo : System.Web.UI.Page
     {
         int paymentId;
+        string paymentIdS;
         int userId;
         string roleId;
         Payment payment = new Payment();
@@ -120,6 +121,8 @@ namespace LegalSystemWeb
             caseMaster.CaseNumber = lblCaseNumber.Text;
             caseMaster.payableAmount = Convert.ToDouble(lblRequestedPaymentAmount.Text);
             caseMasterController.UpdateCasePaidAmount(caseMaster);
+            lblSuccessMsg.Text = "Payment Appproved Successfully!";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
 
         protected void btnReject_Click(object sender, EventArgs e)
@@ -130,6 +133,33 @@ namespace LegalSystemWeb
             payment.ActionTakenDate = DateTime.Now;
             payment.PaymentStatusId = 3;
             paymentController.UpdatePaymentStatus(payment);
+            lblSuccessMsg.Text = "Payment Rejectd Successfully!";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+        }
+
+
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            paymentId = Convert.ToInt32(Request.QueryString["PaymentId"]);
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+
+            IDocumentPaymentController documentPaymentController = ControllerFactory.CreateDocumentPaymentController();
+            List<DocumentPayment> documentPaymentList = documentPaymentController.GetDocumentList();
+            documentPaymentList = documentPaymentList.Where(x => x.PaymentId == paymentId).ToList();
+
+            string fileName = documentPaymentList[rowIndex].DocumentName;
+            if (fileName != "" && fileName != null)
+            {
+                string filePathe = Server.MapPath("~/SystemDocuments/PaymentMemo/RequestPayments/" + fileName);
+
+                Response.Clear();
+                Response.ContentType = "application/octect-stream";
+                Response.AppendHeader("content-disposition", "filename = " + fileName);
+                Response.TransmitFile(filePathe);
+                Response.End();
+            }
+
+
         }
     }
 }

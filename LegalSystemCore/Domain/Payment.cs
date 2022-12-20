@@ -52,7 +52,13 @@ namespace LegalSystemCore.Domain
 
         public Lawyer lawyer { get; set; }
 
+        public UserLogin createdUser { get; set; }
+
+        public UserLogin actionUser { get; set; }
+
         public string Actions { get; set; }
+
+        public string CreatedDateString { get; set; }
 
         public List<PaymentActivity> listPaymentActivity { get; set; }
 

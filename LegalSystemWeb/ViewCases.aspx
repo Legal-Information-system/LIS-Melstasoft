@@ -12,7 +12,7 @@
             <ContentTemplate>
                 <div class="card-header d-flex justify-content-between">
                     <div>
-                        <i class="fas fa-table me-1"></i>
+                        <i class="fas fa-table me-1 "></i>
                         Case Table
                     </div>
                     <div>
