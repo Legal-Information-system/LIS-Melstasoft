@@ -37,6 +37,7 @@ namespace LegalSystemWeb
                     caseNumber = Request.QueryString["CaseNumber"].ToString();
                     BindCaseActivityList(caseNumber);
                     BindDocumentList(caseNumber);
+                    BindPaymentDetailsList(caseNumber);
                 }
                 //}
             }
@@ -150,6 +151,18 @@ namespace LegalSystemWeb
             gvCaseActivity.DataBind();
         }
 
+
+        private void BindPaymentDetailsList(string casenumber)
+        {
+            IPaymentController paymentController = ControllerFactory.CreatePaymentController();
+            List<Payment> paymentList = paymentController.GetPaymentList(true, true, true);
+            paymentList = paymentList.Where(x => x.CaseNumber == casenumber).ToList();
+
+            gvPayments.DataSource = paymentList;
+            gvPayments.DataBind();
+        }
+
+
         private void BindDocumentList(string casenumber)
         {
             IDocumentCaseController documentController = ControllerFactory.CreateDocumentCaseController();
@@ -158,6 +171,7 @@ namespace LegalSystemWeb
             gvDocuments.DataSource = documentList.Where(x => x.CaseNumber == casenumber).ToList();
             gvDocuments.DataBind();
         }
+
 
         protected void btnView_Click(object sender, EventArgs e)
         {

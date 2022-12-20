@@ -230,6 +230,29 @@
 
         <hr />
         <div class="card mb-4">
+            <div class="card-header">
+                Payment Details
+            </div>
+
+            <div class="card-body table-responsive">
+                <asp:GridView ID="gvPayments" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
+                    CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
+                    <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
+                    <Columns>
+                        <asp:BoundField DataField="PaymentId" HeaderText="Id" />
+                        <asp:BoundField DataField="CaseNumber" HeaderText="CaseNumber" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="lawyer.LawyerName" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="Actions" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="Amount" HeaderText="Amount" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="paymentStatus.StatusName" HeaderText="Status" ItemStyle-HorizontalAlign="center" />
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+
+
+        <hr />
+        <div class="card mb-4">
 
             <div class="card-header">
                 Documents
