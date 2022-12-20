@@ -13,7 +13,7 @@ namespace LegalSystemCore.Controller
         int Save(Payment payment);
         int Update(Payment payment);
         int Delete(Payment payment);
-        List<Payment> GetPaymentList(bool withActiveity);
+        List<Payment> GetPaymentList(bool withActiveity, bool withLawyer, bool withStatus, bool withUser);
 
         Payment GetPayment(int paymentId);
 
@@ -89,7 +89,7 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
-        public List<Payment> GetPaymentList(bool withActiveity)
+        public List<Payment> GetPaymentList(bool withActiveity, bool withLawyer, bool withStatus, bool withUser)
         {
             DbConnection dbConnection = null;
             List<Payment> listPayment = new List<Payment>();
@@ -111,10 +111,57 @@ namespace LegalSystemCore.Controller
                             foreach (var activity in payment.listPaymentActivity)
                             {
                                 activity.activity = activityDAO.GetActivity(dbConnection, activity.ActivityId);
+
+                                if (payment.Actions == null)
+                                {
+                                    payment.Actions = activity.activity.ActivityName;
+                                }
+                                else
+                                {
+                                    payment.Actions = payment.Actions + " , " + activity.activity.ActivityName;
+                                }
                             }
                         }
                     }
                 }
+
+                if (withLawyer)
+                {
+                    ILawyerDAO lawyerDAO = DAOFactory.CreateLawyerDAO();
+                    List<Lawyer> lawyerList = lawyerDAO.GetLawyerList(true, dbConnection);
+
+                    foreach (var payment in listPayment)
+                    {
+                        payment.lawyer = lawyerList.Where(x => x.LawyerId == payment.LawyerId).Single();
+                    }
+                }
+
+                if (withStatus)
+                {
+                    IPaymentStatusDAO paymentStatusDAO = DAOFactory.CreatePaymentStatusDAO();
+                    List<PaymentStatus> paymentStatusList = paymentStatusDAO.GetPaymentStatusList(dbConnection);
+
+                    foreach (var payment in listPayment)
+                    {
+                        payment.paymentStatus = paymentStatusList.Where(x => x.StatusId == payment.PaymentStatusId).Single();
+                    }
+                }
+
+                if (withUser)
+                {
+                    IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
+                    List<UserLogin> userLogins = userLoginDAO.GetUserLoginList(true, dbConnection);
+
+                    foreach (var payment in listPayment)
+                    {
+                        payment.createdUser = userLogins.Where(x => x.UserId == payment.CreateUserId).Single();
+                        if (payment.ActionTakenUserId > 0)
+                        {
+                            payment.actionUser = userLogins.Where(x => x.UserId == payment.CreateUserId).Single();
+                        }
+                    }
+                }
+
             }
             catch (Exception)
             {
