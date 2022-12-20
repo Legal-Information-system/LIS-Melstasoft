@@ -4,6 +4,7 @@ using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -155,8 +156,13 @@ namespace LegalSystemWeb
         private void BindPaymentDetailsList(string casenumber)
         {
             IPaymentController paymentController = ControllerFactory.CreatePaymentController();
-            List<Payment> paymentList = paymentController.GetPaymentList(true, true, true);
+            List<Payment> paymentList = paymentController.GetPaymentList(true, true, true, true);
             paymentList = paymentList.Where(x => x.CaseNumber == casenumber).ToList();
+
+            foreach (var payment in paymentList)
+            {
+                payment.CreatedDateString = payment.CreatedDate.ToString("dd/MM/yyyy");
+            }
 
             gvPayments.DataSource = paymentList;
             gvPayments.DataBind();

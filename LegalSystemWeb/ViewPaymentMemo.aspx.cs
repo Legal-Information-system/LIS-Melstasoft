@@ -29,7 +29,7 @@ namespace LegalSystemWeb
         private void BindDataSource()
         {
             IPaymentController paymentController = ControllerFactory.CreatePaymentController();
-            List<Payment> listPayment = paymentController.GetPaymentList(true, true, true);
+            List<Payment> listPayment = paymentController.GetPaymentList(true, true, true, true);
 
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
             List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterList(true);

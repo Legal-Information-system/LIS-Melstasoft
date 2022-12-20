@@ -245,6 +245,8 @@
                         <asp:BoundField DataField="Actions" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="Amount" HeaderText="Amount" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="paymentStatus.StatusName" HeaderText="Status" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="CreatedDateString" HeaderText="Created Date" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="createdUser.UserName" HeaderText="Created By" ItemStyle-HorizontalAlign="center" />
                     </Columns>
                 </asp:GridView>
             </div>
