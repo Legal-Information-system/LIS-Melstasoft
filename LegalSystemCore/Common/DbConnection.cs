@@ -23,6 +23,7 @@ namespace LegalSystemCore.Common
             cmd.CommandType = System.Data.CommandType.Text;
             try
             {
+                //SqlConnection.ClearPool(con);
                 con.Open();
                 tr = con.BeginTransaction();
                 cmd.Transaction = tr;
@@ -46,6 +47,8 @@ namespace LegalSystemCore.Common
                 this.dr.Close();
             tr.Commit();
             this.con.Close();
+            this.con.Dispose();
+            //SqlConnection.ClearPool(con);
         }
 
         public void Dispose()
@@ -60,6 +63,8 @@ namespace LegalSystemCore.Common
                 this.dr.Close();
             this.cmd.Dispose();
             this.con.Close();
+            this.con.Dispose();
+            //SqlConnection.ClearPool(con);
         }
 
 

@@ -24,7 +24,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DocumentCase documentCase = new DocumentCase();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from case_document WHERE case_document_id =" + documentCaseId;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
@@ -39,7 +39,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<DocumentCase> listDocumentCase = new List<DocumentCase>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from case_document WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();

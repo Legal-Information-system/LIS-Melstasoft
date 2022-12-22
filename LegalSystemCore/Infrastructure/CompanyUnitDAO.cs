@@ -79,7 +79,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             String query;
 
             if (with0)

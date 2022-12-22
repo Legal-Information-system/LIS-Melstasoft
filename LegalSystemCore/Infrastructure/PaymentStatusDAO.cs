@@ -25,7 +25,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<PaymentStatus> listPaymentStatus = new List<PaymentStatus>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "select * from payment_status WHERE is_active = 1";
 
@@ -89,7 +89,7 @@ namespace LegalSystemCore.Infrastructure
         {
             PaymentStatus paymentStatus = new PaymentStatus();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             dbConnection.cmd.CommandText = "select * from payment_status WHERE payment_status_id=@StatusId";
