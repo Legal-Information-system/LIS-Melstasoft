@@ -23,7 +23,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<JudgementType> listJudgementType = new List<JudgementType>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (with0)
                 dbConnection.cmd.CommandText = "select * from judgement_type";

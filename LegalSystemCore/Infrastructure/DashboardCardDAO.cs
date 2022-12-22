@@ -27,7 +27,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
                 "INNER JOIN company ON company.company_id = case_master.company_id " +
                 "WHERE case_master.case_status_id = 1 AND company.is_active = 1" +
@@ -44,7 +44,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name AS company_name FROM case_master " +
                 "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
@@ -62,7 +62,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name  AS company_name  FROM case_master " +
                 "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
@@ -79,7 +79,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             DateTime prev = new DateTime();
             prev = DateTime.Now;
@@ -111,7 +111,7 @@ namespace LegalSystemCore.Infrastructure
             prev = DateTime.Now;
             prev = prev.AddMonths(-1);
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (unit)
             {
@@ -153,7 +153,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT case_number, ROUND((total_paid_amount/claim_amount)*100, 2) AS per FROM case_master " +
                 "WHERE case_status_id = 1 ORDER BY per DESC;";
@@ -169,7 +169,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (unit)
             {

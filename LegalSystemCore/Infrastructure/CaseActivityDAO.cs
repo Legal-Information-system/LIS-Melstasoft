@@ -88,7 +88,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<CaseActivity> caseActivityList = new List<CaseActivity>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "select * from case_activity WHERE is_active = 1";
 
