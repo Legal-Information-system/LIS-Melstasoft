@@ -15,7 +15,7 @@ namespace LegalSystemWeb
 {
     public partial class Dashboard : System.Web.UI.Page
     {
-        public DataTable dashboardCardList, progressTable, claimAmoutTable;
+        public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
         public string dates, caseCount, caseNumber, per;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -209,6 +209,41 @@ namespace LegalSystemWeb
                 cs1.RegisterStartupScript(cstype1, csname1, cstext1.ToString());
 
             }
+
+            DailyCaseList = dashboardCardController.GeCompanyListDailyMonth(true, false);
+
+            foreach (DataRow row in DailyCaseList.Rows)
+            {
+                StringBuilder cstextCard = new StringBuilder();
+
+                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("</div>   <div class=\"text-center\">");
+                cstextCard.Append(row["case_count"].ToString());
+                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                ltDailyCase.Text += cstextCard;
+            }
+
+            MonthCaseList = dashboardCardController.GeCompanyListDailyMonth(false, true);
+
+            foreach (DataRow row in MonthCaseList.Rows)
+            {
+                StringBuilder cstextCard = new StringBuilder();
+
+                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("</div>   <div class=\"text-center\">");
+                cstextCard.Append(row["case_count"].ToString());
+                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                ltMonthlyCase.Text += cstextCard;
+            }
+
 
         }
     }
