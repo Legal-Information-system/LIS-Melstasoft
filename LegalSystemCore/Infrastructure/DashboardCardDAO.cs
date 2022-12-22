@@ -54,7 +54,8 @@ namespace LegalSystemCore.Infrastructure
 
                 cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
                             "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND MONTH(created_date) = " + prev.Month +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 " +
+                            "AND (MONTH(created_date) = " + prev.Month + " OR MONTH(created_date) = " + DateTime.Now.Month + ")" +
                             "GROUP BY company.company_name;";
             }
             if (daily)
@@ -65,32 +66,14 @@ namespace LegalSystemCore.Infrastructure
 
                 cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
                             "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND DAY(created_date) = " + prev.Day +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 " +
+                            "AND (DAY(created_date) = " + prev.Day + "OR DAY(created_date) = " + DateTime.Now.Day + ")" +
                             "GROUP BY company.company_name;";
             }
 
             dbConnection.cmd.CommandText = cmd;
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
             dataAdapter.Fill(companyList);
-
-            if (monthly)
-            {
-                cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                            "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND MONTH(created_date) = " + DateTime.Now.Month +
-                            "GROUP BY company.company_name;";
-            }
-            if (daily)
-            {
-                cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                            "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND DAY(created_date) = " + DateTime.Now.Day +
-                            "GROUP BY company.company_name;";
-            }
-
-            dbConnection.cmd.CommandText = cmd;
-            SqlDataAdapter dataAdapter2 = new SqlDataAdapter(dbConnection.cmd);
-            dataAdapter2.Fill(companyList);
 
             return companyList;
         }
