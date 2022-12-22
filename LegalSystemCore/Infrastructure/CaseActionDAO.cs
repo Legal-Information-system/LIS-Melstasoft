@@ -21,7 +21,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<CaseAction> listCaseAction = new List<CaseAction>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (with0)
                 dbConnection.cmd.CommandText = "select * from case_action";

@@ -99,7 +99,7 @@ namespace LegalSystemCore.Infrastructure
         {
             Lawyer lawyer = new Lawyer();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from lawyer WHERE lawyer_id = @LawyerId";
             dbConnection.cmd.Parameters.AddWithValue("@LawyerId", lawyerId);
 

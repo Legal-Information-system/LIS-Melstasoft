@@ -29,7 +29,7 @@ namespace LegalSystemCore.Infrastructure
         {
             CaseMaster caseMaster = new CaseMaster();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from case_master WHERE case_number = @CaseNumber";
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseNumber);
 
@@ -45,7 +45,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<CaseMaster> listCaseMaster = new List<CaseMaster>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             if (withoutclosed)
                 dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 1 AND is_active = 1";
             else

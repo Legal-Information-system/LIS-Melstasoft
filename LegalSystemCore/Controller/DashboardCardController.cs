@@ -12,9 +12,8 @@ namespace LegalSystemCore.Controller
     public interface IDashboardCardController
     {
         DataTable GetCardDetails();
-
+        DataTable GeCompanyListDailyMonth(bool daily, bool monthly);
         DataTable GetCardDetailsCompanyUnit(int companyId);
-
         DataTable GetCardDetailsUnit(int unitId);
         DataTable GetMonthProgress();
         DataTable GetMonthProgressUnit(bool unit, int id);
@@ -48,6 +47,32 @@ namespace LegalSystemCore.Controller
             }
             return listCard;
         }
+
+        public DataTable GeCompanyListDailyMonth(bool daily, bool monthly)
+        {
+            DbConnection dbConnection = null;
+            DataTable listCard = new DataTable();
+            try
+            {
+                dbConnection = new DbConnection();
+                listCard = dashboardCardDAO.GeCompanyListDailyMonth(daily, monthly, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCard;
+        }
+
+
         public DataTable GetCardDetailsCompanyUnit(int companyId)
         {
             DbConnection dbConnection = null;
