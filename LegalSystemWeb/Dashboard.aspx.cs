@@ -15,8 +15,9 @@ namespace LegalSystemWeb
 {
     public partial class Dashboard : System.Web.UI.Page
     {
-        public DataTable dashboardCardList, progressTable, claimAmoutTable;
+        public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
         public string dates, caseCount, caseNumber, per;
+        public int DailyTotal, MonthlyTotal = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -209,6 +210,43 @@ namespace LegalSystemWeb
                 cs1.RegisterStartupScript(cstype1, csname1, cstext1.ToString());
 
             }
+
+            DailyCaseList = dashboardCardController.GeCompanyListDailyMonth(true, false);
+            DailyTotal = 0;
+
+            foreach (DataRow row in DailyCaseList.Rows)
+            {
+                StringBuilder cstextCard = new StringBuilder();
+
+                cstextCard.Append(" <div class=\"row\"> <div class=\"col-8\"><h4 class=\"small\">");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("</h4> </div> <div class=\"col-4\"> <h4 class=\"small d-flex flex-row-reverse\">");
+                cstextCard.Append(row["case_count"].ToString());
+                cstextCard.Append("</h4> </div> </div>");
+
+                ltDailyCase.Text += cstextCard;
+                DailyTotal += Convert.ToInt32(row["case_count"]);
+            }
+
+
+
+            MonthCaseList = dashboardCardController.GeCompanyListDailyMonth(false, true);
+            MonthlyTotal = 0;
+
+            foreach (DataRow row in MonthCaseList.Rows)
+            {
+                StringBuilder cstextCard = new StringBuilder();
+
+                cstextCard.Append(" <div class=\"row\"> <div class=\"col-8\"><h4 class=\"small\">");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("</h4> </div> <div class=\"col-4\"> <h4 class=\"small d-flex flex-row-reverse\">");
+                cstextCard.Append(row["case_count"].ToString());
+                cstextCard.Append("</h4> </div> </div>");
+
+                ltMonthlyCase.Text += cstextCard;
+                MonthlyTotal += Convert.ToInt32(row["case_count"]);
+            }
+
 
         }
     }

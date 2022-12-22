@@ -42,5 +42,68 @@
     </div>
 
 
+    <!-- Content Row -->
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+
+                <div class="card-header py-3">
+                    <p class="m-0">Daily Case List</p>
+                </div>
+
+                <div class="card-body">
+
+                    <asp:Literal ID="ltDailyCase" runat="server"></asp:Literal>
+
+                </div>
+
+                <div class="card-footer py-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="small">Total Daily Cases</h4>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="small d-flex flex-row-reverse"><%=DailyTotal %></h4>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+
+                <div class="card-header py-3">
+                    <p class="m-0">Monthly Case List</p>
+                </div>
+
+                <div class="card-body">
+
+                    <asp:Literal ID="ltMonthlyCase" runat="server"></asp:Literal>
+
+                </div>
+
+                <div class="card-footer py-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="small">Total Monthly Cases</h4>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="small d-flex flex-row-reverse"><%=MonthlyTotal %></h4>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
 
 </asp:Content>
