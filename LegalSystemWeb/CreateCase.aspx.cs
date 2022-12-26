@@ -21,7 +21,9 @@ namespace LegalSystemWeb
         List<CourtLocation> courtlocation = new List<CourtLocation>();
         List<Court> courtList = new List<Court>();
         List<Lawyer> lawyerList = new List<Lawyer>();
-
+        public static List<Lawyer> CounselorList = new List<Lawyer>();
+        ICounselorController counselorController = ControllerFactory.CreateCounselorController();
+        Counselor counselor = new Counselor();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -165,39 +167,53 @@ namespace LegalSystemWeb
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-            CaseMaster caseMaster = new CaseMaster();
+            if (CounselorList.Any())
+            {
+                ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+                CaseMaster caseMaster = new CaseMaster();
 
-            CultureInfo provider = new CultureInfo("en-US");
+                CultureInfo provider = new CultureInfo("en-US");
 
-            caseMaster.CaseNumber = txtCaseNumber.Text;
-            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
-            caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
-            caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
-            caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
-            caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
-            caseMaster.CaseDescription = txtCaseDescription.Text;
-            string clamount = txtClaimAmount.Text;
-            caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
-            caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
-            caseMaster.OtherParty = txtOtherside.Text;
-            caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
-            caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
-            caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
+                caseMaster.CaseNumber = txtCaseNumber.Text;
+                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
+                caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+                caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                caseMaster.CaseDescription = txtCaseDescription.Text;
+                string clamount = txtClaimAmount.Text;
+                caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
+                caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
+                caseMaster.OtherParty = txtOtherside.Text;
+                caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+                caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
+                counselor.CaseNumber = caseMaster.CaseNumber;
 
-            if (ddlCounselor.SelectedValue != "")
-                caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
 
-            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
-            caseMaster.CreatedDate = DateTime.Now;
-            caseMaster.CaseStatusId = 1;
+                if (ddlCounselor.SelectedValue != "")
+                    caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
 
-            caseMasterController.Save(caseMaster);
+                caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                caseMaster.CreatedDate = DateTime.Now;
+                caseMaster.CaseStatusId = 1;
 
-            UploadFiles();
-            Clear();
+                caseMasterController.Save(caseMaster);
+                foreach (Lawyer lawyer in CounselorList)
+                {
+                    counselor.LawyerId = lawyer.LawyerId;
+                    counselorController.Save(counselor);
+                }
 
-            lblSuccessMsg.Text = "Record Updated Successfully!";
+                UploadFiles();
+                Clear();
+                clearCounselor();
+                lblSuccessMsg.Text = "Record Updated Successfully!";
+            }
+            else
+            {
+                lblSuccessMsg.Text = "Please Add Counselor";
+            }
         }
 
 
@@ -273,6 +289,57 @@ namespace LegalSystemWeb
             Clear();
         }
 
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+            Lawyer lawyer = new Lawyer();
 
+            lawyer.LawyerName = ddlCounselor.SelectedItem.Text;
+            if (ddlCounselor.SelectedIndex != 0)
+            {
+                lawyer.LawyerId = Convert.ToInt32(ddlCounselor.SelectedValue);
+                string lawyerName = ddlCounselor.SelectedItem.Text;
+                if (!(CounselorList.Where(x => x.LawyerName == lawyerName).Any()))
+                {
+                    CounselorList.Add(lawyer);
+                    BindCounselorList();
+                }
+            }
+
+
+        }
+
+        protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
+        {
+            gvCounselor.PageIndex = e.NewPageIndex;
+            gvCounselor.DataSource = CounselorList;
+            gvCounselor.DataBind();
+        }
+
+        private void BindCounselorList()
+        {
+            gvCounselor.DataSource = CounselorList;
+            gvCounselor.DataBind();
+
+        }
+
+        protected void btndelete_Click(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvCounselor.PageSize;
+            int pageIndex = gvCounselor.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+
+            CounselorList.RemoveAll(x => x.LawyerName == CounselorList[rowIndex].LawyerName);
+            BindCounselorList();
+
+        }
+
+        private void clearCounselor()
+        {
+            CounselorList.Clear();
+            BindCounselorList();
+        }
     }
 }

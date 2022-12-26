@@ -162,12 +162,33 @@
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
                                         ControlToValidate="ddlAttorney" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                                 </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
                                     <asp:Literal ID="Literal14" runat="server" Text="Counselor"></asp:Literal>
                                     <asp:DropDownList runat="server" ID="ddlCounselor" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
 
 
+                                </div>
+                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                    <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAdd_Click" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
+                                    <asp:GridView Style="margin-top: 30px;" ID="gvCounselor" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
+                                        <Columns>
+                                            <asp:BoundField DataField="LawyerName" HeaderText="Counselor Name" />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_Click">Delete</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
                                 </div>
                             </div>
                         </ContentTemplate>

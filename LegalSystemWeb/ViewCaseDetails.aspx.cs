@@ -8,6 +8,7 @@ using System.EnterpriseServices;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -98,11 +99,29 @@ namespace LegalSystemWeb
                 lblAttorney.Text = caseMaster.AssignAttorner.LawyerName;
                 lblUser.Text = caseMaster.userCreate.UserName;
 
-                if (caseMaster.CounsilorId > 0)
-                {
+                //if (caseMaster.CounsilorId > 0)
+                //{
 
-                    lblCounsilor.Text = caseMaster.Counsilor.LawyerName;
+                //    lblCounsilor.Text = caseMaster.Counsilor.LawyerName;
+                //}
+
+                ICounselorController counselorController = ControllerFactory.CreateCounselorController();
+                List<Counselor> listCounselor = counselorController.GetCounselorList(caseMaster.CaseNumber);
+                Lawyer lawyer = new Lawyer();
+                ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+                foreach (Counselor counselor in listCounselor)
+                {
+                    StringBuilder cstextCard = new StringBuilder();
+                    lawyer = lawyerController.GetLawyer(counselor.LawyerId);
+
+                    cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>counsilor</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                    cstextCard.Append(lawyer.LawyerName);
+                    cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
+
+
+                    ltCounselor.Text += cstextCard;
                 }
+
 
                 if (caseMaster.PrevCaseNumber != null)
                     lblPrevCase.Text = caseMaster.PrevCaseNumber;

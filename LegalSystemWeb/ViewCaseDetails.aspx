@@ -150,14 +150,9 @@
                             <asp:Label ID="lblAttorney" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-sm-5">
-                            <p>Counsilor</p>
-                        </div>
-                        <div class="col-md-7">
-                            <asp:Label ID="lblCounsilor" runat="server" Text="N/A"></asp:Label>
-                        </div>
-                    </div>
+
+
+                    <asp:Literal ID="ltCounselor" runat="server">  </asp:Literal>
                     <div class="row mb-1">
                         <div class="col-sm-5">
                             <p>Case Open Date</p>

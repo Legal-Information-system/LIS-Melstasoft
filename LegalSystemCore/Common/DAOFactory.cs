@@ -139,5 +139,11 @@ namespace LegalSystemCore.Common
             IDashboardCardDAO dashboardCardDAO = new DashboardCardDAOImpl();
             return ((IDashboardCardDAO)dashboardCardDAO);
         }
+
+        public static ICounselorDAO CreateCounselorDAO()
+        {
+            ICounselorDAO counselorDAO = new CounselorDAOSqlImpl();
+            return ((ICounselorDAO)counselorDAO);
+        }
     }
 }
