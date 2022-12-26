@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Common
 {
-    public class DbConnection
+    public class DbConnection : IDisposable
     {
 
         public SqlConnection con;
@@ -23,6 +23,7 @@ namespace LegalSystemCore.Common
             cmd.CommandType = System.Data.CommandType.Text;
             try
             {
+                //SqlConnection.ClearPool(con);
                 con.Open();
                 tr = con.BeginTransaction();
                 cmd.Transaction = tr;
@@ -30,7 +31,7 @@ namespace LegalSystemCore.Common
             }
             catch (Exception)
             {
-
+                this.RollBack();
                 throw;
             }
 
@@ -46,7 +47,15 @@ namespace LegalSystemCore.Common
                 this.dr.Close();
             tr.Commit();
             this.con.Close();
+            this.con.Dispose();
+            //SqlConnection.ClearPool(con);
         }
+
+        public void Dispose()
+        {
+            this.Commit();
+        }
+
         public void RollBack()
         {
             this.tr.Rollback();
@@ -54,6 +63,10 @@ namespace LegalSystemCore.Common
                 this.dr.Close();
             this.cmd.Dispose();
             this.con.Close();
+            this.con.Dispose();
+            //SqlConnection.ClearPool(con);
         }
+
+
     }
 }

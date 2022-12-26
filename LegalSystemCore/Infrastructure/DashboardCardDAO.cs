@@ -12,6 +12,7 @@ namespace LegalSystemCore.Infrastructure
     public interface IDashboardCardDAO
     {
         DataTable GeCompanyList(DbConnection dbConnection);
+        DataTable GeCompanyListDailyMonth(bool daily, bool monthly, DbConnection dbConnection);
         DataTable GeCompanyUnitList(int companyId, DbConnection dbConnection);
         DataTable GeCompanyUnit(int companyUnitId, DbConnection dbConnection);
         DataTable GeMonthProgress(DbConnection dbConnection);
@@ -27,11 +28,10 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                "INNER JOIN company ON company.company_id = case_master.company_id " +
-                "WHERE case_master.case_status_id = 1 AND company.is_active = 1" +
-                "GROUP BY company.company_name;";
+                            "INNER JOIN company ON company.company_id = case_master.company_id " +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1" +
+                            "GROUP BY company.company_name;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
             dataAdapter.Fill(companyList);
@@ -40,11 +40,50 @@ namespace LegalSystemCore.Infrastructure
             return companyList;
         }
 
+
+        public DataTable GeCompanyListDailyMonth(bool daily, bool monthly, DbConnection dbConnection)
+        {
+            DataTable companyList = new DataTable();
+            string cmd = "";
+
+            if (monthly)
+            {
+                DateTime prev = new DateTime();
+                prev = DateTime.Now;
+                prev = prev.AddMonths(-1);
+
+                cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
+                            "INNER JOIN company ON company.company_id = case_master.company_id " +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 " +
+                            "AND (MONTH(created_date) = " + prev.Month + " OR MONTH(created_date) = " + DateTime.Now.Month + ")" +
+                            "GROUP BY company.company_name;";
+            }
+            if (daily)
+            {
+                DateTime prev = new DateTime();
+                prev = DateTime.Now;
+                prev = prev.AddDays(-1);
+
+                cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
+                            "INNER JOIN company ON company.company_id = case_master.company_id " +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 " +
+                            "AND (DAY(created_date) = " + prev.Day + "OR DAY(created_date) = " + DateTime.Now.Day + ")" +
+                            "GROUP BY company.company_name;";
+            }
+
+            dbConnection.cmd.CommandText = cmd;
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
+            dataAdapter.Fill(companyList);
+
+            return companyList;
+        }
+
+
         public DataTable GeCompanyUnitList(int companyId, DbConnection dbConnection)
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name AS company_name FROM case_master " +
                 "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
@@ -62,7 +101,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name  AS company_name  FROM case_master " +
                 "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
@@ -79,7 +118,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             DateTime prev = new DateTime();
             prev = DateTime.Now;
@@ -111,7 +150,7 @@ namespace LegalSystemCore.Infrastructure
             prev = DateTime.Now;
             prev = prev.AddMonths(-1);
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (unit)
             {
@@ -153,7 +192,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT case_number, ROUND((total_paid_amount/claim_amount)*100, 2) AS per FROM case_master " +
                 "WHERE case_status_id = 1 ORDER BY per DESC;";
@@ -169,7 +208,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DataTable companyList = new DataTable();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             if (unit)
             {

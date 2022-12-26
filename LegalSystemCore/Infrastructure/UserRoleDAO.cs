@@ -22,7 +22,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<UserRole> listUserRole = new List<UserRole>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "select * from user_role WHERE is_active = 1";
 

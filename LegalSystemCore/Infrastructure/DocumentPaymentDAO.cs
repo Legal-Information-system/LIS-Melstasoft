@@ -23,7 +23,7 @@ namespace LegalSystemCore.Infrastructure
         {
             DocumentPayment documentPayment = new DocumentPayment();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from payment_document WHERE paymnent_document_id =" + documentPaymentId;
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
@@ -38,7 +38,7 @@ namespace LegalSystemCore.Infrastructure
         {
             List<DocumentPayment> listDocumentPayment = new List<DocumentPayment>();
 
-            dbConnection = new DbConnection();
+            //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from payment_document WHERE is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
