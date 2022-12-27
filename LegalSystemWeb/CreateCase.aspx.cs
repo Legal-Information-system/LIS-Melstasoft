@@ -170,34 +170,43 @@ namespace LegalSystemWeb
 
             CultureInfo provider = new CultureInfo("en-US");
 
-            caseMaster.CaseNumber = txtCaseNumber.Text;
-            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
-            caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
-            caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
-            caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
-            caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
-            caseMaster.CaseDescription = txtCaseDescription.Text;
-            string clamount = txtClaimAmount.Text;
-            caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
-            caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
-            caseMaster.OtherParty = txtOtherside.Text;
-            caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
-            caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
-            caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
+            if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController))
+            {
+                if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtPreCaseNumber.Text == "")
+                {
+                    caseMaster.CaseNumber = txtCaseNumber.Text;
+                    caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                    caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                    caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
+                    caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+                    caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                    caseMaster.CaseDescription = txtCaseDescription.Text;
+                    string clamount = txtClaimAmount.Text;
+                    caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
+                    caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
+                    caseMaster.OtherParty = txtOtherside.Text;
+                    caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                    caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+                    caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
 
-            if (ddlCounselor.SelectedValue != "")
-                caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
+                    if (ddlCounselor.SelectedValue != "")
+                        caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
 
-            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
-            caseMaster.CreatedDate = DateTime.Now;
-            caseMaster.CaseStatusId = 1;
+                    caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                    caseMaster.CreatedDate = DateTime.Now;
+                    caseMaster.CaseStatusId = 1;
 
-            caseMasterController.Save(caseMaster);
+                    caseMasterController.Save(caseMaster);
 
-            UploadFiles();
-            Clear();
+                    UploadFiles();
+                    Clear();
 
-            lblSuccessMsg.Text = "Record Updated Successfully!";
+                    lblCaseNumberError.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = "Record Updated Successfully!";
+                }
+            }
+
         }
 
 
@@ -273,6 +282,44 @@ namespace LegalSystemWeb
             Clear();
         }
 
+        private bool CheckAvailableCaseNum(bool isPrev, string Number, ICaseMasterController c)
+        {
+            CaseMaster caseMaster = c.GetCaseMaster(Number, false);
 
+            if (caseMaster.CaseNumber == null)
+            {
+                if (isPrev)
+                {
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = "Not a Valid Case Number";
+                    return false;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+            }
+            else
+            {
+                if (isPrev)
+                {
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = "Case Number Already Exsists!";
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    return false;
+                }
+            }
+        }
     }
 }
