@@ -281,7 +281,17 @@
         </div>
 
 
+        <% if (Session["User_Role_Id"].ToString() == "1")
+            {
+        %>
 
+        <div class="row">
+            <div class="col-3">
+                <asp:Button ID="btnDelete" runat="server" Text="Delete Case" CssClass="btn-danger" Width="100%" Height="150%" BorderStyle="None" OnClick="btnDelete_Click" />
+            </div>
+        </div>
+
+        <%} %>
     </div>
 
 </asp:Content>
