@@ -145,5 +145,17 @@ namespace LegalSystemCore.Common
             ICounselorDAO counselorDAO = new CounselorDAOSqlImpl();
             return ((ICounselorDAO)counselorDAO);
         }
+
+        public static IPartyDAO CreatePartyDAO()
+        {
+            IPartyDAO partyDAO = new PartyDAOSqlImpl();
+            return ((IPartyDAO)partyDAO);
+        }
+
+        public static IPartyCaseDAO CreatePartyCaseDAO()
+        {
+            IPartyCaseDAO partyCaseDAO = new PartyCaseDAOSqlImpl();
+            return ((IPartyCaseDAO)partyCaseDAO);
+        }
     }
 }

@@ -109,18 +109,81 @@ namespace LegalSystemWeb
                 List<Counselor> listCounselor = counselorController.GetCounselorList(caseMaster.CaseNumber);
                 Lawyer lawyer = new Lawyer();
                 ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+                IPartyController partyController = ControllerFactory.CreatePartyController();
+                IPartyCaseController partyCaseControler = ControllerFactory.CreatePartyCaseController();
+                List<PartyCase> partyCaseList = partyCaseControler.GetPartyCaseList(Request.QueryString["CaseNumber"].ToString());
+                Party party = new Party();
+                if (caseMaster.IsPlentif == 1)
+                {
+                    foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 1))
+                    {
+                        StringBuilder cstextCard = new StringBuilder();
+                        party = partyController.GetParty(partyCase.PartyId);
+
+
+                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n                            <p>Plaintiff Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-6\">\r\n                            <label>");
+                        cstextCard.Append(party.PartyName);
+                        cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
+
+
+                        ltPlaintifParty.Text += cstextCard;
+                    }
+                    foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 0))
+                    {
+                        StringBuilder cstextCard = new StringBuilder();
+                        party = partyController.GetParty(partyCase.PartyId);
+
+
+                        cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Defendent Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                        cstextCard.Append(party.PartyName);
+                        cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
+
+
+                        ltDefendentParty.Text += cstextCard;
+                    }
+                }
+                else
+                {
+                    foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 1))
+                    {
+                        StringBuilder cstextCard = new StringBuilder();
+                        party = partyController.GetParty(partyCase.PartyId);
+
+
+                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n                            <p>Plaintiff Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-6\">\r\n                            <label>");
+                        cstextCard.Append(party.PartyName);
+                        cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
+
+
+                        ltDefendentParty.Text += cstextCard;
+                    }
+                    foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 0))
+                    {
+                        StringBuilder cstextCard = new StringBuilder();
+                        party = partyController.GetParty(partyCase.PartyId);
+
+
+                        cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Defendent Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                        cstextCard.Append(party.PartyName);
+                        cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
+
+
+                        ltPlaintifParty.Text += cstextCard;
+                    }
+                }
                 foreach (Counselor counselor in listCounselor)
                 {
                     StringBuilder cstextCard = new StringBuilder();
                     lawyer = lawyerController.GetLawyer(counselor.LawyerId);
 
-                    cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>counsilor</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                    cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Counsilor</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
                     cstextCard.Append(lawyer.LawyerName);
                     cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
 
                     ltCounselor.Text += cstextCard;
                 }
+
 
 
                 if (caseMaster.PrevCaseNumber != null)
@@ -134,13 +197,12 @@ namespace LegalSystemWeb
 
                 if (caseMaster.IsPlentif == 1)
                 {
-                    lblPlaintiff.Text = caseMaster.company.CompanyName;
-                    lblDefendant.Text = caseMaster.OtherParty; ;
+                    lblPlaintiff.Text = "Plaintiff";
+                    //lblDefendant.Text = caseMaster.OtherParty; 
                 }
                 else
                 {
-                    lblPlaintiff.Text = caseMaster.OtherParty;
-                    lblDefendant.Text = caseMaster.company.CompanyName;
+                    lblPlaintiff.Text = "Defendent";
                 }
             }
             catch (Exception)

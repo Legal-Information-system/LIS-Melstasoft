@@ -94,15 +94,81 @@
                                 ControlToValidate="rbIsPlantiff" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                         </div>
-                        <div class="col-md-6">
-
-                            <asp:Literal ID="Literal6" runat="server" Text="Other Side"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtOtherside" Style="margin-top: 5px"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server"
-                                ControlToValidate="txtOtherside" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                        </div>
 
                     </div>
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
+
+                                    <asp:Literal ID="ltPlaintifSide" runat="server" Text="Plaintif Side"></asp:Literal>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtPlaintif" Style="margin-top: 5px"></asp:TextBox>
+
+
+                                </div>
+                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                    <asp:Button ID="btnPlaintifAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddPlaintif_Click" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6 m-3">
+                                    <asp:Label ID="lblPlaintif" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="table-responsive" style="width: 100%;">
+                                    <asp:GridView Style="margin-top: 30px;" ID="gvPlaintif" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
+                                        <Columns>
+                                            <asp:BoundField DataField="PartyName" HeaderText="Plaintif Side" />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_ClickPlaintif">Delete</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
+
+                                    <asp:Literal ID="ltDefendent" runat="server" Text="Defendent Side"></asp:Literal>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtDefendent" Style="margin-top: 5px"></asp:TextBox>
+
+
+                                </div>
+                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                    <asp:Button ID="btnAddDefendent" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddDefendent_Click" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6 m-3">
+                                    <asp:Label ID="lblDefendent" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="table-responsive" style="width: 100%;">
+                                    <asp:GridView Style="margin-top: 30px;" ID="gvDefendent" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
+                                        <Columns>
+                                            <asp:BoundField DataField="PartyName" HeaderText="Defendent Side" />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_ClickDefendent">Delete</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
 
                     <%--===========--%>
 
@@ -177,7 +243,12 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="table-responsive" style="width: 100%; padding-left: 40px; padding-right: 40px;">
+                                <div class="col-sm-6 m-3">
+                                    <asp:Label ID="lblCounselor" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="table-responsive" style="width: 100%;">
                                     <asp:GridView Style="margin-top: 30px;" ID="gvCounselor" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
                                         <Columns>

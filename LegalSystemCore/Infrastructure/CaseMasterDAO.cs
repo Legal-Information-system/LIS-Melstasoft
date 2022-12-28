@@ -59,46 +59,20 @@ namespace LegalSystemCore.Infrastructure
             return listCaseMaster;
         }
 
+
         public int Save(CaseMaster caseMaster, DbConnection dbConnection)
         {
             int output = 0;
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            if (caseMaster.CounsilorId == 0)
-            {
-                if (caseMaster.PrevCaseNumber != "")
-                {
-                    dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif, other_party, court_id, locationc_id, " +
-                        "prev_case_number, assign_attorney_id, created_by_user, created_date, case_status_id,case_open_date ) " +
-                        "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @OtherParty, @CourtId, @LocationId, @PrevCaseNumber," +
-                        "@AssignAttornerId, @CreatedUserId, @CreatedDate, @CaseStatusId @CaseOpenDate)";
-                }
-                else
-                {
-                    dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif, other_party, court_id, locationc_id, " +
-                        "assign_attorney_id, created_by_user, created_date, case_status_id,case_open_date ) " +
-                        "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @OtherParty, @CourtId, @LocationId," +
-                        "@AssignAttornerId, @CreatedUserId, @CreatedDate, @CaseStatusId,@CaseOpenDate)";
-                }
-            }
-            else
-            {
-                if (caseMaster.PrevCaseNumber != "")
-                {
-                    dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif, other_party, court_id, locationc_id, " +
-                        "prev_case_number, assign_attorney_id, counsilor_id, created_by_user, created_date, case_status_id,case_open_date ) " +
-                        "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @OtherParty, @CourtId, @LocationId, @PrevCaseNumber," +
-                        "@AssignAttornerId, @CounsilorId, @CreatedUserId, @CreatedDate, @CaseStatusId, @CaseOpenDate)";
-                }
-                else
-                {
-                    dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif, other_party, court_id, locationc_id, " +
-                        "assign_attorney_id, counsilor_id, created_by_user, created_date, case_status_id, case_open_date ) " +
-                        "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @OtherParty, @CourtId, @LocationId," +
-                        "@AssignAttornerId, @CounsilorId, @CreatedUserId, @CreatedDate, @CaseStatusId, @CaseOpenDate)";
-                }
-            }
+
+            dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif,  court_id, locationc_id, " +
+                "assign_attorney_id, created_by_user, created_date, case_status_id, case_open_date ) " +
+                "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @CourtId, @LocationId," +
+                "@AssignAttornerId, @CreatedUserId, @CreatedDate, @CaseStatusId, @CaseOpenDate)";
+
+
 
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseMaster.CaseNumber);
@@ -108,12 +82,10 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@CaseDescription", caseMaster.CaseDescription);
             dbConnection.cmd.Parameters.AddWithValue("@ClaimAmount", caseMaster.ClaimAmount);
             dbConnection.cmd.Parameters.AddWithValue("@IsPlentif", caseMaster.IsPlentif);
-            dbConnection.cmd.Parameters.AddWithValue("@OtherParty", caseMaster.OtherParty);
             dbConnection.cmd.Parameters.AddWithValue("@CourtId", caseMaster.CourtId);
             dbConnection.cmd.Parameters.AddWithValue("@LocationId", caseMaster.LocationId);
             dbConnection.cmd.Parameters.AddWithValue("@PrevCaseNumber", caseMaster.PrevCaseNumber);
             dbConnection.cmd.Parameters.AddWithValue("@AssignAttornerId", caseMaster.AssignAttornerId);
-            dbConnection.cmd.Parameters.AddWithValue("@CounsilorId", caseMaster.CounsilorId);
             dbConnection.cmd.Parameters.AddWithValue("@CreatedUserId", caseMaster.CreatedUserId);
             dbConnection.cmd.Parameters.AddWithValue("@CreatedDate", caseMaster.CreatedDate);
             dbConnection.cmd.Parameters.AddWithValue("@CaseStatusId", caseMaster.CaseStatusId);

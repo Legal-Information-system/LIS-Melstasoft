@@ -54,6 +54,8 @@
     <Compile Include="Controller\DocumentCaseController.cs" />
     <Compile Include="Controller\DocumentController.cs" />
     <Compile Include="Controller\DocumentPaymentController.cs" />
+    <Compile Include="Controller\PartyCaseController.cs" />
+    <Compile Include="Controller\PartyController.cs" />
     <Compile Include="Controller\PaymentActivityController.cs" />
     <Compile Include="Controller\PaymentController.cs" />
     <Compile Include="Controller\UserLoginController.cs" />
@@ -85,6 +87,8 @@
     <Compile Include="Domain\Court.cs" />
     <Compile Include="Domain\CourtLocation.cs" />
     <Compile Include="Domain\Location.cs" />
+    <Compile Include="Domain\Party.cs" />
+    <Compile Include="Domain\PartyCase.cs" />
     <Compile Include="Domain\Payment.cs" />
     <Compile Include="Domain\PaymentActivity.cs" />
     <Compile Include="Domain\UserLogin.cs" />
@@ -96,6 +100,8 @@
     <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
     <Compile Include="Infrastructure\DocumentDAO.cs" />
     <Compile Include="Infrastructure\DocumentPaymentDAO.cs" />
+    <Compile Include="Infrastructure\PartyCaseDAO.cs" />
+    <Compile Include="Infrastructure\PartyDAO.cs" />
     <Compile Include="Infrastructure\PaymentActivityDAO.cs" />
     <Compile Include="Infrastructure\PaymentDAO.cs" />
     <Compile Include="Infrastructure\UserLoginDAO.cs" />
