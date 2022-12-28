@@ -178,6 +178,14 @@ namespace LegalSystemWeb
             gvDocuments.DataBind();
         }
 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString(), true);
+            caseMasterController.Delete(caseMaster);
+            Response.Redirect("ViewCases.aspx?name=All");
+
+        }
 
         protected void btnView_Click(object sender, EventArgs e)
         {
