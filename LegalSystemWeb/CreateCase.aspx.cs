@@ -182,6 +182,24 @@ namespace LegalSystemWeb
 
                 CultureInfo provider = new CultureInfo("en-US");
 
+            if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController))
+            {
+                if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtPreCaseNumber.Text == "")
+                {
+                    caseMaster.CaseNumber = txtCaseNumber.Text;
+                    caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                    caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                    caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
+                    caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+                    caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                    caseMaster.CaseDescription = txtCaseDescription.Text;
+                    string clamount = txtClaimAmount.Text;
+                    caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
+                    caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
+                    caseMaster.OtherParty = txtOtherside.Text;
+                    caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                    caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+                    caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
                 caseMaster.CaseNumber = txtCaseNumber.Text;
                 caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
                 caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
@@ -198,10 +216,17 @@ namespace LegalSystemWeb
                 caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
                 counselor.CaseNumber = caseMaster.CaseNumber;
 
+                    if (ddlCounselor.SelectedValue != "")
+                        caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
+
+                    caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                    caseMaster.CreatedDate = DateTime.Now;
+                    caseMaster.CaseStatusId = 1;
                 caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
                 caseMaster.CreatedDate = DateTime.Now;
                 caseMaster.CaseStatusId = 1;
 
+                    caseMasterController.Save(caseMaster);
                 caseMasterController.Save(caseMaster);
                 foreach (Lawyer lawyer in CounselorList)
                 {
@@ -242,6 +267,14 @@ namespace LegalSystemWeb
                     partyCaseController.Save(partyCase);
                 }
 
+                    UploadFiles();
+                    Clear();
+
+                    lblCaseNumberError.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = "Record Updated Successfully!";
+                }
+            }
                 UploadFiles();
                 Clear();
                 clearCounselor();
@@ -252,12 +285,14 @@ namespace LegalSystemWeb
             else
             {
 
+        }
                 if (!CounselorList.Any())
                 {
                     lblCounselor.Text = "Please Add Counselor";
                 }
                 if (!(plaintif.Any() && rbIsPlantiff.SelectedValue == "0"))
                 {
+
 
                     lblPlaintif.Text = "Please Add Plaintif Side";
                 }
@@ -340,6 +375,9 @@ namespace LegalSystemWeb
             Clear();
         }
 
+        private bool CheckAvailableCaseNum(bool isPrev, string Number, ICaseMasterController c)
+        {
+            CaseMaster caseMaster = c.GetCaseMaster(Number, false);
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
@@ -465,6 +503,41 @@ namespace LegalSystemWeb
             BindCounselorList();
         }
 
+            if (caseMaster.CaseNumber == null)
+            {
+                if (isPrev)
+                {
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = "Not a Valid Case Number";
+                    return false;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+            }
+            else
+            {
+                if (isPrev)
+                {
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = "Case Number Already Exsists!";
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    return false;
+                }
+            }
+        }
         private void clearPlaintif()
         {
             plaintif.Clear();

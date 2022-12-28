@@ -204,16 +204,20 @@
 
                             <asp:Literal ID="Literal11" runat="server" Text="Case Number"></asp:Literal>
                             <asp:TextBox runat="server" ID="txtCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
-                                ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            <div class="d-flex text-danger">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
+                                    ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                <asp:Label ID="lblCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
+                            </div>
                         </div>
 
                         <div class="col-md-6">
 
                             <asp:Literal ID="Literal12" runat="server" Text="Previous Case Number"></asp:Literal>
                             <asp:TextBox runat="server" ID="txtPreCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
-
-
+                            <div class="d-flex text-danger">
+                                <asp:Label ID="lblPrevCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
+                            </div>
                         </div>
                     </div>
 
