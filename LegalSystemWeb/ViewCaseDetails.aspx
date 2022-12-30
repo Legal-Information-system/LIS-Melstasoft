@@ -284,8 +284,13 @@
 
         <div class="row">
             <div class="col-3">
+                <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn-warning" Width="100%" Height="150%" BorderStyle="None" OnClick="btnEdit_Click" />
+            </div>
+            <div class="col-3">
                 <asp:Button ID="btnDelete" runat="server" Text="Delete Case" CssClass="btn-danger" Width="100%" Height="150%" BorderStyle="None" OnClick="btnDelete_Click" />
             </div>
+
+
         </div>
 
         <%} %>

@@ -38,7 +38,7 @@ namespace LegalSystemWeb
             foreach (Payment payment in listPayment)
             {
                 caseMaster = caseMasterList.Where(x => x.CaseNumber == payment.CaseNumber).Single();
-                caseMaster.payableAmount = caseMaster.ClaimAmount - caseMaster.totalPaidAmoutToPresent;
+                caseMaster.payableAmount = Convert.ToDouble(caseMaster.ClaimAmount) - caseMaster.totalPaidAmoutToPresent;
                 payment.caseMaster = caseMaster;
             }
 

@@ -126,7 +126,47 @@ namespace LegalSystemCore.Infrastructure
 
         public int Update(CaseMaster caseMaster, DbConnection dbConnection)
         {
-            throw new NotImplementedException();
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            if (caseMaster.PrevCaseNumber == "")
+            {
+                dbConnection.cmd.CommandText = "Update case_master SET company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
+                    "case_description = @CaseDescription ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
+                    "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate" +
+                    " WHERE case_number = @PrevCaseNumberUpdate ";
+            }
+            else
+            {
+                dbConnection.cmd.CommandText = "Update case_master SET company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
+                    "case_description = @CaseDescription,prev_case_number = @PrevCaseNumber ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
+                    "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate" +
+                    " WHERE case_number = @PrevCaseNumberUpdate ";
+            }
+
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseMaster.CaseNumber);
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyId", caseMaster.CompanyId);
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", caseMaster.CompanyUnitId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNatureId", caseMaster.CaseNatureId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseDescription", caseMaster.CaseDescription);
+            dbConnection.cmd.Parameters.AddWithValue("@ClaimAmount", caseMaster.ClaimAmount);
+            dbConnection.cmd.Parameters.AddWithValue("@IsPlentif", caseMaster.IsPlentif);
+            dbConnection.cmd.Parameters.AddWithValue("@CourtId", caseMaster.CourtId);
+            dbConnection.cmd.Parameters.AddWithValue("@LocationId", caseMaster.LocationId);
+            dbConnection.cmd.Parameters.AddWithValue("@PrevCaseNumber", caseMaster.PrevCaseNumber);
+            dbConnection.cmd.Parameters.AddWithValue("@AssignAttornerId", caseMaster.AssignAttornerId);
+            dbConnection.cmd.Parameters.AddWithValue("@CreatedUserId", caseMaster.CreatedUserId);
+            dbConnection.cmd.Parameters.AddWithValue("@CreatedDate", caseMaster.CreatedDate);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseStatusId", caseMaster.CaseStatusId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseOpenDate", caseMaster.CaseOpenDate);
+            dbConnection.cmd.Parameters.AddWithValue("@PrevCaseNumberUpdate", caseMaster.PrevCaseNumberUpdate);
+
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
         }
 
         public int Delete(CaseMaster caseMaster, DbConnection dbConnection)

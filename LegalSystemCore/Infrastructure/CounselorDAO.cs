@@ -16,14 +16,20 @@ namespace LegalSystemCore.Infrastructure
         void Save(Counselor counselor, DbConnection dbConnection);
         List<Counselor> GetCounselorList(DbConnection dbConnection, string CustomQuery = null);
 
+        List<Counselor> GetCounselorListDeleted(DbConnection dbConnection, string CustomQuery = null);
+
+        int ReInit(Counselor counselor, DbConnection dbConnection);
+
         int Delete(Counselor counselor, DbConnection dbConnection);
+
+        int DeletePermenent(String CaseNumber, DbConnection dbConnection);
 
     }
     public class CounselorDAOSqlImpl : ICounselorDAO
     {
         public void Save(Counselor counselor, DbConnection dbConnection)
         {
-            int output = 0;
+
 
 
             dbConnection.cmd.Parameters.Clear();
@@ -72,6 +78,33 @@ namespace LegalSystemCore.Infrastructure
             return CounselorList;
         }
 
+        public List<Counselor> GetCounselorListDeleted(DbConnection dbConnection, string CustomQuery = null)
+        {
+            List<Counselor> CounselorList = new List<Counselor>();
+            if (CustomQuery != null)
+            {
+                dbConnection.cmd.Parameters.Clear();
+                dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+                dbConnection.cmd.CommandText = "SELECT * FROM counselor WHERE case_number = @CaseNumber AND is_active = 0;";
+
+                dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", CustomQuery);
+            }
+
+            else
+            {
+                dbConnection.cmd.Parameters.Clear();
+                dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+                dbConnection.cmd.CommandText = "SELECT * FROM counselor WHERE is_active = 1;";
+            }
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            CounselorList = dataAccessObject.ReadCollection<Counselor>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return CounselorList;
+        }
+
         public int Delete(Counselor counselor, DbConnection dbConnection)
         {
             int output = 0;
@@ -79,6 +112,38 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             dbConnection.cmd.CommandText = "UPDATE counselor SET is_active = 0 WHERE case_number = @CaseNumber AND lawyer_id = @LawyerId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", counselor.CaseNumber);
+            dbConnection.cmd.Parameters.AddWithValue("@LawyerId", counselor.LawyerId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int DeletePermenent(String CaseNumber, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "DELETE FROM counselor WHERE case_number = @CaseNumber ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", CaseNumber);
+
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int ReInit(Counselor counselor, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE counselor SET is_active = 1 WHERE case_number = @CaseNumber AND lawyer_id = @LawyerId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", counselor.CaseNumber);
             dbConnection.cmd.Parameters.AddWithValue("@LawyerId", counselor.LawyerId);

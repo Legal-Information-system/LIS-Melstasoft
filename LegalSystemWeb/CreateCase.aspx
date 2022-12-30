@@ -8,7 +8,8 @@
 
             <div class="card o-hidden border-0 shadow-lg my-3" style="padding-left: unset; padding-right: unset">
                 <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
-                    <h3 class="text-light text-center bg-dark ">Create Case</h3>
+                    <h3 class="text-light text-center bg-dark " id="hTitle" runat="server"></h3>
+
                 </div>
                 <div class="card-body form-group">
 
@@ -54,29 +55,33 @@
                     </div>
 
                     <%--===========--%>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal3" runat="server" Text="Claim Amount"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtClaimAmount" Style="margin-top: 5px" TextMode="Number"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
-                                ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
+                                    <asp:Literal ID="Literal3" runat="server" Text="Claim Amount"></asp:Literal>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtClaimAmount" Style="margin-top: 5px"></asp:TextBox>
+                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                        ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
+                                    <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
                                 ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
                             </asp:RegularExpressionValidator>--%>
-                        </div>
-                        <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                    <asp:Button ID="btnCheckInWords" runat="server" Text="Check in Words" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="claimAmountInWords" />
+                                </div>
 
-                            <asp:Literal ID="Literal4" runat="server" Text="Case Open Date"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" TextMode="Date" ID="txtCaseOpenDate"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
-                                ControlToValidate="txtCaseOpenDate" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
-                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
-                            </asp:RegularExpressionValidator>--%>
-                        </div>
 
-                    </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <asp:Label ID="lblClaimAmountInWords" runat="server" Text="" ForeColor="#000000"></asp:Label>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
 
                     <%--===========--%>
 
@@ -94,11 +99,21 @@
                                 ControlToValidate="rbIsPlantiff" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                         </div>
+                        <div class="col-md-6">
+
+                            <asp:Literal ID="Literal4" runat="server" Text="Case Open Date"></asp:Literal>
+                            <asp:TextBox runat="server" CssClass="form-control form-control-user" TextMode="Date" ID="txtCaseOpenDate"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
+                                ControlToValidate="txtCaseOpenDate" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
+                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
+                            </asp:RegularExpressionValidator>--%>
+                        </div>
 
                     </div>
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
-                            <div class="row mb-3">
+                            <div class="row ">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
                                     <asp:Literal ID="ltPlaintifSide" runat="server" Text="Plaintif Side"></asp:Literal>
@@ -135,7 +150,7 @@
 
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
-                            <div class="row mb-3">
+                            <div class="row ">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
                                     <asp:Literal ID="ltDefendent" runat="server" Text="Defendent Side"></asp:Literal>
@@ -147,7 +162,7 @@
                                     <asp:Button ID="btnAddDefendent" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddDefendent_Click" />
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <div class="row ">
                                 <div class="col-sm-6 m-3">
                                     <asp:Label ID="lblDefendent" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
                                 </div>
@@ -197,30 +212,32 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
 
+                    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                        <ContentTemplate>
+                            <%--===========--%>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
 
-                    <%--===========--%>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                                    <asp:Literal ID="Literal11" runat="server" Text="Case Number"></asp:Literal>
+                                    <asp:TextBox runat="server" ID="txtCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
+                                    <div class="d-flex text-danger">
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
+                                            ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                        <asp:Label ID="lblCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
+                                    </div>
+                                </div>
 
-                            <asp:Literal ID="Literal11" runat="server" Text="Case Number"></asp:Literal>
-                            <asp:TextBox runat="server" ID="txtCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
-                            <div class="d-flex text-danger">
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server"
-                                    ControlToValidate="txtCaseNumber" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                                <asp:Label ID="lblCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
+                                <div class="col-md-6">
+
+                                    <asp:Literal ID="Literal12" runat="server" Text="Previous Case Number"></asp:Literal>
+                                    <asp:TextBox runat="server" ID="txtPreCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
+                                    <div class="d-flex text-danger">
+                                        <asp:Label ID="lblPrevCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <asp:Literal ID="Literal12" runat="server" Text="Previous Case Number"></asp:Literal>
-                            <asp:TextBox runat="server" ID="txtPreCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
-                            <div class="d-flex text-danger">
-                                <asp:Label ID="lblPrevCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
-                            </div>
-                        </div>
-                    </div>
-
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                     <%--===========--%>
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
@@ -234,7 +251,7 @@
                                 </div>
 
                             </div>
-                            <div class="row mb-3">
+                            <div class="row">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
                                     <asp:Literal ID="Literal14" runat="server" Text="Counselor"></asp:Literal>

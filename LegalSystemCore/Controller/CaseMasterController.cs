@@ -73,6 +73,24 @@ namespace LegalSystemCore.Controller
 
                     List<UserLogin> userClosedList = userLoginDAO.GetUserLoginList(true, dbConnection);
                     caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
+                    IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
+                    IPartyController partyController = ControllerFactory.CreatePartyController();
+                    List<PartyCase> partyCases = partyCaseController.GetPartyCaseList(caseMaster.CaseNumber);
+                    caseMaster.plaintif = new List<PartyCase>();
+                    caseMaster.defendent = new List<PartyCase>();
+                    foreach (PartyCase partyCase in partyCases.Where(x => x.IsPlaintif == 1))
+                    {
+                        partyCase.party = partyController.GetParty(partyCase.PartyId);
+                        caseMaster.plaintif.Add(partyCase);
+
+                    }
+
+                    foreach (PartyCase partyCase in partyCases.Where(x => x.IsPlaintif == 0))
+                    {
+                        partyCase.party = partyController.GetParty(partyCase.PartyId);
+                        caseMaster.defendent.Add(partyCase);
+
+                    }
 
                     if (caseMaster.ClosedUserId > 0)
                         caseMaster.userClose = userClosedList.Where(l => l.UserId == caseMaster.ClosedUserId).Single();

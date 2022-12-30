@@ -21,13 +21,16 @@ namespace LegalSystemWeb
         List<CourtLocation> courtlocation = new List<CourtLocation>();
         List<Court> courtList = new List<Court>();
         List<Lawyer> lawyerList = new List<Lawyer>();
-        public static List<Lawyer> CounselorList = new List<Lawyer>();
+        public static List<Lawyer> CounselorLawyerList = new List<Lawyer>();
         ICounselorController counselorController = ControllerFactory.CreateCounselorController();
         IPartyController partyControllerGlobal = ControllerFactory.CreatePartyController();
+        IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
         public static List<Party> partyList = new List<Party>();
         Counselor counselor = new Counselor();
         public static List<Party> plaintif = new List<Party>();
         public static List<Party> defendent = new List<Party>();
+        public static List<Counselor> counselorList = new List<Counselor>();
+        public static string caseNumber;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,13 +48,110 @@ namespace LegalSystemWeb
                 {
                     if (!IsPostBack)
                     {
+                        plaintif.Clear();
+                        defendent.Clear();
+                        partyList.Clear();
+                        counselorList.Clear();
+                        CounselorLawyerList.Clear();
+                        if (pageSwitch())
+                        {
+                            hTitle.InnerText = "Update Case";
+                        }
+                        else
+                        {
+                            hTitle.InnerText = "Create Case";
+
+
+                        }
                         BindCompanyList();
                         BindCaseNatureList();
                         BindCourtList();
                         BindLawyerList();
                         partyList = partyControllerGlobal.GetPartyList();
+
+                        if (pageSwitch())
+                        {
+                            pageUpdateSet();
+                        }
                     }
                 }
+            }
+        }
+
+        private void pageUpdateSet()
+        {
+            btnBack.Visible = false;
+            btnSave.Text = "Update";
+
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            CaseMaster caseMaster = new CaseMaster();
+            caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["casenumber"].ToString(), true);
+            caseNumber = caseMaster.CaseNumber;
+            ddlCompany.SelectedValue = caseMaster.CompanyId.ToString();
+            BindCompanyUnitList();
+            ddlCompanyUnit.SelectedValue = caseMaster.CompanyUnitId.ToString();
+            ddlNatureOfCase.SelectedValue = caseMaster.CaseNatureId.ToString();
+            txtCaseDescription.Text = caseMaster.CaseDescription;
+            txtClaimAmount.Text = caseMaster.ClaimAmount.ToString();
+            rbIsPlantiff.SelectedValue = caseMaster.IsPlentif.ToString();
+            txtCaseOpenDate.Text = caseMaster.CaseOpenDate.ToString("yyyy-MM-dd");
+
+            List<PartyCase> partyCaseList = new List<PartyCase>();
+            partyCaseList = partyCaseController.GetPartyCaseList(caseMaster.CaseNumber);
+
+
+
+            Party party = new Party();
+            if (partyCaseList.Where(x => x.IsPlaintif == 1).Any())
+            {
+                foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 1))
+                {
+                    party = partyControllerGlobal.GetParty(partyCase.PartyId);
+                    plaintif.Add(party);
+                }
+            }
+            if (partyCaseList.Where(x => x.IsPlaintif == 0).Any())
+            {
+                foreach (PartyCase partyCase in partyCaseList.Where(x => x.IsPlaintif == 0))
+                {
+                    party = partyControllerGlobal.GetParty(partyCase.PartyId);
+                    defendent.Add(party);
+                }
+            }
+            BindPlaintifList();
+            BindDefendentList();
+            ddlCourt.SelectedValue = caseMaster.CourtId.ToString();
+            BindDCourtLocationList();
+            ddlLocation.SelectedValue = caseMaster.location.ToString();
+            txtCaseNumber.Text = caseMaster.CaseNumber.ToString();
+            if (caseMaster.PrevCaseNumber == null)
+            {
+                caseMaster.PrevCaseNumber = "";
+            }
+            txtPreCaseNumber.Text = caseMaster.PrevCaseNumber.ToString();
+            ddlAttorney.SelectedValue = caseMaster.AssignAttornerId.ToString();
+            counselorList = counselorController.GetCounselorList(caseMaster.CaseNumber);
+            ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
+            Lawyer lawyer = new Lawyer();
+            foreach (Counselor counselor in counselorList)
+            {
+                lawyer = lawyerController.GetLawyer(counselor.LawyerId);
+                CounselorLawyerList.Add(lawyer);
+            }
+
+            BindCounselorList();
+        }
+
+        private bool pageSwitch()
+        {
+            Dictionary<string, string> allRequestParamesDictionary = Request.Params.AllKeys.ToDictionary(x => x, x => Request.Params[x]);
+            if (allRequestParamesDictionary.ContainsKey("update"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -172,121 +272,110 @@ namespace LegalSystemWeb
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (CounselorList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")))
+            if (pageSwitch())
             {
-                ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-                IPartyController partyController = ControllerFactory.CreatePartyController();
-                IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
-
-                CaseMaster caseMaster = new CaseMaster();
-
-                CultureInfo provider = new CultureInfo("en-US");
-
-            if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController))
-            {
-                if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtPreCaseNumber.Text == "")
-                {
-                    caseMaster.CaseNumber = txtCaseNumber.Text;
-                    caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
-                    caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
-                    caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
-                    caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
-                    caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
-                    caseMaster.CaseDescription = txtCaseDescription.Text;
-                    string clamount = txtClaimAmount.Text;
-                    caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
-                    caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
-                    caseMaster.OtherParty = txtOtherside.Text;
-                    caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
-                    caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
-                    caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
-                caseMaster.CaseNumber = txtCaseNumber.Text;
-                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
-                caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
-                caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
-                caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
-                caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
-                caseMaster.CaseDescription = txtCaseDescription.Text;
-                string clamount = txtClaimAmount.Text;
-                caseMaster.ClaimAmount = Convert.ToDouble(txtClaimAmount.Text);
-                caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
-
-                caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
-                caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
-                caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
-                counselor.CaseNumber = caseMaster.CaseNumber;
-
-                    if (ddlCounselor.SelectedValue != "")
-                        caseMaster.CounsilorId = Convert.ToInt32(ddlCounselor.SelectedValue);
-
-                    caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
-                    caseMaster.CreatedDate = DateTime.Now;
-                    caseMaster.CaseStatusId = 1;
-                caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
-                caseMaster.CreatedDate = DateTime.Now;
-                caseMaster.CaseStatusId = 1;
-
-                    caseMasterController.Save(caseMaster);
-                caseMasterController.Save(caseMaster);
-                foreach (Lawyer lawyer in CounselorList)
-                {
-                    counselor.LawyerId = lawyer.LawyerId;
-                    counselorController.Save(counselor);
-                }
-                PartyCase partyCase = new PartyCase();
-
-                foreach (Party party in plaintif)
-                {
-                    if (partyList.Where(x => x.PartyName == party.PartyName).Any())
-                    {
-                        partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
-                    }
-                    else
-                    {
-                        partyCase.PartyId = partyController.Save(party);
-                    }
-
-                    partyCase.CaseNumber = caseMaster.CaseNumber;
-                    partyCase.IsPlaintif = 1;
-                    partyCaseController.Save(partyCase);
-                }
-
-
-                foreach (Party party in defendent)
-                {
-                    if (partyList.Where(x => x.PartyName == party.PartyName).Any())
-                    {
-                        partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
-                    }
-                    else
-                    {
-                        partyCase.PartyId = partyController.Save(party);
-                    }
-                    partyCase.CaseNumber = caseMaster.CaseNumber;
-                    partyCase.IsPlaintif = 0;
-                    partyCaseController.Save(partyCase);
-                }
-
-                    UploadFiles();
-                    Clear();
-
-                    lblCaseNumberError.Text = string.Empty;
-                    lblPrevCaseNumberError.Text = string.Empty;
-                    lblSuccessMsg.Text = "Record Updated Successfully!";
-                }
-            }
-                UploadFiles();
-                Clear();
-                clearCounselor();
-                clearDefendent();
-                clearPlaintif();
-                lblSuccessMsg.Text = "Record Updated Successfully!";
+                btnUpdate_Click();
             }
             else
             {
+                if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")))
+                {
+                    ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+                    IPartyController partyController = ControllerFactory.CreatePartyController();
+                    IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
 
-        }
-                if (!CounselorList.Any())
+                    CaseMaster caseMaster = new CaseMaster();
+
+                    CultureInfo provider = new CultureInfo("en-US");
+
+                    if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController))
+                    {
+                        if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtPreCaseNumber.Text == "")
+                        {
+
+                            caseMaster.CaseNumber = txtCaseNumber.Text;
+                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                            caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
+                            caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+                            string test = txtCaseOpenDate.Text;
+                            caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                            caseMaster.CaseDescription = txtCaseDescription.Text;
+                            string clamount = txtClaimAmount.Text;
+                            caseMaster.ClaimAmount = txtClaimAmount.Text;
+                            caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
+
+                            caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                            caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+                            caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
+                            counselor.CaseNumber = caseMaster.CaseNumber;
+
+
+                            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                            caseMaster.CreatedDate = DateTime.Now;
+                            caseMaster.CaseStatusId = 1;
+                            caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                            caseMaster.CreatedDate = DateTime.Now;
+                            caseMaster.CaseStatusId = 1;
+
+                            caseMasterController.Save(caseMaster);
+
+                            foreach (Lawyer lawyer in CounselorLawyerList)
+                            {
+                                counselor.LawyerId = lawyer.LawyerId;
+                                counselorController.Save(counselor);
+                            }
+                            PartyCase partyCase = new PartyCase();
+
+                            foreach (Party party in plaintif)
+                            {
+                                if (partyList.Where(x => x.PartyName == party.PartyName).Any())
+                                {
+                                    partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
+                                }
+                                else
+                                {
+                                    partyCase.PartyId = partyController.Save(party);
+                                }
+
+                                partyCase.CaseNumber = caseMaster.CaseNumber;
+                                partyCase.IsPlaintif = 1;
+                                partyCaseController.Save(partyCase);
+                            }
+
+
+                            foreach (Party party in defendent)
+                            {
+                                if (partyList.Where(x => x.PartyName == party.PartyName).Any())
+                                {
+                                    partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
+                                }
+                                else
+                                {
+                                    partyCase.PartyId = partyController.Save(party);
+                                }
+                                partyCase.CaseNumber = caseMaster.CaseNumber;
+                                partyCase.IsPlaintif = 0;
+                                partyCaseController.Save(partyCase);
+                            }
+
+                            UploadFiles();
+                            Clear();
+                            lblSuccessMsg.Text = "Record Updated Successfully!";
+                        }
+                    }
+
+                    Clear();
+                    clearCounselor();
+                    clearDefendent();
+                    clearPlaintif();
+                    lblSuccessMsg.Text = "Record Updated Successfully!";
+                }
+                else
+                {
+
+                }
+                if (!CounselorLawyerList.Any())
                 {
                     lblCounselor.Text = "Please Add Counselor";
                 }
@@ -302,6 +391,143 @@ namespace LegalSystemWeb
                 }
             }
         }
+
+        protected void btnUpdate_Click()
+        {
+            if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")))
+            {
+                ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+                IPartyController partyController = ControllerFactory.CreatePartyController();
+                IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
+
+                CaseMaster caseMaster = new CaseMaster();
+
+                CultureInfo provider = new CultureInfo("en-US");
+
+                if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber)
+                {
+                    if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber || txtPreCaseNumber.Text == "")
+                    {
+                        caseMaster.PrevCaseNumberUpdate = caseNumber;
+                        caseMaster.CaseNumber = txtCaseNumber.Text;
+                        caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                        caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                        caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
+                        caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
+                        string test = txtCaseOpenDate.Text;
+                        caseMaster.CaseOpenDate = DateTime.Parse(txtCaseOpenDate.Text, provider, DateTimeStyles.AdjustToUniversal);
+                        caseMaster.CaseDescription = txtCaseDescription.Text;
+                        string clamount = txtClaimAmount.Text;
+                        caseMaster.ClaimAmount = txtClaimAmount.Text;
+                        caseMaster.IsPlentif = Convert.ToInt32(rbIsPlantiff.Text);
+
+                        caseMaster.CourtId = Convert.ToInt32(ddlCourt.SelectedValue);
+                        caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+                        caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
+                        counselor.CaseNumber = caseMaster.CaseNumber;
+                        if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == "")
+                        {
+                            caseMaster.PrevCaseNumber = "";
+                        }
+                        else
+                        {
+                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                        }
+
+
+                        caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                        caseMaster.CreatedDate = DateTime.Now;
+                        caseMaster.CaseStatusId = 1;
+                        caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
+                        caseMaster.CreatedDate = DateTime.Now;
+                        caseMaster.CaseStatusId = 1;
+
+                        caseMasterController.Update(caseMaster);
+                        if (counselorController.GetCounselorList(caseMaster.CaseNumber).Any())
+                        {
+                            counselorController.DeletePermenent(caseMaster.CaseNumber);
+                        }
+
+                        if (counselorList.Any())
+                        {
+                            foreach (Counselor counselor in counselorList)
+                            {
+
+                                counselorController.Save(counselor);
+                            }
+                        }
+
+                        PartyCase partyCase = new PartyCase();
+                        if (partyCaseController.GetPartyCaseList(caseMaster.CaseNumber).Any())
+                        {
+                            partyCaseController.DeletePermenent(caseMaster.CaseNumber);
+                        }
+
+                        foreach (Party party in plaintif)
+                        {
+                            if (partyList.Where(x => x.PartyName == party.PartyName).Any())
+                            {
+                                partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
+                            }
+                            else
+                            {
+                                partyCase.PartyId = partyController.Save(party);
+                            }
+
+                            partyCase.CaseNumber = caseMaster.CaseNumber;
+                            partyCase.IsPlaintif = 1;
+                            partyCaseController.Save(partyCase);
+                        }
+
+
+                        foreach (Party party in defendent)
+                        {
+                            if (partyList.Where(x => x.PartyName == party.PartyName).Any())
+                            {
+                                partyCase.PartyId = partyList.Where(x => x.PartyName == party.PartyName).ElementAt(0).PartyId;
+                            }
+                            else
+                            {
+                                partyCase.PartyId = partyController.Save(party);
+                            }
+                            partyCase.CaseNumber = caseMaster.CaseNumber;
+                            partyCase.IsPlaintif = 0;
+                            partyCaseController.Save(partyCase);
+                        }
+
+
+                        UploadFiles();
+                        Clear();
+                        lblSuccessMsg.Text = "Record Updated Successfully!";
+                    }
+                }
+
+                Clear();
+                clearCounselor();
+                clearDefendent();
+                clearPlaintif();
+                lblSuccessMsg.Text = "Record Updated Successfully!";
+            }
+            else
+            {
+
+            }
+            if (!counselorList.Any())
+            {
+                lblCounselor.Text = "Please Add Counselor";
+            }
+            if ((!plaintif.Any() && rbIsPlantiff.SelectedValue == "1"))
+            {
+
+
+                lblPlaintif.Text = "Please Add Plaintif Side";
+            }
+            if ((!defendent.Any() && rbIsPlantiff.SelectedValue == "0"))
+            {
+                lblDefendent.Text = "Please Add Defendent Side";
+            }
+        }
+
 
 
         protected void btnDocUpload_Click1(object sender, EventArgs e)
@@ -368,6 +594,13 @@ namespace LegalSystemWeb
             txtCaseOpenDate.Text = string.Empty;
             rbIsPlantiff.Items[0].Selected = false;
             rbIsPlantiff.Items[1].Selected = false;
+            lblCaseNumberError.Text = string.Empty;
+            lblPrevCaseNumberError.Text = string.Empty;
+            lblCounselor.Text = string.Empty;
+            lblDefendent.Text = string.Empty;
+            lblPlaintif.Text = string.Empty;
+            txtPlaintif.Text = string.Empty;
+            txtDefendent.Text = string.Empty;
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -378,6 +611,45 @@ namespace LegalSystemWeb
         private bool CheckAvailableCaseNum(bool isPrev, string Number, ICaseMasterController c)
         {
             CaseMaster caseMaster = c.GetCaseMaster(Number, false);
+
+
+
+            if (caseMaster.CaseNumber == null)
+            {
+                if (isPrev)
+                {
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = "Not a Valid Case Number";
+                    return false;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+            }
+            else
+            {
+                if (isPrev)
+                {
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    lblCaseNumberError.Text = string.Empty;
+                    return true;
+                }
+                else
+                {
+                    lblCaseNumberError.Text = "Case Number Already Exsists!";
+                    lblPrevCaseNumberError.Text = string.Empty;
+                    lblSuccessMsg.Text = string.Empty;
+                    return false;
+                }
+            }
+        }
+
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
@@ -388,9 +660,9 @@ namespace LegalSystemWeb
             {
                 lawyer.LawyerId = Convert.ToInt32(ddlCounselor.SelectedValue);
                 string lawyerName = ddlCounselor.SelectedItem.Text;
-                if (!(CounselorList.Where(x => x.LawyerName == lawyerName).Any()))
+                if (!(CounselorLawyerList.Where(x => x.LawyerName == lawyerName).Any()))
                 {
-                    CounselorList.Add(lawyer);
+                    CounselorLawyerList.Add(lawyer);
                     BindCounselorList();
                     if (lblCounselor.Text != "")
                     {
@@ -435,13 +707,13 @@ namespace LegalSystemWeb
         protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
         {
             gvCounselor.PageIndex = e.NewPageIndex;
-            gvCounselor.DataSource = CounselorList;
+            gvCounselor.DataSource = CounselorLawyerList;
             gvCounselor.DataBind();
         }
 
         private void BindCounselorList()
         {
-            gvCounselor.DataSource = CounselorList;
+            gvCounselor.DataSource = CounselorLawyerList;
             gvCounselor.DataBind();
 
         }
@@ -466,7 +738,7 @@ namespace LegalSystemWeb
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
 
-            CounselorList.RemoveAll(x => x.LawyerName == CounselorList[rowIndex].LawyerName);
+            CounselorLawyerList.RemoveAll(x => x.LawyerName == CounselorLawyerList[rowIndex].LawyerName);
             BindCounselorList();
 
         }
@@ -499,44 +771,8 @@ namespace LegalSystemWeb
 
         private void clearCounselor()
         {
-            CounselorList.Clear();
+            CounselorLawyerList.Clear();
             BindCounselorList();
-        }
-
-            if (caseMaster.CaseNumber == null)
-            {
-                if (isPrev)
-                {
-                    lblSuccessMsg.Text = string.Empty;
-                    lblCaseNumberError.Text = string.Empty;
-                    lblPrevCaseNumberError.Text = "Not a Valid Case Number";
-                    return false;
-                }
-                else
-                {
-                    lblCaseNumberError.Text = string.Empty;
-                    lblSuccessMsg.Text = string.Empty;
-                    lblPrevCaseNumberError.Text = string.Empty;
-                    return true;
-                }
-            }
-            else
-            {
-                if (isPrev)
-                {
-                    lblPrevCaseNumberError.Text = string.Empty;
-                    lblSuccessMsg.Text = string.Empty;
-                    lblCaseNumberError.Text = string.Empty;
-                    return true;
-                }
-                else
-                {
-                    lblCaseNumberError.Text = "Case Number Already Exsists!";
-                    lblPrevCaseNumberError.Text = string.Empty;
-                    lblSuccessMsg.Text = string.Empty;
-                    return false;
-                }
-            }
         }
         private void clearPlaintif()
         {
@@ -548,6 +784,91 @@ namespace LegalSystemWeb
         {
             defendent.Clear();
             BindDefendentList();
+        }
+
+
+
+        public static string ConvertNumbertoWords(long number)
+        {
+            var unitsMap = new[] { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+            var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+            if (number == 0)
+                return "Zero";
+            if (number < 0)
+                return "minus " + ConvertNumbertoWords(Math.Abs(number));
+            string words = "";
+            if ((number / 1000000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000000000) + " Billion ";
+                number %= 1000000000;
+            }
+            if ((number / 1000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000000) + " Million ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000) + " Thousand ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100) + " Hundred ";
+                number %= 100;
+            }
+
+            if (number > 0)
+            {
+
+                //if (words != "")
+                //    words += "AND ";
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += " " + unitsMap[number % 10];
+                }
+            }
+            //if (number > 0)
+            //{
+            //    if (words != "")
+            //        words += "AND ";
+            //    if (number < 20)
+            //        words += unitsMap[number];
+            //    else
+            //    {
+            //        words += tensMap[number / 10];
+            //        if ((number % 10) > 0)
+            //            words += " " + unitsMap[number % 10];
+            //    }
+            //    words += " Cents";
+            //}
+            return words;
+        }
+        protected void claimAmountInWords(object sender, EventArgs e)
+        {
+            if ((txtClaimAmount.Text.All(x => ".0123456789".Contains(x)) || txtClaimAmount.Text.All(x => "0123456789".Contains(x))) && ((txtClaimAmount.Text.Count(x => x == '.') == 1) || (txtClaimAmount.Text.Count(x => x == '.') == 0)))
+            {
+                lblClaimAmountInWords.Text = "Claim Amount In Words : ";
+                string number = txtClaimAmount.Text.Split('.')[0];
+
+
+                //long claimAmount = long.Parse(txtClaimAmount.Text);
+
+                lblClaimAmountInWords.Text += ConvertNumbertoWords(long.Parse(number));
+                if (txtClaimAmount.Text.Contains('.'))
+                {
+                    string decimalNumber = txtClaimAmount.Text.Split('.')[1].Substring(0, 2);
+                    lblClaimAmountInWords.Text += " And " + ConvertNumbertoWords(long.Parse(decimalNumber)) + " Cents";
+                }
+            }
+            else
+            {
+                lblClaimAmountInWords.Text = "Enter Valid Amount";
+            }
         }
     }
 }

@@ -12,8 +12,11 @@ namespace LegalSystemCore.Controller
     {
         void Save(Counselor counselor);
         List<Counselor> GetCounselorList(string CustomQuery = null);
-
+        List<Counselor> GetCounselorListDeleted(string CustomQuery = null);
+        int ReInit(Counselor counselor);
         int Delete(Counselor counselor);
+
+        int DeletePermenent(String CaseNumber);
 
     }
 
@@ -40,6 +43,39 @@ namespace LegalSystemCore.Controller
                     dbconnection.Commit();
                 }
             }
+        }
+
+        public List<Counselor> GetCounselorListDeleted(string CustomQuery = null)
+        {
+            Common.DbConnection dbConnection = null;
+            List<Counselor> listCounselor = new List<Counselor>();
+
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                if (CustomQuery == null)
+                {
+                    listCounselor = counselorDAO.GetCounselorListDeleted(dbConnection);
+                }
+                else
+                {
+                    listCounselor = counselorDAO.GetCounselorListDeleted(dbConnection, CustomQuery);
+                }
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCounselor;
         }
 
         public List<Counselor> GetCounselorList(string CustomQuery = null)
@@ -97,6 +133,49 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int DeletePermenent(String CaseNumber)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return counselorDAO.DeletePermenent(CaseNumber, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int ReInit(Counselor counselor)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return counselorDAO.ReInit(counselor, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
 
     }
 }

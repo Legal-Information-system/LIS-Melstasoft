@@ -268,6 +268,11 @@ namespace LegalSystemWeb
 
         }
 
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CreateCase.aspx?casenumber=" + Request.QueryString["CaseNumber"].ToString() + "&update=true");
+        }
+
         protected void btnView_Click(object sender, EventArgs e)
         {
             caseNumber = Request.QueryString["CaseNumber"].ToString();

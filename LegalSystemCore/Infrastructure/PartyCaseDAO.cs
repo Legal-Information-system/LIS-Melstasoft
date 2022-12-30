@@ -13,7 +13,11 @@ namespace LegalSystemCore.Infrastructure
         int Update(PartyCase partyCase, DbConnection dbConnection);
         int Delete(PartyCase partyCase, DbConnection dbConnection);
 
+        int DeletePermenent(String CaseNumber, DbConnection dbConnection);
+        int ReInit(PartyCase partyCase, DbConnection dbConnection);
+
         List<PartyCase> GetPartyCaseList(string caseNumber, DbConnection dbConnection);
+        List<PartyCase> GetPartyCaseListDeleted(string caseNumber, DbConnection dbConnection);
 
     }
 
@@ -24,9 +28,25 @@ namespace LegalSystemCore.Infrastructure
         {
             List<PartyCase> listPartyCase = new List<PartyCase>();
 
-
             dbConnection.cmd.CommandText = "select * from party_case WHERE is_active = 1 AND case_number = @CaseNumber";
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseNumber);
+
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            listPartyCase = dataAccessObject.ReadCollection<PartyCase>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return listPartyCase;
+        }
+
+        public List<PartyCase> GetPartyCaseListDeleted(string caseNumber, DbConnection dbConnection)
+        {
+            List<PartyCase> listPartyCase = new List<PartyCase>();
+
+            dbConnection.cmd.CommandText = "select * from party_case WHERE is_active = 0 AND case_number = @CaseNumber";
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseNumber);
+
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
@@ -75,6 +95,38 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.AddWithValue("@PartyId", partyCase.PartyId);
             dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", partyCase.CaseNumber);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int DeletePermenent(String CaseNumber, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "DELETE FROM party_case  WHERE case_number = @CaseNumber ";
+
+
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", CaseNumber);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+        public int ReInit(PartyCase partyCase, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "UPDATE party_case SET is_active = 0 , is_plaintif = @IsPlaintif WHERE party_id = @PartyId AND case_number = @CaseNumber ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@PartyId", partyCase.PartyId);
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", partyCase.CaseNumber);
+            dbConnection.cmd.Parameters.AddWithValue("@IsPlaintif", partyCase.IsPlaintif);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 
