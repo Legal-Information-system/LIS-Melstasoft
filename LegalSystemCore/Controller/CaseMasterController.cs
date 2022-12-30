@@ -36,6 +36,14 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 caseMaster = caseMasterDAO.GetCaseMaster(caseNumber, dbConnection);
+                if (caseMaster.IsPlentif == 1)
+                {
+                    caseMaster.IsPlaintif = "Plaintff";
+                }
+                else if (caseMaster.IsPlentif == 0)
+                {
+                    caseMaster.IsPlaintif = "Defendent";
+                }
 
                 if (withDetails)
                 {
@@ -61,8 +69,7 @@ namespace LegalSystemCore.Controller
                     List<Lawyer> lawyerList = lawyerDAO.GetLawyerList(true, dbConnection);
                     caseMaster.AssignAttorner = lawyerList.Where(l => l.LawyerId == caseMaster.AssignAttornerId).Single();
 
-                    if (caseMaster.CounsilorId > 0)
-                        caseMaster.Counsilor = lawyerList.Where(l => l.LawyerId == caseMaster.CounsilorId).Single();
+
 
                     List<UserLogin> userClosedList = userLoginDAO.GetUserLoginList(true, dbConnection);
                     caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
@@ -108,6 +115,7 @@ namespace LegalSystemCore.Controller
                 foreach (var caseMaster in listCaseMaster)
                 {
                     caseMaster.company = listCompany.Where(x => x.CompanyId == caseMaster.CompanyId).Single();
+
                 }
 
                 ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
@@ -132,6 +140,14 @@ namespace LegalSystemCore.Controller
                 foreach (var caseMaster in listCaseMaster)
                 {
                     caseMaster.location = listLocation.Where(x => x.LocationId == caseMaster.LocationId).Single();
+                    if (caseMaster.IsPlentif == 1)
+                    {
+                        caseMaster.IsPlaintif = "Plaintff";
+                    }
+                    else if (caseMaster.IsPlentif == 0)
+                    {
+                        caseMaster.IsPlaintif = "Defendent";
+                    }
                 }
             }
             catch (Exception)

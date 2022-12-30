@@ -61,6 +61,8 @@ namespace LegalSystemWeb
             caseMasterList = caseMasterController.GetCaseMasterList(false);
             caseMasterListC = caseMasterList.Where(x => x.CaseStatusId == 2).ToList();
 
+
+
             UserId = Convert.ToInt32(Session["User_Role_Id"]);
             companyId = Convert.ToInt32(Session["company_id"].ToString());
             int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());

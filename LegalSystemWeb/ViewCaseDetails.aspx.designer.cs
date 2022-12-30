@@ -60,6 +60,15 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Label lblPlaintiff;
 
         /// <summary>
+        /// ltPlaintifParty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltPlaintifParty;
+
+        /// <summary>
         /// lblCourt control.
         /// </summary>
         /// <remarks>
@@ -150,13 +159,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Label lblPrevCase;
 
         /// <summary>
-        /// lblDefendant control.
+        /// ltDefendentParty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDefendant;
+        protected global::System.Web.UI.WebControls.Literal ltDefendentParty;
 
         /// <summary>
         /// lblAttorney control.
@@ -168,13 +177,13 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.Label lblAttorney;
 
         /// <summary>
-        /// lblCounsilor control.
+        /// ltCounselor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCounsilor;
+        protected global::System.Web.UI.WebControls.Literal ltCounselor;
 
         /// <summary>
         /// lblCaseOpenDate control.

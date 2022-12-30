@@ -25,5 +25,10 @@ namespace LegalSystemWeb
 
             }
         }
+
+        protected void btnNotification_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Notification.aspx");
+        }
     }
 }

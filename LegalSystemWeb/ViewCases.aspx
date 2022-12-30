@@ -30,6 +30,9 @@
                             <asp:BoundField DataField="CaseNumber" HeaderText="Case Number" ItemStyle-HorizontalAlign="center">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="IsPlaintif" HeaderText="Company Party" ItemStyle-HorizontalAlign="center">
+                                <ItemStyle HorizontalAlign="Center" />
+                            </asp:BoundField>
                             <asp:BoundField DataField="company.CompanyName" HeaderText="Company Name" ItemStyle-HorizontalAlign="center">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
@@ -37,9 +40,6 @@
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="caseNature.CaseNatureName" HeaderText="Case Nature" ItemStyle-HorizontalAlign="center">
-                                <ItemStyle HorizontalAlign="Center" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="OtherParty" HeaderText="Other Party" ItemStyle-HorizontalAlign="center">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="location.locationName" HeaderText="Location" ItemStyle-HorizontalAlign="center">

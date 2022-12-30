@@ -69,7 +69,7 @@ namespace LegalSystemWeb
 
         }
 
-        protected void BindCaseDeatils(object sender, EventArgs e)
+        protected void BindCaseDetails(object sender, EventArgs e)
         {
             if (ddlCase.SelectedValue != "")
             {
@@ -98,11 +98,11 @@ namespace LegalSystemWeb
                 if (caseMaster.IsPlentif == 1)
                 {
                     lblPlaintiff.Text = company.CompanyName;
-                    lblDefendant.Text = caseMaster.OtherParty; ;
+                    //lblDefendant.Text = caseMaster.OtherParty; ;
                 }
                 else
                 {
-                    lblPlaintiff.Text = caseMaster.OtherParty;
+                    //lblPlaintiff.Text = caseMaster.OtherParty;
                     lblDefendant.Text = company.CompanyName;
                 }
             }

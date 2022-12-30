@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UpdateCaseActivity.aspx.cs" Inherits="LegalSystemWeb.UpdateCaseActivity" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="UpdateCaseActivity.aspx.cs" Inherits="LegalSystemWeb.UpdateCaseActivity" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -15,24 +15,25 @@
             <form class="user">
 
 
-                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                    <ContentTemplate>
 
-                        <div class="row mb-3 ms-1">
+
+                <div class="row mb-3 ms-1">
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
                             <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6">
-                                        <asp:Literal ID="Literal16" runat="server" Text="Case Number"></asp:Literal>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" AutoPostBack="true" OnSelectedIndexChanged="BindCaseDeatils"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="1"
-                                            ControlToValidate="ddlCase" ErrorMessage="Required">*</asp:RequiredFieldValidator>
-                                    </div>
-                                </div>
+                                <asp:Literal ID="Literal16" runat="server" Text="Case Number"></asp:Literal>
+                            </div>
+                            <div class="col-md-6">
+                                <asp:DropDownList ID="ddlCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" AutoPostBack="true" OnSelectedIndexChanged="BindCaseDetails"></asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="1"
+                                    ControlToValidate="ddlCase" ErrorMessage="Required">*</asp:RequiredFieldValidator>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
 
+                    <ContentTemplate>
 
                         <div class="row mb-5">
                             <div class="col-sm-6">
