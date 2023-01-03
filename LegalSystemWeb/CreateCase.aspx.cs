@@ -278,7 +278,8 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")))
+                int flag = 0;
+                if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
                 {
                     ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
                     IPartyController partyController = ControllerFactory.CreatePartyController();
@@ -369,32 +370,41 @@ namespace LegalSystemWeb
                     clearCounselor();
                     clearDefendent();
                     clearPlaintif();
+                    flag = 1;
                     lblSuccessMsg.Text = "Record Updated Successfully!";
                 }
                 else
                 {
 
                 }
-                if (!CounselorLawyerList.Any())
+                if (!counselorList.Any() && flag == 0)
                 {
+                    dCounselor.Visible = true;
                     lblCounselor.Text = "Please Add Counselor";
                 }
-                if (!(plaintif.Any() && rbIsPlantiff.SelectedValue == "0"))
+                if ((!plaintif.Any() && rbIsPlantiff.SelectedValue == "1") && flag == 0)
                 {
-
-
+                    dPlaintif.Visible = true;
                     lblPlaintif.Text = "Please Add Plaintif Side";
                 }
-                if (!(defendent.Any() && rbIsPlantiff.SelectedValue == "1"))
+                if ((!defendent.Any() && rbIsPlantiff.SelectedValue == "0") && flag == 0)
                 {
+                    dDefendent.Visible = true;
                     lblDefendent.Text = "Please Add Defendent Side";
                 }
+                if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
+                {
+                    dAttorney.Visible = true;
+                    lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
+                }
+
             }
         }
 
         protected void btnUpdate_Click()
         {
-            if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")))
+            int flag = 0;
+            if ((CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1"))) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
                 IPartyController partyController = ControllerFactory.CreatePartyController();
@@ -506,25 +516,32 @@ namespace LegalSystemWeb
                 clearCounselor();
                 clearDefendent();
                 clearPlaintif();
+                flag = 1;
                 lblSuccessMsg.Text = "Record Updated Successfully!";
             }
             else
             {
 
             }
-            if (!counselorList.Any())
+            if (!counselorList.Any() && flag == 0)
             {
+                dCounselor.Visible = true;
                 lblCounselor.Text = "Please Add Counselor";
             }
-            if ((!plaintif.Any() && rbIsPlantiff.SelectedValue == "1"))
+            if ((!plaintif.Any() && rbIsPlantiff.SelectedValue == "1") && flag == 0)
             {
-
-
+                dPlaintif.Visible = true;
                 lblPlaintif.Text = "Please Add Plaintif Side";
             }
-            if ((!defendent.Any() && rbIsPlantiff.SelectedValue == "0"))
+            if ((!defendent.Any() && rbIsPlantiff.SelectedValue == "0") && flag == 0)
             {
+                dDefendent.Visible = true;
                 lblDefendent.Text = "Please Add Defendent Side";
+            }
+            if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
+            {
+                dAttorney.Visible = true;
+                lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
             }
         }
 
@@ -656,19 +673,30 @@ namespace LegalSystemWeb
             Lawyer lawyer = new Lawyer();
 
             lawyer.LawyerName = ddlCounselor.SelectedItem.Text;
+            string lawyerName = ddlCounselor.SelectedItem.Text;
+            if (CounselorLawyerList.Where(x => x.LawyerName == lawyerName).Any())
+            {
+                dCounselor.Visible = true;
+                lblCounselor.Text = "Counselor already exists in list!";
+            }
             if (ddlCounselor.SelectedIndex != 0)
             {
                 lawyer.LawyerId = Convert.ToInt32(ddlCounselor.SelectedValue);
-                string lawyerName = ddlCounselor.SelectedItem.Text;
-                if (!(CounselorLawyerList.Where(x => x.LawyerName == lawyerName).Any()))
+
+                if (!(CounselorLawyerList.Where(x => x.LawyerName == lawyerName).Any()) && lawyerName != ddlAttorney.SelectedItem.Text)
                 {
                     CounselorLawyerList.Add(lawyer);
                     BindCounselorList();
-                    if (lblCounselor.Text != "")
-                    {
-                        lblCounselor.Text = "";
-                    }
+                    dCounselor.Visible = false;
+
+
                 }
+                if (lawyerName == ddlAttorney.SelectedItem.Text)
+                {
+                    dCounselor.Visible = true;
+                    lblCounselor.Text = "Cannot assign the Attorney as a Counselor!";
+                }
+
             }
 
 
@@ -678,31 +706,53 @@ namespace LegalSystemWeb
         {
             Party party = new Party();
             party.PartyName = txtPlaintif.Text;
+            if (plaintif.Where(x => x.PartyName == party.PartyName).Any())
+            {
+                dPlaintifError.Visible = true;
+                lblPlaintifError.Text = "Party already exists in Plaintiff Side";
+            }
             if (!(plaintif.Where(x => x.PartyName == party.PartyName).Any()) && party.PartyName != "" && !(defendent.Where(x => x.PartyName == party.PartyName).Any()))
             {
                 plaintif.Add(party);
                 BindPlaintifList();
-                if (lblPlaintif.Text != "")
-                {
-                    lblPlaintif.Text = "";
-                }
+
+
+                dPlaintifError.Visible = false;
+                txtPlaintif.Text = string.Empty;
             }
+            if (defendent.Where(x => x.PartyName == party.PartyName).Any())
+            {
+                dPlaintifError.Visible = true;
+                lblPlaintifError.Text = "Party already exists in Defendent Side";
+            }
+
         }
 
         protected void btnAddDefendent_Click(object sender, EventArgs e)
         {
             Party party = new Party();
             party.PartyName = txtDefendent.Text;
+            if (defendent.Where(x => x.PartyName == party.PartyName).Any())
+            {
+                dDefendentError.Visible = true;
+                lblDefendentError.Text = "Party already exists in Defendent Side";
+            }
             if (!(defendent.Where(x => x.PartyName == party.PartyName).Any()) && party.PartyName != "" && !(plaintif.Where(x => x.PartyName == party.PartyName).Any()))
             {
                 defendent.Add(party);
                 BindDefendentList();
-                if (lblDefendent.Text != "")
-                {
-                    lblDefendent.Text = "";
-                }
+
+                dDefendentError.Visible = false;
+                txtDefendent.Text = string.Empty;
             }
+            if (plaintif.Where(x => x.PartyName == party.PartyName).Any())
+            {
+                dDefendentError.Visible = true;
+                lblDefendentError.Text = "Party already exists in Plaintiff Side";
+            }
+
         }
+
 
         protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
         {
@@ -737,8 +787,9 @@ namespace LegalSystemWeb
             int pageIndex = gvCounselor.PageIndex;
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
-
+            ddlAttorney.Items.FindByText(CounselorLawyerList[rowIndex].LawyerName).Attributes.Add("Enabled", "Enabled");
             CounselorLawyerList.RemoveAll(x => x.LawyerName == CounselorLawyerList[rowIndex].LawyerName);
+
             BindCounselorList();
 
         }

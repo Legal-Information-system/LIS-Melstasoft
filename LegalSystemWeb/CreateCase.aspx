@@ -125,10 +125,13 @@
                                     <asp:Button ID="btnPlaintifAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddPlaintif_Click" />
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6 m-3">
-                                    <asp:Label ID="lblPlaintif" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
-                                </div>
+                            <div class="row " id="dPlaintifError" runat="server">
+                                <asp:Label ID="lblPlaintifError" runat="server" Text="" ForeColor="#ff0000"></asp:Label>
+                            </div>
+                            <div class="row " id="dPlaintif" runat="server">
+
+                                <asp:Label ID="lblPlaintif" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+
                             </div>
                             <div class="row mb-3">
                                 <div class="table-responsive" style="width: 100%;">
@@ -162,12 +165,15 @@
                                     <asp:Button ID="btnAddDefendent" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddDefendent_Click" />
                                 </div>
                             </div>
-                            <div class="row ">
-                                <div class="col-sm-6 m-3">
-                                    <asp:Label ID="lblDefendent" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
-                                </div>
+                            <div class="row" id="dDefendentError" runat="server">
+                                <asp:Label ID="lblDefendentError" runat="server" Text="" ForeColor="#ff0000"></asp:Label>
                             </div>
-                            <div class="row mb-3">
+                            <div class="row " id="dDefendent" runat="server">
+
+                                <asp:Label ID="lblDefendent" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+
+                            </div>
+                            <div class="row">
                                 <div class="table-responsive" style="width: 100%;">
                                     <asp:GridView Style="margin-top: 30px;" ID="gvDefendent" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
@@ -251,6 +257,11 @@
                                 </div>
 
                             </div>
+                            <div class="row " runat="server" id="dAttorney">
+
+                                <asp:Label ID="lblAttorney" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+
+                            </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
@@ -263,14 +274,14 @@
                                     <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAdd_Click" />
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6 m-3">
-                                    <asp:Label ID="lblCounselor" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
-                                </div>
+                            <div class="row " runat="server" id="dCounselor">
+
+                                <asp:Label ID="lblCounselor" runat="server" Text="" ForeColor="#ff3300"></asp:Label>
+
                             </div>
                             <div class="row mb-3">
                                 <div class="table-responsive" style="width: 100%;">
-                                    <asp:GridView Style="margin-top: 30px;" ID="gvCounselor" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+                                    <asp:GridView Style="margin-top: 30px;" ID="gvCounselor" runat="server" EnableViewState="true" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
                                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
                                         <Columns>
                                             <asp:BoundField DataField="LawyerName" HeaderText="Counselor Name" />
