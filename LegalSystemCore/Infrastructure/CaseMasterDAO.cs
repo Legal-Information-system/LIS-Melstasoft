@@ -16,6 +16,8 @@ namespace LegalSystemCore.Infrastructure
         int CaseClose(CaseMaster caseMaster, DbConnection dbConnection);
         int Delete(CaseMaster caseMaster, DbConnection dbConnection);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed, DbConnection dbConnection);
+
+        List<CaseMaster> GetCaseMasterListAll(DbConnection dbConnection);
         CaseMaster GetCaseMaster(string caseNumber, DbConnection dbConnection);
 
         double GetCaseMasterWithTotalPaidAmount(String caseNumber, DbConnection dbConnection);
@@ -50,6 +52,22 @@ namespace LegalSystemCore.Infrastructure
                 dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 1 AND is_active = 1";
             else
                 dbConnection.cmd.CommandText = "select * from case_master WHERE is_active = 1";
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            listCaseMaster = dataAccessObject.ReadCollection<CaseMaster>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return listCaseMaster;
+        }
+
+        public List<CaseMaster> GetCaseMasterListAll(DbConnection dbConnection)
+        {
+            List<CaseMaster> listCaseMaster = new List<CaseMaster>();
+
+            //dbConnection = new DbConnection();
+
+            dbConnection.cmd.CommandText = "select * from case_master";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

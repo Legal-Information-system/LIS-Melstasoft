@@ -10,6 +10,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace LegalSystemWeb
 {
@@ -31,6 +34,10 @@ namespace LegalSystemWeb
         public static List<Party> defendent = new List<Party>();
         public static List<Counselor> counselorList = new List<Counselor>();
         public static string caseNumber;
+        List<string> filePaths = new List<string>();
+        List<ListItem> files = new List<ListItem>();
+        List<HttpPostedFile> listUplodedFile = new List<HttpPostedFile>();
+        public static int documentIncrement = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,7 +49,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3" || Session["User_Role_Id"].ToString() == "2")
+                if (Session["User_Role_Id"].ToString() == "3")
                     Response.Redirect("404.aspx");
                 else
                 {
@@ -74,6 +81,11 @@ namespace LegalSystemWeb
                             pageUpdateSet();
                         }
                     }
+
+
+
+
+
                 }
             }
         }
@@ -553,7 +565,7 @@ namespace LegalSystemWeb
         }
 
 
-        private void UploadFiles()
+        protected void UploadFiles()
         {
             IDocumentController documentController = ControllerFactory.CreateDocumentController();
             IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
@@ -561,28 +573,95 @@ namespace LegalSystemWeb
             Document document = new Document();
             DocumentCase documentCase = new DocumentCase();
 
+
+            for (int i = 0; i < listUplodedFile.Count; i++)
+            {
+                string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
+                HttpPostedFile uploadFile = listUplodedFile[i];
+
+
+
+
+                if (uploadFile.ContentLength > 0)
+                {
+                    uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + filePaths[i]);
+                    //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+
+
+                    document.DocumentType = "case";
+                    documentCase.DocumentId = documentController.Save(document);
+
+                    documentCase.DocumentName = filePaths[i];
+                    documentCase.CaseNumber = txtCaseNumber.Text;
+                    documentCase.DocumentDescription = "";
+                    documentCaseController.Save(documentCase);
+                }
+            }
+        }
+
+
+        protected void AddFiles(object sender, EventArgs e)
+        {
+
+
             if (Uploader.HasFile)
             {
                 HttpFileCollection uploadFiles = Request.Files;
                 for (int i = 0; i < uploadFiles.Count; i++)
                 {
+                    string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
                     HttpPostedFile uploadFile = uploadFiles[i];
+
                     if (uploadFile.ContentLength > 0)
                     {
-                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+
+                        filePaths.Add(caseNumber + documentIncrement + uploadFile.FileName);
                         //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
-
-                        document.DocumentType = "case";
-                        documentCase.DocumentId = documentController.Save(document);
-
-                        documentCase.DocumentName = uploadFile.FileName;
-                        documentCase.CaseNumber = txtCaseNumber.Text;
-                        documentCase.DocumentDescription = "";
-                        documentCaseController.Save(documentCase);
+                        documentIncrement++;
+                        listUplodedFile.Add(uploadFile);
                     }
                 }
+                BindDocuments();
             }
         }
+
+
+
+
+        protected void DeleteFiles(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = fileGridview.PageSize;
+            int pageIndex = fileGridview.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            FileInfo file = new FileInfo(filePaths[rowIndex]);
+            if (file.Exists)
+            {
+                file.Delete();
+                filePaths.RemoveAt(rowIndex);
+                listUplodedFile.RemoveAt(rowIndex);
+
+            }
+
+
+            BindDocuments();
+        }
+
+        protected void BindDocuments()
+        {
+            fileGridview.DataSource = listUplodedFile;
+            fileGridview.DataBind();
+        }
+
+
+
+        protected void uploadData(object sender, EventArgs e)
+        {
+
+        }
+
+
 
         protected void ddlCourt_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -787,7 +866,7 @@ namespace LegalSystemWeb
             int pageIndex = gvCounselor.PageIndex;
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
-            ddlAttorney.Items.FindByText(CounselorLawyerList[rowIndex].LawyerName).Attributes.Add("Enabled", "Enabled");
+
             CounselorLawyerList.RemoveAll(x => x.LawyerName == CounselorLawyerList[rowIndex].LawyerName);
 
             BindCounselorList();

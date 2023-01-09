@@ -179,7 +179,7 @@ namespace LegalSystemCore.Infrastructure
                 dataAdapter1.Fill(companyList);
 
                 dbConnection.cmd.CommandText = "SELECT COUNT(created_date) AS case_count, DAY(created_date) AS month_day FROM case_master " +
-               "WHERE MONTH(created_date) = " + "AND YEAR(created_date) = " + DateTime.Now.Year + DateTime.Now.Month + "AND  company_unit_id =" + id +
+               "WHERE MONTH(created_date) = " + DateTime.Now.Month + "AND YEAR(created_date) = " + DateTime.Now.Year + DateTime.Now.Month + "AND  company_unit_id =" + id +
                "GROUP BY DAY(created_date);";
 
                 SqlDataAdapter dataAdapter2 = new SqlDataAdapter(dbConnection.cmd);

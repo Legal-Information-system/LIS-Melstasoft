@@ -305,32 +305,70 @@
 
 
                     </div>--%>
-                    <div class="row mb-5 mt-3">
-                        <div class="col-sm-6" style="display: flex; flex-direction: column">
-                            <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" />
-                            <asp:Label ID="lblListOfUploadedFiles" runat="server" />
-                        </div>
 
-                    </div>
-                    <div class="row mb-3">
+                    <div class="row mb-5 mt-3">
 
                         <div class="col-sm-6">
-
-                            <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnBack_Click" />
-                            <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
-
+                            <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" CssClass="btn " />
+                            <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
                         </div>
-                    </div>
+                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                            <%--<Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnUpload" EventName="AddFiles" />
+                        </Triggers>--%>
+                            <ContentTemplate>
+                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                    <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" OnClientClick="AddFiles" />
 
-                    <div class="col-sm-6 m-3">
-                        <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                                </div>
+
+                                </div>
+                    
+                            <div class="row">
+                                <asp:GridView ID="fileGridview" UseAccessibleHeader="true" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" EmptyDataText="No Files Uploaded">
+                                    <Columns>
+                                        <asp:BoundField DataField="FileName" HeaderText="File Name" />
+
+
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+
+                                                <asp:LinkButton ID="DeleteLink" runat="server" Text="Delete" OnClick="DeleteFiles" CssClass="btn btn-primary btn-user btn-block " BackColor="#993333" BorderColor="#212529"></asp:LinkButton>
+                                            </ItemTemplate>
+
+                                        </asp:TemplateField>
+
+                                    </Columns>
+
+                                </asp:GridView>
+                                <script type="text/javascript">    
+
+                                    $(document).ready(function () {
+                                        $('#fileGridview').DataTable();
+                                    });
+                                </script>
+                            </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <div class="row mb-3">
+
+                            <div class="col-sm-6">
+
+                                <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnBack_Click" />
+                                <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 m-3">
+                            <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
         </div>
-    </div>
 </asp:Content>
 
 

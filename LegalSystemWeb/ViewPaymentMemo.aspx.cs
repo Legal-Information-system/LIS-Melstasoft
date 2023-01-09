@@ -32,14 +32,17 @@ namespace LegalSystemWeb
             List<Payment> listPayment = paymentController.GetPaymentList(true, true, true, true);
 
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
-            List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterList(true);
+            List<CaseMaster> caseMasterList = caseMasterController.GetCaseMasterListAll();
             CaseMaster caseMaster = new CaseMaster();
 
             foreach (Payment payment in listPayment)
             {
-                caseMaster = caseMasterList.Where(x => x.CaseNumber == payment.CaseNumber).Single();
-                caseMaster.payableAmount = Convert.ToDouble(caseMaster.ClaimAmount) - caseMaster.totalPaidAmoutToPresent;
-                payment.caseMaster = caseMaster;
+                if (caseMasterList.Any(x => x.CaseNumber == payment.CaseNumber))
+                {
+                    caseMaster = caseMasterList.Where(x => x.CaseNumber == payment.CaseNumber).Single();
+                    caseMaster.payableAmount = Convert.ToDouble(caseMaster.ClaimAmount) - caseMaster.totalPaidAmoutToPresent;
+                    payment.caseMaster = caseMaster;
+                }
             }
 
             int UserRoleId = Convert.ToInt32(Session["User_Role_Id"]);
@@ -48,7 +51,14 @@ namespace LegalSystemWeb
 
             if (UserRoleId == 4 || UserRoleId == 5)
             {
-                listPayment = listPayment.Where(c => c.caseMaster.CompanyId == companyId).ToList();
+                if (listPayment.Any((c => c.caseMaster.CompanyId == companyId)))
+                {
+                    listPayment = listPayment.Where(c => c.caseMaster.CompanyId == companyId).ToList();
+                }
+                else
+                {
+                    listPayment.Clear();
+                }
             }
 
             if (UserRoleId == 5)
