@@ -115,21 +115,19 @@
                             </a>
                             <%} %>
 
-                            <% if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                            <% if (Session["User_Role_Id"].ToString() == "1")
                                 {
                             %>
 
                             <div class="sb-sidenav-menu-heading">Admin</div>
 
-                            <% if (Session["User_Role_Id"].ToString() != "2")
-                                {
-                            %>
+
                             <a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Create Account
                             </a>
 
-                            <%} %>
+
 
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -153,6 +151,7 @@
 
                                 </nav>
                             </div>
+
                             <%} %>
                         </div>
                         <%-- <div class="sb-sidenav-menu-heading">Admin</div>
