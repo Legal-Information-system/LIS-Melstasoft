@@ -19,14 +19,14 @@
                             </Triggers>--%>
                         <ContentTemplate>
                             <div class="row mb-3">
-                                <div class="col-3 align-middle" style="display: flex; flex-direction: row">
+                                <div class="col-sm-3">
 
                                     <asp:Literal ID="Literal2" runat="server" Text="Company Name"></asp:Literal>
 
                                 </div>
-                                <div class="col-sm-6" style="display: flex; flex-direction: row">
+                                <div class="col-sm-6">
 
-                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged" Width="100%"></asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlCompany" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                                 </div>
@@ -34,14 +34,14 @@
 
                             </div>
                             <div class="row mb-3">
-                                <div class="col-3 align-middle" style="display: flex; flex-direction: row">
+                                <div class="col-sm-3">
 
                                     <asp:Literal ID="Literal3" runat="server" Text="Company Unit"></asp:Literal>
 
                                 </div>
-                                <div class="col-sm-6" style="display: flex; flex-direction: row">
+                                <div class="col-sm-6">
 
-                                    <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyUnit_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlCompanyUnit" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyUnit_SelectedIndexChanged" Width="100%"></asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlCompanyUnit" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
                                 </div>
