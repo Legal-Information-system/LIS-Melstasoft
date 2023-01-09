@@ -13,7 +13,13 @@ namespace LegalSystemCore.Controller
         int Save(PartyCase partyCase);
         int Update(PartyCase partyCase);
         List<PartyCase> GetPartyCaseList(string caseNumber);
+
+        List<PartyCase> GetPartyCaseListDeleted(string caseNumber);
         int Delete(PartyCase partyCase);
+
+        int DeletePermenent(String CaseNumber);
+
+        int ReInit(PartyCase partyCase);
     }
 
     public class PartyCaseControllerImpl : IPartyCaseController
@@ -67,7 +73,77 @@ namespace LegalSystemCore.Controller
             return listPartyCase;
         }
 
+        public List<PartyCase> GetPartyCaseListDeleted(string caseNumber)
+        {
+            Common.DbConnection dbConnection = null;
+            List<PartyCase> listPartyCase = new List<PartyCase>();
+
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                listPartyCase = partyCaseDAO.GetPartyCaseListDeleted(caseNumber, dbConnection);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listPartyCase;
+        }
+
         public int Delete(PartyCase partyCase)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return partyCaseDAO.Delete(partyCase, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int DeletePermenent(String CaseNumber)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return partyCaseDAO.DeletePermenent(CaseNumber, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int ReInit(PartyCase partyCase)
         {
             DbConnection dbConnection = null;
             try

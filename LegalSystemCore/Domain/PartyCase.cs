@@ -17,5 +17,7 @@ namespace LegalSystemCore.Domain
         [DBField("is_plaintif")]
 
         public int IsPlaintif { get; set; }
+
+        public Party party { get; set; }
     }
 }

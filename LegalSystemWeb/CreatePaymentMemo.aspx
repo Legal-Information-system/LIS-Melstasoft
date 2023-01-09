@@ -13,35 +13,40 @@
                 </div>
                 <div class="card-body m-5">
                     <form class="user">
-                        <div class="row mb-3">
-                            <div class="col-3 align-middle" style="display: flex; flex-direction: row">
+                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <div class="row mb-3">
+                                    <div class="col-3 align-middle" style="display: flex; flex-direction: row">
 
-                                <asp:Literal ID="Literal1" runat="server" Text="Case No"></asp:Literal>
+                                        <asp:Literal ID="Literal1" runat="server" Text="Case No"></asp:Literal>
 
-                            </div>
-                            <div class="col-sm-6" style="display: flex; flex-direction: row">
+                                    </div>
+                                    <div class="col-sm-6" style="display: flex; flex-direction: row">
 
-                                <asp:DropDownList ID="ddlCaseNo" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCaseNo" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="ddlCaseNo" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="btnCaseNo_IndexChange"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlCaseNo" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
-                            </div>
+                                    </div>
 
 
-                        </div>
-                        <div class="row mb-3 mt-5">
-                            <div class="col-3 align-middle" style="display: flex; flex-direction: row">
+                                </div>
+                                <div class="row mb-3 mt-5">
+                                    <div class="col-3 align-middle" style="display: flex; flex-direction: row">
 
-                                <asp:Literal ID="Literal2" runat="server" Text="Lawyer Name"></asp:Literal>
+                                        <asp:Literal ID="Literal2" runat="server" Text="Lawyer Name"></asp:Literal>
 
-                            </div>
-                            <div class="col-sm-6" style="display: flex; flex-direction: row">
+                                    </div>
+                                    <div class="col-sm-6" style="display: flex; flex-direction: row">
 
-                                <asp:DropDownList ID="ddlLawyerName" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlLawyerName" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="ddlLawyerName" runat="server" CssClass="btn btn-outline-dark dropdown-toggle"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlLawyerName" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
-                            </div>
+                                    </div>
 
-                        </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
 
                         <div class="row mb-3 mt-5">
                             <div class="col-3 align-middle" style="display: flex; flex-direction: row">

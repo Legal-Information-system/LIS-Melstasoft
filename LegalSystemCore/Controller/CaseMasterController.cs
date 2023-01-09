@@ -16,6 +16,8 @@ namespace LegalSystemCore.Controller
         int CaseClose(CaseMaster caseMaster);
         int Delete(CaseMaster caseMaster);
         List<CaseMaster> GetCaseMasterList(bool withoutclosed);
+
+        List<CaseMaster> GetCaseMasterListAll();
         CaseMaster GetCaseMaster(string caseNumber, bool withDetails);
 
         CaseMaster GetCaseMasterWithPaid(String caseNumber);
@@ -73,6 +75,24 @@ namespace LegalSystemCore.Controller
 
                     List<UserLogin> userClosedList = userLoginDAO.GetUserLoginList(true, dbConnection);
                     caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
+                    IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
+                    IPartyController partyController = ControllerFactory.CreatePartyController();
+                    List<PartyCase> partyCases = partyCaseController.GetPartyCaseList(caseMaster.CaseNumber);
+                    caseMaster.plaintif = new List<PartyCase>();
+                    caseMaster.defendent = new List<PartyCase>();
+                    foreach (PartyCase partyCase in partyCases.Where(x => x.IsPlaintif == 1))
+                    {
+                        partyCase.party = partyController.GetParty(partyCase.PartyId);
+                        caseMaster.plaintif.Add(partyCase);
+
+                    }
+
+                    foreach (PartyCase partyCase in partyCases.Where(x => x.IsPlaintif == 0))
+                    {
+                        partyCase.party = partyController.GetParty(partyCase.PartyId);
+                        caseMaster.defendent.Add(partyCase);
+
+                    }
 
                     if (caseMaster.ClosedUserId > 0)
                         caseMaster.userClose = userClosedList.Where(l => l.UserId == caseMaster.ClosedUserId).Single();
@@ -165,6 +185,70 @@ namespace LegalSystemCore.Controller
             return listCaseMaster;
         }
 
+        public List<CaseMaster> GetCaseMasterListAll()
+        {
+            DbConnection dbConnection = null;
+            List<CaseMaster> listCaseMaster = new List<CaseMaster>();
+            try
+            {
+                dbConnection = new DbConnection();
+                listCaseMaster = caseMasterDAO.GetCaseMasterListAll(dbConnection);
+
+                ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
+                List<Company> listCompany = companyDAO.GetCompanyList(true, dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.company = listCompany.Where(x => x.CompanyId == caseMaster.CompanyId).Single();
+
+                }
+
+                ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
+                List<CompanyUnit> listCompanyUnit = companyUnitDAO.GetCompanyUnitList(true, dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.companyUnit = listCompanyUnit.Where(x => x.CompanyUnitId == caseMaster.CompanyUnitId).Single();
+                }
+
+                ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
+                List<CaseNature> listCaseNature = caseNatureDAO.GetCaseNatureList(true, dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.caseNature = listCaseNature.Where(x => x.CaseNatureId == caseMaster.CaseNatureId).Single();
+                }
+
+                ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
+                List<Location> listLocation = locationDAO.GetLocationList(true, dbConnection);
+
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.location = listLocation.Where(x => x.LocationId == caseMaster.LocationId).Single();
+                    if (caseMaster.IsPlentif == 1)
+                    {
+                        caseMaster.IsPlaintif = "Plaintff";
+                    }
+                    else if (caseMaster.IsPlentif == 0)
+                    {
+                        caseMaster.IsPlaintif = "Defendent";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listCaseMaster;
+        }
         public int Save(CaseMaster caseMaster)
         {
             DbConnection dbConnection = null;
