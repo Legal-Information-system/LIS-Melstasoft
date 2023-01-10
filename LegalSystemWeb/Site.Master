@@ -105,14 +105,19 @@
                             <% if (Session["User_Role_Id"].ToString() == "1")
                                 {
                             %>
-                            <a class="nav-link" href="DailyCases.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Daily Reports
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Reports
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <a class="nav-link" href="MonthlyCases.aspx">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Monthly Reports
-                            </a>
+                            <div class="collapse" id="collapseReports" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="DailyCases.aspx">Daily Reports</a>
+                                    <a class="nav-link" href="MonthlyCases.aspx">Monthly Reports</a>
+                                </nav>
+                            </div>
+
                             <%} %>
 
                             <% if (Session["User_Role_Id"].ToString() == "1")
