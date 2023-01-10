@@ -15,6 +15,9 @@
 
     </div>
 
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Daily added cases</li>
+    </ol>
 
     <div class="row">
         <div class="col-xl-6">

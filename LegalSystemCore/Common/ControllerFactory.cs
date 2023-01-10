@@ -140,5 +140,23 @@ namespace LegalSystemCore.Common
             return (IDashboardCardController)dashboardCardController;
         }
 
+        public static ICounselorController CreateCounselorController()
+        {
+            ICounselorController counselorController = new CounselorControllerImpl();
+            return ((ICounselorController)counselorController);
+        }
+
+        public static IPartyController CreatePartyController()
+        {
+            IPartyController partyController = new PartyControllerImpl();
+            return ((IPartyController)partyController);
+        }
+
+        public static IPartyCaseController CreatePartyCaseController()
+        {
+            IPartyCaseController partyCaseController = new PartyCaseControllerImpl();
+            return (IPartyCaseController)partyCaseController;
+        }
+
     }
 }

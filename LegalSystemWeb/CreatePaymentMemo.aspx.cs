@@ -16,6 +16,9 @@ namespace LegalSystemWeb
     {
         Activity activity = new Activity();
         List<Activity> listActivity = new List<Activity>();
+        ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
+        ICounselorController counselorController = ControllerFactory.CreateCounselorController();
+        ICaseMasterController masterController = ControllerFactory.CreateCaseMasterController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,7 +29,7 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (Session["User_Role_Id"].ToString() == "3" || Session["User_Role_Id"].ToString() == "2")
+                    if (Session["User_Role_Id"].ToString() == "3")
                     {
                         Response.Redirect("404.aspx");
                     }
@@ -51,8 +54,17 @@ namespace LegalSystemWeb
 
         private void BindLawyerList()
         {
-            ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
-            ddlLawyerName.DataSource = LawyerController.GetLawyerList(false);
+            List<Counselor> counselors = new List<Counselor>();
+            List<Lawyer> counselorLawyer = new List<Lawyer>();
+            counselors = counselorController.GetCounselorList(ddlCaseNo.SelectedValue);
+            foreach (Counselor counselor in counselors)
+            {
+                counselorLawyer.Add(LawyerController.GetLawyer(counselor.LawyerId));
+            }
+
+            counselorLawyer.Add(LawyerController.GetLawyer(masterController.GetCaseMaster(ddlCaseNo.SelectedValue, false).AssignAttornerId));
+
+            ddlLawyerName.DataSource = counselorLawyer;
             ddlLawyerName.DataValueField = "LawyerId";
             ddlLawyerName.DataTextField = "LawyerName";
             ddlLawyerName.DataBind();
@@ -81,6 +93,11 @@ namespace LegalSystemWeb
 
             ddlCaseNo.Items.Insert(0, new ListItem("-- select case --", ""));
 
+        }
+
+        protected void btnCaseNo_IndexChange(object sender, EventArgs e)
+        {
+            BindLawyerList();
         }
 
 

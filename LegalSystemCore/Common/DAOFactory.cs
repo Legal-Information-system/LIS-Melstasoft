@@ -139,5 +139,23 @@ namespace LegalSystemCore.Common
             IDashboardCardDAO dashboardCardDAO = new DashboardCardDAOImpl();
             return ((IDashboardCardDAO)dashboardCardDAO);
         }
+
+        public static ICounselorDAO CreateCounselorDAO()
+        {
+            ICounselorDAO counselorDAO = new CounselorDAOSqlImpl();
+            return ((ICounselorDAO)counselorDAO);
+        }
+
+        public static IPartyDAO CreatePartyDAO()
+        {
+            IPartyDAO partyDAO = new PartyDAOSqlImpl();
+            return ((IPartyDAO)partyDAO);
+        }
+
+        public static IPartyCaseDAO CreatePartyCaseDAO()
+        {
+            IPartyCaseDAO partyCaseDAO = new PartyCaseDAOSqlImpl();
+            return ((IPartyCaseDAO)partyCaseDAO);
+        }
     }
 }

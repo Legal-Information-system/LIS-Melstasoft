@@ -41,6 +41,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <asp:Button ID="btnNotification" runat="server" Text="Notification" CssClass="dropdown-item" OnClick="btnNotification_Click" />
+                        </li>
 
                         <li>
                             <hr class="dropdown-divider" />
@@ -70,7 +73,7 @@
                                 Dashboard
                             </a>
 
-                            <% if (Session["User_Role_Id"].ToString() != "2")
+                            <% if (Session["User_Role_Id"].ToString() != "3")
                                 {
                             %>
                             <a class="nav-link" href="CreateCase.aspx">
@@ -99,23 +102,37 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 View Payment Memo
                             </a>
+                            <% if (Session["User_Role_Id"].ToString() == "1")
+                                {
+                            %>
 
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Reports
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseReports" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="DailyCases.aspx">Daily Reports</a>
+                                    <a class="nav-link" href="MonthlyCases.aspx">Monthly Reports</a>
+                                </nav>
+                            </div>
 
-                            <% if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                            <%} %>
+
+                            <% if (Session["User_Role_Id"].ToString() == "1")
                                 {
                             %>
 
                             <div class="sb-sidenav-menu-heading">Admin</div>
 
-                            <% if (Session["User_Role_Id"].ToString() != "2")
-                                {
-                            %>
+
                             <a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Create Account
                             </a>
 
-                            <%} %>
+
 
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -139,6 +156,7 @@
 
                                 </nav>
                             </div>
+
                             <%} %>
                         </div>
                         <%-- <div class="sb-sidenav-menu-heading">Admin</div>

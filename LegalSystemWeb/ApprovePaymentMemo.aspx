@@ -116,7 +116,7 @@
         <div id="UpdateStatus">
             <%if (lblPaymentStatus.Text == "Pending")
                 { %>
-            <%if (Session["User_Role_Id"].ToString() == "3")
+            <%if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
                 { %>
             <div class="row mb-5">
                 <div class="col-sm-4" style="text-align: end; padding-top: 20px;">

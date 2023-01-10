@@ -94,10 +94,13 @@
     <Content Include="CreateCase.aspx" />
     <Content Include="CreatePaymentMemo.aspx" />
     <Content Include="css\styles.css" />
+    <Content Include="DailyCases.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="js\datatables-simple-demo.js" />
     <Content Include="js\scripts.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MonthlyCases.aspx" />
+    <Content Include="Notification.aspx" />
     <Content Include="obj\Debug\LegalSystemWeb.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\LegalSystemWeb.dll" />
     <Content Include="obj\Debug\LegalSystemWeb.pdb" />
@@ -1847,6 +1850,13 @@
     <Compile Include="CreatePaymentMemo.aspx.designer.cs">
       <DependentUpon>CreatePaymentMemo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DailyCases.aspx.cs">
+      <DependentUpon>DailyCases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DailyCases.aspx.designer.cs">
+      <DependentUpon>DailyCases.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1863,6 +1873,20 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MonthlyCases.aspx.cs">
+      <DependentUpon>MonthlyCases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MonthlyCases.aspx.designer.cs">
+      <DependentUpon>MonthlyCases.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Notification.aspx.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Notification.aspx.designer.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
     </Compile>
     <Compile Include="PrivacyPolicy.aspx.cs">
       <DependentUpon>PrivacyPolicy.aspx</DependentUpon>

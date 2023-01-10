@@ -9,8 +9,16 @@ namespace LegalSystemCore.Domain
     [Serializable]
     public class CaseMaster
     {
+        public List<PartyCase> plaintif { set; get; }
+
+        public List<PartyCase> defendent { set; get; }
+
         [DBField("case_number")]
         public string CaseNumber { get; set; }
+
+
+
+        public string PrevCaseNumberUpdate { get; set; }
 
         [DBField("company_id")]
         public int CompanyId { get; set; }
@@ -25,13 +33,13 @@ namespace LegalSystemCore.Domain
         public string CaseDescription { get; set; }
 
         [DBField("claim_amount")]
-        public double ClaimAmount { get; set; }
+        public string ClaimAmount { get; set; }
 
         [DBField("is_plaintif")]
         public int IsPlentif { get; set; }
 
-        [DBField("other_party")]
-        public string OtherParty { get; set; }
+        //[DBField("other_party")]
+        //public string OtherParty { get; set; }
 
         [DBField("court_id")]
         public int CourtId { get; set; }
@@ -45,8 +53,8 @@ namespace LegalSystemCore.Domain
         [DBField("assign_attorney_id")]
         public int AssignAttornerId { get; set; }
 
-        [DBField("counsilor_id")]
-        public int CounsilorId { get; set; }
+        //[DBField("counsilor_id")]
+        //public int CounsilorId { get; set; }
 
         [DBField("created_by_user")]
         public int CreatedUserId { get; set; }
@@ -102,6 +110,10 @@ namespace LegalSystemCore.Domain
         public double totalPaidAmoutToPresent { get; set; }
 
         public double payableAmount { get; set; }
+
+        public string IsPlaintif { get; set; }
+
+
 
     }
 }

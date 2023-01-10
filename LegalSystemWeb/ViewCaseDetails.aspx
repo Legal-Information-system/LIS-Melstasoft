@@ -39,13 +39,14 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <p>Plaintiff</p>
+                            <p>Company Side</p>
                         </div>
                         <div class="col-md-6">
                             <asp:Label ID="lblPlaintiff" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
-                    <div class="row mb-1">
+                    <asp:Literal ID="ltPlaintifParty" runat="server">  </asp:Literal>
+                    <div class="row">
                         <div class="col-sm-6">
                             <p>Court</p>
                         </div>
@@ -134,14 +135,15 @@
                             <asp:Label ID="lblPrevCase" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
-                    <div class="row">
+                    <asp:Literal ID="ltDefendentParty" runat="server">  </asp:Literal>
+                    <%--                    <div class="row">
                         <div class="col-sm-5">
                             <p>Defendant</p>
                         </div>
                         <div class="col-md-7">
                             <asp:Label ID="lblDefendant" runat="server" Text="N/A"></asp:Label>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="row mb-1">
                         <div class="col-sm-5">
                             <p>Assign Attorney</p>
@@ -150,14 +152,9 @@
                             <asp:Label ID="lblAttorney" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-sm-5">
-                            <p>Counsilor</p>
-                        </div>
-                        <div class="col-md-7">
-                            <asp:Label ID="lblCounsilor" runat="server" Text="N/A"></asp:Label>
-                        </div>
-                    </div>
+
+
+                    <asp:Literal ID="ltCounselor" runat="server">  </asp:Literal>
                     <div class="row mb-1">
                         <div class="col-sm-5">
                             <p>Case Open Date</p>
@@ -287,8 +284,13 @@
 
         <div class="row">
             <div class="col-3">
+                <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn-warning" Width="100%" Height="150%" BorderStyle="None" OnClick="btnEdit_Click" />
+            </div>
+            <div class="col-3">
                 <asp:Button ID="btnDelete" runat="server" Text="Delete Case" CssClass="btn-danger" Width="100%" Height="150%" BorderStyle="None" OnClick="btnDelete_Click" />
             </div>
+
+
         </div>
 
         <%} %>
