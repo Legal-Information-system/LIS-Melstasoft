@@ -600,6 +600,11 @@ namespace LegalSystemWeb
 
                 documentCaseController.Save(item);
             }
+
+            listUplodedFile.Clear();
+            files.Clear();
+            filePaths.Clear();
+            BindDocuments();
         }
 
 

@@ -121,7 +121,10 @@ namespace LegalSystemWeb
                         party = partyController.GetParty(partyCase.PartyId);
 
 
-                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n                            <p>Plaintiff Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-6\">\r\n                            <label>");
+                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n          " +
+                            "                  <p>Plaintiff Side</p>\r\n        " +
+                            "                </div>\r\n                        <div class=\"col-md-6\">\r\n     " +
+                            "                       <label>");
                         cstextCard.Append(party.PartyName);
                         cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
@@ -134,7 +137,11 @@ namespace LegalSystemWeb
                         party = partyController.GetParty(partyCase.PartyId);
 
 
-                        cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Defendent Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                        cstextCard.Append("<div class=\"row mb-1\">\r\n             " +
+                            "           <div class=\"col-sm-6\">\r\n                       " +
+                            "     <p>Defendent Side</p>\r\n         " +
+                            "               </div>\r\n               " +
+                            "         <div class=\"col-md-6\">\r\n                            <label>");
                         cstextCard.Append(party.PartyName);
                         cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
@@ -150,7 +157,10 @@ namespace LegalSystemWeb
                         party = partyController.GetParty(partyCase.PartyId);
 
 
-                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n                            <p>Plaintiff Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-6\">\r\n                            <label>");
+                        cstextCard.Append("<div class=\"row\">\r\n                        <div class=\"col-sm-6\">\r\n    " +
+                            "                        <p>Plaintiff Side</p>\r\n         " +
+                            "               </div>\r\n                        <div class=\"col-md-6\">\r\n    " +
+                            "                        <label>");
                         cstextCard.Append(party.PartyName);
                         cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
@@ -163,7 +173,9 @@ namespace LegalSystemWeb
                         party = partyController.GetParty(partyCase.PartyId);
 
 
-                        cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Defendent Side</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                        cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-6\">\r\n      " +
+                            "                      <p>Defendent Side</p>\r\n                        </div>\r\n               " +
+                            "         <div class=\"col-md-6\">\r\n                            <label>");
                         cstextCard.Append(party.PartyName);
                         cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
@@ -176,7 +188,9 @@ namespace LegalSystemWeb
                     StringBuilder cstextCard = new StringBuilder();
                     lawyer = lawyerController.GetLawyer(counselor.LawyerId);
 
-                    cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-5\">\r\n                            <p>Counsilor</p>\r\n                        </div>\r\n                        <div class=\"col-md-7\">\r\n                            <label>");
+                    cstextCard.Append("<div class=\"row mb-1\">\r\n                        <div class=\"col-sm-6\">\r\n          " +
+                        "                  <p>Counsilor</p>\r\n                        </div>\r\n         " +
+                        "               <div class=\"col-md-6\">\r\n                            <label>");
                     cstextCard.Append(lawyer.LawyerName);
                     cstextCard.Append("</label>\r\n\r\n                        </div>\r\n                    </div>");
 
