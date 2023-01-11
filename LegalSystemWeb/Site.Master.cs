@@ -18,6 +18,7 @@ namespace LegalSystemWeb
 
         protected void btnLogut_Click(object sender, EventArgs e)
         {
+            string test = Session["User_Id"].ToString();
             if (Session["User_Id"] != null)
             {
                 Session.Abandon();

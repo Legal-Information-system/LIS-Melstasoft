@@ -212,11 +212,11 @@
                         <asp:BoundField DataField="CaseActivitId" HeaderText="Id" />
                         <asp:BoundField DataField="ActivityDateString" HeaderText="Date" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="assignAttorney.LawyerName" HeaderText="Assign Attorney" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="counsilor.LawyerName" HeaderText="Counsilor" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="counsilor.LawyerName" HeaderText="Counsellor" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="OtherSideLawyer" HeaderText="Other Side Lawyer" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="JudgeName" HeaderText="Judge Name" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="CompanyRep" HeaderText="Company Rep" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="actionTaken.ActionName" HeaderText="ActionT aken" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="actionTaken.ActionName" HeaderText="Action Taken" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="NextDateString" HeaderText="Next Date" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="nextAction.ActionName" HeaderText="Next Action" ItemStyle-HorizontalAlign="center" />
                     </Columns>
@@ -237,7 +237,7 @@
                     <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                     <Columns>
                         <asp:BoundField DataField="PaymentId" HeaderText="Id" />
-                        <asp:BoundField DataField="CaseNumber" HeaderText="CaseNumber" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="CaseNumber" HeaderText="Case Number" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="lawyer.LawyerName" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="Actions" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="Amount" HeaderText="Amount" ItemStyle-HorizontalAlign="center" />
