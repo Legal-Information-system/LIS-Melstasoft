@@ -661,7 +661,8 @@ namespace LegalSystemWeb
             //listUplodedFile.RemoveAt(rowIndex);
 
             DocumentCase documentCase = UplodedFilesList[rowIndex];
-            string filePath = "C:\\Users\\MSSI\\Desktop\\LIS-Melstasoft\\LegalSystemWeb\\SystemDocuments\\CaseMaster\\" + documentCase.DocumentName;
+            string path = Server.MapPath("~/SystemDocuments/CaseMaster/");
+            string filePath = path + documentCase.DocumentName;
 
             if (File.Exists(filePath))
             {
