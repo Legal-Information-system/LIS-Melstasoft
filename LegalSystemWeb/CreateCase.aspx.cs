@@ -34,14 +34,14 @@ namespace LegalSystemWeb
         public static List<Party> defendent = new List<Party>();
         public static List<Counselor> counselorList = new List<Counselor>();
         public static string caseNumber;
-        List<string> filePaths = new List<string>();
-        List<ListItem> files = new List<ListItem>();
-        List<HttpPostedFile> listUplodedFile = new List<HttpPostedFile>();
+        public static List<string> filePaths = new List<string>();
+        public static List<ListItem> files = new List<ListItem>();
+        public static List<HttpPostedFileBase> listUplodedFile = new List<HttpPostedFileBase>();
         public static int documentIncrement = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Form.Attributes.Add("enctype", "multipart/form-data");
 
             if (Session["User_Id"] == null)
             {
@@ -573,25 +573,19 @@ namespace LegalSystemWeb
             Document document = new Document();
             DocumentCase documentCase = new DocumentCase();
 
-
-            for (int i = 0; i < listUplodedFile.Count; i++)
+            int i = 0;
+            foreach (HttpPostedFileBase file in listUplodedFile)
             {
-                string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
-                HttpPostedFile uploadFile = listUplodedFile[i];
-
-
-
-
-                if (uploadFile.ContentLength > 0)
+                if (file.ContentLength > 0)
                 {
-                    uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + filePaths[i]);
+                    file.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + caseNumber + filePaths[i]);
                     //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
 
 
                     document.DocumentType = "case";
                     documentCase.DocumentId = documentController.Save(document);
 
-                    documentCase.DocumentName = filePaths[i];
+                    documentCase.DocumentName = caseNumber + filePaths[i];
                     documentCase.CaseNumber = txtCaseNumber.Text;
                     documentCase.DocumentDescription = "";
                     documentCaseController.Save(documentCase);
@@ -604,23 +598,25 @@ namespace LegalSystemWeb
         {
 
 
-            if (Uploader.HasFile)
+            if (Uploader.PostedFile != null)
             {
-                HttpFileCollection uploadFiles = Request.Files;
-                for (int i = 0; i < uploadFiles.Count; i++)
+
+                listUplodedFile.Add(new HttpPostedFileWrapper(HttpContext.Current.Request.Files[0]));
+
+
+
+                string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
+                HttpPostedFileBase uploadFile = listUplodedFile.Last();
+
+                if (uploadFile.ContentLength > 0)
                 {
-                    string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
-                    HttpPostedFile uploadFile = uploadFiles[i];
 
-                    if (uploadFile.ContentLength > 0)
-                    {
+                    filePaths.Add(documentIncrement++ + uploadFile.FileName);
 
-                        filePaths.Add(caseNumber + documentIncrement + uploadFile.FileName);
-                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
-                        documentIncrement++;
-                        listUplodedFile.Add(uploadFile);
-                    }
+                    //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+
                 }
+
                 BindDocuments();
             }
         }
@@ -636,13 +632,11 @@ namespace LegalSystemWeb
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
             FileInfo file = new FileInfo(filePaths[rowIndex]);
-            if (file.Exists)
-            {
-                file.Delete();
-                filePaths.RemoveAt(rowIndex);
-                listUplodedFile.RemoveAt(rowIndex);
 
-            }
+            filePaths.RemoveAt(rowIndex);
+            listUplodedFile.RemoveAt(rowIndex);
+
+
 
 
             BindDocuments();

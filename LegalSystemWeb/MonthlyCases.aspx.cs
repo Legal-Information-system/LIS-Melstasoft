@@ -188,12 +188,19 @@ namespace LegalSystemWeb
         {
             if (txtYear.Text.All(x => "0123456789".Contains(x)) && !(Int32.Parse(txtYear.Text) > Int32.Parse(DateTime.Now.ToString(("dd/MM/yyyy").Split('/')[2])) || Int32.Parse(txtYear.Text) < 0))
             {
-                DataLoad();
+                if (rbCompany.SelectedValue == "0" || rbCompany.SelectedValue == "1")
+                {
+                    DataLoad();
+                }
             }
         }
 
         protected void YearChanged(object sender, EventArgs e)
         {
+            company.Visible = false;
+            ltDetails.Text = string.Empty;
+            btnPrint.Visible = false;
+            rbCompany.ClearSelection();
             if (txtYear.Text.All(x => "0123456789".Contains(x)))
             {
                 if (Int32.Parse(txtYear.Text) > Int32.Parse(DateTime.Now.ToString(("dd/MM/yyyy").Split('/')[2])) || Int32.Parse(txtYear.Text) < 0)
@@ -203,13 +210,15 @@ namespace LegalSystemWeb
                 else
                 {
                     lblMsg.Text = string.Empty;
-                    DataLoad();
+
+                    company.Visible = true;
                 }
             }
             else
             {
                 lblMsg.Text = "Enter a valid year ( yyyy )";
             }
+
 
         }
         protected void DataLoad()
@@ -246,66 +255,82 @@ namespace LegalSystemWeb
                     }
                 }
 
-                foreach (CaseMaster caseMaster in caseMasterListDataLoad.GroupBy(x => x.CompanyId).Select(y => y.First()))
+                if (caseMasterListDataLoad.Any())
                 {
-                    cstextCard.Append("<div class=\"card\" style=\"width: 100%; margin-top: 60px;\">");
-                    cstextCard.Append("<div class=\"card-body\" style=\"padding-left: 30px;\">\r\n " +
-                        "                                   <div class=\"row mb-1\">\r\n  " +
-                        "                                      <div class=\"col-sm-6\">\r\n   " +
-                        "                                         <p>Company</p>\r\n          " +
-                        "                              </div>\r\n                         " +
-                        "               <div class=\"col-md-6\" style=\"font-weight: 900;font-size: 1.875rem;\">");
-                    cstextCard.Append(caseMaster.company.CompanyName);
-                    cstextCard.Append("</div>\r\n                                    </div>");
-                    cstextCard.Append("<br />\r\n            <br />");
-
-                    foreach (CaseMaster caseMasterCompany in caseMasterListDataLoad.Where(x => x.CompanyId == caseMaster.CompanyId).GroupBy(x => x.CompanyUnitId).Select(y => y.First()))
+                    caseMasterListDataLoad = caseMasterListDataLoad.OrderBy(x => x.CaseOpenDate.ToString("dd/MM/yyyy")).ToList();
+                    foreach (CaseMaster caseMaster in caseMasterListDataLoad.GroupBy(x => x.CompanyId).Select(y => y.First()))
                     {
-                        cstextCard.Append("<div class=\"row mb-1\" style=\"margin-top: 30px\">\r\n  " +
-                                "                                      <div class=\"col-sm-6\">\r\n  " +
-                                "                                          <p>Company Unit</p>\r\n    " +
-                                "                                    </div>\r\n    " +
-                                "                                    <div class=\"col-md-6\" style=\"font-weight: bold;\">");
-                        cstextCard.Append(caseMasterCompany.companyUnit.CompanyUnitName);
+                        cstextCard.Append("<div class=\"card\" style=\"width: 100%; margin-top: 60px;\">");
+                        cstextCard.Append("<div class=\"card-body\" style=\"padding-left: 30px;\">\r\n " +
+                            "                                   <div class=\"row mb-1\">\r\n  " +
+                            "                                      <div class=\"col-sm-6\">\r\n   " +
+                            "                                         <p>Company</p>\r\n          " +
+                            "                              </div>\r\n                         " +
+                            "               <div class=\"col-md-6\" style=\"font-weight: 900;font-size: 1.875rem;\">");
+                        cstextCard.Append(caseMaster.company.CompanyName);
                         cstextCard.Append("</div>\r\n                                    </div>");
-                        cstextCard.Append("<br />");
+                        cstextCard.Append("<br />\r\n            <br />");
 
-                        cstextCard.Append("<table class=\"table\">\r\n                     " +
-                            "           <thead>\r\n                    " +
-                            "                <tr>\r\n                    " +
-                            "                    <th scope=\"col\">Case Number</th>\r\n  " +
-                            "                                      <th scope=\"col\">Created Date</th>\r\n  " +
-                            "                                      <th scope=\"col\">Case Open Date</th>\r\n    " +
-                            "                                    <th scope=\"col\">Claim Amount</th>\r\n     " +
-                            "                               </tr>\r\n                                </thead> <tbody>");
-
-                        foreach (CaseMaster caseMasterCompanyUnit in caseMasterListDataLoad.Where(x => x.CompanyUnitId == caseMasterCompany.CompanyUnitId))
+                        foreach (CaseMaster caseMasterCompany in caseMasterListDataLoad.Where(x => x.CompanyId == caseMaster.CompanyId).GroupBy(x => x.CompanyUnitId).Select(y => y.First()))
                         {
-                            cstextCard.Append("<tr>\r\n                                        <th scope=\"row\">");
-                            cstextCard.Append(caseMasterCompanyUnit.CaseNumber);
-                            cstextCard.Append("</th>\r\n                                        <td>");
+                            cstextCard.Append("<div class=\"row mb-1\" style=\"margin-top: 30px\">\r\n  " +
+                                    "                                      <div class=\"col-sm-6\">\r\n  " +
+                                    "                                          <p>Company Unit</p>\r\n    " +
+                                    "                                    </div>\r\n    " +
+                                    "                                    <div class=\"col-md-6\" style=\"font-weight: bold;\">");
+                            cstextCard.Append(caseMasterCompany.companyUnit.CompanyUnitName);
+                            cstextCard.Append("</div>\r\n                                    </div>");
+                            cstextCard.Append("<br />");
 
-                            cstextCard.Append(caseMasterCompanyUnit.CreatedDate.ToString("dd/MM/yyyy"));
-                            cstextCard.Append("</td>\r\n                                        <td>");
-                            cstextCard.Append(caseMasterCompanyUnit.CaseOpenDate.ToString("dd/MM/yyyy"));
-                            cstextCard.Append("</td>\r\n                                        <td>");
-                            cstextCard.Append(caseMasterCompanyUnit.ClaimAmount);
-                            cstextCard.Append("</td>\r\n                                    </tr>");
+                            cstextCard.Append("<table class=\"table\">\r\n                     " +
+                                "           <thead>\r\n                    " +
+                                "                <tr>\r\n                    " +
+                                "                    <th scope=\"col\">Case Number</th>\r\n  " +
+                                "                                      <th scope=\"col\">Created Date</th>\r\n  " +
+                                "                                      <th scope=\"col\">Case Open Date</th>\r\n    " +
+                                "                                    <th scope=\"col\">Claim Amount</th>\r\n     " +
+                                "                               </tr>\r\n                                </thead> <tbody>");
+
+                            foreach (CaseMaster caseMasterCompanyUnit in caseMasterListDataLoad.Where(x => x.CompanyUnitId == caseMasterCompany.CompanyUnitId))
+                            {
+                                cstextCard.Append("<tr>\r\n                                        <th scope=\"row\">");
+                                cstextCard.Append(caseMasterCompanyUnit.CaseNumber);
+                                cstextCard.Append("</th>\r\n                                        <td>");
+
+                                cstextCard.Append(caseMasterCompanyUnit.CreatedDate.ToString("dd/MM/yyyy"));
+                                cstextCard.Append("</td>\r\n                                        <td>");
+                                cstextCard.Append(caseMasterCompanyUnit.CaseOpenDate.ToString("dd/MM/yyyy"));
+                                cstextCard.Append("</td>\r\n                                        <td>");
+                                cstextCard.Append(caseMasterCompanyUnit.ClaimAmount);
+                                cstextCard.Append("</td>\r\n                                    </tr>");
+                            }
+                            cstextCard.Append("</tbody>\r\n                            </table>");
+
                         }
-                        cstextCard.Append("</tbody>\r\n                            </table>");
 
+                        cstextCard.Append(" </div>\r\n                            </div>\r\n                            </div>");
                     }
 
-                    cstextCard.Append(" </div>\r\n                            </div>\r\n                            </div>");
+
+                    btnPrint.Visible = true;
+
                 }
-
+                else
+                {
+                    btnPrint.Visible = false;
+                    cstextCard.Append("<div class=\"card py-4\" style=\"width: 100%;>\r\n " +
+                        "                               <div class=\"card-body\" style=\"padding-left: 30px;\">\r\n  " +
+                        "                                  <div class=\"row mb-1\">\r\n            " +
+                        "                            <div class=\"col-sm d-flex justify-content-center\">\r\n           " +
+                        "                                 <span class=\"align-middle\" style=\"font-weight: bold;\">------ No Cases Available ------</span>\r\n  " +
+                        "                                      </div>\r\n                                    </div>\r\n    " +
+                        "                            </div>\r\n                            </div>");
+                }
                 ltDetails.Text = cstextCard.ToString();
-                btnPrint.Visible = true;
-
-
             }
+
         }
-
-
     }
+
+
 }
