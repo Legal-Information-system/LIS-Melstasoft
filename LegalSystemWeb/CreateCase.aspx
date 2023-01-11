@@ -299,7 +299,7 @@
                             <div class="row">
                                 <asp:GridView ID="fileGridview" UseAccessibleHeader="true" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" EmptyDataText="No Files Uploaded">
                                     <Columns>
-                                        <asp:BoundField DataField="FileName" HeaderText="File Name" />
+                                        <asp:BoundField DataField="DocumentName" HeaderText="File Name" />
 
 
                                         <asp:TemplateField>
