@@ -127,8 +127,8 @@
                 </div>
             </div>
             <div style="text-align: center; margin-top: 30px;">
-                <asp:Button ID="btnApprove" runat="server" OnClick="btnApprove_Click" Text="Approve" Style="width: 250px; margin-right: 10px; height: 40px;" />
-                <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" Style="width: 250px; margin-left: 10px; height: 40px;" />
+                <asp:Button ID="btnApprove" runat="server" OnClick="btnApprove_Click" Text="Approve" CssClass="btn btn-primary btn-user btn-block" />
+                <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" />
             </div>
             <div class="col-sm-6 m-3">
                 <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>

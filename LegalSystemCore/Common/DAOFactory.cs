@@ -157,5 +157,23 @@ namespace LegalSystemCore.Common
             IPartyCaseDAO partyCaseDAO = new PartyCaseDAOSqlImpl();
             return ((IPartyCaseDAO)partyCaseDAO);
         }
+
+        public static IFunctionsDAO CreateFunctionsDAO()
+        {
+            IFunctionsDAO functionsDAO = new FunctionsDAOSqlImpl();
+            return ((IFunctionsDAO)functionsDAO);
+        }
+
+        public static IUserPrivilegeDAO CreateUserPrivilegeDAO()
+        {
+            IUserPrivilegeDAO userPrivilegeDAO = new UserPrivilegeDAOSqlImpl();
+            return ((IUserPrivilegeDAO)userPrivilegeDAO);
+        }
+
+        public static IUserRolePrivilegeDAO CreateUserRolePrivilegeDAO()
+        {
+            IUserRolePrivilegeDAO userRolePrivilegeDAO = new UserRolePrivilegeDAOSqlImpl();
+            return ((IUserRolePrivilegeDAO)userRolePrivilegeDAO);
+        }
     }
 }

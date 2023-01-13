@@ -55,6 +55,7 @@ namespace LegalSystemWeb
                 judgementType.JTypeName = txtJType.Text;
 
                 judgementTypeController.Update(judgementType);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Judgement Type Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -62,6 +63,7 @@ namespace LegalSystemWeb
                 JudgementType judgementType = new JudgementType();
                 judgementType.JTypeName = txtJType.Text;
                 judgementType.JTypeId = judgementTypeController.Save(judgementType);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Judgement Type Added Succesfully!', 'success')", true);
             }
 
             Clear();

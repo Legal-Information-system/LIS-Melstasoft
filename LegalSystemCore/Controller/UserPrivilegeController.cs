@@ -3,39 +3,36 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace LegalSystemCore.Controller
 {
-
-    public interface IUserLoginController
+    public interface IUserPrivilegeController
     {
-        int Save(UserLogin userLogin);
-        int Update(UserLogin userLogin);
-        List<UserLogin> GetUserLoginList(bool with0);
-        UserLogin GetUserLogin(UserLogin userLogin);
+        int Save(UserPrivilege userPrivilege);
+        int Update(UserPrivilege userPrivilege);
+        List<UserPrivilege> GetUserPrivilegeList(int userLoginId);
 
-        UserLogin GetUserLoginById(string userLoginId);
+        int Delete(UserPrivilege userPrivilege);
+
+        UserPrivilege GetUserPrivilege(int userLoginId, int functionId);
     }
 
-    public class UserLoginControllerImpl : IUserLoginController
-    {
-        IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
+    public class UserPrivilegeControllerImpl : IUserPrivilegeController
 
-        public int Save(UserLogin userLogin)
+    {
+        IUserPrivilegeDAO userPrivilegeDAO = DAOFactory.CreateUserPrivilegeDAO();
+        public int Save(UserPrivilege userPrivilege)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return userLoginDAO.Save(userLogin, dbconnection);
+                return userPrivilegeDAO.Save(userPrivilege, dbconnection);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbconnection.RollBack();
                 throw;
             }
@@ -48,42 +45,19 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(UserLogin userLogin)
-        {
-            Common.DbConnection dbconnection = null;
-            try
-            {
-                dbconnection = new Common.DbConnection();
-                return userLoginDAO.Update(userLogin, dbconnection);
-            }
-            catch (Exception)
-            {
-                HttpContext.Current.Response.Redirect("500.aspx");
-                dbconnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbconnection.Commit();
-                }
-            }
-        }
-
-        public List<UserLogin> GetUserLoginList(bool with0)
+        public List<UserPrivilege> GetUserPrivilegeList(int userLoginId)
         {
             Common.DbConnection dbConnection = null;
-            List<UserLogin> listUserLogin = new List<UserLogin>();
+            List<UserPrivilege> listActivity = new List<UserPrivilege>();
+
             try
             {
                 dbConnection = new Common.DbConnection();
-                listUserLogin = userLoginDAO.GetUserLoginList(with0, dbConnection);
+                listActivity = userPrivilegeDAO.GetUserPrivilegeList(userLoginId, dbConnection);
 
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -94,24 +68,19 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listUserLogin;
+            return listActivity;
         }
 
-        public UserLogin GetUserLogin(UserLogin userLogin)
+        public int Delete(UserPrivilege userPrivilege)
         {
-            Common.DbConnection dbConnection = null;
-
+            DbConnection dbConnection = null;
             try
             {
-                dbConnection = new Common.DbConnection();
-                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLogin);
-
-
-
+                dbConnection = new DbConnection();
+                return userPrivilegeDAO.Delete(userPrivilege, dbConnection);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -122,22 +91,18 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return userLogin;
         }
 
-        public UserLogin GetUserLoginById(string userLoginId)
+        public int Update(UserPrivilege userPrivilege)
         {
             Common.DbConnection dbConnection = null;
-            UserLogin userLogin = new UserLogin();
             try
             {
                 dbConnection = new Common.DbConnection();
-
-                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLoginId);
+                return userPrivilegeDAO.Update(userPrivilege, dbConnection);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -148,9 +113,32 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return userLogin;
+        }
+
+        public UserPrivilege GetUserPrivilege(int userLoginId, int functionId)
+        {
+            Common.DbConnection dbConnection = null;
+            UserPrivilege activity = new UserPrivilege();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                activity = userPrivilegeDAO.GetUserPrivilege(dbConnection, userLoginId, functionId);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return activity;
         }
 
     }
-
 }

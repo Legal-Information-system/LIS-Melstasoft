@@ -374,8 +374,9 @@ namespace LegalSystemWeb
                             }
 
                             UploadFiles();
+                            ClearDocuments();
                             Clear();
-                            lblSuccessMsg.Text = "Record Updated Successfully!";
+
                         }
                     }
 
@@ -384,7 +385,8 @@ namespace LegalSystemWeb
                     clearDefendent();
                     clearPlaintif();
                     flag = 1;
-                    lblSuccessMsg.Text = "Record Updated Successfully!";
+
+
                 }
                 else
                 {
@@ -409,6 +411,12 @@ namespace LegalSystemWeb
                 {
                     dAttorney.Visible = true;
                     lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
+                }
+                if (flag == 1)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "alert", "swal('Success!', 'Case Created Succesfully!', 'success')", true);
+
+                    //ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Approve Succesfully!', 'success');window.setTimeout(function(){window.location='CreateCase.aspx'},2500);", true);
                 }
 
             }
@@ -648,6 +656,13 @@ namespace LegalSystemWeb
                 BindDocuments();
 
             }
+        }
+
+        protected void ClearDocuments()
+        {
+            UplodedFilesList.Clear();
+            filePaths.Clear();
+            BindDocuments();
         }
 
 

@@ -55,6 +55,7 @@ namespace LegalSystemWeb
                 paymentStatus.StatusName = txtPStatus.Text;
 
                 paymentStatusController.Update(paymentStatus);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Status Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -62,6 +63,7 @@ namespace LegalSystemWeb
                 PaymentStatus paymentStatus = new PaymentStatus();
                 paymentStatus.StatusName = txtPStatus.Text;
                 paymentStatus.StatusId = paymentStatusController.Save(paymentStatus);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Status Created Succesfully!', 'success')", true);
             }
 
             Clear();

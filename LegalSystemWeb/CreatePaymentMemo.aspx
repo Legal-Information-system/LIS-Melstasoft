@@ -91,8 +91,46 @@
                             </div>
 
                         </div>
+                        <div class="row mb-5 mt-3">
 
-                        <div class="row mb-6 mt-5 ">
+                            <div class="col-sm-6">
+                                <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="false" CssClass="btn " />
+                                <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
+                            </div>
+
+                            <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+
+                                <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" />
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <asp:GridView ID="fileGridview" UseAccessibleHeader="true" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" EmptyDataText="No Files Uploaded">
+                                <Columns>
+                                    <asp:BoundField DataField="DocumentName" HeaderText="File Name" />
+
+
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+
+                                            <asp:LinkButton ID="DeleteLink" runat="server" Text="Delete" OnClick="DeleteFiles" CssClass="btn btn-primary btn-user btn-block " BackColor="#993333" BorderColor="#212529"></asp:LinkButton>
+                                        </ItemTemplate>
+
+                                    </asp:TemplateField>
+
+                                </Columns>
+
+                            </asp:GridView>
+                            <script type="text/javascript">    
+
+                                $(document).ready(function () {
+                                    $('#fileGridview').DataTable();
+                                });
+                            </script>
+                        </div>
+                        <%--<div class="row mb-6 mt-5 ">
                             <div class="col-3 align-middle d-flex">
 
                                 <asp:Literal ID="Literal4" runat="server" Text="Upload Documents / Slips"></asp:Literal>
@@ -105,7 +143,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div>--%>
                         <div class="row mb-3 ms-1">
                             <div class="col-sm-3">
                                 <asp:Button ID="btnReset" runat="server" CssClass="btn btn-secondary btn-user btn-block" BackColor="#212529" BorderColor="#212529" Text="Reset" />

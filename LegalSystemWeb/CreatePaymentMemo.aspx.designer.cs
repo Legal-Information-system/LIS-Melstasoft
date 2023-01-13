@@ -159,15 +159,6 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.TextBox txtRemarks;
 
         /// <summary>
-        /// Literal4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal4;
-
-        /// <summary>
         /// Uploader control.
         /// </summary>
         /// <remarks>
@@ -177,13 +168,22 @@ namespace LegalSystemWeb
         protected global::System.Web.UI.WebControls.FileUpload Uploader;
 
         /// <summary>
-        /// lblListOfUploadedFiles control.
+        /// btnUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblListOfUploadedFiles;
+        protected global::System.Web.UI.WebControls.Button btnUpload;
+
+        /// <summary>
+        /// fileGridview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView fileGridview;
 
         /// <summary>
         /// btnReset control.

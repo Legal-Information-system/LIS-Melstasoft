@@ -3,39 +3,32 @@ using LegalSystemCore.Domain;
 using LegalSystemCore.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace LegalSystemCore.Controller
 {
-
-    public interface IUserLoginController
+    public interface IFunctionsController
     {
-        int Save(UserLogin userLogin);
-        int Update(UserLogin userLogin);
-        List<UserLogin> GetUserLoginList(bool with0);
-        UserLogin GetUserLogin(UserLogin userLogin);
-
-        UserLogin GetUserLoginById(string userLoginId);
+        int Save(Functions functions);
+        int Update(Functions functions);
+        List<Functions> GetFunctionList(bool with0);
+        Functions GetFunctions(string functionName);
     }
 
-    public class UserLoginControllerImpl : IUserLoginController
+    public class FunctionsControllerImpl : IFunctionsController
     {
-        IUserLoginDAO userLoginDAO = DAOFactory.CreateUserLoginDAO();
-
-        public int Save(UserLogin userLogin)
+        IFunctionsDAO functionsDAO = DAOFactory.CreateFunctionsDAO();
+        public int Save(Functions functions)
         {
             Common.DbConnection dbconnection = null;
             try
             {
                 dbconnection = new Common.DbConnection();
-                return userLoginDAO.Save(userLogin, dbconnection);
+                return functionsDAO.Save(functions, dbconnection);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbconnection.RollBack();
                 throw;
             }
@@ -48,42 +41,19 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public int Update(UserLogin userLogin)
-        {
-            Common.DbConnection dbconnection = null;
-            try
-            {
-                dbconnection = new Common.DbConnection();
-                return userLoginDAO.Update(userLogin, dbconnection);
-            }
-            catch (Exception)
-            {
-                HttpContext.Current.Response.Redirect("500.aspx");
-                dbconnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbconnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbconnection.Commit();
-                }
-            }
-        }
-
-        public List<UserLogin> GetUserLoginList(bool with0)
+        public List<Functions> GetFunctionList(bool with0)
         {
             Common.DbConnection dbConnection = null;
-            List<UserLogin> listUserLogin = new List<UserLogin>();
+            List<Functions> listFunction = new List<Functions>();
+
             try
             {
                 dbConnection = new Common.DbConnection();
-                listUserLogin = userLoginDAO.GetUserLoginList(with0, dbConnection);
+                listFunction = functionsDAO.GetFunctionList(with0, dbConnection);
 
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -94,24 +64,20 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listUserLogin;
+            return listFunction;
         }
 
-        public UserLogin GetUserLogin(UserLogin userLogin)
+
+        public int Update(Functions functions)
         {
             Common.DbConnection dbConnection = null;
-
             try
             {
                 dbConnection = new Common.DbConnection();
-                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLogin);
-
-
-
+                return functionsDAO.Update(functions, dbConnection);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -122,22 +88,20 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return userLogin;
         }
 
-        public UserLogin GetUserLoginById(string userLoginId)
+        public Functions GetFunctions(string functionName)
         {
             Common.DbConnection dbConnection = null;
-            UserLogin userLogin = new UserLogin();
+            Functions functions = new Functions();
             try
             {
                 dbConnection = new Common.DbConnection();
+                functions = functionsDAO.GetFunctions(dbConnection, functionName);
 
-                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLoginId);
             }
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("500.aspx");
                 dbConnection.RollBack();
                 throw;
             }
@@ -148,9 +112,8 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return userLogin;
+            return functions;
         }
 
     }
-
 }

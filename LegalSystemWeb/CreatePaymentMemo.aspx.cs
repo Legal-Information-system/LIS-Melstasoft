@@ -3,6 +3,7 @@ using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -14,11 +15,16 @@ namespace LegalSystemWeb
 {
     public partial class CreatePaymentMemo : System.Web.UI.Page
     {
-        Activity activity = new Activity();
-        List<Activity> listActivity = new List<Activity>();
+        UserPrivilege activity = new UserPrivilege();
+        List<UserPrivilege> listActivity = new List<UserPrivilege>();
         ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
         ICounselorController counselorController = ControllerFactory.CreateCounselorController();
         ICaseMasterController masterController = ControllerFactory.CreateCaseMasterController();
+        public static List<string> filePaths = new List<string>();
+        public static List<ListItem> files = new List<ListItem>();
+        public static List<HttpPostedFileBase> listUplodedFile = new List<HttpPostedFileBase>();
+        public static List<DocumentPayment> UplodedFilesList = new List<DocumentPayment>();
+        public static int documentIncrement = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -163,7 +169,7 @@ namespace LegalSystemWeb
                 UploadFiles(payment.PaymentId);
                 lblCheckRequired.Text = "";
                 Clear();
-                lblSuccessMsg.Text = "Record Updated Successfully!";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Created Succesfully!', 'success')", true);
             }
             else
             {
@@ -172,37 +178,123 @@ namespace LegalSystemWeb
 
         }
 
-        private void UploadFiles(int paymentId)
+        protected void UploadFiles(int paymentId)
         {
             IDocumentController documentController = ControllerFactory.CreateDocumentController();
-
             IDocumentPaymentController documentPaymentController = ControllerFactory.CreateDocumentPaymentController();
 
             Document document = new Document();
             DocumentPayment documentPayment = new DocumentPayment();
 
+            //int i = 0;
+            //foreach (HttpPostedFileBase file in listUplodedFile)
+            //{
+            //    if (file.ContentLength > 0)
+            //    {
+            //        file.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + caseNumber + filePaths[i]);
+            //        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
 
-            if (Uploader.HasFile)
+
+            //        document.DocumentType = "case";
+            //        documentCase.DocumentId = documentController.Save(document);
+
+            //        documentCase.DocumentName = caseNumber + filePaths[i];
+            //        documentCase.CaseNumber = txtCaseNumber.Text;
+            //        documentCase.DocumentDescription = "";
+            //        documentCaseController.Save(documentCase);
+            //    }
+            //}
+
+            foreach (var item in UplodedFilesList)
             {
+                document.DocumentType = "case";
+                item.DocumentId = documentController.Save(document);
+                item.PaymentId = paymentId;
+                documentPaymentController.Save(item);
+            }
+
+            listUplodedFile.Clear();
+            files.Clear();
+            filePaths.Clear();
+            BindDocuments();
+        }
+
+
+        protected void AddFiles(object sender, EventArgs e)
+        {
+
+
+            if (Uploader.PostedFile != null)
+            {
+                //listUplodedFile.Add(new HttpPostedFileWrapper(HttpContext.Current.Request.Files[0]));
+                //string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
+                //HttpPostedFileBase uploadFile = listUplodedFile.Last();
+
+                //if (uploadFile.ContentLength > 0)
+                //{
+                //    filePaths.Add(documentIncrement++ + uploadFile.FileName);
+                //    //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+                //}
+
+
                 HttpFileCollection uploadFiles = Request.Files;
                 for (int i = 0; i < uploadFiles.Count; i++)
                 {
                     HttpPostedFile uploadFile = uploadFiles[i];
                     if (uploadFile.ContentLength > 0)
                     {
+
                         uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/PaymentMemo/RequestPayments/") + uploadFile.FileName);
-                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
 
-                        document.DocumentType = "payment";
-                        documentPayment.DocumentId = documentController.Save(document);
+                        DocumentPayment document = new DocumentPayment
+                        {
+                            DocumentName = uploadFile.FileName,
+                            DocumentDescription = ""
 
-                        documentPayment.DocumentName = uploadFile.FileName;
-                        documentPayment.PaymentId = paymentId;
-                        documentPayment.DocumentDescription = "";
-                        documentPaymentController.Save(documentPayment);
+                        };
+
+                        UplodedFilesList.Add(document);
                     }
                 }
+                BindDocuments();
+
             }
         }
+
+
+
+
+        protected void DeleteFiles(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = fileGridview.PageSize;
+            int pageIndex = fileGridview.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            //FileInfo file = new FileInfo(filePaths[rowIndex]);
+
+            //filePaths.RemoveAt(rowIndex);
+            //listUplodedFile.RemoveAt(rowIndex);
+
+            DocumentPayment documentPayment = UplodedFilesList[rowIndex];
+            string path = Server.MapPath("~/SystemDocuments/PaymentMemo/RequestPayments/");
+            string filePath = path + documentPayment.DocumentName;
+
+            if (File.Exists(filePath))
+            {
+                // If file found, delete it    
+                File.Delete(filePath);
+                UplodedFilesList.RemoveAt(rowIndex);
+            }
+
+            BindDocuments();
+        }
+
+        protected void BindDocuments()
+        {
+            fileGridview.DataSource = UplodedFilesList;
+            fileGridview.DataBind();
+        }
+
     }
 }

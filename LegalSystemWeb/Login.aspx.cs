@@ -39,9 +39,13 @@ namespace LegalSystemWeb
                 Session["company_unit_id"] = userLogin.CompanyUnitId;
 
                 if (userLogin.UserRoleId == 3)
+                {
                     Response.Redirect("ViewPaymentMemo.aspx");
+                }
                 else
+                {
                     Response.Redirect("Dashboard.aspx");
+                }
 
             }
         }

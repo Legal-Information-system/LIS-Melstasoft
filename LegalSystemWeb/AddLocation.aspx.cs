@@ -56,6 +56,7 @@ namespace LegalSystemWeb
 
 
                 locationController.Update(location);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Location Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -64,6 +65,7 @@ namespace LegalSystemWeb
                 location.locationName = txtLocationName.Text;
 
                 location.LocationId = locationController.Save(location);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Location Added Succesfully!', 'success')", true);
             }
 
             BindDataSource();
