@@ -112,6 +112,7 @@
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="TermsAndConditions.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="UserPrivileges.aspx" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="vendor\bootstrap\js\bootstrap.js" />
@@ -1916,6 +1917,13 @@
     </Compile>
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserPrivileges.aspx.cs">
+      <DependentUpon>UserPrivileges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserPrivileges.aspx.designer.cs">
+      <DependentUpon>UserPrivileges.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewCaseDetails.aspx.cs">
       <DependentUpon>ViewCaseDetails.aspx</DependentUpon>
