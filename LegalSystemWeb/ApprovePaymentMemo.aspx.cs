@@ -37,6 +37,8 @@ namespace LegalSystemWeb
                 }
 
             }
+
+
         }
 
         private void BindData()
@@ -57,15 +59,20 @@ namespace LegalSystemWeb
             }
             else
             {
+                IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
                 lblPaymentId.Text = payment.PaymentId.ToString();
                 lblCreatedDate.Text = payment.CreatedDate.ToString();
                 lblCaseNumber.Text = payment.CaseNumber.ToString();
-                lblCreatedBy.Text = payment.CreateUserId.ToString();
+                lblCreatedBy.Text = userLoginController.GetUserLoginById(payment.CreateUserId.ToString()).UserName;
                 payment.lawyer = lawyerController.GetLawyer(payment.LawyerId);
                 lblLawyerName.Text = payment.lawyer.LawyerName.ToString();
                 payment.paymentStatus = paymentStatusController.GetPaymentStatus(payment.PaymentStatusId);
                 lblPaymentStatus.Text = payment.paymentStatus.StatusName;
                 lblRemarks.Text = payment.Remarks.ToString();
+                if (lblRemarks.Text == string.Empty || lblRemarks.Text == "")
+                {
+                    lblRemarks.Text = "N/A";
+                }
                 lblRequestedPaymentAmount.Text = payment.Amount.ToString();
 
                 caseMaster = caseMasterController.GetCaseMasterWithPaid(payment.CaseNumber);
@@ -121,8 +128,8 @@ namespace LegalSystemWeb
             caseMaster.CaseNumber = lblCaseNumber.Text;
             caseMaster.payableAmount = Convert.ToDouble(lblRequestedPaymentAmount.Text);
             caseMasterController.UpdateCasePaidAmount(caseMaster);
-            lblSuccessMsg.Text = "Payment Appproved Successfully!";
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Approve Succesfully!', 'success');window.setTimeout(function(){window.location='ApprovePaymentMemo.aspx?PaymentId=" + Request.QueryString["PaymentId"] + "'},2500);", true);
+
         }
 
         protected void btnReject_Click(object sender, EventArgs e)
@@ -133,8 +140,7 @@ namespace LegalSystemWeb
             payment.ActionTakenDate = DateTime.Now;
             payment.PaymentStatusId = 3;
             paymentController.UpdatePaymentStatus(payment);
-            lblSuccessMsg.Text = "Payment Rejectd Successfully!";
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Reject Succesfully!', 'success');window.setTimeout(function(){window.location='ApprovePaymentMemo.aspx?PaymentId=" + Request.QueryString["PaymentId"] + "'},2500);", true);
         }
 
 

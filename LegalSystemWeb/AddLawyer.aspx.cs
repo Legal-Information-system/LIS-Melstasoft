@@ -57,6 +57,7 @@ namespace LegalSystemWeb
 
 
                 lawyerController.Update(lawyer);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Lawyer Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Add";
             }
             else
@@ -67,6 +68,7 @@ namespace LegalSystemWeb
                 lawyer.LawyerContact = txtContact.Text;
 
                 lawyer.LawyerId = lawyerController.Save(lawyer);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Lawyer Added Succesfully!', 'success')", true);
             }
 
 

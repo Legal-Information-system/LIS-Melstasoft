@@ -224,7 +224,7 @@ namespace LegalSystemWeb
             }
 
             Clear();
-            lblSuccessMsg.Text = "Record Updated Successfully!";
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Updated Succesfully!', 'success')", true);
 
         }
 

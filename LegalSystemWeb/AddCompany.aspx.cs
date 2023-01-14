@@ -58,6 +58,7 @@ namespace LegalSystemWeb
 
 
                 companyController.Update(company);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Company Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -65,7 +66,7 @@ namespace LegalSystemWeb
                 Company company = new Company();
                 company.CompanyName = txtCompanyName.Text;
                 company.CompanyAddress = txtCompanyAddress.Text;
-
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Company Added Succesfully!', 'success')", true);
                 company.CompanyId = companyController.Save(company);
             }
 

@@ -54,6 +54,7 @@ namespace LegalSystemWeb
 
 
                 userRoleController.Update(userRole);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Role Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -61,6 +62,7 @@ namespace LegalSystemWeb
                 UserRole userRole = new UserRole();
                 userRole.RoleName = txtRoleName.Text;
                 userRole.RoleId = userRoleController.Save(userRole);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Role Created Succesfully!', 'success')", true);
             }
 
 
@@ -104,6 +106,7 @@ namespace LegalSystemWeb
             userRole.RoleId = userRoleList[rowIndex].RoleId;
 
             userRoleController.Delete(userRole);
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Role Deleted Succesfully!', 'success')", true);
             BindDataSource();
         }
 

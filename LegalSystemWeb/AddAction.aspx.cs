@@ -52,9 +52,8 @@ namespace LegalSystemWeb
                 CaseAction caseAction = new CaseAction();
                 caseAction.ActionId = rowIndex;
                 caseAction.ActionName = txtAction.Text;
-
-
                 caseActionController.Update(caseAction);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Action Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -62,6 +61,8 @@ namespace LegalSystemWeb
                 CaseAction caseAction = new CaseAction();
                 caseAction.ActionName = txtAction.Text;
                 caseAction.ActionId = caseActionController.Save(caseAction);
+
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Action Added Succesfully!', 'success')", true);
             }
 
             Clear();

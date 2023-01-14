@@ -158,5 +158,22 @@ namespace LegalSystemCore.Common
             return (IPartyCaseController)partyCaseController;
         }
 
+        public static IFunctionsController CreateFunctionsController()
+        {
+            IFunctionsController functionsController = new FunctionsControllerImpl();
+            return (IFunctionsController)functionsController;
+        }
+
+        public static IUserPrivilegeController CreateUserPrivilegeController()
+        {
+            IUserPrivilegeController userPrivilegeController = new UserPrivilegeControllerImpl();
+            return (IUserPrivilegeController)userPrivilegeController;
+        }
+
+        public static IUserRolePrivilegeController CreateUserRolePrivilegeController()
+        {
+            IUserRolePrivilegeController userRolePrivilegeController = new UserRolePrivilegeControllerImpl();
+            return (IUserRolePrivilegeController)userRolePrivilegeController;
+        }
     }
 }
