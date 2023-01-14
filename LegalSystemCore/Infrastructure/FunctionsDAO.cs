@@ -11,8 +11,9 @@ namespace LegalSystemCore.Infrastructure
     {
         int Save(Functions functions, DbConnection dbConnection);
         int Update(Functions functions, DbConnection dbConnection);
-        List<Functions> GetFunctionList(bool with0, DbConnection dbConnection);
+        List<Functions> GetFunctionList(DbConnection dbConnection);
 
+        int Init(DbConnection dbConnection);
         Functions GetFunctions(DbConnection dbConnection, string functionName);
     }
     public class FunctionsDAOSqlImpl : IFunctionsDAO
@@ -40,13 +41,36 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
-        public List<Functions> GetFunctionList(bool with0, DbConnection dbConnection)
+        public int Init(DbConnection dbConnection)
+        {
+            int output = 0;
+
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Insert into functions (function_name) " +
+                                           "values ('Add Action'),('Add Activity'),('Add Case Nature'),('Add Case Status')," +
+                                           "('Add Company'),('Add Company Unit'),('Add Court'),('Add Court Location')," +
+                                           "('Add Judgement Type'),('Add Lawyer'),('Add Location'),('Add Payment Status')," +
+                                           "('Add Payment Memo'),('Add User Role'),('Approve Payment Memo'),('Create Account')," +
+                                           "('Create Case'),('Create Payment Memo'),('Daily Cases'),('Monthly Cases')," +
+                                           "('Update Case Activity'),('User Privileges'),('View Case Details'),('View Cases')," +
+                                           "('View Payment Memo')";
+
+
+            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+
+
+            return output;
+        }
+
+
+        public List<Functions> GetFunctionList(DbConnection dbConnection)
         {
             List<Functions> functionList = new List<Functions>();
-            if (with0)
-                dbConnection.cmd.CommandText = "select * from functions";
-            else
-                dbConnection.cmd.CommandText = "select * from functions WHERE is_active = 1";
+
+            dbConnection.cmd.CommandText = "select * from functions";
+
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

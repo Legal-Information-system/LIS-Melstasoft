@@ -72,6 +72,7 @@
     <Compile Include="Controller\PaymentStatusController.cs" />
     <Compile Include="Controller\UserPrivilegeController.cs" />
     <Compile Include="Controller\UserRoleController.cs" />
+    <Compile Include="Controller\UserRolePrivilegeController.cs" />
     <Compile Include="Domain\Activity.cs" />
     <Compile Include="Domain\CaseAction.cs" />
     <Compile Include="Controller\LawyerController.cs" />

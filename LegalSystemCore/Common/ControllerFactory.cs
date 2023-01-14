@@ -169,5 +169,11 @@ namespace LegalSystemCore.Common
             IUserPrivilegeController userPrivilegeController = new UserPrivilegeControllerImpl();
             return (IUserPrivilegeController)userPrivilegeController;
         }
+
+        public static IUserRolePrivilegeController CreateUserRolePrivilegeController()
+        {
+            IUserRolePrivilegeController userRolePrivilegeController = new UserRolePrivilegeControllerImpl();
+            return (IUserRolePrivilegeController)userRolePrivilegeController;
+        }
     }
 }

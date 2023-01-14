@@ -12,7 +12,8 @@ namespace LegalSystemCore.Controller
     {
         int Save(Functions functions);
         int Update(Functions functions);
-        List<Functions> GetFunctionList(bool with0);
+        List<Functions> GetFunctionList();
+        int Init();
         Functions GetFunctions(string functionName);
     }
 
@@ -41,7 +42,28 @@ namespace LegalSystemCore.Controller
             }
         }
 
-        public List<Functions> GetFunctionList(bool with0)
+        public int Init()
+        {
+            Common.DbConnection dbconnection = null;
+            try
+            {
+                dbconnection = new Common.DbConnection();
+                return functionsDAO.Init(dbconnection);
+            }
+            catch (Exception)
+            {
+                dbconnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbconnection.Commit();
+                }
+            }
+        }
+        public List<Functions> GetFunctionList()
         {
             Common.DbConnection dbConnection = null;
             List<Functions> listFunction = new List<Functions>();
@@ -49,7 +71,7 @@ namespace LegalSystemCore.Controller
             try
             {
                 dbConnection = new Common.DbConnection();
-                listFunction = functionsDAO.GetFunctionList(with0, dbConnection);
+                listFunction = functionsDAO.GetFunctionList(dbConnection);
 
             }
             catch (Exception)

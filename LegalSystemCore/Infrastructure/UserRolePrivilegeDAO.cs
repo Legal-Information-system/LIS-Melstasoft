@@ -51,6 +51,23 @@ namespace LegalSystemCore.Infrastructure
             return output;
         }
 
+        public int Init(UserRolePrivilege userRolePrivilege, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "INSERT INTO user_role_privilege (user_role_id,function_id) " +
+                                           "VALUES (@UserRoleId , @FunctionId) SELECT SCOPE_IDENTITY()";
+
+            dbConnection.cmd.Parameters.AddWithValue("@UserRoleId", userRolePrivilege.UserRoleId);
+            dbConnection.cmd.Parameters.AddWithValue("@FunctionId", userRolePrivilege.FunctionId);
+
+            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+
+            return output;
+        }
+
 
         public int Delete(UserRolePrivilege userRolePrivilege, DbConnection dbConnection)
         {
