@@ -3,19 +3,21 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container" id="mainContainer">
-        <div class="row justify-content-center">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel5" runat="server">
 
-            <div class="card o-hidden border-0 shadow-lg my-3" style="padding-left: unset; padding-right: unset">
-                <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
-                    <h3 class="text-light text-center bg-dark " id="hTitle" runat="server"></h3>
+        <ContentTemplate>
+            <div class="container" id="mainContainer">
+                <div class="row justify-content-center">
 
-                </div>
-                <div class="card-body form-group">
+                    <div class="card o-hidden border-0 shadow-lg my-3" style="padding-left: unset; padding-right: unset">
+                        <div class="card-header d-flex align-items-center justify-content-center" style="background-color: #212529; height: 50px">
+                            <h3 class="text-light text-center bg-dark " id="hTitle" runat="server"></h3>
 
-                    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        <ContentTemplate>
+                        </div>
+                        <div class="card-body form-group">
+
+
                             <div class="row mb-3 ">
                                 <div class="col-sm-6 dropdown" style="display: flex; flex-direction: column">
 
@@ -33,30 +35,28 @@
                                         ControlToValidate="ddlCompanyUnit" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
 
-                    <%--=========--%>
-                    <div class="form-group row ">
-                        <div class="col-md-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="Literal5" runat="server" Text="Nature Of Case"></asp:Literal>
-                            <asp:DropDownList ID="ddlNatureOfCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"
-                                ControlToValidate="ddlNatureOfCase" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                        </div>
-                        <div class="col-md-6">
+                            <%--=========--%>
+                            <div class="form-group row ">
+                                <div class="col-md-6" style="display: flex; flex-direction: column">
 
-                            <asp:Literal ID="ltLastName" runat="server" Text="Case Description"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtCaseDescription" TextMode="MultiLine" Style="margin-top: 5px"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
-                                ControlToValidate="txtCaseDescription" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                        </div>
-                    </div>
+                                    <asp:Literal ID="Literal5" runat="server" Text="Nature Of Case"></asp:Literal>
+                                    <asp:DropDownList ID="ddlNatureOfCase" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"
+                                        ControlToValidate="ddlNatureOfCase" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                                <div class="col-md-6">
 
-                    <%--===========--%>
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
+                                    <asp:Literal ID="ltLastName" runat="server" Text="Case Description"></asp:Literal>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtCaseDescription" TextMode="MultiLine" Style="margin-top: 5px"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
+                                        ControlToValidate="txtCaseDescription" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                </div>
+                            </div>
+
+                            <%--===========--%>
+
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
@@ -79,40 +79,38 @@
                             <div class="row mb-3">
                                 <asp:Label ID="lblClaimAmountInWords" runat="server" Text="" ForeColor="#000000"></asp:Label>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
 
 
-                    <%--===========--%>
+
+                            <%--===========--%>
 
 
-                    <%--===========--%>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                            <%--===========--%>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
 
-                            <asp:Literal ID="Literal15" runat="server" Text="Company Side"></asp:Literal>
-                            <asp:RadioButtonList ID="rbIsPlantiff" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px">
-                                <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">&nbsp;Plaintiff</asp:ListItem>
-                                <asp:ListItem Value="0" CssClass="form-check-input">&nbsp;Defendant</asp:ListItem>
-                            </asp:RadioButtonList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
-                                ControlToValidate="rbIsPlantiff" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                    <asp:Literal ID="Literal15" runat="server" Text="Company Side"></asp:Literal>
+                                    <asp:RadioButtonList ID="rbIsPlantiff" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px">
+                                        <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">&nbsp;Plaintiff</asp:ListItem>
+                                        <asp:ListItem Value="0" CssClass="form-check-input">&nbsp;Defendant</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
+                                        ControlToValidate="rbIsPlantiff" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
 
-                        </div>
-                        <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
 
-                            <asp:Literal ID="Literal4" runat="server" Text="Case Open Date"></asp:Literal>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-user" TextMode="Date" ID="txtCaseOpenDate"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
-                                ControlToValidate="txtCaseOpenDate" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
-                            <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
+                                    <asp:Literal ID="Literal4" runat="server" Text="Case Open Date"></asp:Literal>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" TextMode="Date" ID="txtCaseOpenDate"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"
+                                        ControlToValidate="txtCaseOpenDate" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                                    <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
                                 ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
                             </asp:RegularExpressionValidator>--%>
-                        </div>
+                                </div>
 
-                    </div>
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
+                            </div>
+
                             <div class="row ">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
@@ -148,11 +146,7 @@
                                     </asp:GridView>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
 
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
                             <div class="row ">
                                 <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
 
@@ -188,17 +182,7 @@
                                     </asp:GridView>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
 
-                    <%--===========--%>
-
-                    <%--</div>--%>
-
-
-                    <%--===========--%>
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                        <ContentTemplate>
                             <div class="row mb-3">
                                 <div class="col-md-6" style="display: flex; flex-direction: column">
 
@@ -215,11 +199,7 @@
                                         ControlToValidate="ddlLocation" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
 
-                    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
-                        <ContentTemplate>
                             <%--===========--%>
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -242,11 +222,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                    <%--===========--%>
-                    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                        <ContentTemplate>
+
                             <div class="row mb-3">
                                 <div class="col-md-6" style="display: flex; flex-direction: column">
 
@@ -294,10 +270,9 @@
                                     </asp:GridView>
                                 </div>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                    <%--===========--%>
-                    <%--                    <div class="row mb-3">
+
+                            <%--===========--%>
+                            <%--                    <div class="row mb-3">
                         <div class="col-md-6">
                             <asp:Button ID="btnDocUpload" runat="server" Text="Next" OnClientClick="btnDocUpload_CLick" CssClass="btn btn-primary btn-user btn-block" OnClick="btnDocUpload_Click1" />
                         </div>
@@ -306,28 +281,25 @@
 
                     </div>--%>
 
-                    <div class="row mb-5 mt-3">
+                            <div class="row mb-5 mt-3">
 
-                        <div class="col-sm-6">
-                            <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="true" CssClass="btn " />
-                            <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
-                        </div>
-                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
-                            <%--<Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="btnUpload" EventName="AddFiles" />
-                        </Triggers>--%>
-                            <ContentTemplate>
+                                <div class="col-sm-6">
+                                    <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="false" CssClass="btn " />
+                                    <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
+                                </div>
+
                                 <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
-                                    <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" OnClientClick="AddFiles" />
+
+                                    <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" />
 
                                 </div>
 
-                                </div>
-                    
+                            </div>
+
                             <div class="row">
                                 <asp:GridView ID="fileGridview" UseAccessibleHeader="true" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" EmptyDataText="No Files Uploaded">
                                     <Columns>
-                                        <asp:BoundField DataField="FileName" HeaderText="File Name" />
+                                        <asp:BoundField DataField="DocumentName" HeaderText="File Name" />
 
 
                                         <asp:TemplateField>
@@ -348,27 +320,34 @@
                                     });
                                 </script>
                             </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                        <div class="row mb-3">
 
-                            <div class="col-sm-6">
 
-                                <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnBack_Click" />
-                                <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
 
+                            <div class="row mb-3">
+
+                                <div class="col-sm-6">
+
+                                    <asp:Button ID="btnBack" runat="server" Text="Reset" CssClass="btn btn-primary btn-user btn-block" BackColor="#212529" BorderColor="#212529" OnClick="btnBack_Click" />
+                                    <asp:Button ID="btnSave" runat="server" Text="Create Case" CssClass="btn btn-primary btn-user btn-block" ValidationGroup="1" OnClick="btnSave_Click" />
+
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6 m-3">
-                            <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                            <div class="col-sm-6 m-3">
+                                <asp:Label ID="lblSuccessMsg" runat="server" Text="" ForeColor="#33cc33"></asp:Label>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
             </div>
-        </div>
+        </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnUpload" />
+
+        </Triggers>
+    </asp:UpdatePanel>
 </asp:Content>
 
 

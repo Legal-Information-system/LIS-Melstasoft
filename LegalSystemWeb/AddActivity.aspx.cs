@@ -59,15 +59,15 @@ namespace LegalSystemWeb
 
 
                 activityController.Update(activity);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Activity Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Add";
             }
             else
             {
                 Activity activity = new Activity();
                 activity.ActivityName = txtAddActivity.Text;
-
-
                 activity.ActivityId = activityController.Save(activity);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Activity Added Succesfully!', 'success')", true);
             }
 
 

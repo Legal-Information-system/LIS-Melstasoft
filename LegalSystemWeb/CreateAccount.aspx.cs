@@ -105,7 +105,8 @@ namespace LegalSystemWeb
 
                 Clear();
                 lblErrorMsg.Text = "";
-                lblSuccessMsg.Text = "User created Successfully!";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'User Created Succesfully!', 'success')", true);
+
             }
             else
             {

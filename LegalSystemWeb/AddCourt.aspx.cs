@@ -55,13 +55,14 @@ namespace LegalSystemWeb
 
 
                 courtController.Update(court);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Court Details Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
             {
                 Court court = new Court();
                 court.CourtName = txtCourtName.Text;
-
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Court Added Succesfully!', 'success')", true);
                 court.CourtId = courtController.Save(court);
             }
 

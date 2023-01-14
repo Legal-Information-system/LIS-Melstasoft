@@ -56,6 +56,7 @@ namespace LegalSystemWeb
 
 
                 caseStatusController.Update(caseStatus);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Status Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -63,6 +64,7 @@ namespace LegalSystemWeb
                 CaseStatus caseStatus = new CaseStatus();
                 caseStatus.StatusName = txtCase.Text;
                 caseStatus.StatusId = caseStatusController.Save(caseStatus);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Status Added Succesfully!', 'success')", true);
             }
 
             Clear();

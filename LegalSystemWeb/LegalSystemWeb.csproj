@@ -105,13 +105,17 @@
     <Content Include="obj\Debug\LegalSystemWeb.dll" />
     <Content Include="obj\Debug\LegalSystemWeb.pdb" />
     <Content Include="PrivacyPolicy.aspx" />
+    <Content Include="Scripts\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Styles\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Styles\sweetalert.css" />
     <Content Include="TermsAndConditions.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="UserPrivileges.aspx" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="vendor\bootstrap\js\bootstrap.js" />
@@ -1917,6 +1921,13 @@
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserPrivileges.aspx.cs">
+      <DependentUpon>UserPrivileges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserPrivileges.aspx.designer.cs">
+      <DependentUpon>UserPrivileges.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewCaseDetails.aspx.cs">
       <DependentUpon>ViewCaseDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2094,6 +2105,7 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

@@ -55,6 +55,7 @@ namespace LegalSystemWeb
                 caseNature.CaseNatureName = txtNatureName.Text;
 
                 caseNatureController.Update(caseNature);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Nature Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Add";
             }
             else
@@ -63,7 +64,7 @@ namespace LegalSystemWeb
 
                 caseNature.CaseNatureName = txtNatureName.Text;
                 caseNature.CaseNatureId = caseNatureController.Save(caseNature);
-
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Nature Added Succesfully!', 'success')", true);
 
             }
 

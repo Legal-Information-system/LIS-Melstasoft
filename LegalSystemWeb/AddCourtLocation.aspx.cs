@@ -89,6 +89,7 @@ namespace LegalSystemWeb
                 courtlocation.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
 
                 courtLocationController.Update(courtlocation, courtId, locationId);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Court Location Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -98,6 +99,7 @@ namespace LegalSystemWeb
                 courtlocation.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
 
                 courtlocation.CourtId = courtLocationController.Save(courtlocation);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Court Location Added Succesfully!', 'success')", true);
             }
 
             BindDataSource();

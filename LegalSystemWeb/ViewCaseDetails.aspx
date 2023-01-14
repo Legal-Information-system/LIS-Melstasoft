@@ -112,26 +112,26 @@
             <div class="card" style="width: 85%; margin-right: auto">
                 <div class="card-body" style="padding-left: 30px;">
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Company Unit</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblCompanyUnit" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Nature of Case</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblNature" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Previous Case Number</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblPrevCase" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
@@ -145,10 +145,10 @@
                         </div>
                     </div>--%>
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Assign Attorney</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblAttorney" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
@@ -156,28 +156,28 @@
 
                     <asp:Literal ID="ltCounselor" runat="server">  </asp:Literal>
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Case Open Date</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblCaseOpenDate" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <%if (lblStatus.Text == "Closed")
                         { %>
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Closed Remarks</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblCLoseRemarks" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <p>Closed User</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <asp:Label ID="lblCloseUser" runat="server" Text="N/A"></asp:Label>
                         </div>
                     </div>
@@ -189,10 +189,10 @@
         <div class="card" style="width: 85%; margin: auto; margin-bottom: 20px;">
             <div class="card-body" style="padding-left: 30px;">
                 <div class="row mb-1">
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                         <p>Case Description</p>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <asp:Label ID="lblDescription" runat="server" Text="N/A"></asp:Label>
                     </div>
                 </div>
@@ -212,11 +212,11 @@
                         <asp:BoundField DataField="CaseActivitId" HeaderText="Id" />
                         <asp:BoundField DataField="ActivityDateString" HeaderText="Date" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="assignAttorney.LawyerName" HeaderText="Assign Attorney" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="counsilor.LawyerName" HeaderText="Counsilor" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="counsilor.LawyerName" HeaderText="Counsellor" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="OtherSideLawyer" HeaderText="Other Side Lawyer" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="JudgeName" HeaderText="Judge Name" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="CompanyRep" HeaderText="Company Rep" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="actionTaken.ActionName" HeaderText="ActionT aken" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="actionTaken.ActionName" HeaderText="Action Taken" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="NextDateString" HeaderText="Next Date" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="nextAction.ActionName" HeaderText="Next Action" ItemStyle-HorizontalAlign="center" />
                     </Columns>
@@ -237,7 +237,7 @@
                     <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                     <Columns>
                         <asp:BoundField DataField="PaymentId" HeaderText="Id" />
-                        <asp:BoundField DataField="CaseNumber" HeaderText="CaseNumber" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="CaseNumber" HeaderText="Case Number" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="lawyer.LawyerName" HeaderText="Lawyer Name" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="Actions" HeaderText="Actions" ItemStyle-HorizontalAlign="center" />
                         <asp:BoundField DataField="Amount" HeaderText="Amount" ItemStyle-HorizontalAlign="center" />

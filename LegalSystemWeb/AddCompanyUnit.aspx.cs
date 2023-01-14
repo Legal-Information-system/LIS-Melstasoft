@@ -74,6 +74,7 @@ namespace LegalSystemWeb
 
 
                 companyUnitController.Update(companyUnit);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Company Unit Updated Succesfully!', 'success')", true);
                 btnSave.Text = "Save";
             }
             else
@@ -82,6 +83,7 @@ namespace LegalSystemWeb
                 companyUnit.CompanyUnitName = txtCompanyUnitName.Text;
                 string test = ddlCompany.SelectedValue;
                 companyUnit.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Company Unit Added Succesfully!', 'success')", true);
                 companyUnit.CompanyUnitId = companyUnitController.Save(companyUnit);
 
             }

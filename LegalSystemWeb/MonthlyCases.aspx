@@ -19,13 +19,13 @@
                             </Triggers>--%>
                         <ContentTemplate>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
 
                                     <asp:Literal ID="Literal5" runat="server" Text="Case Opened Month and Year"></asp:Literal>
 
                                 </div>
                                 <div class="col-sm-3">
-                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtYear" Style="margin-top: 5px" OnTextChanged="YearChanged" AutoPostBack="true"></asp:TextBox>
+                                    <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtYear" OnTextChanged="YearChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                 <div class="col-sm-3">
                                     <asp:DropDownList ID="ddlMonth" runat="server" CssClass="btn btn-outline-dark dropdown-toggle" AutoPostBack="true" OnSelectedIndexChanged="ddlMonthChanged" Width="100%">
@@ -45,7 +45,7 @@
                                 </div>
 
 
-                                <div class="col-sm-3" id="btnPrint" runat="server">
+                                <div class="col-sm-2" id="btnPrint" runat="server">
 
                                     <asp:button runat="server" cssclass="btn btn-primary btn-user btn-block" onclientclick="javascript:window.print();" text="Print" xmlns:asp="#unknown" />
 
@@ -134,36 +134,7 @@
                             <div id="lt">
                                 <asp:Literal ID="ltDetails" runat="server"></asp:Literal>
                             </div>
-                            <%--<table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Case Number</th>
-                                        <th scope="col">Created Date</th>
-                                        <th scope="col">Case Open Date</th>
-                                        <th scope="col">Claim Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>--%>
+
                         </ContentTemplate>
                     </asp:UpdatePanel>
 

@@ -17,6 +17,8 @@ namespace LegalSystemCore.Controller
         int Update(UserLogin userLogin);
         List<UserLogin> GetUserLoginList(bool with0);
         UserLogin GetUserLogin(UserLogin userLogin);
+
+        UserLogin GetUserLoginById(string userLoginId);
     }
 
     public class UserLoginControllerImpl : IUserLoginController
@@ -106,6 +108,32 @@ namespace LegalSystemCore.Controller
 
 
 
+            }
+            catch (Exception)
+            {
+                HttpContext.Current.Response.Redirect("500.aspx");
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return userLogin;
+        }
+
+        public UserLogin GetUserLoginById(string userLoginId)
+        {
+            Common.DbConnection dbConnection = null;
+            UserLogin userLogin = new UserLogin();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+
+                userLogin = userLoginDAO.GetUserLogin(dbConnection, userLoginId);
             }
             catch (Exception)
             {

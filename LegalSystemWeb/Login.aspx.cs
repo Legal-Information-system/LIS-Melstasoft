@@ -21,6 +21,7 @@ namespace LegalSystemWeb
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
+            IFunctionsController functionsController = ControllerFactory.CreateFunctionsController();
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1"); ;
@@ -37,11 +38,19 @@ namespace LegalSystemWeb
                 Session["User_Name"] = userLogin.UserName;
                 Session["company_id"] = userLogin.CompanyId;
                 Session["company_unit_id"] = userLogin.CompanyUnitId;
+                if (!functionsController.GetFunctionList().Any())
+                {
+                    functionsController.Init();
+                }
 
                 if (userLogin.UserRoleId == 3)
+                {
                     Response.Redirect("ViewPaymentMemo.aspx");
+                }
                 else
+                {
                     Response.Redirect("Dashboard.aspx");
+                }
 
             }
         }

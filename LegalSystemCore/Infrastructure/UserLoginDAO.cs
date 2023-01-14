@@ -15,6 +15,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(UserLogin userLogin, DbConnection dbConnection);
         List<UserLogin> GetUserLoginList(bool with0, DbConnection dbConnection);
 
+        UserLogin GetUserLogin(DbConnection dbConnection, string userLoginId);
         UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin);
     }
 
@@ -96,6 +97,23 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
 
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            userLogin = dataAccessObject.GetSingleOject<UserLogin>(dbConnection.dr);
+            dbConnection.dr.Close();
+            return userLogin;
+        }
+
+        public UserLogin GetUserLogin(DbConnection dbConnection, string userLoginId)
+        {
+
+            dbConnection.cmd.CommandText = "select * from user_login  where user_login_id = @UserLoginId AND is_active = 1";
+
+            dbConnection.cmd.Parameters.AddWithValue("@UserLoginId", userLoginId);
+
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+
+            UserLogin userLogin = new UserLogin();
             DataAccessObject dataAccessObject = new DataAccessObject();
             userLogin = dataAccessObject.GetSingleOject<UserLogin>(dbConnection.dr);
             dbConnection.dr.Close();

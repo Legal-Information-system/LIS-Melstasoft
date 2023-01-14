@@ -34,14 +34,15 @@ namespace LegalSystemWeb
         public static List<Party> defendent = new List<Party>();
         public static List<Counselor> counselorList = new List<Counselor>();
         public static string caseNumber;
-        List<string> filePaths = new List<string>();
-        List<ListItem> files = new List<ListItem>();
-        List<HttpPostedFile> listUplodedFile = new List<HttpPostedFile>();
+        public static List<string> filePaths = new List<string>();
+        public static List<ListItem> files = new List<ListItem>();
+        public static List<HttpPostedFileBase> listUplodedFile = new List<HttpPostedFileBase>();
+        public static List<DocumentCase> UplodedFilesList = new List<DocumentCase>();
         public static int documentIncrement = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Form.Attributes.Add("enctype", "multipart/form-data");
 
             if (Session["User_Id"] == null)
             {
@@ -373,8 +374,9 @@ namespace LegalSystemWeb
                             }
 
                             UploadFiles();
+                            ClearDocuments();
                             Clear();
-                            lblSuccessMsg.Text = "Record Updated Successfully!";
+
                         }
                     }
 
@@ -383,7 +385,8 @@ namespace LegalSystemWeb
                     clearDefendent();
                     clearPlaintif();
                     flag = 1;
-                    lblSuccessMsg.Text = "Record Updated Successfully!";
+
+
                 }
                 else
                 {
@@ -408,6 +411,12 @@ namespace LegalSystemWeb
                 {
                     dAttorney.Visible = true;
                     lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
+                }
+                if (flag == 1)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "alert", "swal('Success!', 'Case Created Succesfully!', 'success')", true);
+
+                    //ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Payment Approve Succesfully!', 'success');window.setTimeout(function(){window.location='CreateCase.aspx'},2500);", true);
                 }
 
             }
@@ -573,30 +582,37 @@ namespace LegalSystemWeb
             Document document = new Document();
             DocumentCase documentCase = new DocumentCase();
 
+            //int i = 0;
+            //foreach (HttpPostedFileBase file in listUplodedFile)
+            //{
+            //    if (file.ContentLength > 0)
+            //    {
+            //        file.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + caseNumber + filePaths[i]);
+            //        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
 
-            for (int i = 0; i < listUplodedFile.Count; i++)
+
+            //        document.DocumentType = "case";
+            //        documentCase.DocumentId = documentController.Save(document);
+
+            //        documentCase.DocumentName = caseNumber + filePaths[i];
+            //        documentCase.CaseNumber = txtCaseNumber.Text;
+            //        documentCase.DocumentDescription = "";
+            //        documentCaseController.Save(documentCase);
+            //    }
+            //}
+
+            foreach (var item in UplodedFilesList)
             {
-                string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
-                HttpPostedFile uploadFile = listUplodedFile[i];
+                document.DocumentType = "case";
+                item.DocumentId = documentController.Save(document);
 
-
-
-
-                if (uploadFile.ContentLength > 0)
-                {
-                    uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + filePaths[i]);
-                    //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
-
-
-                    document.DocumentType = "case";
-                    documentCase.DocumentId = documentController.Save(document);
-
-                    documentCase.DocumentName = filePaths[i];
-                    documentCase.CaseNumber = txtCaseNumber.Text;
-                    documentCase.DocumentDescription = "";
-                    documentCaseController.Save(documentCase);
-                }
+                documentCaseController.Save(item);
             }
+
+            listUplodedFile.Clear();
+            files.Clear();
+            filePaths.Clear();
+            BindDocuments();
         }
 
 
@@ -604,25 +620,49 @@ namespace LegalSystemWeb
         {
 
 
-            if (Uploader.HasFile)
+            if (Uploader.PostedFile != null)
             {
+                //listUplodedFile.Add(new HttpPostedFileWrapper(HttpContext.Current.Request.Files[0]));
+                //string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
+                //HttpPostedFileBase uploadFile = listUplodedFile.Last();
+
+                //if (uploadFile.ContentLength > 0)
+                //{
+                //    filePaths.Add(documentIncrement++ + uploadFile.FileName);
+                //    //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
+                //}
+
+
                 HttpFileCollection uploadFiles = Request.Files;
                 for (int i = 0; i < uploadFiles.Count; i++)
                 {
-                    string fileName = Path.GetFileName(Uploader.PostedFile.FileName);
                     HttpPostedFile uploadFile = uploadFiles[i];
-
                     if (uploadFile.ContentLength > 0)
                     {
 
-                        filePaths.Add(caseNumber + documentIncrement + uploadFile.FileName);
-                        //lblListOfUploadedFiles.Text += String.Format("{0}<br />", uploadFile.FileName);
-                        documentIncrement++;
-                        listUplodedFile.Add(uploadFile);
+                        uploadFile.SaveAs(Server.MapPath("~/SystemDocuments/CaseMaster/") + uploadFile.FileName);
+
+                        DocumentCase document = new DocumentCase
+                        {
+                            DocumentName = uploadFile.FileName,
+                            CaseNumber = txtCaseNumber.Text,
+                            DocumentDescription = ""
+
+                        };
+
+                        UplodedFilesList.Add(document);
                     }
                 }
                 BindDocuments();
+
             }
+        }
+
+        protected void ClearDocuments()
+        {
+            UplodedFilesList.Clear();
+            filePaths.Clear();
+            BindDocuments();
         }
 
 
@@ -635,22 +675,28 @@ namespace LegalSystemWeb
             int pageIndex = fileGridview.PageIndex;
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
-            FileInfo file = new FileInfo(filePaths[rowIndex]);
-            if (file.Exists)
+            //FileInfo file = new FileInfo(filePaths[rowIndex]);
+
+            //filePaths.RemoveAt(rowIndex);
+            //listUplodedFile.RemoveAt(rowIndex);
+
+            DocumentCase documentCase = UplodedFilesList[rowIndex];
+            string path = Server.MapPath("~/SystemDocuments/CaseMaster/");
+            string filePath = path + documentCase.DocumentName;
+
+            if (File.Exists(filePath))
             {
-                file.Delete();
-                filePaths.RemoveAt(rowIndex);
-                listUplodedFile.RemoveAt(rowIndex);
-
+                // If file found, delete it    
+                File.Delete(filePath);
+                UplodedFilesList.RemoveAt(rowIndex);
             }
-
 
             BindDocuments();
         }
 
         protected void BindDocuments()
         {
-            fileGridview.DataSource = listUplodedFile;
+            fileGridview.DataSource = UplodedFilesList;
             fileGridview.DataBind();
         }
 
