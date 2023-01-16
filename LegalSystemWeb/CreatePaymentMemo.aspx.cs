@@ -15,6 +15,7 @@ namespace LegalSystemWeb
 {
     public partial class CreatePaymentMemo : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         UserPrivilege activity = new UserPrivilege();
         List<UserPrivilege> listActivity = new List<UserPrivilege>();
         ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
@@ -35,7 +36,7 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (Session["User_Role_Id"].ToString() == "3")
+                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 17).Any())
                     {
                         Response.Redirect("404.aspx");
                     }

@@ -10,16 +10,14 @@ using System.Web.UI.WebControls;
 
 namespace LegalSystemWeb
 {
-    public partial class UserPrivileges : System.Web.UI.Page
+    public partial class UserRolePrivileges : System.Web.UI.Page
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
-        IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 22).Any())
+                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 23).Any())
                     Response.Redirect("404.aspx");
                 else
                 {
@@ -32,12 +30,10 @@ namespace LegalSystemWeb
             if (ddlUser.SelectedValue != "")
             {
                 gvUserPrevilages.Visible = true;
-                lblUserType.Text = userRoleController.GetUserRole(Convert.ToInt32(Session["User_Role_Id"])).RoleName;
                 BindFunctionList();
             }
             else
             {
-                lblUserType.Text = "";
                 gvUserPrevilages.Visible = false;
             }
         }
@@ -71,46 +67,30 @@ namespace LegalSystemWeb
 
             //ViewState["userList"] = userList;
 
-            IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
-            List<UserLogin> userLogins = userLoginController.GetUserLoginList(true);
-            ddlUser.DataSource = userLogins;
-            ddlUser.DataValueField = "UserId";
-            ddlUser.DataTextField = "UserName";
+            IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
+            List<UserRole> userRoles = userRoleController.GetUserRoleList();
+            ddlUser.DataSource = userRoles;
+            ddlUser.DataValueField = "RoleId";
+            ddlUser.DataTextField = "RoleName";
             ddlUser.DataBind();
-            ddlUser.Items.Insert(0, new ListItem("-- select user --", ""));
-            ViewState["userLogins"] = userLogins;
+            ddlUser.Items.Insert(0, new ListItem("-- select user role --", ""));
+            ViewState["userLogins"] = userRoles;
         }
 
 
         private void BindFunctionList()
         {
+            //List<SystemUser> userList = (List<SystemUser>)ViewState["userList"];
+            //SystemUser systemUser = userList.Where(x => x.SystemUserId == Convert.ToInt32(ddlUser.SelectedValue)).Single();
+            //lblUserType.Text = systemUser._UserType.UserTypeName;
 
-            List<UserLogin> userLogins = (List<UserLogin>)ViewState["userLogins"];
-            UserLogin userLogin = userLogins.Where(x => x.UserId == Convert.ToInt32(ddlUser.SelectedValue)).Single();
-            lblUserType.Text = userRoleController.GetUserRole(userLogin.UserRoleId).RoleName;
-            IFunctionsController functionsController = ControllerFactory.CreateFunctionsController();
-            IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
-            IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
-            List<Functions> functions = functionsController.GetFunctionList();
+            //AutFunctionController autFunctionController = ControllerFactory.CreateAutFunctionController();
+            //List<AutFunction> autFunctionList = autFunctionController.GetAllAutFunction();
 
-            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(userLogin.UserRoleId.ToString());
-            List<UserPrivilege> UserPrivileges = userPrivilegeController.GetUserPrivilegeList(userLogin.UserId);
-
-            foreach (var item in functions)
-            {
-                if (userRolePrivileges.Any(x => x.FunctionId == item.FunctionId) || UserPrivileges.Any(x => x.FunctionId == item.FunctionId && x.IsGrantRevoke == 1))
-                {
-                    item.Status = "Yes";
-                    if (UserPrivileges.Any(x => x.FunctionId == item.FunctionId && x.IsGrantRevoke == 0))
-                    {
-                        item.Status = "NO";
-                    }
-                }
-                else
-                {
-                    item.Status = "NO";
-                }
-            }
+            //foreach (var item in autFunctionList)
+            //{
+            //    item.Status = "NO";
+            //}
 
             //AutUserFunctionController autUserFunctionController = ControllerFactory.CreateAutUserFunctionController();
             //List<AutUserFunction> autUserFunctionList = autUserFunctionController.GetAllAutUserFunctionByUserId(false, Convert.ToInt32(ddlUser.SelectedValue));
@@ -130,10 +110,12 @@ namespace LegalSystemWeb
             //    }
             //}
 
-            gvUserPrevilages.DataSource = functions;
-            gvUserPrevilages.DataBind();
+            //gvUserPrevilages.DataSource = autFunctionList;
+            //gvUserPrevilages.DataBind();
 
-            ViewState["functions"] = functions;
+            //ViewState["previlagesList"] = autFunctionList;
+
+
 
         }
     }

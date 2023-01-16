@@ -13,5 +13,7 @@ namespace LegalSystemCore.Domain
 
         [DBField("function_name")]
         public string FunctionName { get; set; }
+
+        public string Status { get; set; }
     }
 }

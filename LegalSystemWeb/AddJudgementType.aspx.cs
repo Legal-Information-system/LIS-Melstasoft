@@ -14,7 +14,7 @@ namespace LegalSystemWeb
     public partial class AddJudgementType : System.Web.UI.Page
     {
         List<JudgementType> judgementTypeList = new List<JudgementType>();
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -23,7 +23,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                if (userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 9).Any())
                 {
                     BindDataSource();
                 }

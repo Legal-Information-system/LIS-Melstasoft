@@ -18,7 +18,7 @@ namespace LegalSystemWeb
 {
     public partial class CreateCase : System.Web.UI.Page
     {
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         int UserId, UserRoleId;
         string UserName;
         List<CourtLocation> courtlocation = new List<CourtLocation>();
@@ -50,7 +50,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
+                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 16).Any())
                     Response.Redirect("404.aspx");
                 else
                 {

@@ -115,8 +115,9 @@
         </div>
         <div id="UpdateStatus">
             <%if (lblPaymentStatus.Text == "Pending")
-                { %>
-            <%if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                {
+                    LegalSystemCore.Controller.IUserRolePrivilegeController userRolePrivilegeController = LegalSystemCore.Common.ControllerFactory.CreateUserRolePrivilegeController();%>
+            <%if (userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 14).Any())
                 { %>
             <div class="row mb-5">
                 <div class="col-sm-4" style="text-align: end; padding-top: 20px;">

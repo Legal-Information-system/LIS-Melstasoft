@@ -22,6 +22,7 @@ namespace LegalSystemWeb
         {
             IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
             IFunctionsController functionsController = ControllerFactory.CreateFunctionsController();
+            IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1"); ;
@@ -41,6 +42,10 @@ namespace LegalSystemWeb
                 if (!functionsController.GetFunctionList().Any())
                 {
                     functionsController.Init();
+                }
+                if (!userRolePrivilegeController.GetUserRolePrivilegeList().Any())
+                {
+                    userRolePrivilegeController.Init();
                 }
 
                 if (userLogin.UserRoleId == 3)

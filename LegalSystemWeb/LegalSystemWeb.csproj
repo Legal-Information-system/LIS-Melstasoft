@@ -115,6 +115,7 @@
     <Content Include="Styles\sweetalert.css" />
     <Content Include="TermsAndConditions.aspx" />
     <Content Include="UpdateCaseActivity.aspx" />
+    <Content Include="UserRolePrivileges.aspx" />
     <Content Include="UserPrivileges.aspx" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js" />
@@ -1920,6 +1921,13 @@
     </Compile>
     <Compile Include="UpdateCaseActivity.aspx.designer.cs">
       <DependentUpon>UpdateCaseActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserRolePrivileges.aspx.cs">
+      <DependentUpon>UserRolePrivileges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserRolePrivileges.aspx.designer.cs">
+      <DependentUpon>UserRolePrivileges.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserPrivileges.aspx.cs">
       <DependentUpon>UserPrivileges.aspx</DependentUpon>

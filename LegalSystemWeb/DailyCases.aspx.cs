@@ -16,6 +16,7 @@ namespace LegalSystemWeb
 {
     public partial class DailyCases : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
         protected void Page_Load(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (Session["User_Role_Id"].ToString() != "1")
+                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 18).Any())
                     {
                         Response.Redirect("404.aspx");
                     }

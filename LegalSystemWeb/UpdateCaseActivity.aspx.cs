@@ -15,6 +15,7 @@ namespace LegalSystemWeb
 {
     public partial class UpdateCaseActivity : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         List<JudgementType> judgementTypeList = new List<JudgementType>(4);
         List<Lawyer> lawyerList = new List<Lawyer>(4);
         List<CaseAction> caseActionList = new List<CaseAction>(4);
@@ -29,7 +30,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
+                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 21).Any())
                     Response.Redirect("404.aspx");
                 else
                 {

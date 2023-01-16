@@ -14,6 +14,7 @@ namespace LegalSystemWeb
     public partial class AddPaymentStatus : System.Web.UI.Page
     {
         List<PaymentStatus> paymentStatusList = new List<PaymentStatus>();
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,7 +24,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                if (userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 12).Any())
                 {
                     BindDataSource();
                 }

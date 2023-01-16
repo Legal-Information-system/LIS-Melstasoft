@@ -20,7 +20,7 @@ namespace LegalSystemWeb
         CaseMaster caseMaster = new CaseMaster();
         string caseNumber;
         int UserId, companyId;
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -35,11 +35,16 @@ namespace LegalSystemWeb
                 //{
                 if (!IsPostBack)
                 {
-                    SetCaseMasterData();
-                    caseNumber = Request.QueryString["CaseNumber"].ToString();
-                    BindCaseActivityList(caseNumber);
-                    BindDocumentList(caseNumber);
-                    BindPaymentDetailsList(caseNumber);
+                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 24).Any())
+                        Response.Redirect("404.aspx");
+                    else
+                    {
+                        SetCaseMasterData();
+                        caseNumber = Request.QueryString["CaseNumber"].ToString();
+                        BindCaseActivityList(caseNumber);
+                        BindDocumentList(caseNumber);
+                        BindPaymentDetailsList(caseNumber);
+                    }
                 }
                 //}
             }
@@ -51,27 +56,32 @@ namespace LegalSystemWeb
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
                 caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString(), true);
+                List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
 
                 UserId = Convert.ToInt32(Session["User_Role_Id"]);
                 companyId = Convert.ToInt32(Session["company_id"].ToString());
                 int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
-
-                if (UserId == 4)
+                if (!userRolePrivileges.Where(x => x.FunctionId == 28).Any())
                 {
-                    if (caseMaster.CompanyId != companyId)
+                    if (userRolePrivileges.Where(x => x.FunctionId == 29).Any())
                     {
-                        Response.Redirect("404.aspx");
+                        if (caseMaster.CompanyId != companyId)
+                        {
+                            Response.Redirect("404.aspx");
+                        }
+                    }
+                    else
+                    {
+
+                        if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
+                        {
+                            if (caseMaster.CompanyUnitId != companyUnitId)
+                            {
+                                Response.Redirect("404.aspx");
+                            }
+                        }
                     }
                 }
-
-                if (UserId == 5)
-                {
-                    if (caseMaster.CompanyUnitId != companyUnitId)
-                    {
-                        Response.Redirect("404.aspx");
-                    }
-                }
-
 
                 if (caseMaster.JudgementTypeId > 0)
                 {

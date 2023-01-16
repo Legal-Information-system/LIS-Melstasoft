@@ -12,6 +12,7 @@ namespace LegalSystemWeb
 {
     public partial class CreateAccount : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,7 +22,7 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() != "1")
+                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 15).Any())
                 {
                     Response.Redirect("404.aspx");
                 }

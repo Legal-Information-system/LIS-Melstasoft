@@ -15,6 +15,8 @@ namespace LegalSystemWeb
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+
         public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
         public string dates, caseCount, caseNumber, per;
         public int DailyTotal, MonthlyTotal = 0;
@@ -26,9 +28,11 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
+                List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+                if (!(userRolePrivileges.Where(x => x.FunctionId == 20).Any()) && userRolePrivileges.Where(x => x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30).Any())
+                {
                     Response.Redirect("ViewPaymentMemo.aspx");
-
+                }
                 if (!IsPostBack)
                 {
                     BindCompanyList();
@@ -40,27 +44,33 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             IDashboardCardController dashboardCardController = ControllerFactory.CreateDashboardCardController();
-
-            if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+            if (userRolePrivileges.Where(x => x.FunctionId == 28).Any())
             {
                 dashboardCardList = dashboardCardController.GetCardDetails();
                 progressTable = dashboardCardController.GetMonthProgress();
                 claimAmoutTable = dashboardCardController.GetClaimAmountPercentage();
             }
-
-
-            if (Session["User_Role_Id"].ToString() == "4")
+            else
             {
-                dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(Convert.ToInt32(Session["company_id"].ToString()));
-                progressTable = dashboardCardController.GetMonthProgressUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
-                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
-            }
 
-            if (Session["User_Role_Id"].ToString() == "5")
-            {
-                dashboardCardList = dashboardCardController.GetCardDetailsUnit(Convert.ToInt32(Session["company_unit_id"].ToString()));
-                progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
-                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
+
+                if (userRolePrivileges.Where(x => x.FunctionId == 29).Any())
+                {
+                    dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(Convert.ToInt32(Session["company_id"].ToString()));
+                    progressTable = dashboardCardController.GetMonthProgressUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
+                    claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
+                }
+                else
+                {
+
+                    if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
+                    {
+                        dashboardCardList = dashboardCardController.GetCardDetailsUnit(Convert.ToInt32(Session["company_unit_id"].ToString()));
+                        progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
+                        claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
+                    }
+                }
             }
 
             foreach (DataRow row in dashboardCardList.Rows)

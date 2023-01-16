@@ -20,7 +20,7 @@ namespace LegalSystemWeb
         List<CaseMaster> caseMasterListO = new List<CaseMaster>();
         List<CaseMaster> caseMasterListC = new List<CaseMaster>();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -35,8 +35,13 @@ namespace LegalSystemWeb
                 //{
                 if (!IsPostBack)
                 {
-                    name = Request.QueryString["name"].ToString();
-                    BindCaseStatus();
+                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 25).Any())
+                        Response.Redirect("404.aspx");
+                    else
+                    {
+                        name = Request.QueryString["name"].ToString();
+                        BindCaseStatus();
+                    }
                 }
                 //}
             }
@@ -56,6 +61,7 @@ namespace LegalSystemWeb
         private void BindCaseList()
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
 
             caseMasterListO = caseMasterController.GetCaseMasterList(true);
             caseMasterList = caseMasterController.GetCaseMasterList(false);
@@ -67,13 +73,18 @@ namespace LegalSystemWeb
             companyId = Convert.ToInt32(Session["company_id"].ToString());
             int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
 
-            if (UserId == 4 || UserId == 5)
+            if (!userRolePrivileges.Where(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28).Any())
+            {
+                Response.Redirect("404.aspx");
+            }
+
+            if (userRolePrivileges.Where(x => x.FunctionId == 29 || x.FunctionId == 30).Any())
             {
                 caseMasterListO = caseMasterListO.Where(c => c.CompanyId == companyId).ToList();
                 caseMasterListC = caseMasterListC.Where(c => c.CompanyId == companyId).ToList();
             }
 
-            if (UserId == 5)
+            if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
             {
                 caseMasterListO = caseMasterListO.Where(c => c.CompanyUnitId == companyUnitId).ToList();
                 caseMasterListC = caseMasterListC.Where(c => c.CompanyUnitId == companyUnitId).ToList();

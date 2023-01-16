@@ -50,7 +50,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "select * from user_privilege where user_login-id = @UserLoginId";
+            dbConnection.cmd.CommandText = "select * from user_privilege where user_login_id = @UserLoginId";
 
             dbConnection.cmd.Parameters.AddWithValue("@UserLoginId", userLoginId);
 
