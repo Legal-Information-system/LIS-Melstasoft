@@ -19,7 +19,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-sm-6">
-                                    <asp:Literal ID="lblUser" runat="server" Text="Select User Role"></asp:Literal>
+                                    <asp:Literal ID="lblUser" runat="server" Text="Select User"></asp:Literal>
                                 </div>
                                 <div class="col-md-6">
                                     <asp:DropDownList ID="ddlUser" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"
@@ -45,15 +45,17 @@
 
                                 <asp:GridView ID="gvUserPrevilages" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered">
                                     <Columns>
-
-                                        <asp:BoundField DataField="FunctionName" HeaderText="Page or Function" HeaderStyle-CssClass="table-dark">
+                                        <asp:BoundField DataField="FunctionId" HeaderText="Function Id" HeaderStyle-CssClass="table-dark">
+                                            <HeaderStyle CssClass="table-dark"></HeaderStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="FunctionName" HeaderText="Page or Function Name" HeaderStyle-CssClass="table-dark">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
                                         </asp:BoundField>
 
-                                        <%--<asp:BoundField DataField="Status" HeaderText="Status" HeaderStyle-CssClass="table-dark">
+                                        <asp:BoundField DataField="Status" HeaderText="Status" HeaderStyle-CssClass="table-dark">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
-                                        </asp:BoundField>--%>
-                                        <%--<asp:TemplateField ItemStyle-HorizontalAlign="center">
+                                        </asp:BoundField>
+                                        <asp:TemplateField ItemStyle-HorizontalAlign="center">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
                                             <ItemTemplate>
                                                 <asp:LinkButton ID="btnChange" runat="server" CssClass="btn btn-info btn-user btn-block"
@@ -61,9 +63,10 @@
                                             Change
                                                 </asp:LinkButton>
                                             </ItemTemplate>
-                                        </asp:TemplateField>--%>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
+
 
                             </div>
                         </div>

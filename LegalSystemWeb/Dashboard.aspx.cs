@@ -16,7 +16,7 @@ namespace LegalSystemWeb
     public partial class Dashboard : System.Web.UI.Page
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
-
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
         public string dates, caseCount, caseNumber, per;
         public int DailyTotal, MonthlyTotal = 0;
@@ -29,7 +29,10 @@ namespace LegalSystemWeb
             else
             {
                 List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
-                if (!(userRolePrivileges.Where(x => x.FunctionId == 20).Any()) && userRolePrivileges.Where(x => x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30).Any())
+
+                if (!((userRolePrivileges.Where(x => x.FunctionId == 20).Any()) && userRolePrivileges.Where(x => x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30).Any() &&
+                !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => (x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 0)) ||
+                userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => (x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 1)))
                 {
                     Response.Redirect("ViewPaymentMemo.aspx");
                 }
@@ -45,7 +48,10 @@ namespace LegalSystemWeb
         {
             IDashboardCardController dashboardCardController = ControllerFactory.CreateDashboardCardController();
             List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
-            if (userRolePrivileges.Where(x => x.FunctionId == 28).Any())
+            List<UserPrivilege> UserPrivileges = userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"]));
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 28).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 1)))
             {
                 dashboardCardList = dashboardCardController.GetCardDetails();
                 progressTable = dashboardCardController.GetMonthProgress();
@@ -55,7 +61,9 @@ namespace LegalSystemWeb
             {
 
 
-                if (userRolePrivileges.Where(x => x.FunctionId == 29).Any())
+                if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 29).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 29 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 29 && x.IsGrantRevoke == 1)))
                 {
                     dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(Convert.ToInt32(Session["company_id"].ToString()));
                     progressTable = dashboardCardController.GetMonthProgressUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
@@ -64,7 +72,9 @@ namespace LegalSystemWeb
                 else
                 {
 
-                    if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
+                    if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 30).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 1)))
                     {
                         dashboardCardList = dashboardCardController.GetCardDetailsUnit(Convert.ToInt32(Session["company_unit_id"].ToString()));
                         progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));

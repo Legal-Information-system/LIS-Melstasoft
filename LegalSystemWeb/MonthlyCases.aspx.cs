@@ -16,6 +16,7 @@ namespace LegalSystemWeb
     public partial class MonthlyCases : System.Web.UI.Page
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
         protected void Page_Load(object sender, EventArgs e)
@@ -28,7 +29,9 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 19).Any())
+                    if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 19).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 19 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 19 && x.IsGrantRevoke == 1)))
                     {
                         Response.Redirect("404.aspx");
                     }

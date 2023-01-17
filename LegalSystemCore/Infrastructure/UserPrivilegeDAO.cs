@@ -38,7 +38,7 @@ namespace LegalSystemCore.Infrastructure
 
 
 
-            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+            output = Convert.ToInt32(dbConnection.cmd.ExecuteNonQuery());
 
 
             return output;
@@ -68,7 +68,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "Update activity set is_grant_revoke = @IsGrantRevoke WHERE user_login_id = @UserLoginId AND function_id = @FunctionId ";
+            dbConnection.cmd.CommandText = "Update user_privilege set is_grant_revoke = @IsGrantRevoke WHERE user_login_id = @UserLoginId AND function_id = @FunctionId ";
 
 
             dbConnection.cmd.Parameters.AddWithValue("@UserLoginId", userPrivilege.UserLoginId);

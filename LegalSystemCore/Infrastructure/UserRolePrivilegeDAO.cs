@@ -67,7 +67,7 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@UserRoleId", userRolePrivilege.UserRoleId);
             dbConnection.cmd.Parameters.AddWithValue("@FunctionId", userRolePrivilege.FunctionId);
 
-            output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());
+            output = dbConnection.cmd.ExecuteNonQuery();
 
             return output;
         }
@@ -100,7 +100,7 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-            dbConnection.cmd.CommandText = "UPDATE user_role_privillege SET is_active = 0 WHERE user_role_id = @UserRoleId  AND function_id = @FunctionId";
+            dbConnection.cmd.CommandText = "Delete user_role_privilege WHERE user_role_id = @UserRoleId  AND function_id = @FunctionId";
 
             dbConnection.cmd.Parameters.AddWithValue("@UserRoleId", userRolePrivilege.UserRoleId);
             dbConnection.cmd.Parameters.AddWithValue("@FunctionId", userRolePrivilege.FunctionId);

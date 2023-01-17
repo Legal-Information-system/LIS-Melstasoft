@@ -28,14 +28,7 @@
                                 </div>
                             </div>
 
-                            <%--<div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <asp:Literal ID="ltlUserType" runat="server" Text="Current User Type"></asp:Literal>
-                                </div>
-                                <div class="col-md-6">
-                                    <asp:Label ID="lblUserType" runat="server" Text="" CssClass="form-control form-control-user"></asp:Label>
-                                </div>
-                            </div>--%>
+
                         </div>
 
                     </div>
@@ -45,15 +38,13 @@
 
                                 <asp:GridView ID="gvUserPrevilages" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered">
                                     <Columns>
-                                        <asp:BoundField DataField="AutFunctionId" HeaderText="ID" HeaderStyle-CssClass="table-dark">
+                                        <asp:BoundField DataField="FunctionId" HeaderText="Function Id" HeaderStyle-CssClass="table-dark">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="FunctionName" HeaderText="Name" HeaderStyle-CssClass="table-dark">
+                                        <asp:BoundField DataField="FunctionName" HeaderText="Page or Function Name" HeaderStyle-CssClass="table-dark">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="Url" HeaderText="URL" HeaderStyle-CssClass="table-dark">
-                                            <HeaderStyle CssClass="table-dark"></HeaderStyle>
-                                        </asp:BoundField>
+
                                         <asp:BoundField DataField="Status" HeaderText="Status" HeaderStyle-CssClass="table-dark">
                                             <HeaderStyle CssClass="table-dark"></HeaderStyle>
                                         </asp:BoundField>
@@ -68,6 +59,7 @@
                                         </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
+
 
                             </div>
                         </div>

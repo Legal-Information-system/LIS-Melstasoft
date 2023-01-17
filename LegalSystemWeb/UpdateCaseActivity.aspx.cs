@@ -16,9 +16,10 @@ namespace LegalSystemWeb
     public partial class UpdateCaseActivity : System.Web.UI.Page
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
-        List<JudgementType> judgementTypeList = new List<JudgementType>(4);
-        List<Lawyer> lawyerList = new List<Lawyer>(4);
-        List<CaseAction> caseActionList = new List<CaseAction>(4);
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
+        List<JudgementType> judgementTypeList = new List<JudgementType>();
+        List<Lawyer> lawyerList = new List<Lawyer>();
+        List<CaseAction> caseActionList = new List<CaseAction>();
         int UserId;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,7 +31,9 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 21).Any())
+                if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 21).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 21 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 21 && x.IsGrantRevoke == 1)))
                     Response.Redirect("404.aspx");
                 else
                 {

@@ -18,6 +18,7 @@ namespace LegalSystemWeb
 {
     public partial class CreateCase : System.Web.UI.Page
     {
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         int UserId, UserRoleId;
         string UserName;
@@ -50,8 +51,12 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 16).Any())
+                if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 16).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 16 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 16 && x.IsGrantRevoke == 1)))
+                {
                     Response.Redirect("404.aspx");
+                }
                 else
                 {
                     if (!IsPostBack)
@@ -879,6 +884,8 @@ namespace LegalSystemWeb
         }
 
 
+
+
         protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
         {
             gvCounselor.PageIndex = e.NewPageIndex;
@@ -919,6 +926,8 @@ namespace LegalSystemWeb
 
         }
 
+
+
         protected void btndelete_ClickPlaintif(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
@@ -932,6 +941,18 @@ namespace LegalSystemWeb
 
         }
 
+        protected void btnEdit_ClickPlaintiff(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvPlaintif.PageSize;
+            int pageIndex = gvPlaintif.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            txtPlaintif.Text = plaintif[rowIndex].PartyName;
+            plaintif.RemoveAll(x => x.PartyName == plaintif[rowIndex].PartyName);
+            BindPlaintifList();
+        }
+
         protected void btndelete_ClickDefendent(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
@@ -940,6 +961,19 @@ namespace LegalSystemWeb
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
 
+            defendent.RemoveAll(x => x.PartyName == defendent[rowIndex].PartyName);
+            BindDefendentList();
+
+        }
+
+        protected void btnEdit_ClickDefendent(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvDefendent.PageSize;
+            int pageIndex = gvDefendent.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            txtDefendent.Text = defendent[rowIndex].PartyName;
             defendent.RemoveAll(x => x.PartyName == defendent[rowIndex].PartyName);
             BindDefendentList();
 

@@ -16,6 +16,7 @@ namespace LegalSystemWeb
     public partial class CreatePaymentMemo : System.Web.UI.Page
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         UserPrivilege activity = new UserPrivilege();
         List<UserPrivilege> listActivity = new List<UserPrivilege>();
         ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
@@ -36,7 +37,9 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (!userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 17).Any())
+                    if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 17).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 17 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 17 && x.IsGrantRevoke == 1)))
                     {
                         Response.Redirect("404.aspx");
                     }
