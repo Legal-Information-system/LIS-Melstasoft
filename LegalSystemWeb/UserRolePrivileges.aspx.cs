@@ -77,7 +77,7 @@ namespace LegalSystemWeb
         {
 
             IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
-            List<UserRole> userRoles = userRoleController.GetUserRoleList();
+            List<UserRole> userRoles = userRoleController.GetUserRoleList().Where(x => x.RoleId != 1).ToList();
             ddlUser.DataSource = userRoles;
             ddlUser.DataValueField = "RoleId";
             ddlUser.DataTextField = "RoleName";

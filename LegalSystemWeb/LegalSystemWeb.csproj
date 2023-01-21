@@ -105,6 +105,7 @@
     <Content Include="obj\Debug\LegalSystemWeb.dll" />
     <Content Include="obj\Debug\LegalSystemWeb.pdb" />
     <Content Include="PrivacyPolicy.aspx" />
+    <Content Include="ResetPassword.aspx" />
     <Content Include="Scripts\sweetalert-dev.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Styles\Site.css" />
@@ -1675,6 +1676,7 @@
     <Content Include="vendor\jquery\jquery.min.js" />
     <Content Include="vendor\jquery\jquery.slim.js" />
     <Content Include="vendor\jquery\jquery.slim.min.js" />
+    <Content Include="ViewCaseActivity.aspx" />
     <Content Include="ViewCaseDetails.aspx" />
     <Content Include="ViewCases.aspx" />
     <Content Include="ViewPaymentMemo.aspx" />
@@ -1901,6 +1903,13 @@
       <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1936,6 +1945,13 @@
     <Compile Include="UserPrivileges.aspx.designer.cs">
       <DependentUpon>UserPrivileges.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewCaseActivity.aspx.cs">
+      <DependentUpon>ViewCaseActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewCaseActivity.aspx.designer.cs">
+      <DependentUpon>ViewCaseActivity.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewCaseDetails.aspx.cs">
       <DependentUpon>ViewCaseDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1961,7 +1977,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="SystemDocuments\CaseMaster\" />
+    <Folder Include="SystemDocuments\CaseMaster\CaseActivity\" />
     <Folder Include="SystemDocuments\PaymentMemo\PaidPayments\" />
     <Folder Include="SystemDocuments\PaymentMemo\RequestPayments\" />
   </ItemGroup>

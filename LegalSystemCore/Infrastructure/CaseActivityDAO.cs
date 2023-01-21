@@ -14,7 +14,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(CaseActivity caseActivity, DbConnection dbConnection);
         int Delete(CaseActivity caseActivityte, DbConnection dbConnection);
         List<CaseActivity> GetCaseActivityList(DbConnection dbConnection);
-
+        CaseActivity GetCaseActivity(string caseActivityNumber, DbConnection dbConnection);
     }
 
     public class CaseActivityDAOSqlImpl : ICaseActivityDAO
@@ -53,7 +53,8 @@ namespace LegalSystemCore.Infrastructure
             {
                 dbConnection.cmd.CommandText = "Insert into case_activity (case_number, activity_Date, assign_attorney_id,counsilor_id , other_side_lawyer, judge_name, " +
                     "company_rep, action_taken_id, next_date, remarks, next_action_id, create_user_id ) values (@CaseNumber,@ActivityDate,@AssignAttorneyId,@CounsilorId," +
-                    "@OtherSideLawyer,@JudgeName,@CompanyRep,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId)";
+                    "@OtherSideLawyer,@JudgeName,@CompanyRep,@ActionTakenId,@NextDate,@Remarks,@NextActionId,@CreateUserId); " +
+                    "SELECT SCOPE_IDENTITY()";
             }
 
 
@@ -99,6 +100,22 @@ namespace LegalSystemCore.Infrastructure
 
 
             return caseActivityList;
+        }
+
+        public CaseActivity GetCaseActivity(string caseActivityNumber, DbConnection dbConnection)
+        {
+            CaseActivity caseMaster = new CaseActivity();
+
+            //dbConnection = new DbConnection();
+            dbConnection.cmd.CommandText = "select * from case_activity WHERE case_activity_id = @CaseNumber";
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", caseActivityNumber);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            caseMaster = dataAccessObject.GetSingleOject<CaseActivity>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return caseMaster;
         }
         public int Update(CaseActivity caseActivity, DbConnection dbConnection)
         {

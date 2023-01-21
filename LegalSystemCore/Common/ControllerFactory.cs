@@ -175,5 +175,11 @@ namespace LegalSystemCore.Common
             IUserRolePrivilegeController userRolePrivilegeController = new UserRolePrivilegeControllerImpl();
             return (IUserRolePrivilegeController)userRolePrivilegeController;
         }
+
+        public static IDocumentCaseActivityController CreateDocumentCaseActivityController()
+        {
+            IDocumentCaseActivityController documentCaseActivityController = new DocumentCaseActivityControllerImpl();
+            return (IDocumentCaseActivityController)documentCaseActivityController;
+        }
     }
 }

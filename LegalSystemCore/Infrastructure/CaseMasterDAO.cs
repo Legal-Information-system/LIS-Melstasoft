@@ -51,7 +51,7 @@ namespace LegalSystemCore.Infrastructure
             if (withoutclosed)
                 dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 1 AND is_active = 1";
             else
-                dbConnection.cmd.CommandText = "select * from case_master WHERE is_active = 1";
+                dbConnection.cmd.CommandText = "select * from case_master WHERE case_status_id = 2 AND is_active = 1";
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

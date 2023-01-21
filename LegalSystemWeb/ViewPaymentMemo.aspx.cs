@@ -16,6 +16,7 @@ namespace LegalSystemWeb
         IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Session["User_Id"] == null)
             {
                 Response.Redirect("Login.aspx");
@@ -25,7 +26,9 @@ namespace LegalSystemWeb
                 if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 26).Any()
                      && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 26 && x.IsGrantRevoke == 0))) ||
                      userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 26 && x.IsGrantRevoke == 1)))
+                {
                     Response.Redirect("404.aspx");
+                }
                 else
                 {
                     BindDataSource();
@@ -59,12 +62,19 @@ namespace LegalSystemWeb
             int companyId = Convert.ToInt32(Session["company_id"].ToString());
             int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
 
-            if (!userRolePrivileges.Where(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28).Any())
+            if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28 && x.IsGrantRevoke == 1))
+                && ((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 20).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 20 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 20 && x.IsGrantRevoke == 1)))
             {
                 Response.Redirect("404.aspx");
             }
 
-            if (userRolePrivileges.Where(x => x.FunctionId == 29 || x.FunctionId == 30).Any())
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 29 || x.FunctionId == 30 || x.FunctionId == 28 && x.IsGrantRevoke == 1)))
             {
                 if (listPayment.Any((c => c.caseMaster.CompanyId == companyId)))
                 {
@@ -76,7 +86,9 @@ namespace LegalSystemWeb
                 }
             }
 
-            if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 30).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 1)))
             {
                 listPayment = listPayment.Where(c => c.caseMaster.CompanyUnitId == companyUnitId).ToList();
             }

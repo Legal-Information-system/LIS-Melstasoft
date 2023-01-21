@@ -108,11 +108,14 @@ namespace LegalSystemWeb
 
                 Clear();
                 lblErrorMsg.Text = "";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'User Created Succesfully!', 'success')", true);
+
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "alert", "swal('Success!', 'User Created Succesfully!', 'success')", true);
+                Clear();
 
             }
             else
             {
+                Clear();
                 lblSuccessMsg.Text = "";
                 lblErrorMsg.Text = "User Already Exists!";
             }

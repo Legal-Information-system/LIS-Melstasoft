@@ -209,16 +209,16 @@
                     CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True">
                     <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
                     <Columns>
-                        <asp:BoundField DataField="CaseActivitId" HeaderText="Id" />
+
                         <asp:BoundField DataField="ActivityDateString" HeaderText="Date" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="assignAttorney.LawyerName" HeaderText="Assign Attorney" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="counsilor.LawyerName" HeaderText="Counsellor" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="OtherSideLawyer" HeaderText="Other Side Lawyer" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="JudgeName" HeaderText="Judge Name" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="CompanyRep" HeaderText="Company Rep" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="actionTaken.ActionName" HeaderText="Action Taken" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="NextDateString" HeaderText="Next Date" ItemStyle-HorizontalAlign="center" />
-                        <asp:BoundField DataField="nextAction.ActionName" HeaderText="Next Action" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="court" HeaderText="Court" ItemStyle-HorizontalAlign="center" />
+                        <asp:BoundField DataField="location" HeaderText="Location" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="ActionTaken.ActionName" HeaderText="Action Taken" ItemStyle-HorizontalAlign="center" />
+                        <asp:TemplateField ItemStyle-HorizontalAlign="center">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnView" CssClass="btn btn-info btn-user btn-block" runat="server" OnClick="btnViewActivity_Click">View Details</asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>
@@ -278,19 +278,32 @@
         </div>
 
 
-        <% if (Session["User_Role_Id"].ToString() == "1")
+        <% if ((rolePrivileges.Where(x => x.FunctionId == 32 || x.FunctionId == 33).Any()
+                                  && !(userPrivileges.Any(x => x.FunctionId == 32 || x.FunctionId == 33 && x.IsGrantRevoke == 0))) ||
+                                  userPrivileges.Any(x => x.FunctionId == 32 || x.FunctionId == 33 && x.IsGrantRevoke == 1))
             {
         %>
 
         <div class="row">
+            <% if ((rolePrivileges.Where(x => x.FunctionId == 32).Any()
+                    && !(userPrivileges.Any(x => x.FunctionId == 32 && x.IsGrantRevoke == 0))) ||
+                    userPrivileges.Any(x => x.FunctionId == 32 && x.IsGrantRevoke == 1))
+                {
+            %>
             <div class="col-3">
                 <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn-warning" Width="100%" Height="150%" BorderStyle="None" OnClick="btnEdit_Click" />
             </div>
+            <%
+                }
+                if ((rolePrivileges.Where(x => x.FunctionId == 33).Any()
+                    && !(userPrivileges.Any(x => x.FunctionId == 33 && x.IsGrantRevoke == 0))) ||
+                    userPrivileges.Any(x => x.FunctionId == 33 && x.IsGrantRevoke == 1))
+                {
+            %>
             <div class="col-3">
                 <asp:Button ID="btnDelete" runat="server" Text="Delete Case" CssClass="btn-danger" Width="100%" Height="150%" BorderStyle="None" OnClick="btnDelete_Click" />
             </div>
-
-
+            <%} %>
         </div>
 
         <%} %>

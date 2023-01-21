@@ -56,7 +56,8 @@ namespace LegalSystemCore.Infrastructure
                                            "('Create Case'),('Create Payment Memo'),('Daily Cases'),('Monthly Cases'), ('DashBoard')," +
                                            "('Update Case Activity'),('User Privileges'),('User Role Privileges'),('View Case Details'),('View Cases')," +
                                            "('View Payment Memo List'),('View Payment Details'), ('Full Access on Dashboard')," +
-                                           "('Company Wise Access on Dashboard'),('Company Unit Wise Access on Dashboard')";
+                                           "('Company Wise Access on Dashboard'),('Company Unit Wise Access on Dashboard'),('Reset Password')," +
+                                           "('Edit Case'),('Delete Case'),('View Case Activity Details')";
 
 
 

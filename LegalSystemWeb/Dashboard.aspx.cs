@@ -93,6 +93,7 @@ namespace LegalSystemWeb
                 cstextCard.Append(row["case_count"].ToString());
                 cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
                 cstextCard.Append(row["company_name"].ToString());
+                string text = row["company_name"].ToString();
                 cstextCard.Append("\"></a>  </div>  </div>  </div> ");
 
                 ltCompanyStatus.Text += cstextCard;

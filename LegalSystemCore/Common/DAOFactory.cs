@@ -175,5 +175,11 @@ namespace LegalSystemCore.Common
             IUserRolePrivilegeDAO userRolePrivilegeDAO = new UserRolePrivilegeDAOSqlImpl();
             return ((IUserRolePrivilegeDAO)userRolePrivilegeDAO);
         }
+
+        public static IDocumentCaseActivityDAO CreateDocumentCaseActivityDAO()
+        {
+            IDocumentCaseActivityDAO documentCaseActivityDAO = new DocumentCaseActivityDAOsqlImpl();
+            return ((IDocumentCaseActivityDAO)documentCaseActivityDAO);
+        }
     }
 }

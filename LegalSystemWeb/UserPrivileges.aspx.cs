@@ -15,6 +15,7 @@ namespace LegalSystemWeb
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         IUserRoleController userRoleController = ControllerFactory.CreateUserRoleController();
         IUserPrivilegeController privilegeController = ControllerFactory.CreateUserPrivilegeController();
+        IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,7 +40,7 @@ namespace LegalSystemWeb
             if (ddlUser.SelectedValue != "")
             {
                 gvUserPrevilages.Visible = true;
-                lblUserType.Text = userRoleController.GetUserRole(Convert.ToInt32(Session["User_Role_Id"])).RoleName;
+                lblUserType.Text = lblUserType.Text = userRoleController.GetUserRole(userLoginController.GetUserLoginById(ddlUser.SelectedValue).UserRoleId).RoleName;
                 BindFunctionList();
             }
             else
@@ -91,8 +92,8 @@ namespace LegalSystemWeb
         {
 
 
-            IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
-            List<UserLogin> userLogins = userLoginController.GetUserLoginList(true);
+
+            List<UserLogin> userLogins = userLoginController.GetUserLoginList(true).Where(x => x.UserRoleId != 1).ToList();
             ddlUser.DataSource = userLogins;
             ddlUser.DataValueField = "UserId";
             ddlUser.DataTextField = "UserName";

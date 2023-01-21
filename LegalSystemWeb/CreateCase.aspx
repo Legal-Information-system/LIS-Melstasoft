@@ -62,11 +62,7 @@
 
                                     <asp:Literal ID="Literal3" runat="server" Text="Claim Amount"></asp:Literal>
                                     <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtClaimAmount" Style="margin-top: 5px"></asp:TextBox>
-                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
-                                        ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
-                                    <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
-                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
-                            </asp:RegularExpressionValidator>--%>
+
                                 </div>
                                 <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
                                     <asp:Button ID="btnCheckInWords" runat="server" Text="Check in Words" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="claimAmountInWords" />
@@ -79,7 +75,10 @@
                             <div class="row mb-3">
                                 <asp:Label ID="lblClaimAmountInWords" runat="server" Text="" ForeColor="#000000"></asp:Label>
                             </div>
-
+                            <div class="row mb-3">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                    ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            </div>
 
 
                             <%--===========--%>

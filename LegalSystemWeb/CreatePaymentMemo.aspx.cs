@@ -218,6 +218,7 @@ namespace LegalSystemWeb
             }
 
             listUplodedFile.Clear();
+            UplodedFilesList.Clear();
             files.Clear();
             filePaths.Clear();
             BindDocuments();
