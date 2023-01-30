@@ -297,10 +297,10 @@ namespace LegalSystemWeb
             else
             {
                 int flag = 0;
-                lblCounselor.Text = string.Empty;
-                lblPlaintif.Text = string.Empty;
-                lblDefendent.Text = string.Empty;
-                lblAttorney.Text = string.Empty;
+                lblCounselor.Text = "";
+                lblPlaintif.Text = "";
+                lblDefendent.Text = "";
+                lblAttorney.Text = "";
                 if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
                 {
                     ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
@@ -408,7 +408,7 @@ namespace LegalSystemWeb
                 {
 
                 }
-                if (!counselorList.Any() && flag == 0)
+                if (!CounselorLawyerList.Any() && flag == 0)
                 {
                     dCounselor.Visible = true;
                     lblCounselor.Text = "Please Add Counselor";
@@ -441,10 +441,10 @@ namespace LegalSystemWeb
         protected void btnUpdate_Click()
         {
             int flag = 0;
-            lblCounselor.Text = string.Empty;
-            lblPlaintif.Text = string.Empty;
-            lblDefendent.Text = string.Empty;
-            lblAttorney.Text = string.Empty;
+            lblCounselor.Text = "";
+            lblPlaintif.Text = "";
+            lblDefendent.Text = "";
+            lblAttorney.Text = "";
             if ((CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1"))) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
