@@ -84,11 +84,20 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
-
-            dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif,  court_id, locationc_id, " +
-                "assign_attorney_id, created_by_user, created_date, case_status_id, case_open_date ) " +
+            if (caseMaster.PrevCaseNumber != " ")
+            {
+                dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif,  court_id, locationc_id, " +
+                "assign_attorney_id, created_by_user, created_date, case_status_id, case_open_date, prev_case_number ) " +
+                "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @CourtId, @LocationId," +
+                "@AssignAttornerId, @CreatedUserId, @CreatedDate, @CaseStatusId, @CaseOpenDate, @PrevCaseNumber)";
+            }
+            else
+            {
+                dbConnection.cmd.CommandText = "Insert into case_master (case_number, company_id, company_unit_id, case_nature_id, case_description, claim_amount, is_plaintif,  court_id, locationc_id, " +
+                "assign_attorney_id, created_by_user, created_date, case_status_id, case_open_date) " +
                 "values (@CaseNumber, @CompanyId, @CompanyUnitId, @CaseNatureId, @CaseDescription, @ClaimAmount, @IsPlentif, @CourtId, @LocationId," +
                 "@AssignAttornerId, @CreatedUserId, @CreatedDate, @CaseStatusId, @CaseOpenDate)";
+            }
 
 
 
@@ -158,9 +167,9 @@ namespace LegalSystemCore.Infrastructure
             else
             {
                 dbConnection.cmd.CommandText = "Update case_master SET company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
-                    "case_description = @CaseDescription,prev_case_number = @PrevCaseNumber ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
-                    "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate" +
-                    " WHERE case_number = @PrevCaseNumberUpdate ";
+                    "case_description = @CaseDescription ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
+                    "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate," +
+                    "prev_case_number = @PrevCaseNumber WHERE case_number = @PrevCaseNumberUpdate ";
             }
 
 

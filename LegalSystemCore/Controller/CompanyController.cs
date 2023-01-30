@@ -17,6 +17,8 @@ namespace LegalSystemCore.Controller
         int Delete(Company company);
         int Update(Company company);
         Company GetCompany(int CompanyId);
+
+        Company GetCompanyByName(string name);
         List<Company> GetCompanyList(bool with0);
 
     }
@@ -77,6 +79,31 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new Common.DbConnection();
                 company = companyDAO.GetCompany(CompanyId, dbConnection);
+
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return company;
+        }
+
+        public Company GetCompanyByName(string name)
+        {
+            Common.DbConnection dbConnection = null;
+            Company company = new Company();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                company = companyDAO.GetCompanyByName(name, dbConnection);
 
             }
             catch (Exception)

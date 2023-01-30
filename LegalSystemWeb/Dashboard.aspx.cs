@@ -1,4 +1,5 @@
-﻿using LegalSystemCore.Common;
+﻿using LegalSystemCore;
+using LegalSystemCore.Common;
 using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
@@ -18,7 +19,7 @@ namespace LegalSystemWeb
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
-        public string dates, caseCount, caseNumber, per;
+        public string dates, caseCount, caseNumber, per, CompanyUnitName;
         public int DailyTotal, MonthlyTotal = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,10 +39,64 @@ namespace LegalSystemWeb
                 }
                 if (!IsPostBack)
                 {
-                    BindCompanyList();
+
+                    if (Request.QueryString["name"] == null)
+                    {
+                        DashboardView.Visible = true;
+                        BindCompanyList();
+                        ViewCompany.Visible = false;
+                    }
+                    else
+                    {
+                        CompanyUnitName = Request.QueryString["name"].ToString();
+                        DashboardView.Visible = false;
+                        ViewCompany.Visible = true;
+                        BindCompanyUnitList();
+
+                    }
                 }
 
             }
+        }
+        private void BindCompanyUnitList()
+        {
+            IDashboardCardController dashboardCardController = ControllerFactory.CreateDashboardCardController();
+            ICompanyController companyController = ControllerFactory.CreateCompanyController();
+            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+            List<UserPrivilege> UserPrivileges = userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"]));
+            Company company = new Company();
+            company = companyController.GetCompanyByName(CompanyUnitName);
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 28).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 1)))
+            {
+
+
+                dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(company.CompanyId);
+                progressTable = dashboardCardController.GetMonthProgressUnit(false, company.CompanyId);
+                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, company.CompanyId);
+
+            }
+            StringBuilder cstextCard = new StringBuilder();
+            cstextCard.Append("<div id=\"DashboardView\" runat=\"server\">\r\n        <h1 class=\"mt-4\">");
+            cstextCard.Append(CompanyUnitName);
+            cstextCard.Append("</h1> <br/> <br/>\r\n <div class=\"row\">");
+            foreach (DataRow row in dashboardCardList.Rows)
+            {
+
+
+                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                cstextCard.Append(row["company_name"].ToString());
+                cstextCard.Append("</div>   <div class=\"text-center\">");
+                cstextCard.Append(row["case_count"].ToString());
+                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                cstextCard.Append(row["company_name"].ToString());
+                string text = row["company_name"].ToString();
+                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+            }
+            cstextCard.Append("</div> </div>");
+            ltCompanyUnit.Text += cstextCard;
         }
 
         private void BindCompanyList()
@@ -56,6 +111,21 @@ namespace LegalSystemWeb
                 dashboardCardList = dashboardCardController.GetCardDetails();
                 progressTable = dashboardCardController.GetMonthProgress();
                 claimAmoutTable = dashboardCardController.GetClaimAmountPercentage();
+                foreach (DataRow row in dashboardCardList.Rows)
+                {
+                    StringBuilder cstextCard = new StringBuilder();
+
+                    cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                    cstextCard.Append(row["company_name"].ToString());
+                    cstextCard.Append("</div>   <div class=\"text-center\">");
+                    cstextCard.Append(row["case_count"].ToString());
+                    cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"Dashboard.aspx?name=");
+                    cstextCard.Append(row["company_name"].ToString());
+                    string text = row["company_name"].ToString();
+                    cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                    ltCompanyStatus.Text += cstextCard;
+                }
             }
             else
             {
@@ -80,24 +150,26 @@ namespace LegalSystemWeb
                         progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
                         claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
                     }
+
+                }
+                foreach (DataRow row in dashboardCardList.Rows)
+                {
+                    StringBuilder cstextCard = new StringBuilder();
+
+                    cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                    cstextCard.Append(row["company_name"].ToString());
+                    cstextCard.Append("</div>   <div class=\"text-center\">");
+                    cstextCard.Append(row["case_count"].ToString());
+                    cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                    cstextCard.Append(row["company_name"].ToString());
+                    string text = row["company_name"].ToString();
+                    cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                    ltCompanyStatus.Text += cstextCard;
                 }
             }
 
-            foreach (DataRow row in dashboardCardList.Rows)
-            {
-                StringBuilder cstextCard = new StringBuilder();
 
-                cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
-                cstextCard.Append(row["company_name"].ToString());
-                cstextCard.Append("</div>   <div class=\"text-center\">");
-                cstextCard.Append(row["case_count"].ToString());
-                cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
-                cstextCard.Append(row["company_name"].ToString());
-                string text = row["company_name"].ToString();
-                cstextCard.Append("\"></a>  </div>  </div>  </div> ");
-
-                ltCompanyStatus.Text += cstextCard;
-            }
 
             foreach (DataRow row in progressTable.Rows)
             {

@@ -75,6 +75,21 @@ namespace LegalSystemCore.Infrastructure
             return companyUnit;
         }
 
+        public CompanyUnit GetCompanyUnitByName(string name, DbConnection dbConnection)
+        {
+            CompanyUnit companyUnit = new CompanyUnit();
+
+            dbConnection.cmd.CommandText = "select * from company_unit WHERE company_unit_name = @CompanyUnitId";
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", name);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            companyUnit = dataAccessObject.GetSingleOject<CompanyUnit>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return companyUnit;
+        }
+
         public List<CompanyUnit> GetCompanyUnitList(bool with0, DbConnection dbConnection, string companyId = null)
         {
             List<CompanyUnit> listCompanyUnit = new List<CompanyUnit>();

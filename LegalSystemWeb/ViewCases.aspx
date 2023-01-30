@@ -39,6 +39,9 @@
                             <asp:BoundField DataField="companyUnit.CompanyUnitName" HeaderText="Company Unit" ItemStyle-HorizontalAlign="center">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="court.CourtName" HeaderText="Court" ItemStyle-HorizontalAlign="center">
+                                <ItemStyle HorizontalAlign="Center" />
+                            </asp:BoundField>
                             <asp:BoundField DataField="caseNature.CaseNatureName" HeaderText="Case Nature" ItemStyle-HorizontalAlign="center">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>

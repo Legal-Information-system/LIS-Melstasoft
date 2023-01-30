@@ -15,6 +15,15 @@ namespace LegalSystemWeb
     {
 
         /// <summary>
+        /// DashboardView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DashboardView;
+
+        /// <summary>
         /// ltCompanyStatus control.
         /// </summary>
         /// <remarks>
@@ -40,5 +49,23 @@ namespace LegalSystemWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltMonthlyCase;
+
+        /// <summary>
+        /// ViewCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ViewCompany;
+
+        /// <summary>
+        /// ltCompanyUnit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltCompanyUnit;
     }
 }

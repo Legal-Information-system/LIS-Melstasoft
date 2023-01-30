@@ -77,6 +77,7 @@ namespace LegalSystemCore.Controller
                     caseMaster.userCreate = userClosedList.Where(l => l.UserId == caseMaster.CreatedUserId).Single();
                     IPartyCaseController partyCaseController = ControllerFactory.CreatePartyCaseController();
                     IPartyController partyController = ControllerFactory.CreatePartyController();
+                    ICounselorController counselorController = ControllerFactory.CreateCounselorController();
                     List<PartyCase> partyCases = partyCaseController.GetPartyCaseList(caseMaster.CaseNumber);
                     caseMaster.plaintif = new List<PartyCase>();
                     caseMaster.defendent = new List<PartyCase>();
@@ -93,6 +94,7 @@ namespace LegalSystemCore.Controller
                         caseMaster.defendent.Add(partyCase);
 
                     }
+
 
                     if (caseMaster.ClosedUserId > 0)
                         caseMaster.userClose = userClosedList.Where(l => l.UserId == caseMaster.ClosedUserId).Single();
@@ -154,8 +156,21 @@ namespace LegalSystemCore.Controller
                     caseMaster.caseNature = listCaseNature.Where(x => x.CaseNatureId == caseMaster.CaseNatureId).Single();
                 }
 
+                ICourtDAO courtDAO = DAOFactory.CreateCourtDAO();
+                List<Court> courts = courtDAO.GetCourtList(true, dbConnection);
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.court = courts.Where(x => x.CourtId == caseMaster.CourtId).Single();
+                }
+
                 ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
                 List<Location> listLocation = locationDAO.GetLocationList(true, dbConnection);
+
+                ICounselorController counselorController = ControllerFactory.CreateCounselorController();
+                foreach (var caseMaster in listCaseMaster)
+                {
+                    caseMaster.counselors = counselorController.GetCounselorList(caseMaster.CaseNumber);
+                }
 
                 foreach (var caseMaster in listCaseMaster)
                 {
@@ -197,33 +212,24 @@ namespace LegalSystemCore.Controller
                 ICompanyDAO companyDAO = DAOFactory.CreateCompanyDAO();
                 List<Company> listCompany = companyDAO.GetCompanyList(true, dbConnection);
 
-                foreach (var caseMaster in listCaseMaster)
-                {
-                    caseMaster.company = listCompany.Where(x => x.CompanyId == caseMaster.CompanyId).Single();
-
-                }
-
                 ICompanyUnitDAO companyUnitDAO = DAOFactory.CreateCompanyUnitDAO();
                 List<CompanyUnit> listCompanyUnit = companyUnitDAO.GetCompanyUnitList(true, dbConnection);
-
-                foreach (var caseMaster in listCaseMaster)
-                {
-                    caseMaster.companyUnit = listCompanyUnit.Where(x => x.CompanyUnitId == caseMaster.CompanyUnitId).Single();
-                }
 
                 ICaseNatureDAO caseNatureDAO = DAOFactory.CreateCaseNatureDAO();
                 List<CaseNature> listCaseNature = caseNatureDAO.GetCaseNatureList(true, dbConnection);
 
-                foreach (var caseMaster in listCaseMaster)
-                {
-                    caseMaster.caseNature = listCaseNature.Where(x => x.CaseNatureId == caseMaster.CaseNatureId).Single();
-                }
+                ICounselorController counselorController = ControllerFactory.CreateCounselorController();
+                List<Counselor> counselors = counselorController.GetCounselorList();
 
                 ILocationDAO locationDAO = DAOFactory.CreateLocationDAO();
                 List<Location> listLocation = locationDAO.GetLocationList(true, dbConnection);
 
                 foreach (var caseMaster in listCaseMaster)
                 {
+                    caseMaster.company = listCompany.Where(x => x.CompanyId == caseMaster.CompanyId).Single();
+                    caseMaster.companyUnit = listCompanyUnit.Where(x => x.CompanyUnitId == caseMaster.CompanyUnitId).Single();
+                    caseMaster.caseNature = listCaseNature.Where(x => x.CaseNatureId == caseMaster.CaseNatureId).Single();
+                    caseMaster.counselors = counselors.Where(x => x.CaseNumber == caseMaster.CaseNumber).ToList();
                     caseMaster.location = listLocation.Where(x => x.LocationId == caseMaster.LocationId).Single();
                     if (caseMaster.IsPlentif == 1)
                     {

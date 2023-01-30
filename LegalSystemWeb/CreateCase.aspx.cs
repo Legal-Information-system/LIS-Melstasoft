@@ -297,6 +297,10 @@ namespace LegalSystemWeb
             else
             {
                 int flag = 0;
+                lblCounselor.Text = string.Empty;
+                lblPlaintif.Text = string.Empty;
+                lblDefendent.Text = string.Empty;
+                lblAttorney.Text = string.Empty;
                 if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
                 {
                     ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
@@ -313,7 +317,14 @@ namespace LegalSystemWeb
                         {
 
                             caseMaster.CaseNumber = txtCaseNumber.Text;
-                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                            {
+                                caseMaster.PrevCaseNumber = " ";
+                            }
+                            else
+                            {
+                                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            }
                             caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
                             caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
                             caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
@@ -412,7 +423,7 @@ namespace LegalSystemWeb
                     dDefendent.Visible = true;
                     lblDefendent.Text = "Please Add Defendent Side";
                 }
-                if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
+                if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any() && flag == 0)
                 {
                     dAttorney.Visible = true;
                     lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
@@ -430,6 +441,10 @@ namespace LegalSystemWeb
         protected void btnUpdate_Click()
         {
             int flag = 0;
+            lblCounselor.Text = string.Empty;
+            lblPlaintif.Text = string.Empty;
+            lblDefendent.Text = string.Empty;
+            lblAttorney.Text = string.Empty;
             if ((CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1"))) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
@@ -445,6 +460,14 @@ namespace LegalSystemWeb
                     if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber || txtPreCaseNumber.Text == "")
                     {
                         caseMaster.PrevCaseNumberUpdate = caseNumber;
+                        if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                        {
+                            caseMaster.PrevCaseNumber = " ";
+                        }
+                        else
+                        {
+                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                        }
                         caseMaster.CaseNumber = txtCaseNumber.Text;
                         caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
                         caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
@@ -479,11 +502,25 @@ namespace LegalSystemWeb
                         caseMaster.CaseStatusId = 1;
 
                         caseMasterController.Update(caseMaster);
-                        if (counselorController.GetCounselorList(caseMaster.CaseNumber).Any())
+                        List<Counselor> test1 = counselorController.GetCounselorList(caseMaster.CaseNumber);
+
+
+                        if (test1.Any())
                         {
                             counselorController.DeletePermenent(caseMaster.CaseNumber);
                         }
 
+                        counselorList.Clear();
+                        foreach (Lawyer lawyer in CounselorLawyerList)
+                        {
+                            Counselor counselorTemp = new Counselor();
+                            counselorTemp.CaseNumber = caseMaster.CaseNumber;
+                            counselorTemp.LawyerId = lawyer.LawyerId;
+
+                            counselorList.Add(counselorTemp);
+
+                        }
+                        test1 = counselorController.GetCounselorList(caseMaster.CaseNumber);
                         if (counselorList.Any())
                         {
                             foreach (Counselor counselor in counselorList)
@@ -919,8 +956,8 @@ namespace LegalSystemWeb
             int pageIndex = gvCounselor.PageIndex;
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
-
             CounselorLawyerList.RemoveAll(x => x.LawyerName == CounselorLawyerList[rowIndex].LawyerName);
+
 
             BindCounselorList();
 

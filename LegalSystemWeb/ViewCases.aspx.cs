@@ -16,7 +16,7 @@ namespace LegalSystemWeb
     public partial class ViewCases : System.Web.UI.Page
     {
         int companyId, UserId;
-        string name;
+        static string name;
         List<CaseMaster> caseMasterListO = new List<CaseMaster>();
         List<CaseMaster> caseMasterListC = new List<CaseMaster>();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
@@ -88,9 +88,9 @@ namespace LegalSystemWeb
             {
 
 
-                if ((userRolePrivileges.Where(x => (x.FunctionId == 29 || x.FunctionId == 30)).Any()
-                         && !(UserPrivileges.Any(x => (x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 0))) ||
-                         UserPrivileges.Any(x => (x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 1))
+                if ((userRolePrivileges.Where(x => (x.FunctionId == 29)).Any()
+                         && !(UserPrivileges.Any(x => (x.FunctionId == 29) && x.IsGrantRevoke == 0))) ||
+                         UserPrivileges.Any(x => (x.FunctionId == 29) && x.IsGrantRevoke == 1))
                 {
                     caseMasterListO = caseMasterListO.Where(c => c.CompanyId == companyId).ToList();
                     caseMasterListC = caseMasterListC.Where(c => c.CompanyId == companyId).ToList();
@@ -109,18 +109,18 @@ namespace LegalSystemWeb
 
             if (name != "All" && name != null)
             {
-                if (((userRolePrivileges.Where(x => (x.FunctionId == 28)).Any()
-                         && !(UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 0))) ||
-                         UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 1)))
-                {
-                    caseMasterListO = caseMasterListO.Where(c => c.company.CompanyName == name).ToList();
-                    caseMasterListC = caseMasterListC.Where(c => c.company.CompanyName == name).ToList();
-                }
-                else
-                {
-                    caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
-                    caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
-                }
+                //if (((userRolePrivileges.Where(x => (x.FunctionId == 28)).Any()
+                //         && !(UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 0))) ||
+                //         UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 1)))
+                //{
+                //    caseMasterListO = caseMasterListO.Where(c => c.company.CompanyName == name).ToList();
+                //    caseMasterListC = caseMasterListC.Where(c => c.company.CompanyName == name).ToList();
+                //}
+                //else
+                //{
+                caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+                caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+
             }
 
             datatablesSimple.DataSource = caseMasterListO;

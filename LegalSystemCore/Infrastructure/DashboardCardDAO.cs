@@ -29,7 +29,7 @@ namespace LegalSystemCore.Infrastructure
             DataTable companyList = new DataTable();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                            "INNER JOIN company ON company.company_id = case_master.company_id " +
+                            "INNER JOIN company ON company.company_id = case_master.company_id AND case_master.is_active = 1 " +
                             "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND case_master.is_active = 1" +
                             "GROUP BY company.company_name;";
 
@@ -53,8 +53,8 @@ namespace LegalSystemCore.Infrastructure
                 prev = prev.AddMonths(-1);
 
                 cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                            "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND " +
+                            "INNER JOIN company ON company.company_id = case_master.company_id AND case_master.is_active = 1" +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND case_master.is_active = 1 AND " +
                             "( (MONTH(created_date) = " + prev.Month + "AND YEAR(created_date) = " + prev.Year + ") OR " +
                             "(MONTH(created_date) = " + DateTime.Now.Month + "AND YEAR(created_date) = " + DateTime.Now.Year + ") )" +
                             "GROUP BY company.company_name;";
@@ -66,8 +66,8 @@ namespace LegalSystemCore.Infrastructure
                 prev = prev.AddDays(-1);
 
                 cmd = "SELECT COUNT(case_master.company_id ) AS case_count, company.company_name FROM case_master " +
-                            "INNER JOIN company ON company.company_id = case_master.company_id " +
-                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 " +
+                            "INNER JOIN company ON company.company_id = case_master.company_id AND case_master.is_active = 1 " +
+                            "WHERE case_master.case_status_id = 1 AND company.is_active = 1 AND case_master.is_active = 1" +
                             "AND (CAST(created_date AS DATE) = '" + prev.ToString("yyyy-MM-dd") + "'OR CAST(created_date AS DATE) = '" + DateTime.Now.ToString("yyyy-MM-dd") + "')" +
                             "GROUP BY company.company_name;";
             }
@@ -87,8 +87,8 @@ namespace LegalSystemCore.Infrastructure
             //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name AS company_name FROM case_master " +
-                "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
-                "WHERE case_master.case_status_id = 1 AND case_master.company_id =" + companyId +
+                "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id AND case_master.is_active = 1" +
+                "WHERE case_master.case_status_id = 1 AND case_master.is_active = 1 AND case_master.company_id =" + companyId +
                 "GROUP BY company_unit.company_unit_name;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
@@ -105,8 +105,8 @@ namespace LegalSystemCore.Infrastructure
             //dbConnection = new DbConnection();
 
             dbConnection.cmd.CommandText = "SELECT COUNT(case_master.company_unit_id ) AS case_count, company_unit.company_unit_name  AS company_name  FROM case_master " +
-                "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id " +
-                "WHERE case_master.case_status_id = 1 AND case_master.company_unit_id =" + companyUnitId +
+                "INNER JOIN company_unit ON company_unit.company_unit_id = case_master.company_unit_id AND case_master.is_active = 1" +
+                "WHERE case_master.case_status_id = 1 AND case_master.is_active = 1 AND case_master.company_unit_id =" + companyUnitId +
                 "GROUP BY company_unit.company_unit_name;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(dbConnection.cmd);
