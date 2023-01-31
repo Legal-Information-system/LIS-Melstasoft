@@ -115,8 +115,13 @@
         </div>
         <div id="UpdateStatus">
             <%if (lblPaymentStatus.Text == "Pending")
-                { %>
-            <%if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                {
+                    LegalSystemCore.Controller.IUserRolePrivilegeController userRolePrivilegeController = LegalSystemCore.Common.ControllerFactory.CreateUserRolePrivilegeController();
+                    LegalSystemCore.Controller.IUserPrivilegeController userPrivilegeController = LegalSystemCore.Common.ControllerFactory.CreateUserPrivilegeController();
+            %>
+            <% if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 14).Any()
+                      && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 14 && x.IsGrantRevoke == 0))) ||
+                      userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 14 && x.IsGrantRevoke == 1)))
                 { %>
             <div class="row mb-5">
                 <div class="col-sm-4" style="text-align: end; padding-top: 20px;">

@@ -22,6 +22,8 @@ namespace LegalSystemWeb
         {
             IUserLoginController userLoginController = ControllerFactory.CreateUserLoginController();
             IFunctionsController functionsController = ControllerFactory.CreateFunctionsController();
+            IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+            IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
             UserLogin userLogin = new UserLogin();
             userLogin.UserName = txtUserName.Text;
             userLogin.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1"); ;
@@ -42,9 +44,15 @@ namespace LegalSystemWeb
                 {
                     functionsController.Init();
                 }
-
-                if (userLogin.UserRoleId == 3)
+                if (!userRolePrivilegeController.GetUserRolePrivilegeList().Any())
                 {
+                    userRolePrivilegeController.Init();
+                }
+                if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 20).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 20 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 20 && x.IsGrantRevoke == 1)))
+                {
+
                     Response.Redirect("ViewPaymentMemo.aspx");
                 }
                 else

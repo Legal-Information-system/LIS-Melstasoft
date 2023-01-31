@@ -62,11 +62,7 @@
 
                                     <asp:Literal ID="Literal3" runat="server" Text="Claim Amount"></asp:Literal>
                                     <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtClaimAmount" Style="margin-top: 5px"></asp:TextBox>
-                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
-                                        ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>--%>
-                                    <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtClaimAmount"
-                                ErrorMessage="RegularExpressionValidator" ValidationGroup="1">*
-                            </asp:RegularExpressionValidator>--%>
+
                                 </div>
                                 <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
                                     <asp:Button ID="btnCheckInWords" runat="server" Text="Check in Words" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="claimAmountInWords" />
@@ -79,7 +75,10 @@
                             <div class="row mb-3">
                                 <asp:Label ID="lblClaimAmountInWords" runat="server" Text="" ForeColor="#000000"></asp:Label>
                             </div>
-
+                            <div class="row mb-3">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                    ControlToValidate="txtClaimAmount" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+                            </div>
 
 
                             <%--===========--%>
@@ -112,14 +111,14 @@
                             </div>
 
                             <div class="row ">
-                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
+                                <div class="col-md-4 mb-3" style="display: flex; flex-direction: column">
 
-                                    <asp:Literal ID="ltPlaintifSide" runat="server" Text="Plaintif Side"></asp:Literal>
+                                    <asp:Literal ID="ltPlaintifSide" runat="server" Text="Plaintif Party"></asp:Literal>
                                     <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtPlaintif" Style="margin-top: 5px"></asp:TextBox>
 
 
                                 </div>
-                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                <div class="col-md-2 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
                                     <asp:Button ID="btnPlaintifAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddPlaintif_Click" />
                                 </div>
                             </div>
@@ -139,6 +138,11 @@
                                             <asp:BoundField DataField="PartyName" HeaderText="Plaintif Side" />
                                             <asp:TemplateField>
                                                 <ItemTemplate>
+                                                    <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_ClickPlaintiff">Edit</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
                                                     <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_ClickPlaintif">Delete</asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -148,14 +152,14 @@
                             </div>
 
                             <div class="row ">
-                                <div class="col-md-6 mb-3" style="display: flex; flex-direction: column">
+                                <div class="col-md-4 mb-3" style="display: flex; flex-direction: column">
 
-                                    <asp:Literal ID="ltDefendent" runat="server" Text="Defendent Side"></asp:Literal>
+                                    <asp:Literal ID="ltDefendent" runat="server" Text="Defendent Party"></asp:Literal>
                                     <asp:TextBox runat="server" CssClass="form-control form-control-user" ID="txtDefendent" Style="margin-top: 5px"></asp:TextBox>
 
 
                                 </div>
-                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                <div class="col-md-2 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
                                     <asp:Button ID="btnAddDefendent" runat="server" Text="Add" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="btnAddDefendent_Click" />
                                 </div>
                             </div>
@@ -173,6 +177,11 @@
                                         CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="GridView2_OnPageIndexChanged">
                                         <Columns>
                                             <asp:BoundField DataField="PartyName" HeaderText="Defendent Side" />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnEdit" runat="server" OnClick="btnEdit_ClickDefendent">Edit</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="btndelete" runat="server" OnClick="btndelete_ClickDefendent">Delete</asp:LinkButton>
@@ -283,12 +292,12 @@
 
                             <div class="row mb-5 mt-3">
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="false" CssClass="btn " />
                                     <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
                                 </div>
 
-                                <div class="col-md-6 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+                                <div class="col-md-2 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
 
                                     <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" />
 

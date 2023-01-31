@@ -14,7 +14,8 @@ namespace LegalSystemWeb
     public partial class AddCompanyUnit : System.Web.UI.Page
     {
         List<CompanyUnit> companyUnitList = new List<CompanyUnit>();
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -23,7 +24,9 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+                if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 6).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 6 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 6 && x.IsGrantRevoke == 1)))
                 {
                     if (!IsPostBack)
                     {

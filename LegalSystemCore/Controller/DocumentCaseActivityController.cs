@@ -8,29 +8,27 @@ using System.Text;
 
 namespace LegalSystemCore.Controller
 {
-    public interface IUserRolePrivilegeController
+    public interface IDocumentCaseActivityController
     {
-        int Save(UserRolePrivilege userRolePrivilege);
-        int Delete(UserRolePrivilege userRolePrivilege);
-
-        int Init();
-        List<UserRolePrivilege> GetUserRolePrivilegeList();
-
-        List<UserRolePrivilege> GetUserRolePrivilegeListByRole(string userRoleID);
+        int Save(DocumentCaseActivity documentCaseActivity);
+        int Update(DocumentCaseActivity documentCaseActivity);
+        int Delete(DocumentCaseActivity documentCaseActivity);
+        List<DocumentCaseActivity> GetDocumentList(DocumentCaseActivity documentCaseActivity, bool check);
+        DocumentCaseActivity GetDocument(int documentCaseActivityId);
     }
 
-    public class UserRolePrivilegeControllerImpl : IUserRolePrivilegeController
+    public class DocumentCaseActivityControllerImpl : IDocumentCaseActivityController
     {
-        IUserRolePrivilegeDAO userRolePrivilegeDAO = DAOFactory.CreateUserRolePrivilegeDAO();
+        IDocumentCaseActivityDAO documentCaseActivityDAO = DAOFactory.CreateDocumentCaseActivityDAO();
 
-        public List<UserRolePrivilege> GetUserRolePrivilegeList()
+        public DocumentCaseActivity GetDocument(int documentCaseActivityId)
         {
             DbConnection dbConnection = null;
-            List<UserRolePrivilege> listUserRolePrivilege = new List<UserRolePrivilege>();
+            DocumentCaseActivity documentCase = new DocumentCaseActivity();
             try
             {
                 dbConnection = new DbConnection();
-                listUserRolePrivilege = userRolePrivilegeDAO.GetUserRolePrivilegeList(dbConnection);
+                documentCase = documentCaseActivityDAO.GetDocumentCaseActivity(documentCaseActivityId, dbConnection);
             }
             catch (Exception)
             {
@@ -44,17 +42,19 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listUserRolePrivilege;
+            return documentCase;
         }
 
-        public List<UserRolePrivilege> GetUserRolePrivilegeListByRole(string userRoleID)
+        public List<DocumentCaseActivity> GetDocumentList(DocumentCaseActivity documentCaseActivity, bool check)
         {
             DbConnection dbConnection = null;
-            List<UserRolePrivilege> listUserRolePrivilege = new List<UserRolePrivilege>();
+            List<DocumentCaseActivity> listDocumentCase = new List<DocumentCaseActivity>();
             try
             {
                 dbConnection = new DbConnection();
-                listUserRolePrivilege = userRolePrivilegeDAO.GetUserRolePrivilegeListByRole(userRoleID, dbConnection);
+
+                listDocumentCase = documentCaseActivityDAO.GetDocumentCaseActivityList(documentCaseActivity, check, dbConnection);
+
             }
             catch (Exception)
             {
@@ -68,38 +68,16 @@ namespace LegalSystemCore.Controller
                     dbConnection.Commit();
                 }
             }
-            return listUserRolePrivilege;
+            return listDocumentCase;
         }
 
-        public int Save(UserRolePrivilege userRolePrivilege)
+        public int Save(DocumentCaseActivity documentCaseActivity)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return userRolePrivilegeDAO.Save(userRolePrivilege, dbConnection);
-            }
-            catch (Exception)
-            {
-                dbConnection.RollBack();
-                throw;
-            }
-            finally
-            {
-                if (dbConnection.con.State == System.Data.ConnectionState.Open)
-                {
-                    dbConnection.Commit();
-                }
-            }
-        }
-
-        public int Init()
-        {
-            DbConnection dbConnection = null;
-            try
-            {
-                dbConnection = new DbConnection();
-                return userRolePrivilegeDAO.Init(dbConnection);
+                return documentCaseActivityDAO.Save(documentCaseActivity, dbConnection);
             }
             catch (Exception)
             {
@@ -115,14 +93,13 @@ namespace LegalSystemCore.Controller
             }
         }
 
-
-        public int Delete(UserRolePrivilege userRolePrivilege)
+        public int Update(DocumentCaseActivity documentCaseActivity)
         {
             DbConnection dbConnection = null;
             try
             {
                 dbConnection = new DbConnection();
-                return userRolePrivilegeDAO.Delete(userRolePrivilege, dbConnection);
+                return documentCaseActivityDAO.Update(documentCaseActivity, dbConnection);
             }
             catch (Exception)
             {
@@ -138,5 +115,26 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int Delete(DocumentCaseActivity documentCaseActivity)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentCaseActivityDAO.Delete(documentCaseActivity, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
     }
 }

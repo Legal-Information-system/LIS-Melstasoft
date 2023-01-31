@@ -18,7 +18,8 @@ namespace LegalSystemWeb
 {
     public partial class CreateCase : System.Web.UI.Page
     {
-
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         int UserId, UserRoleId;
         string UserName;
         List<CourtLocation> courtlocation = new List<CourtLocation>();
@@ -50,8 +51,12 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
+                if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 16).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 16 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 16 && x.IsGrantRevoke == 1)))
+                {
                     Response.Redirect("404.aspx");
+                }
                 else
                 {
                     if (!IsPostBack)
@@ -292,6 +297,10 @@ namespace LegalSystemWeb
             else
             {
                 int flag = 0;
+                lblCounselor.Text = "";
+                lblPlaintif.Text = "";
+                lblDefendent.Text = "";
+                lblAttorney.Text = "";
                 if (CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1")) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
                 {
                     ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
@@ -308,7 +317,14 @@ namespace LegalSystemWeb
                         {
 
                             caseMaster.CaseNumber = txtCaseNumber.Text;
-                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                            {
+                                caseMaster.PrevCaseNumber = " ";
+                            }
+                            else
+                            {
+                                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            }
                             caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
                             caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
                             caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
@@ -392,7 +408,7 @@ namespace LegalSystemWeb
                 {
 
                 }
-                if (!counselorList.Any() && flag == 0)
+                if (!CounselorLawyerList.Any() && flag == 0)
                 {
                     dCounselor.Visible = true;
                     lblCounselor.Text = "Please Add Counselor";
@@ -407,7 +423,7 @@ namespace LegalSystemWeb
                     dDefendent.Visible = true;
                     lblDefendent.Text = "Please Add Defendent Side";
                 }
-                if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
+                if (CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any() && flag == 0)
                 {
                     dAttorney.Visible = true;
                     lblAttorney.Text = "Cannot assign the Attorney as a Counselor!";
@@ -425,6 +441,10 @@ namespace LegalSystemWeb
         protected void btnUpdate_Click()
         {
             int flag = 0;
+            lblCounselor.Text = "";
+            lblPlaintif.Text = "";
+            lblDefendent.Text = "";
+            lblAttorney.Text = "";
             if ((CounselorLawyerList.Any() && ((plaintif.Any() && rbIsPlantiff.SelectedValue == "0") || (defendent.Any() && rbIsPlantiff.SelectedValue == "1"))) && !CounselorLawyerList.Where(x => x.LawyerName == ddlAttorney.SelectedItem.Text).Any())
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
@@ -440,6 +460,14 @@ namespace LegalSystemWeb
                     if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber || txtPreCaseNumber.Text == "")
                     {
                         caseMaster.PrevCaseNumberUpdate = caseNumber;
+                        if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                        {
+                            caseMaster.PrevCaseNumber = " ";
+                        }
+                        else
+                        {
+                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                        }
                         caseMaster.CaseNumber = txtCaseNumber.Text;
                         caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
                         caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
@@ -474,11 +502,25 @@ namespace LegalSystemWeb
                         caseMaster.CaseStatusId = 1;
 
                         caseMasterController.Update(caseMaster);
-                        if (counselorController.GetCounselorList(caseMaster.CaseNumber).Any())
+                        List<Counselor> test1 = counselorController.GetCounselorList(caseMaster.CaseNumber);
+
+
+                        if (test1.Any())
                         {
                             counselorController.DeletePermenent(caseMaster.CaseNumber);
                         }
 
+                        counselorList.Clear();
+                        foreach (Lawyer lawyer in CounselorLawyerList)
+                        {
+                            Counselor counselorTemp = new Counselor();
+                            counselorTemp.CaseNumber = caseMaster.CaseNumber;
+                            counselorTemp.LawyerId = lawyer.LawyerId;
+
+                            counselorList.Add(counselorTemp);
+
+                        }
+                        test1 = counselorController.GetCounselorList(caseMaster.CaseNumber);
                         if (counselorList.Any())
                         {
                             foreach (Counselor counselor in counselorList)
@@ -879,6 +921,8 @@ namespace LegalSystemWeb
         }
 
 
+
+
         protected void GridView2_OnPageIndexChanged(object sender, GridViewPageEventArgs e)
         {
             gvCounselor.PageIndex = e.NewPageIndex;
@@ -912,12 +956,14 @@ namespace LegalSystemWeb
             int pageIndex = gvCounselor.PageIndex;
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
-
             CounselorLawyerList.RemoveAll(x => x.LawyerName == CounselorLawyerList[rowIndex].LawyerName);
+
 
             BindCounselorList();
 
         }
+
+
 
         protected void btndelete_ClickPlaintif(object sender, EventArgs e)
         {
@@ -932,6 +978,18 @@ namespace LegalSystemWeb
 
         }
 
+        protected void btnEdit_ClickPlaintiff(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvPlaintif.PageSize;
+            int pageIndex = gvPlaintif.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            txtPlaintif.Text = plaintif[rowIndex].PartyName;
+            plaintif.RemoveAll(x => x.PartyName == plaintif[rowIndex].PartyName);
+            BindPlaintifList();
+        }
+
         protected void btndelete_ClickDefendent(object sender, EventArgs e)
         {
             int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
@@ -940,6 +998,19 @@ namespace LegalSystemWeb
 
             rowIndex = (pageSize * pageIndex) + rowIndex;
 
+            defendent.RemoveAll(x => x.PartyName == defendent[rowIndex].PartyName);
+            BindDefendentList();
+
+        }
+
+        protected void btnEdit_ClickDefendent(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvDefendent.PageSize;
+            int pageIndex = gvDefendent.PageIndex;
+
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            txtDefendent.Text = defendent[rowIndex].PartyName;
             defendent.RemoveAll(x => x.PartyName == defendent[rowIndex].PartyName);
             BindDefendentList();
 

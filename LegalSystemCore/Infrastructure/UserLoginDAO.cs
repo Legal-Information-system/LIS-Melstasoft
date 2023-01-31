@@ -14,7 +14,7 @@ namespace LegalSystemCore.Infrastructure
         int Save(UserLogin userLogin, DbConnection dbConnection);
         int Update(UserLogin userLogin, DbConnection dbConnection);
         List<UserLogin> GetUserLoginList(bool with0, DbConnection dbConnection);
-
+        int UpdatePassword(UserLogin userLogin, DbConnection dbConnection);
         UserLogin GetUserLogin(DbConnection dbConnection, string userLoginId);
         UserLogin GetUserLogin(DbConnection dbConnection, UserLogin userLogin);
     }
@@ -63,6 +63,24 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", userLogin.CompanyId);
             dbConnection.cmd.Parameters.AddWithValue("@CompanyUnitId", userLogin.CompanyUnitId);
             dbConnection.cmd.Parameters.AddWithValue("@UserRoleId", userLogin.UserRoleId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int UpdatePassword(UserLogin userLogin, DbConnection dbConnection)
+        {
+
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Update user_login set user_password = @Password WHERE user_login_id = @UserId ";
+
+
+            dbConnection.cmd.Parameters.AddWithValue("@UserId", userLogin.UserId);
+            dbConnection.cmd.Parameters.AddWithValue("@Password", userLogin.Password);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 

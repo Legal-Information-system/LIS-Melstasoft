@@ -18,6 +18,8 @@ namespace LegalSystemCore.Controller
         List<UserLogin> GetUserLoginList(bool with0);
         UserLogin GetUserLogin(UserLogin userLogin);
 
+        UserLogin GetUserLogin(string userId);
+        int UpdatePassword(UserLogin userLogin);
         UserLogin GetUserLoginById(string userLoginId);
     }
 
@@ -71,6 +73,29 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int UpdatePassword(UserLogin userLogin)
+        {
+            Common.DbConnection dbconnection = null;
+            try
+            {
+                dbconnection = new Common.DbConnection();
+                return userLoginDAO.UpdatePassword(userLogin, dbconnection);
+            }
+            catch (Exception)
+            {
+                HttpContext.Current.Response.Redirect("500.aspx");
+                dbconnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbconnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbconnection.Commit();
+                }
+            }
+        }
+
         public List<UserLogin> GetUserLoginList(bool with0)
         {
             Common.DbConnection dbConnection = null;
@@ -105,6 +130,34 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new Common.DbConnection();
                 userLogin = userLoginDAO.GetUserLogin(dbConnection, userLogin);
+
+
+
+            }
+            catch (Exception)
+            {
+                HttpContext.Current.Response.Redirect("500.aspx");
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return userLogin;
+        }
+
+        public UserLogin GetUserLogin(string userId)
+        {
+            Common.DbConnection dbConnection = null;
+            UserLogin userLogin = new UserLogin();
+            try
+            {
+                dbConnection = new Common.DbConnection();
+                userLogin = userLoginDAO.GetUserLogin(dbConnection, userId);
 
 
 

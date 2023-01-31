@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserPrivileges.aspx.cs" Inherits="LegalSystemWeb.UserPrivileges" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserRolePrivileges.aspx.cs" Inherits="LegalSystemWeb.UserRolePrivileges" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -8,7 +8,7 @@
 
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-header d-flex align-items-center justify-content-center" style="height: 5%">
-            <h5 class="text-center  mt-3 mb-3">User Privileges</h5>
+            <h5 class="text-center  mt-3 mb-3">User Role Privileges</h5>
         </div>
 
         <div class="card-body">
@@ -19,7 +19,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-sm-6">
-                                    <asp:Literal ID="lblUser" runat="server" Text="Select User"></asp:Literal>
+                                    <asp:Literal ID="lblUser" runat="server" Text="Select User Role"></asp:Literal>
                                 </div>
                                 <div class="col-md-6">
                                     <asp:DropDownList ID="ddlUser" runat="server" CssClass="btn btn-outline-dark dropdown-toggle form-control"
@@ -28,14 +28,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <asp:Literal ID="ltlUserType" runat="server" Text="Current User Type"></asp:Literal>
-                                </div>
-                                <div class="col-md-6">
-                                    <asp:Label ID="lblUserType" runat="server" Text="&nbsp " CssClass="form-control form-control-user"></asp:Label>
-                                </div>
-                            </div>
+
                         </div>
 
                     </div>

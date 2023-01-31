@@ -13,6 +13,8 @@ namespace LegalSystemCore.Domain
 
         public List<PartyCase> defendent { set; get; }
 
+        public List<Counselor> counselors { set; get; }
+
         [DBField("case_number")]
         public string CaseNumber { get; set; }
 
@@ -87,6 +89,8 @@ namespace LegalSystemCore.Domain
 
         public DateTime CaseOpenDate { get; set; }
 
+
+        public CaseActivity activity { get; set; }
         public Company company { get; set; }
 
         public CompanyUnit companyUnit { get; set; }

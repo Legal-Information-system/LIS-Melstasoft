@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <p>Difendant</p>
+                                                <p>Defendant</p>
                                             </div>
                                             <div class="col-md-6">
                                                 <asp:Label ID="lblDefendant" runat="server" Text="N/A"></asp:Label>
@@ -118,10 +118,10 @@
 
                 <div class="row mb-3 ms-1">
                     <div class="col-sm-6">
-                        <asp:Literal ID="Literal2" runat="server" Text="Appeared Lawyer(Company Side)"></asp:Literal>
+                        <asp:Literal ID="Literal2" runat="server" Text="Appeared Lawyer ( Company Side )"></asp:Literal>
                     </div>
                     <div class="col-sm-6">
-                        <asp:Literal ID="Literal4" runat="server" Text="Appeared Lawyer(Other Side)"></asp:Literal>
+                        <asp:Literal ID="Literal4" runat="server" Text="Appeared Lawyer ( Other Side )"></asp:Literal>
                     </div>
                 </div>
 
@@ -278,8 +278,52 @@
                             </div>
                         </div>
                         <%} %>
+                        <div class="row mb-5 mt-3">
+
+                            <div class="col-sm-4">
+                                <asp:FileUpload ID="Uploader" runat="server" AllowMultiple="false" CssClass="btn " />
+                                <%--<asp:Label ID="lblListOfUploadedFiles" runat="server" />--%>
+                            </div>
+
+                            <div class="col-md-2 mb-3 d-flex justify-content-end" style="display: flex; flex-direction: column">
+
+                                <asp:Button ID="btnUpload" Text="upload" runat="server" CssClass="btn btn-primary btn-user btn-block " BackColor="#212529" BorderColor="#212529" OnClick="AddFiles" />
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <asp:GridView ID="fileGridview" UseAccessibleHeader="true" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" EmptyDataText="No Files Uploaded">
+                                <Columns>
+                                    <asp:BoundField DataField="DocumentName" HeaderText="File Name" />
+
+
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+
+                                            <asp:LinkButton ID="DeleteLink" runat="server" Text="Delete" OnClick="DeleteFiles" CssClass="btn btn-primary btn-user btn-block " BackColor="#993333" BorderColor="#212529"></asp:LinkButton>
+                                        </ItemTemplate>
+
+                                    </asp:TemplateField>
+
+                                </Columns>
+
+                            </asp:GridView>
+                            <script type="text/javascript">    
+
+                                $(document).ready(function () {
+                                    $('#fileGridview').DataTable();
+                                });
+                            </script>
+                        </div>
                     </ContentTemplate>
+                    <Triggers>
+                        <asp:PostBackTrigger ControlID="btnUpload" />
+
+                    </Triggers>
                 </asp:UpdatePanel>
+
 
                 <div class="row mb-3 ms-1">
                     <div class="col-sm-3">

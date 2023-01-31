@@ -14,12 +14,36 @@ namespace LegalSystemCore.Controller
         int Update(UserRole userRole);
         int Delete(UserRole userRole);
         List<UserRole> GetUserRoleList();
+        UserRole GetUserRole(int userRoleId);
     }
 
     public class UserControllerImpl : IUserRoleController
     {
         IUserRoleDAO userRoleDAO = DAOFactory.CreateUserRoleDAO();
 
+        public UserRole GetUserRole(int userRoleId)
+        {
+            DbConnection dbConnection = null;
+            UserRole userRole = new UserRole();
+            try
+            {
+                dbConnection = new DbConnection();
+                userRole = userRoleDAO.GetUserRole(userRoleId, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return userRole;
+        }
         public List<UserRole> GetUserRoleList()
         {
             DbConnection dbConnection = null;

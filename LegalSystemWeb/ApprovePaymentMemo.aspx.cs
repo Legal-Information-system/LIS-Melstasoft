@@ -19,6 +19,8 @@ namespace LegalSystemWeb
         string roleId;
         Payment payment = new Payment();
         IPaymentController paymentController = ControllerFactory.CreatePaymentController();
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,11 +31,21 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    userId = (int)Session["User_Id"];
-                    roleId = Session["User_Role_Id"].ToString();
-                    paymentId = Convert.ToInt32(Request.QueryString["PaymentId"]);
-                    BindData();
-                    BindDocumentList(payment.PaymentId);
+                    if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 25).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 25 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 25 && x.IsGrantRevoke == 1)))
+                    {
+
+                        userId = (int)Session["User_Id"];
+                        roleId = Session["User_Role_Id"].ToString();
+                        paymentId = Convert.ToInt32(Request.QueryString["PaymentId"]);
+                        BindData();
+                        BindDocumentList(payment.PaymentId);
+                    }
+                    else
+                    {
+                        Response.Redirect("404.aspx");
+                    }
                 }
 
             }

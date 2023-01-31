@@ -51,6 +51,7 @@
     <Compile Include="Controller\CaseNatureController.cs" />
     <Compile Include="Controller\CounselorController.cs" />
     <Compile Include="Controller\DashboardCardController.cs" />
+    <Compile Include="Controller\DocumentCaseActivityController.cs" />
     <Compile Include="Controller\DocumentCaseController.cs" />
     <Compile Include="Controller\DocumentController.cs" />
     <Compile Include="Controller\DocumentPaymentController.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Domain\DashboardCard.cs" />
     <Compile Include="Domain\Document.cs" />
     <Compile Include="Domain\DocumentCase.cs" />
+    <Compile Include="Domain\DocumentCaseActivity.cs" />
     <Compile Include="Domain\DocumentPayment.cs" />
     <Compile Include="Domain\Functions.cs" />
     <Compile Include="Domain\Lawyer.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Infrastructure\CaseNatureDAO.cs" />
     <Compile Include="Infrastructure\CounselorDAO.cs" />
     <Compile Include="Infrastructure\DashboardCardDAO.cs" />
+    <Compile Include="Infrastructure\DocumentCaseActivityDAO.cs" />
     <Compile Include="Infrastructure\DocumentCaseDAO.cs" />
     <Compile Include="Infrastructure\DocumentDAO.cs" />
     <Compile Include="Infrastructure\DocumentPaymentDAO.cs" />

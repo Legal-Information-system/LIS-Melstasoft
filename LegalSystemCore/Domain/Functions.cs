@@ -6,6 +6,7 @@ using System.Text;
 
 namespace LegalSystemCore.Domain
 {
+    [Serializable]
     public class Functions
     {
         [DBField("function_id")]
@@ -13,5 +14,7 @@ namespace LegalSystemCore.Domain
 
         [DBField("function_name")]
         public string FunctionName { get; set; }
+
+        public string Status { get; set; }
     }
 }

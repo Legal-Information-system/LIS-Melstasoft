@@ -51,6 +51,10 @@ namespace LegalSystemCore.Domain
         [DBField("is_active")]
         public int IsActive { get; set; }
 
+        public string court { get; set; }
+
+        public string location { get; set; }
+
         public Lawyer assignAttorney { get; set; }
         public Lawyer counsilor { get; set; }
         public CaseAction actionTaken { get; set; }

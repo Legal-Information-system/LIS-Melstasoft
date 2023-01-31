@@ -13,6 +13,7 @@ namespace LegalSystemCore.Infrastructure
         int Update(UserRole userRole, DbConnection dbConnection);
         int Delete(UserRole userRole, DbConnection dbConnection);
         List<UserRole> GetUserRoleList(DbConnection dbConnection);
+        UserRole GetUserRole(int roleId, DbConnection dbConnection);
     }
 
     public class UserRoleDAOSqlImpl : IUserRoleDAO
@@ -33,6 +34,23 @@ namespace LegalSystemCore.Infrastructure
 
 
             return listUserRole;
+        }
+
+        public UserRole GetUserRole(int roleId, DbConnection dbConnection)
+        {
+            UserRole userRole = new UserRole();
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "select * from user_role WHERE user_role_id = @RoleId";
+            dbConnection.cmd.Parameters.AddWithValue("@RoleId", roleId);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            userRole = dataAccessObject.GetSingleOject<UserRole>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return userRole;
         }
 
         public int Save(UserRole userRole, DbConnection dbConnection)

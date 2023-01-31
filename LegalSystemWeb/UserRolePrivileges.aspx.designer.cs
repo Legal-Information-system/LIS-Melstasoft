@@ -11,61 +11,52 @@ namespace LegalSystemWeb
 {
 
 
-    public partial class Dashboard
+    public partial class UserRolePrivileges
     {
 
         /// <summary>
-        /// DashboardView control.
+        /// ScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DashboardView;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// ltCompanyStatus control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltCompanyStatus;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// ltDailyCase control.
+        /// lblUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltDailyCase;
+        protected global::System.Web.UI.WebControls.Literal lblUser;
 
         /// <summary>
-        /// ltMonthlyCase control.
+        /// ddlUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltMonthlyCase;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUser;
 
         /// <summary>
-        /// ViewCompany control.
+        /// gvUserPrevilages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ViewCompany;
-
-        /// <summary>
-        /// ltCompanyUnit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltCompanyUnit;
+        protected global::System.Web.UI.WebControls.GridView gvUserPrevilages;
     }
 }

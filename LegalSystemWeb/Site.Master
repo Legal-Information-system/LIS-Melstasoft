@@ -67,7 +67,9 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Basic</div>
 
-                            <% if (Session["User_Role_Id"].ToString() != "3")
+                            <% if ((userRolePrivileges.Where(x => (x.FunctionId == 20)).Any()
+                                                                        && !(userPrivileges.Any(x => (x.FunctionId == 20) && x.IsGrantRevoke == 0))) ||
+                                                                        userPrivileges.Any(x => (x.FunctionId == 20) && x.IsGrantRevoke == 1))
                                 {
                             %>
 
@@ -76,17 +78,31 @@
                                 Dashboard
                             </a>
 
-                            <% if (Session["User_Role_Id"].ToString() != "3")
+                            <% if ((userRolePrivileges.Where(x => (x.FunctionId == 16)).Any()
+                                                                       && !(userPrivileges.Any(x => (x.FunctionId == 16) && x.IsGrantRevoke == 0))) ||
+                                                                       userPrivileges.Any(x => (x.FunctionId == 16) && x.IsGrantRevoke == 1))
                                 {
                             %>
                             <a class="nav-link" href="CreateCase.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
                                 Create Case
                             </a>
+                            <% }
+                                if ((userRolePrivileges.Where(x => (x.FunctionId == 21)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 21) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 21) && x.IsGrantRevoke == 1))
+                                {
+                            %>
                             <a class="nav-link" href="UpdateCaseActivity.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div>
                                 Update Case Activity
                             </a>
+                            <% }
+                                if ((userRolePrivileges.Where(x => (x.FunctionId == 17)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 17) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 17) && x.IsGrantRevoke == 1))
+                                {
+                            %>
                             <a class="nav-link" href="CreatePaymentMemo.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-credit-card"></i></div>
                                 Payment Memo
@@ -94,18 +110,30 @@
 
                             <%} %>
                             <%} %>
+                            <%  if ((userRolePrivileges.Where(x => (x.FunctionId == 25)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 25) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 25) && x.IsGrantRevoke == 1))
+                                {
+                            %>
                             <a class="nav-link" href="ViewCases.aspx?name=All">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 View Cases
                             </a>
+                            <%} %>
 
-
-
+                            <%  if ((userRolePrivileges.Where(x => (x.FunctionId == 26)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 26) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 26) && x.IsGrantRevoke == 1))
+                                {
+                            %>
                             <a class="nav-link" href="ViewPaymentMemo.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 View Payment Memo
                             </a>
-                            <% if (Session["User_Role_Id"].ToString() == "1")
+                            <%} %>
+                            <% if ((userRolePrivileges.Where(x => (x.FunctionId == 19 || x.FunctionId == 18)).Any()
+                                                                       && !(userPrivileges.Any(x => (x.FunctionId == 19 || x.FunctionId == 18) && x.IsGrantRevoke == 0))) ||
+                                                                       userPrivileges.Any(x => (x.FunctionId == 19 || x.FunctionId == 18) && x.IsGrantRevoke == 1))
                                 {
                             %>
 
@@ -114,28 +142,115 @@
                                 Reports
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+
                             <div class="collapse" id="collapseReports" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <% 
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 18)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 18) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 18) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="DailyCases.aspx">Daily Reports</a>
+                                    <% }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 19)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 19) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 19) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="MonthlyCases.aspx">Monthly Reports</a>
+                                    <%} %>
                                 </nav>
                             </div>
+                            <%} %>
+                            <%if ((userRolePrivileges.Where(x => (x.FunctionId == 22 || x.FunctionId == 23)).Any()
+                                                                                                             && !(userPrivileges.Any(x => (x.FunctionId == 22 || x.FunctionId == 23) && x.IsGrantRevoke == 0))) ||
+                                                                                                             userPrivileges.Any(x => (x.FunctionId == 22 || x.FunctionId == 23) && x.IsGrantRevoke == 1))
+                                { %>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUserPrivilege" aria-expanded="false" aria-controls="collapseUserPrivilege">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                User Privilege
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
 
+                            <div class="collapse" id="collapseUserPrivilege" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <% if ((userRolePrivileges.Where(x => (x.FunctionId == 22)).Any()
+                                                                   && !(userPrivileges.Any(x => (x.FunctionId == 22) && x.IsGrantRevoke == 0))) ||
+                                                                   userPrivileges.Any(x => (x.FunctionId == 22) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
+                                    <a class="nav-link" href="UserPrivileges.aspx">User Privileges</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 23)).Any()
+                         && !(userPrivileges.Any(x => (x.FunctionId == 23) && x.IsGrantRevoke == 0))) ||
+                         userPrivileges.Any(x => (x.FunctionId == 23) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
+                                    <a class="nav-link" href="UserRolePrivileges.aspx">User Role Privileges</a>
+                                    <%} %>
+                                </nav>
+                            </div>
                             <%} %>
 
-                            <% if (Session["User_Role_Id"].ToString() == "1")
+
+                            <%  var idList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 31 };
+                                bool statement;
+                                if (userPrivileges.Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 0)))
                                 {
+                                    statement = ((userRolePrivileges.Where(x => idList.Any(y => x.FunctionId == y)).Where(z => userPrivileges.Any(a => a.FunctionId == z.FunctionId && a.IsGrantRevoke != 0)).Any())
+                                       || userPrivileges.Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 1)));
+                                }
+                                else
+                                {
+                                    statement = ((userRolePrivileges.Where(x => idList.Any(y => x.FunctionId == y)).Any())
+                                                                          || userPrivileges.Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 1)));
+                                }
+                                if (statement)
+                                {
+
+
+
                             %>
 
                             <div class="sb-sidenav-menu-heading">Admin</div>
 
-
+                            <% if ((userRolePrivileges.Where(x => (x.FunctionId == 15)).Any()
+                                     && !(userPrivileges.Any(x => (x.FunctionId == 15) && x.IsGrantRevoke == 0))) ||
+                                     userPrivileges.Any(x => (x.FunctionId == 15) && x.IsGrantRevoke == 1))
+                                {
+                            %>
                             <a class="nav-link" href="CreateAccount.aspx">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Create Account
                             </a>
+                            <%} %>
 
+                            <% if ((userRolePrivileges.Where(x => (x.FunctionId == 31)).Any()
+                                     && !(userPrivileges.Any(x => (x.FunctionId == 31) && x.IsGrantRevoke == 0))) ||
+                                     userPrivileges.Any(x => (x.FunctionId == 31) && x.IsGrantRevoke == 1))
+                                {
+                            %>
+                            <a class="nav-link" href="ResetPassword.aspx">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                Reset User Passwords
+                            </a>
+                            <%} %>
 
+                            <% if (userPrivileges.Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 0)))
+                                {
+                                    statement = ((userRolePrivileges.Where(b => b.FunctionId != 15).Where(x => idList.Any(y => x.FunctionId == y)).Where(z => userPrivileges.Where(b => b.FunctionId != 15).Any(a => a.FunctionId == z.FunctionId && a.IsGrantRevoke != 0)).Any())
+                                       || userPrivileges.Where(b => b.FunctionId != 15).Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 1)));
+                                }
+                                else
+                                {
+                                    statement = ((userRolePrivileges.Where(b => b.FunctionId != 15).Where(x => idList.Any(y => x.FunctionId == y)).Any())
+                                                                          || userPrivileges.Any(x => idList.Any(y => x.FunctionId == y && x.IsGrantRevoke == 1)));
+                                }
+                                if (statement)
+                                {
+                            %>
 
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -145,20 +260,96 @@
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <% if ((userRolePrivileges.Where(x => (x.FunctionId == 5)).Any()
+                                     && !(userPrivileges.Any(x => (x.FunctionId == 5) && x.IsGrantRevoke == 0))) ||
+                                     userPrivileges.Any(x => (x.FunctionId == 5) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddCompany.aspx">Add Company</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 6)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 6) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 6) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddCompanyUnit.aspx">Add Company Unit</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 10)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 10) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 10) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddLawyer.aspx">Add Lawyer</a>
-                                    <%--<a class="nav-link" href="AddUserRole.aspx">Add User Role</a>--%>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 13)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 13) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 13) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
+                                    <a class="nav-link" href="AddUserRole.aspx">Add User Role</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 7)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 7) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 7) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddCourt.aspx">Add Court</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 11)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 11) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 11) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddLocation.aspx">Add Location</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 8)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 8) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 8) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddCourtLocation.aspx">Add Court Location</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 3)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 3) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 3) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddCaseNature.aspx">Add Case Nature</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 1)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 1) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 1) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddAction.aspx">Add Action</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 2)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 2) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 2) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddActivity.aspx">Add Activity</a>
+                                    <%
+                                        }
+                                        if ((userRolePrivileges.Where(x => (x.FunctionId == 9)).Any()
+   && !(userPrivileges.Any(x => (x.FunctionId == 9) && x.IsGrantRevoke == 0))) ||
+   userPrivileges.Any(x => (x.FunctionId == 9) && x.IsGrantRevoke == 1))
+                                        {
+                                    %>
                                     <a class="nav-link" href="AddJudgementType.aspx">Add Judgement Type</a>
-
+                                    <%} %>
                                 </nav>
                             </div>
+                            <%} %>
 
                             <%} %>
                         </div>
