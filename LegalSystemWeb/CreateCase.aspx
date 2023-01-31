@@ -222,7 +222,21 @@
                                     </div>
                                 </div>
 
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="col-md-6">
+
+                                    <asp:Literal ID="Literal6" runat="server" Text="Previous Case"></asp:Literal>
+                                    <asp:RadioButtonList ID="rbPrevCase" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px" AutoPostBack="true" OnSelectedIndexChanged="rbPrevCaseChanged">
+                                        <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">&nbsp;Case on System</asp:ListItem>
+                                        <asp:ListItem Value="0" CssClass="form-check-input">&nbsp;Case not on system</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server"
+                                        ControlToValidate="rbPrevCase" ErrorMessage="Required" ValidationGroup="1">*</asp:RequiredFieldValidator>
+
+                                </div>
+                                <div class="col-md-6" id="textOption" runat="server">
 
                                     <asp:Literal ID="Literal12" runat="server" Text="Previous Case Number"></asp:Literal>
                                     <asp:TextBox runat="server" ID="txtPreCaseNumber" CssClass="form-control form-control-user" Style="margin-top: 5px"></asp:TextBox>
@@ -230,6 +244,13 @@
                                         <asp:Label ID="lblPrevCaseNumberError" runat="server" Text="" ForeColor="Red"></asp:Label>
                                     </div>
                                 </div>
+                                <div class="col-md-6" style="display: flex; flex-direction: column" id="dropDownOption" runat="server">
+
+                                    <asp:Literal ID="Literal7" runat="server" Text="Case Number"></asp:Literal>
+                                    <asp:DropDownList runat="server" ID="ddlPrevCase" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled" Style="margin-top: 5px"></asp:DropDownList>
+
+                                </div>
+
                             </div>
 
                             <div class="row mb-3">

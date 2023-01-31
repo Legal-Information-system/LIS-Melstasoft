@@ -19,7 +19,7 @@ namespace LegalSystemWeb
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
-        public string dates, caseCount, caseNumber, per, CompanyUnitName;
+        public string dates, caseCount, caseNumber, per, CompanyUnitName, CompanyName;
         public int DailyTotal, MonthlyTotal = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,6 +49,7 @@ namespace LegalSystemWeb
                     else
                     {
                         CompanyUnitName = Request.QueryString["name"].ToString();
+                        //CompanyName = Request.QueryString["Cname"].ToString();
                         DashboardView.Visible = false;
                         ViewCompany.Visible = true;
                         BindCompanyUnitList();
@@ -91,7 +92,11 @@ namespace LegalSystemWeb
                 cstextCard.Append(row["case_count"].ToString());
                 cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
                 cstextCard.Append(row["company_name"].ToString());
-                string text = row["company_name"].ToString();
+
+                cstextCard.Append("&cname=");
+                cstextCard.Append(CompanyUnitName);
+
+                string text = CompanyUnitName;
                 cstextCard.Append("\"></a>  </div>  </div>  </div> ");
 
             }

@@ -16,7 +16,7 @@ namespace LegalSystemWeb
     public partial class ViewCases : System.Web.UI.Page
     {
         int companyId, UserId;
-        static string name;
+        static string name, Cname;
         List<CaseMaster> caseMasterListO = new List<CaseMaster>();
         List<CaseMaster> caseMasterListC = new List<CaseMaster>();
         List<CaseMaster> caseMasterList = new List<CaseMaster>();
@@ -42,7 +42,15 @@ namespace LegalSystemWeb
                         Response.Redirect("404.aspx");
                     else
                     {
-                        name = Request.QueryString["name"].ToString();
+                        if (Request.QueryString["name"] != null)
+                        {
+                            name = Request.QueryString["name"].ToString();
+                        }
+
+                        if (Request.QueryString["cname"] != null)
+                        {
+                            Cname = Request.QueryString["cname"].ToString();
+                        }
                         BindCaseStatus();
                     }
                 }
@@ -107,7 +115,7 @@ namespace LegalSystemWeb
                 }
             }
 
-            if (name != "All" && name != null)
+            if (name != "All" && name != null && Cname != null)
             {
                 //if (((userRolePrivileges.Where(x => (x.FunctionId == 28)).Any()
                 //         && !(UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 0))) ||
@@ -118,8 +126,8 @@ namespace LegalSystemWeb
                 //}
                 //else
                 //{
-                caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
-                caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+                caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name && c.company.CompanyName == Cname).ToList();
+                caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name && c.company.CompanyName == Cname).ToList();
 
             }
 
