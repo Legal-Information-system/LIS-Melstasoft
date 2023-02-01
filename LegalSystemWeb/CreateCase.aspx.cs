@@ -118,6 +118,7 @@ namespace LegalSystemWeb
             List<CaseMaster> caseMasters = caseMasterController.GetCaseMasterListAll();
             CaseMaster caseMaster = new CaseMaster();
             caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["casenumber"].ToString(), true);
+            BindDocumentList(caseMaster.CaseNumber);
             caseNumber = caseMaster.CaseNumber;
             ddlCompany.SelectedValue = caseMaster.CompanyId.ToString();
             BindCompanyUnitList();
@@ -200,6 +201,15 @@ namespace LegalSystemWeb
             {
                 return false;
             }
+        }
+
+        private void BindDocumentList(string casenumber)
+        {
+            IDocumentCaseController documentController = ControllerFactory.CreateDocumentCaseController();
+            UplodedFilesList.Clear();
+            UplodedFilesList = documentController.GetDocumentList().Where(x => x.CaseNumber == casenumber).ToList();
+
+            BindDocuments();
         }
 
         private void BindCompanyList()
@@ -631,6 +641,7 @@ namespace LegalSystemWeb
 
 
                         UploadFiles();
+                        ClearDocuments();
                         Clear();
                         lblSuccessMsg.Text = "Record Updated Successfully!";
                     }
@@ -681,9 +692,20 @@ namespace LegalSystemWeb
         {
             IDocumentController documentController = ControllerFactory.CreateDocumentController();
             IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
-
             Document document = new Document();
             DocumentCase documentCase = new DocumentCase();
+            if (pageSwitch())
+            {
+                List<DocumentCase> documentCases = documentCaseController.GetDocumentListByFilter(Request.QueryString["casenumber"].ToString());
+
+                documentCaseController.DeleteByCaseNumber(Request.QueryString["casenumber"].ToString());
+                foreach (DocumentCase doc in documentCases)
+                {
+                    document.DocumentId = doc.DocumentId;
+                    documentController.DeletePermenent(document);
+                }
+            }
+
 
             //int i = 0;
             //foreach (HttpPostedFileBase file in listUplodedFile)

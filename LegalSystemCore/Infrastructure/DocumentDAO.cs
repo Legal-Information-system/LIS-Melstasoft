@@ -12,6 +12,8 @@ namespace LegalSystemCore.Infrastructure
         int Save(Document document, DbConnection dbConnection);
         int Update(Document document, DbConnection dbConnection);
         int Delete(Document document, DbConnection dbConnection);
+
+        int DeletePermenent(Document document, DbConnection dbConnection);
         List<Document> GetDocumentList(DbConnection dbConnection);
         Document GetDocument(int documentId, DbConnection dbConnection);
 
@@ -88,6 +90,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.Parameters.Clear();
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             dbConnection.cmd.CommandText = "UPDATE document SET is_active = 0 WHERE document_id = @DocumentId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@DocumentId", document.DocumentId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int DeletePermenent(Document document, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Delete from document WHERE document_id = @DocumentId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@DocumentId", document.DocumentId);
 

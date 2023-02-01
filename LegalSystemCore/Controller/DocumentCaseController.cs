@@ -14,7 +14,10 @@ namespace LegalSystemCore.Controller
         int Save(DocumentCase documentCase);
         int Update(DocumentCase documentCase);
         int Delete(DocumentCase documentCase);
+        int DeleteByCaseNumber(string CaseNumber);
         List<DocumentCase> GetDocumentList();
+
+        List<DocumentCase> GetDocumentListByFilter(string CaseNumber);
         DocumentCase GetDocument(int documentCaseId);
     }
 
@@ -54,6 +57,30 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 listDocumentCase = documentCaseDAO.GetDocumentCaseList(dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listDocumentCase;
+        }
+
+        public List<DocumentCase> GetDocumentListByFilter(string CaseNumber)
+        {
+            DbConnection dbConnection = null;
+            List<DocumentCase> listDocumentCase = new List<DocumentCase>();
+            try
+            {
+                dbConnection = new DbConnection();
+                listDocumentCase = documentCaseDAO.GetDocumentCaseListFilter(CaseNumber, dbConnection);
             }
             catch (Exception)
             {
@@ -121,6 +148,28 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 return documentCaseDAO.Delete(documentCase, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int DeleteByCaseNumber(string CaseNumber)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentCaseDAO.DeleteByCaseNumber(CaseNumber, dbConnection);
             }
             catch (Exception)
             {

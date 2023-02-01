@@ -55,6 +55,20 @@ namespace LegalSystemWeb
             }
         }
 
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UpdateCaseActivity.aspx?CaseActivityNumber=" + Request.QueryString["CaseActivityNumber"].ToString() + "&update=true");
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            ICaseActivityController caseActivityController = ControllerFactory.CreateCaseActivityController();
+            CaseActivity caseActivity = new CaseActivity();
+            caseActivity = caseActivityController.GetCaseActivity(Request.QueryString["CaseActivityNumber"].ToString(), false);
+            caseActivityController.Delete(caseActivity);
+            Response.Redirect("ViewCases.aspx?name=" + caseActivity.CaseNumber);
+        }
+
         private void SetCaseMasterData()
         {
             try
