@@ -160,6 +160,8 @@ namespace LegalSystemWeb
             if (caseMaster.PrevCaseNumber == null)
             {
                 caseMaster.PrevCaseNumber = "";
+                rbPrevCase.SelectedValue = "0";
+                textOption.Visible = true;
             }
             else
             {

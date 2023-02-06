@@ -48,6 +48,7 @@ namespace LegalSystemWeb
                         dvCompanyUnit.Visible = false;
                         companyUnit.Visible = false;
                         company.Visible = false;
+                        dvDate.Visible = false;
                         txtCaseOpenDate.Text = string.Empty;
                         btnPrint.Visible = false;
                         //BindCaseList();
@@ -169,6 +170,30 @@ namespace LegalSystemWeb
 
         }
 
+        protected void rbFilter_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ltDetails.Text = string.Empty;
+            ltDate.Text = string.Empty;
+            dvDate.Visible = true;
+            dvCompany.Visible = false;
+            dvCompanyUnit.Visible = false;
+            companyUnit.Visible = false;
+            company.Visible = false;
+            btnPrint.Visible = false;
+            rbCompany.ClearSelection();
+            rbCompanyUnit.ClearSelection();
+            txtCaseOpenDate.Text = string.Empty;
+            if (rbSelectOption.SelectedValue == "0")
+            {
+                ltDate.Text = "Next Action Date";
+            }
+            else
+            {
+                ltDate.Text = "Created Date";
+            }
+            ltDetails.Text = string.Empty;
+        }
+
         protected void rbCompanyUnit_SelectedValueChanged(object sender, EventArgs e)
         {
             ltDetails.Text = string.Empty;
@@ -212,21 +237,52 @@ namespace LegalSystemWeb
             {
                 List<CaseActivity> caseActivities = caseActivityController.GetUpdateCaseList(true);
                 lawyers = lawyerController.GetLawyerList(true);
-                foreach (CaseMaster global in caseMasterList)
+                if (rbSelectOption.SelectedValue == "0")
                 {
-                    string newString = DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy");
-                    string newString2 = global.CaseOpenDate.ToString("dd/MM/yyyy");
-                    if (newString2 == newString)
+                    foreach (CaseMaster global in caseMasterList)
                     {
-                        caseMasterListDataLoad.Add(global);
+                        string newString = DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy");
+
+                        foreach (CaseActivity activity in caseActivities.Where(x => x.CaseNumber == global.CaseNumber))
+                        {
+
+                            string newString2 = activity.NextDate.ToString("dd/MM/yyyy");
+                            if (newString2 == newString)
+                            {
+                                caseMasterListDataLoad.Add(global);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (CaseMaster global in caseMasterList)
+                    {
+                        string newString = DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy");
+                        string newString2 = global.CaseOpenDate.ToString("dd/MM/yyyy");
+                        if (newString2 == newString)
+                        {
+                            caseMasterListDataLoad.Add(global);
+                        }
                     }
                 }
                 //caseMasterListDataLoad = caseMasterListDataLoad.Where(x => x.CreatedDate.ToString("dd/MM/yyyy") == DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy")).ToList();
-                if (rbCompany.SelectedValue == "0" && txtCaseOpenDate.Text != string.Empty)
-                {
+                //if (rbSelectOption.SelectedValue == "0" && txtCaseOpenDate.Text != string.Empty)
+                //{
+                //    foreach (CaseMaster case1 in caseMasterListDataLoad)
+                //    {
+                //        foreach (CaseActivity case2 in caseActivities)
+                //        {
+                //            if (case1.CaseNumber == case2.CaseNumber && case2.NextDate.ToString("dd/MM/yyyy") == DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy"))
+                //            {
+                //                string n = case1.CaseNumber.ToString();
+                //            }
+                //        }
+                //    }
+                //    caseMasterListDataLoad = caseMasterListDataLoad.Where(x => caseActivities.Any(y => y.CaseNumber == x.CaseNumber && y.NextDate.ToString("dd/MM/yyyy") == DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy"))).ToList();
+                //}
 
-                }
-                else if (rbCompany.SelectedValue == "1" && txtCaseOpenDate.Text != string.Empty)
+                if (rbCompany.SelectedValue == "1" && txtCaseOpenDate.Text != string.Empty)
                 {
                     caseMasterListDataLoad = caseMasterListDataLoad.Where(x => x.CompanyId == Int32.Parse(ddlCompany.SelectedValue)).ToList();
                     if (rbCompanyUnit.SelectedValue == "1")
@@ -234,6 +290,7 @@ namespace LegalSystemWeb
                         caseMasterListDataLoad = caseMasterListDataLoad.Where(y => y.CompanyUnitId == Int32.Parse(ddlCompanyUnit.SelectedValue)).ToList();
                     }
                 }
+
                 if (caseMasterListDataLoad.Any())
                 {
                     caseMasterListDataLoad = caseMasterListDataLoad.OrderBy(x => x.CaseOpenDate.ToString("dd/MM/yyyy")).ToList();
@@ -270,6 +327,7 @@ namespace LegalSystemWeb
                                 "                                      <th scope=\"col\">Court</th>\r\n    " +
 
                                 "                                    <th scope=\"col\">Next Step</th>\r\n     " +
+                                "                                    <th scope=\"col\">Next Step Date</th>\r\n     " +
                                 "                                    <th scope=\"col\">Counsellor</th>\r\n     " +
                                 "                               </tr>\r\n                                </thead> <tbody>");
 
@@ -288,9 +346,17 @@ namespace LegalSystemWeb
                                 cstextCard.Append("</td>\r\n                                        <td>");
                                 if (caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).Any())
                                 {
-                                    cstextCard.Append(caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).OrderByDescending(r => r.ActivityDate).Single().nextAction.ActionName);
+                                    cstextCard.Append(caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).OrderByDescending(r => r.ActivityDate).FirstOrDefault().nextAction.ActionName);
+                                    cstextCard.Append("</td>\r\n                                        <td>");
+                                    cstextCard.Append(caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).OrderByDescending(r => r.ActivityDate).FirstOrDefault().NextDate.ToString("dd/MM/yyyy"));
+                                    cstextCard.Append("</td>\r\n                                        <td>");
                                 }
-                                cstextCard.Append("</td>\r\n                                        <td>");
+                                else
+                                {
+                                    cstextCard.Append("N/A</td>\r\n                                        <td>");
+                                    cstextCard.Append("N/A</td>\r\n                                        <td>");
+                                }
+
                                 if (lawyers.Any(x => caseMasterCompanyUnit.counselors.Any(y => y.LawyerId == x.LawyerId)))
                                 {
                                     var flag = 0;
