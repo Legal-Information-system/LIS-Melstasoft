@@ -154,7 +154,7 @@ namespace LegalSystemWeb
             if (UserId == 5)
                 caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-            ddlCase.DataSource = caseMasterList;
+            ddlCase.DataSource = caseMasterList.OrderBy(x => x.CaseNumber);
             ddlCase.DataValueField = "CaseNumber";
             ddlCase.DataTextField = "CaseNumber";
             ddlCase.DataBind();
@@ -216,14 +216,14 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             lawyerList = lawyerController.GetLawyerList(false);
 
-            ddlAssignAttorney.DataSource = lawyerList;
+            ddlAssignAttorney.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlAssignAttorney.DataValueField = "LawyerId";
             ddlAssignAttorney.DataTextField = "LawyerName";
             ddlAssignAttorney.DataBind();
             ddlAssignAttorney.Items.Insert(0, new ListItem("-- select attorney --", ""));
 
 
-            ddlCounselor.DataSource = lawyerList;
+            ddlCounselor.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
@@ -237,13 +237,13 @@ namespace LegalSystemWeb
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
             caseActionList = caseActionController.GetCaseActionList(false);
 
-            ddlActionTaken.DataSource = caseActionList;
+            ddlActionTaken.DataSource = caseActionList.OrderBy(x => x.ActionName);
             ddlActionTaken.DataValueField = "ActionId";
             ddlActionTaken.DataTextField = "ActionName";
             ddlActionTaken.DataBind();
             ddlActionTaken.Items.Insert(0, new ListItem("-- select action taken --", ""));
 
-            ddlNextAction.DataSource = caseActionList;
+            ddlNextAction.DataSource = caseActionList.OrderBy(x => x.ActionName);
             ddlNextAction.DataValueField = "ActionId";
             ddlNextAction.DataTextField = "ActionName";
             ddlNextAction.DataBind();
@@ -257,7 +257,7 @@ namespace LegalSystemWeb
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
             judgementTypeList = judgementTypeController.GetJudgementTypeList(false);
 
-            ddlJudgement.DataSource = judgementTypeList;
+            ddlJudgement.DataSource = judgementTypeList.OrderBy(x => x.JTypeName);
             ddlJudgement.DataValueField = "JTypeId";
             ddlJudgement.DataTextField = "JTypeName";
             ddlJudgement.DataBind();
@@ -373,7 +373,7 @@ namespace LegalSystemWeb
 
             Document document = new Document();
             DocumentCaseActivity documentCase = new DocumentCaseActivity();
-            documentCase.CaseActivityId = Request.QueryString["CaseActivityNumber"].ToString();
+            documentCase.CaseActivityId = ddlCase.SelectedValue.ToString();
             if (pageSwitch())
             {
                 List<DocumentCaseActivity> documentCases = documentCaseController.GetDocumentList(documentCase, false);

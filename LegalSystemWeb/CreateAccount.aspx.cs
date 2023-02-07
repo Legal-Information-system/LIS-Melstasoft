@@ -56,7 +56,7 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
-            ddlCompany.DataSource = companyController.GetCompanyList(false);
+            ddlCompany.DataSource = companyController.GetCompanyList(false).OrderBy(x => x.CompanyName);
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
 
@@ -68,7 +68,7 @@ namespace LegalSystemWeb
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             if (ddlCompany.SelectedValue != "")
             {
-                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(false, ddlCompany.SelectedValue);
+                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(false, ddlCompany.SelectedValue).OrderBy(x => x.CompanyUnitName);
                 ddlCompanyUnit.DataValueField = "CompanyUnitId";
                 ddlCompanyUnit.DataTextField = "CompanyUnitName";
 

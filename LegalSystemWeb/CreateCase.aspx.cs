@@ -103,7 +103,7 @@ namespace LegalSystemWeb
         {
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
             List<CaseMaster> caseMasters = caseMasterController.GetCaseMasterListAll();
-            ddlPrevCase.DataSource = caseMasters;
+            ddlPrevCase.DataSource = caseMasters.OrderBy(x => x.CaseNumber);
             ddlPrevCase.DataValueField = "CaseNumber";
             ddlPrevCase.DataTextField = "CaseNumber";
             ddlPrevCase.DataBind();
@@ -225,7 +225,7 @@ namespace LegalSystemWeb
             if (UserId == 4 || UserId == 5)
                 companyList = companyList.Where(c => c.CompanyId == companyId).ToList();
 
-            ddlCompany.DataSource = companyList;
+            ddlCompany.DataSource = companyList.OrderBy(x => x.CompanyName);
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
             ddlCompany.DataBind();
@@ -245,7 +245,7 @@ namespace LegalSystemWeb
                 if (UserId == 5)
                     companyUnitList = companyUnitList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-                ddlCompanyUnit.DataSource = companyUnitList;
+                ddlCompanyUnit.DataSource = companyUnitList.OrderBy(x => x.CompanyUnitName);
                 ddlCompanyUnit.DataValueField = "CompanyUnitId";
                 ddlCompanyUnit.DataTextField = "CompanyUnitName";
 
@@ -260,7 +260,7 @@ namespace LegalSystemWeb
         private void BindCaseNatureList()
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
-            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList(false);
+            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList(false).OrderBy(x => x.CaseNatureName);
             ddlNatureOfCase.DataValueField = "CaseNatureId";
             ddlNatureOfCase.DataTextField = "CaseNatureName";
             ddlNatureOfCase.DataBind();
@@ -274,7 +274,7 @@ namespace LegalSystemWeb
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
             courtList = courtController.GetCourtList(false);
-            ddlCourt.DataSource = courtList;
+            ddlCourt.DataSource = courtList.OrderBy(x => x.CourtName);
             ddlCourt.DataValueField = "CourtId";
             ddlCourt.DataTextField = "CourtName";
             ddlCourt.DataBind();
@@ -295,7 +295,7 @@ namespace LegalSystemWeb
                     listLocation.Add(courtLocation.location);
                 }
 
-                ddlLocation.DataSource = listLocation;
+                ddlLocation.DataSource = listLocation.OrderBy(x => x.locationName);
                 ddlLocation.DataValueField = "LocationId";
                 ddlLocation.DataTextField = "locationName";
 
@@ -313,14 +313,14 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             lawyerList = lawyerController.GetLawyerList(false);
 
-            ddlAttorney.DataSource = lawyerList;
+            ddlAttorney.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlAttorney.DataValueField = "LawyerId";
             ddlAttorney.DataTextField = "LawyerName";
             ddlAttorney.DataBind();
             ddlAttorney.Items.Insert(0, new ListItem("-- select Attorney --", ""));
 
 
-            ddlCounselor.DataSource = lawyerList;
+            ddlCounselor.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
