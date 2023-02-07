@@ -12,6 +12,8 @@ namespace LegalSystemCore.Infrastructure
         int Save(DocumentCaseActivity documentCaseActivity, DbConnection dbConnection);
         int Update(DocumentCaseActivity documentCaseActivity, DbConnection dbConnection);
         int Delete(DocumentCaseActivity documentCaseActivity, DbConnection dbConnection);
+
+        int DeleteDocuments(DocumentCaseActivity documentCaseActivity, DbConnection dbConnection);
         List<DocumentCaseActivity> GetDocumentCaseActivityList(DocumentCaseActivity documentCaseActivity, bool check, DbConnection dbConnection);
         DocumentCaseActivity GetDocumentCaseActivity(int documentCaseActivityId, DbConnection dbConnection);
     }
@@ -90,6 +92,21 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandText = "UPDATE case_activity_document SET is_active = 0 WHERE case_activity_document_id = @DocumentCaseId ";
 
             dbConnection.cmd.Parameters.AddWithValue("@DocumentCaseId", documentCaseActivity.DocumentCaseActivityId);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
+
+        public int DeleteDocuments(DocumentCaseActivity documentCaseActivity, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Delete from case_activity_document WHERE case_activity_id = @DocumentCaseId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@DocumentCaseId", documentCaseActivity.CaseActivityId);
 
             output = dbConnection.cmd.ExecuteNonQuery();
 

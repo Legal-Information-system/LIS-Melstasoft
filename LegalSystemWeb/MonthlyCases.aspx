@@ -21,7 +21,19 @@
                             <div class="row mb-3">
                                 <div class="col-sm-4">
 
-                                    <asp:Literal ID="Literal5" runat="server" Text="Case Opened Month and Year"></asp:Literal>
+                                    <asp:Literal ID="Literal6" runat="server" Text="Select Option"></asp:Literal>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <asp:RadioButtonList ID="rbSelectOption" runat="server" RepeatDirection="Horizontal" CssClass="margin-left:10px" OnTextChanged="rbFilter_SelectedValueChanged" AutoPostBack="true">
+                                        <asp:ListItem Value="1" CssClass="form-check-input" Style="margin-right: 50px">  &nbsp;By Created Date</asp:ListItem>
+                                        <asp:ListItem Value="0" CssClass="form-check-input">  &nbsp;By Next Action Date</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                            </div>
+                            <div class="row mb-3" id="dvDate" runat="server">
+                                <div class="col-sm-4">
+                                    <asp:Label ID="ltDate" runat="server"></asp:Label>
 
                                 </div>
                                 <div class="col-sm-3">
@@ -55,6 +67,7 @@
                             <div class="row mb-3">
                                 <asp:Label ID="lblMsg" runat="server" Text="" ForeColor="Red"></asp:Label>
                             </div>
+
                             <div class="row mb-3" id="company" runat="server">
                                 <div class="col-sm-3">
 
@@ -70,6 +83,7 @@
 
 
                             </div>
+
                             <div class="row mb-3" id="companyUnit" runat="server">
                                 <div class="col-sm-3">
 

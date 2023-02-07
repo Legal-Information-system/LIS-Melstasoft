@@ -61,6 +61,8 @@ namespace LegalSystemWeb
                 {
                     if (!IsPostBack)
                     {
+                        dropDownOption.Visible = false;
+                        textOption.Visible = false;
                         plaintif.Clear();
                         defendent.Clear();
                         partyList.Clear();
@@ -76,6 +78,7 @@ namespace LegalSystemWeb
 
 
                         }
+                        bindCaseList();
                         BindCompanyList();
                         BindCaseNatureList();
                         BindCourtList();
@@ -96,14 +99,26 @@ namespace LegalSystemWeb
             }
         }
 
+        private void bindCaseList()
+        {
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            List<CaseMaster> caseMasters = caseMasterController.GetCaseMasterListAll();
+            ddlPrevCase.DataSource = caseMasters.OrderBy(x => x.CaseNumber);
+            ddlPrevCase.DataValueField = "CaseNumber";
+            ddlPrevCase.DataTextField = "CaseNumber";
+            ddlPrevCase.DataBind();
+            ddlPrevCase.Items.Insert(0, new ListItem("-- select Case --", ""));
+        }
         private void pageUpdateSet()
         {
             btnBack.Visible = false;
             btnSave.Text = "Update";
 
             ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            List<CaseMaster> caseMasters = caseMasterController.GetCaseMasterListAll();
             CaseMaster caseMaster = new CaseMaster();
             caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["casenumber"].ToString(), true);
+            BindDocumentList(caseMaster.CaseNumber);
             caseNumber = caseMaster.CaseNumber;
             ddlCompany.SelectedValue = caseMaster.CompanyId.ToString();
             BindCompanyUnitList();
@@ -145,6 +160,23 @@ namespace LegalSystemWeb
             if (caseMaster.PrevCaseNumber == null)
             {
                 caseMaster.PrevCaseNumber = "";
+                rbPrevCase.SelectedValue = "0";
+                textOption.Visible = true;
+            }
+            else
+            {
+                if (caseMasters.Any(x => x.CaseNumber == caseMaster.PrevCaseNumber))
+                {
+                    rbPrevCase.SelectedValue = "1";
+                    dropDownOption.Visible = true;
+                    ddlPrevCase.SelectedValue = caseMaster.PrevCaseNumber.ToString();
+                }
+                else
+                {
+                    rbPrevCase.SelectedValue = "0";
+                    textOption.Visible = true;
+                    txtPreCaseNumber.Text = caseMaster.PrevCaseNumber.ToString();
+                }
             }
             txtPreCaseNumber.Text = caseMaster.PrevCaseNumber.ToString();
             ddlAttorney.SelectedValue = caseMaster.AssignAttornerId.ToString();
@@ -173,6 +205,15 @@ namespace LegalSystemWeb
             }
         }
 
+        private void BindDocumentList(string casenumber)
+        {
+            IDocumentCaseController documentController = ControllerFactory.CreateDocumentCaseController();
+            UplodedFilesList.Clear();
+            UplodedFilesList = documentController.GetDocumentList().Where(x => x.CaseNumber == casenumber).ToList();
+
+            BindDocuments();
+        }
+
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
@@ -184,7 +225,7 @@ namespace LegalSystemWeb
             if (UserId == 4 || UserId == 5)
                 companyList = companyList.Where(c => c.CompanyId == companyId).ToList();
 
-            ddlCompany.DataSource = companyList;
+            ddlCompany.DataSource = companyList.OrderBy(x => x.CompanyName);
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
             ddlCompany.DataBind();
@@ -204,7 +245,7 @@ namespace LegalSystemWeb
                 if (UserId == 5)
                     companyUnitList = companyUnitList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-                ddlCompanyUnit.DataSource = companyUnitList;
+                ddlCompanyUnit.DataSource = companyUnitList.OrderBy(x => x.CompanyUnitName);
                 ddlCompanyUnit.DataValueField = "CompanyUnitId";
                 ddlCompanyUnit.DataTextField = "CompanyUnitName";
 
@@ -219,7 +260,7 @@ namespace LegalSystemWeb
         private void BindCaseNatureList()
         {
             ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
-            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList(false);
+            ddlNatureOfCase.DataSource = caseNatureController.GetCaseNatureList(false).OrderBy(x => x.CaseNatureName);
             ddlNatureOfCase.DataValueField = "CaseNatureId";
             ddlNatureOfCase.DataTextField = "CaseNatureName";
             ddlNatureOfCase.DataBind();
@@ -233,7 +274,7 @@ namespace LegalSystemWeb
             ICourtController courtController = ControllerFactory.CreateCourtController();
 
             courtList = courtController.GetCourtList(false);
-            ddlCourt.DataSource = courtList;
+            ddlCourt.DataSource = courtList.OrderBy(x => x.CourtName);
             ddlCourt.DataValueField = "CourtId";
             ddlCourt.DataTextField = "CourtName";
             ddlCourt.DataBind();
@@ -254,7 +295,7 @@ namespace LegalSystemWeb
                     listLocation.Add(courtLocation.location);
                 }
 
-                ddlLocation.DataSource = listLocation;
+                ddlLocation.DataSource = listLocation.OrderBy(x => x.locationName);
                 ddlLocation.DataValueField = "LocationId";
                 ddlLocation.DataTextField = "locationName";
 
@@ -272,14 +313,14 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             lawyerList = lawyerController.GetLawyerList(false);
 
-            ddlAttorney.DataSource = lawyerList;
+            ddlAttorney.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlAttorney.DataValueField = "LawyerId";
             ddlAttorney.DataTextField = "LawyerName";
             ddlAttorney.DataBind();
             ddlAttorney.Items.Insert(0, new ListItem("-- select Attorney --", ""));
 
 
-            ddlCounselor.DataSource = lawyerList;
+            ddlCounselor.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
@@ -287,7 +328,17 @@ namespace LegalSystemWeb
 
         }
 
-
+        private string PrevCase()
+        {
+            if (rbPrevCase.SelectedValue == "0")
+            {
+                return " ";
+            }
+            else
+            {
+                return ddlPrevCase.SelectedValue.ToString();
+            }
+        }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (pageSwitch())
@@ -313,18 +364,33 @@ namespace LegalSystemWeb
 
                     if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController))
                     {
-                        if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtPreCaseNumber.Text == "")
+                        if ((rbPrevCase.SelectedValue == "1" && ddlPrevCase.SelectedIndex != 0) || (rbPrevCase.SelectedValue == "0"))
                         {
 
                             caseMaster.CaseNumber = txtCaseNumber.Text;
-                            if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                            if (rbPrevCase.SelectedValue == "1")
                             {
-                                caseMaster.PrevCaseNumber = " ";
+                                if (ddlPrevCase.SelectedValue != "")
+                                {
+                                    caseMaster.PrevCaseNumber = ddlPrevCase.SelectedValue;
+                                }
+                                else
+                                {
+                                    caseMaster.PrevCaseNumber = " ";
+                                }
                             }
                             else
                             {
-                                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                                if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                                {
+                                    caseMaster.PrevCaseNumber = " ";
+                                }
+                                else
+                                {
+                                    caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                                }
                             }
+
                             caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
                             caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
                             caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
@@ -392,7 +458,7 @@ namespace LegalSystemWeb
                             UploadFiles();
                             ClearDocuments();
                             Clear();
-
+                            flag = 1;
                         }
                     }
 
@@ -400,7 +466,7 @@ namespace LegalSystemWeb
                     clearCounselor();
                     clearDefendent();
                     clearPlaintif();
-                    flag = 1;
+
 
 
                 }
@@ -457,19 +523,33 @@ namespace LegalSystemWeb
 
                 if (CheckAvailableCaseNum(false, txtCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber)
                 {
-                    if (CheckAvailableCaseNum(true, txtPreCaseNumber.Text, caseMasterController) || txtCaseNumber.Text == caseNumber || txtPreCaseNumber.Text == "")
+                    if ((rbPrevCase.SelectedValue == "1" && ddlPrevCase.SelectedIndex != 0) || (rbPrevCase.SelectedValue == "0"))
                     {
                         caseMaster.PrevCaseNumberUpdate = caseNumber;
-                        if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                        if (rbPrevCase.SelectedValue == "1")
                         {
-                            caseMaster.PrevCaseNumber = " ";
+                            if (ddlPrevCase.SelectedValue != "")
+                            {
+                                caseMaster.PrevCaseNumber = ddlPrevCase.SelectedValue;
+                            }
+                            else
+                            {
+                                caseMaster.PrevCaseNumber = " ";
+                            }
                         }
                         else
                         {
-                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == string.Empty)
+                            {
+                                caseMaster.PrevCaseNumber = " ";
+                            }
+                            else
+                            {
+                                caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+                            }
                         }
                         caseMaster.CaseNumber = txtCaseNumber.Text;
-                        caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
+
                         caseMaster.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
                         caseMaster.CompanyUnitId = Convert.ToInt32(ddlCompanyUnit.SelectedValue);
                         caseMaster.CaseNatureId = Convert.ToInt32(ddlNatureOfCase.SelectedValue);
@@ -484,14 +564,7 @@ namespace LegalSystemWeb
                         caseMaster.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
                         caseMaster.AssignAttornerId = Convert.ToInt32(ddlAttorney.SelectedValue);
                         counselor.CaseNumber = caseMaster.CaseNumber;
-                        if (txtPreCaseNumber.Text == null || txtPreCaseNumber.Text == "")
-                        {
-                            caseMaster.PrevCaseNumber = "";
-                        }
-                        else
-                        {
-                            caseMaster.PrevCaseNumber = txtPreCaseNumber.Text;
-                        }
+
 
 
                         caseMaster.CreatedUserId = Convert.ToInt32(Session["User_Id"]);
@@ -570,6 +643,7 @@ namespace LegalSystemWeb
 
 
                         UploadFiles();
+                        ClearDocuments();
                         Clear();
                         lblSuccessMsg.Text = "Record Updated Successfully!";
                     }
@@ -620,9 +694,20 @@ namespace LegalSystemWeb
         {
             IDocumentController documentController = ControllerFactory.CreateDocumentController();
             IDocumentCaseController documentCaseController = ControllerFactory.CreateDocumentCaseController();
-
             Document document = new Document();
             DocumentCase documentCase = new DocumentCase();
+            if (pageSwitch())
+            {
+                List<DocumentCase> documentCases = documentCaseController.GetDocumentListByFilter(Request.QueryString["casenumber"].ToString());
+
+                documentCaseController.DeleteByCaseNumber(Request.QueryString["casenumber"].ToString());
+                foreach (DocumentCase doc in documentCases)
+                {
+                    document.DocumentId = doc.DocumentId;
+                    documentController.DeletePermenent(document);
+                }
+            }
+
 
             //int i = 0;
             //foreach (HttpPostedFileBase file in listUplodedFile)
@@ -764,6 +849,7 @@ namespace LegalSystemWeb
 
         private void Clear()
         {
+
             txtCaseDescription.Text = string.Empty;
             txtCaseNumber.Text = string.Empty;
             txtClaimAmount.Text = string.Empty;
@@ -778,6 +864,8 @@ namespace LegalSystemWeb
             txtCaseOpenDate.Text = string.Empty;
             rbIsPlantiff.Items[0].Selected = false;
             rbIsPlantiff.Items[1].Selected = false;
+            rbPrevCase.Items[0].Selected = false;
+            rbPrevCase.Items[1].Selected = false;
             lblCaseNumberError.Text = string.Empty;
             lblPrevCaseNumberError.Text = string.Empty;
             lblCounselor.Text = string.Empty;
@@ -1115,6 +1203,19 @@ namespace LegalSystemWeb
             else
             {
                 lblClaimAmountInWords.Text = "Enter Valid Amount";
+            }
+        }
+        protected void rbPrevCaseChanged(object sender, EventArgs e)
+        {
+            if (rbPrevCase.SelectedValue == "1")
+            {
+                dropDownOption.Visible = true;
+                textOption.Visible = false;
+            }
+            else
+            {
+                dropDownOption.Visible = false;
+                textOption.Visible = true;
             }
         }
     }

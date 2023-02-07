@@ -14,6 +14,7 @@ namespace LegalSystemCore.Controller
         int Save(Document document);
         int Update(Document document);
         int Delete(Document document);
+        int DeletePermenent(Document document);
         List<Document> GetDocumentList();
         Document GetDocument(int documentId);
     }
@@ -135,5 +136,28 @@ namespace LegalSystemCore.Controller
                 }
             }
         }
+
+        public int DeletePermenent(Document document)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentDAO.DeletePermenent(document, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
     }
 }

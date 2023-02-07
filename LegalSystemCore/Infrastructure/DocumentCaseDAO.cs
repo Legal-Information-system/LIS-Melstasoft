@@ -13,13 +13,31 @@ namespace LegalSystemCore.Infrastructure
         int Save(DocumentCase documentCase, DbConnection dbConnection);
         int Update(DocumentCase documentCase, DbConnection dbConnection);
         int Delete(DocumentCase documentCase, DbConnection dbConnection);
+
+        int DeleteByCaseNumber(string CaseNumber, DbConnection dbConnection);
         List<DocumentCase> GetDocumentCaseList(DbConnection dbConnection);
+
+        List<DocumentCase> GetDocumentCaseListFilter(string CaseNumber, DbConnection dbConnection);
         DocumentCase GetDocumentCase(int documentCaseId, DbConnection dbConnection);
     }
 
     public class DocumentCaseDAOSqlImpl : IDocumentCaseDAO
     {
 
+        public int DeleteByCaseNumber(string CaseNumber, DbConnection dbConnection)
+        {
+            int output = 0;
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "Delete from case_document WHERE case_number = @DocumentCaseId ";
+
+            dbConnection.cmd.Parameters.AddWithValue("@DocumentCaseId", CaseNumber);
+
+            output = dbConnection.cmd.ExecuteNonQuery();
+
+            return output;
+        }
         public DocumentCase GetDocumentCase(int documentCaseId, DbConnection dbConnection)
         {
             DocumentCase documentCase = new DocumentCase();
@@ -42,6 +60,22 @@ namespace LegalSystemCore.Infrastructure
             //dbConnection = new DbConnection();
             dbConnection.cmd.CommandText = "select * from case_document WHERE is_active = 1";
 
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            listDocumentCase = dataAccessObject.ReadCollection<DocumentCase>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return listDocumentCase;
+        }
+
+        public List<DocumentCase> GetDocumentCaseListFilter(string CaseNumber, DbConnection dbConnection)
+        {
+            List<DocumentCase> listDocumentCase = new List<DocumentCase>();
+
+            dbConnection.cmd.Parameters.Clear();
+            dbConnection.cmd.CommandType = System.Data.CommandType.Text;
+            dbConnection.cmd.CommandText = "select * from case_document WHERE is_active = 1 AND case_number = @CaseNumber";
+            dbConnection.cmd.Parameters.AddWithValue("@CaseNumber", CaseNumber);
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();
             listDocumentCase = dataAccessObject.ReadCollection<DocumentCase>(dbConnection.dr);

@@ -46,6 +46,7 @@ namespace LegalSystemWeb
                         company.Visible = false;
                         txtYear.Text = string.Empty;
                         btnPrint.Visible = false;
+                        dvDate.Visible = false;
                         //BindCaseList();
                         BindCompanyList();
                         BindCompanyUnitList();
@@ -91,6 +92,30 @@ namespace LegalSystemWeb
             ddlCompany.DataBind();
             ddlCompany.Items.Insert(0, new ListItem("-- select company --", "0"));
 
+        }
+
+        protected void rbFilter_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ltDetails.Text = string.Empty;
+            ltDate.Text = string.Empty;
+            dvDate.Visible = true;
+            dvCompany.Visible = false;
+            dvCompanyUnit.Visible = false;
+            companyUnit.Visible = false;
+            company.Visible = false;
+            btnPrint.Visible = false;
+            rbCompany.ClearSelection();
+            rbCompanyUnit.ClearSelection();
+            txtYear.Text = string.Empty;
+            if (rbSelectOption.SelectedValue == "0")
+            {
+                ltDate.Text = "Next Action Month and Year";
+            }
+            else
+            {
+                ltDate.Text = "Case Opened Month and Year";
+            }
+            ltDetails.Text = string.Empty;
         }
         private void BindCompanyUnitList()
         {
@@ -239,17 +264,40 @@ namespace LegalSystemWeb
             {
                 List<CaseActivity> caseActivities = caseActivityController.GetUpdateCaseList(true);
                 lawyers = lawyerController.GetLawyerList(true);
-                foreach (CaseMaster global in caseMasterList)
+                if (rbSelectOption.SelectedValue == "0")
                 {
-                    string newString = txtYear.Text;
-                    string newStringMonth = ddlMonth.SelectedValue;
-                    string newString2 = global.CaseOpenDate.ToString("dd/MM/yyyy").Split('/')[2];
-                    string newStringMonth2 = global.CaseOpenDate.ToString("dd/MM/yyyy").Split('/')[1];
-                    if (newString2 == newString && newStringMonth == newStringMonth2)
+                    foreach (CaseMaster global in caseMasterList)
                     {
-                        caseMasterListDataLoad.Add(global);
+                        string newString = txtYear.Text;
+                        string newStringMonth = ddlMonth.SelectedValue;
+
+                        foreach (CaseActivity activity in caseActivities.Where(x => x.CaseNumber == global.CaseNumber))
+                        {
+
+                            string newString2 = activity.NextDate.ToString("dd/MM/yyyy").Split('/')[2];
+                            string newStringMonth2 = activity.NextDate.ToString("dd/MM/yyyy").Split('/')[1];
+                            if (newString2 == newString && newStringMonth == newStringMonth2)
+                            {
+                                caseMasterListDataLoad.Add(global);
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    foreach (CaseMaster global in caseMasterList)
+                    {
+                        string newString = txtYear.Text;
+                        string newStringMonth = ddlMonth.SelectedValue;
+                        string newString2 = global.CaseOpenDate.ToString("dd/MM/yyyy").Split('/')[2];
+                        string newStringMonth2 = global.CaseOpenDate.ToString("dd/MM/yyyy").Split('/')[1];
+                        if (newString2 == newString && newStringMonth == newStringMonth2)
+                        {
+                            caseMasterListDataLoad.Add(global);
+                        }
+                    }
+                }
+
                 //caseMasterListDataLoad = caseMasterListDataLoad.Where(x => x.CreatedDate.ToString("dd/MM/yyyy") == DateTime.Parse(txtCaseOpenDate.Text).ToString("dd/MM/yyyy")).ToList();
                 if (rbCompany.SelectedValue == "0" && txtYear.Text != string.Empty)
                 {
@@ -300,6 +348,7 @@ namespace LegalSystemWeb
                                 "                                      <th scope=\"col\">Court</th>\r\n    " +
 
                                 "                                    <th scope=\"col\">Next Step</th>\r\n     " +
+                                "                                    <th scope=\"col\">Next Step Date</th>\r\n     " +
                                 "                                    <th scope=\"col\">Counsellor</th>\r\n     " +
                                 "                               </tr>\r\n                                </thead> <tbody>");
 
@@ -318,9 +367,18 @@ namespace LegalSystemWeb
                                 cstextCard.Append("</td>\r\n                                        <td>");
                                 if (caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).Any())
                                 {
-                                    cstextCard.Append(caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).OrderByDescending(r => r.ActivityDate).Single().nextAction.ActionName);
+                                    CaseActivity caseActivity = new CaseActivity();
+                                    caseActivity = caseActivities.Where(x => x.CaseNumber == caseMasterCompanyUnit.CaseNumber).OrderByDescending(r => r.ActivityDate).FirstOrDefault();
+                                    cstextCard.Append(caseActivity.nextAction.ActionName);
+                                    cstextCard.Append("</td>\r\n                                        <td>");
+                                    cstextCard.Append(caseActivity.NextDate.ToString("dd/MM/yyyy"));
+                                    cstextCard.Append("</td>\r\n                                        <td>");
                                 }
-                                cstextCard.Append("</td>\r\n                                        <td>");
+                                else
+                                {
+                                    cstextCard.Append("N/A</td>\r\n                                        <td>");
+                                    cstextCard.Append("N/A</td>\r\n                                        <td>");
+                                }
                                 if (lawyers.Any(x => caseMasterCompanyUnit.counselors.Any(y => y.LawyerId == x.LawyerId)))
                                 {
                                     var flag = 0;

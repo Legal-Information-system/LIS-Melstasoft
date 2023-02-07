@@ -13,6 +13,8 @@ namespace LegalSystemCore.Controller
         int Save(DocumentCaseActivity documentCaseActivity);
         int Update(DocumentCaseActivity documentCaseActivity);
         int Delete(DocumentCaseActivity documentCaseActivity);
+
+        int DeleteDocuments(DocumentCaseActivity documentCaseActivity);
         List<DocumentCaseActivity> GetDocumentList(DocumentCaseActivity documentCaseActivity, bool check);
         DocumentCaseActivity GetDocument(int documentCaseActivityId);
     }
@@ -122,6 +124,28 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 return documentCaseActivityDAO.Delete(documentCaseActivity, dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
+
+        public int DeleteDocuments(DocumentCaseActivity documentCaseActivity)
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return documentCaseActivityDAO.DeleteDocuments(documentCaseActivity, dbConnection);
             }
             catch (Exception)
             {

@@ -18,6 +18,8 @@ namespace LegalSystemWeb
     {
         IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
         IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
+        ICaseActivityController caseActivityController = ControllerFactory.CreateCaseActivityController();
+        CaseActivity caseActivityGlobal = new CaseActivity();
         List<JudgementType> judgementTypeList = new List<JudgementType>();
         List<Lawyer> lawyerList = new List<Lawyer>();
         List<CaseAction> caseActionList = new List<CaseAction>();
@@ -49,11 +51,92 @@ namespace LegalSystemWeb
                         BindLawyerList();
                         BindActionList();
                         BindJudgementList();
+                        if (pageSwitch())
+                        {
+                            caseActivityGlobal = caseActivityController.GetCaseActivity(Request.QueryString["CaseActivityNumber"].ToString(), true);
+                            hTitle.InnerText = "Update Case Activity - " + caseActivityGlobal.CaseNumber + " ( " + caseActivityGlobal.CaseActivitId + " )";
+                            caseActivityGlobal = caseActivityController.GetCaseActivity(Request.QueryString["CaseActivityNumber"].ToString(), true);
+                            pageUpdateSet();
+                        }
+                        else
+                        {
+                            hTitle.InnerText = "Update Case Activity";
+
+
+                        }
                     }
                 }
 
             }
 
+        }
+
+        private void pageUpdateSet()
+        {
+            ddlCase.SelectedValue = caseActivityGlobal.CaseNumber;
+            ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
+            ICompanyController companyController = ControllerFactory.CreateCompanyController();
+            ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
+            ICaseNatureController caseNatureController = ControllerFactory.CreateCaseNatureController();
+            dvCaseNumber.Visible = false;
+            CaseMaster caseMaster = new CaseMaster();
+            caseMaster = caseMasterController.GetCaseMaster(ddlCase.SelectedValue, true);
+
+            Company company = new Company();
+            company = companyController.GetCompany(caseMaster.CompanyId);
+
+            CompanyUnit companyUnit = new CompanyUnit();
+            companyUnit = companyUnitController.GetCompanyUnit(caseMaster.CompanyUnitId);
+
+            CaseNature caseNature = new CaseNature();
+            caseNature = caseNatureController.GetCaseNature(caseMaster.CaseNatureId);
+
+            lblCompany.Text = company.CompanyName;
+            lblCompanyUnit.Text = companyUnit.CompanyUnitName;
+            lblDescription.Text = caseMaster.CaseDescription;
+            lblNature.Text = caseNature.CaseNatureName;
+            BindDocumentList();
+            if (caseMaster.IsPlentif == 1)
+            {
+                lblPlaintiff.Text = company.CompanyName;
+                //lblDefendant.Text = caseMaster.OtherParty; ;
+            }
+            else
+            {
+                //lblPlaintiff.Text = caseMaster.OtherParty;
+                lblDefendant.Text = company.CompanyName;
+            }
+
+            txtDate.Text = caseActivityGlobal.ActivityDate.ToString("yyyy-MM-dd");
+            ddlAssignAttorney.SelectedValue = caseActivityGlobal.AssignAttorneyId.ToString();
+            ddlCounselor.SelectedValue = caseActivityGlobal.CounsilorId.ToString();
+            txtOtherLawyer.Text = caseActivityGlobal.OtherSideLawyer.ToString();
+            txtJudgeName.Text = caseActivityGlobal.JudgeName.ToString();
+            txtCompanyRepresenter.Text = caseActivityGlobal.CompanyRep.ToString();
+            ddlActionTaken.SelectedValue = caseActivityGlobal.actionTaken.ActionId.ToString();
+            ddlNextAction.SelectedValue = caseActivityGlobal.NextActionId.ToString();
+            txtNextDate.Text = caseActivityGlobal.NextDate.ToString("yyyy-MM-dd");
+            txtRemarks.Text = caseActivityGlobal.Remarks.ToString();
+        }
+
+        private bool pageSwitch()
+        {
+            Dictionary<string, string> allRequestParamesDictionary = Request.Params.AllKeys.ToDictionary(x => x, x => Request.Params[x]);
+            if (allRequestParamesDictionary.ContainsKey("update") && allRequestParamesDictionary.ContainsKey("CaseActivityNumber"))
+            {
+                if (Request.QueryString["CaseActivityNumber"] != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void BindCaseList()
@@ -71,7 +154,7 @@ namespace LegalSystemWeb
             if (UserId == 5)
                 caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-            ddlCase.DataSource = caseMasterList;
+            ddlCase.DataSource = caseMasterList.OrderBy(x => x.CaseNumber);
             ddlCase.DataValueField = "CaseNumber";
             ddlCase.DataTextField = "CaseNumber";
             ddlCase.DataBind();
@@ -133,14 +216,14 @@ namespace LegalSystemWeb
             ILawyerController lawyerController = ControllerFactory.CreateLawyerController();
             lawyerList = lawyerController.GetLawyerList(false);
 
-            ddlAssignAttorney.DataSource = lawyerList;
+            ddlAssignAttorney.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlAssignAttorney.DataValueField = "LawyerId";
             ddlAssignAttorney.DataTextField = "LawyerName";
             ddlAssignAttorney.DataBind();
             ddlAssignAttorney.Items.Insert(0, new ListItem("-- select attorney --", ""));
 
 
-            ddlCounselor.DataSource = lawyerList;
+            ddlCounselor.DataSource = lawyerList.OrderBy(x => x.LawyerName);
             ddlCounselor.DataValueField = "LawyerId";
             ddlCounselor.DataTextField = "LawyerName";
             ddlCounselor.DataBind();
@@ -154,13 +237,13 @@ namespace LegalSystemWeb
             ICaseActionController caseActionController = ControllerFactory.CreateCaseActionController();
             caseActionList = caseActionController.GetCaseActionList(false);
 
-            ddlActionTaken.DataSource = caseActionList;
+            ddlActionTaken.DataSource = caseActionList.OrderBy(x => x.ActionName);
             ddlActionTaken.DataValueField = "ActionId";
             ddlActionTaken.DataTextField = "ActionName";
             ddlActionTaken.DataBind();
             ddlActionTaken.Items.Insert(0, new ListItem("-- select action taken --", ""));
 
-            ddlNextAction.DataSource = caseActionList;
+            ddlNextAction.DataSource = caseActionList.OrderBy(x => x.ActionName);
             ddlNextAction.DataValueField = "ActionId";
             ddlNextAction.DataTextField = "ActionName";
             ddlNextAction.DataBind();
@@ -174,7 +257,7 @@ namespace LegalSystemWeb
             IJudgementTypeController judgementTypeController = ControllerFactory.CreateJudgementTypeController();
             judgementTypeList = judgementTypeController.GetJudgementTypeList(false);
 
-            ddlJudgement.DataSource = judgementTypeList;
+            ddlJudgement.DataSource = judgementTypeList.OrderBy(x => x.JTypeName);
             ddlJudgement.DataValueField = "JTypeId";
             ddlJudgement.DataTextField = "JTypeName";
             ddlJudgement.DataBind();
@@ -189,7 +272,7 @@ namespace LegalSystemWeb
 
         protected void btnUpdateActivity_Click(object sender, EventArgs e)
         {
-            ICaseActivityController caseActivityController = ControllerFactory.CreateCaseActivityController();
+
             CaseActivity caseActivity = new CaseActivity();
 
             CultureInfo provider = new CultureInfo("en-US");
@@ -211,8 +294,18 @@ namespace LegalSystemWeb
                 caseActivity.NextDate = DateTime.Parse(txtNextDate.Text, provider, DateTimeStyles.AdjustToUniversal);
                 nextdate = true;
             }
+            int caseActivityNumber;
             caseActivity.Remarks = txtRemarks.Text;
-            int caseActivityNumber = caseActivityController.Save(caseActivity, nextdate);
+            if (pageSwitch())
+            {
+                caseActivityNumber = Convert.ToInt32(Request.QueryString["CaseActivityNumber"].ToString());
+                caseActivity.CaseActivitId = caseActivityNumber;
+                caseActivityController.Update(caseActivity, nextdate);
+            }
+            else
+            {
+                caseActivityNumber = caseActivityController.Save(caseActivity, nextdate);
+            }
             UploadFiles(caseActivityNumber);
             ClearDocuments();
 
@@ -235,8 +328,16 @@ namespace LegalSystemWeb
             }
 
             Clear();
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Updated Succesfully!', 'success')", true);
 
+            if (pageSwitch())
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Activity Updated Succesfully!', 'success');window.setTimeout(function(){window.location='ViewCaseActivity.aspx?CaseActivityNumber=" + Request.QueryString["CaseActivityNumber"].ToString() + "'},2500);", true);
+
+            }
+            else
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'Case Activity Updated Succesfully!', 'success')", true);
+            }
         }
 
 
@@ -272,6 +373,18 @@ namespace LegalSystemWeb
 
             Document document = new Document();
             DocumentCaseActivity documentCase = new DocumentCaseActivity();
+            documentCase.CaseActivityId = ddlCase.SelectedValue.ToString();
+            if (pageSwitch())
+            {
+                List<DocumentCaseActivity> documentCases = documentCaseController.GetDocumentList(documentCase, false);
+
+                documentCaseController.DeleteDocuments(documentCase);
+                foreach (DocumentCaseActivity doc in documentCases)
+                {
+                    document.DocumentId = doc.DocumentId;
+                    documentController.DeletePermenent(document);
+                }
+            }
 
             //int i = 0;
             //foreach (HttpPostedFileBase file in listUplodedFile)
@@ -371,7 +484,7 @@ namespace LegalSystemWeb
             //listUplodedFile.RemoveAt(rowIndex);
 
             DocumentCaseActivity documentCase = UplodedFilesList[rowIndex];
-            string path = Server.MapPath("~/SystemDocuments/CaseMaster/CaseActivity");
+            string path = Server.MapPath("~/SystemDocuments/CaseMaster/CaseActivity/");
             string filePath = path + documentCase.DocumentName;
 
             if (File.Exists(filePath))
@@ -388,6 +501,17 @@ namespace LegalSystemWeb
         {
             fileGridview.DataSource = UplodedFilesList;
             fileGridview.DataBind();
+        }
+
+        private void BindDocumentList()
+        {
+            IDocumentCaseActivityController documentController = ControllerFactory.CreateDocumentCaseActivityController();
+            DocumentCaseActivity documentCaseActivity = new DocumentCaseActivity();
+            documentCaseActivity.CaseActivityId = Request.QueryString["CaseActivityNumber"].ToString();
+            UplodedFilesList.Clear();
+            UplodedFilesList = documentController.GetDocumentList(documentCaseActivity, false);
+
+            BindDocuments();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace LegalSystemWeb
         private void BindActivityList()
         {
             IActivityController activityController = ControllerFactory.CreateActivityController();
-            cblActivity.DataSource = activityController.GetActivityList(false);
+            cblActivity.DataSource = activityController.GetActivityList(false).OrderBy(x => x.ActivityName);
             cblActivity.DataValueField = "ActivityId";
             cblActivity.DataTextField = "ActivityName";
             cblActivity.DataBind();
@@ -74,7 +74,7 @@ namespace LegalSystemWeb
 
             counselorLawyer.Add(LawyerController.GetLawyer(masterController.GetCaseMaster(ddlCaseNo.SelectedValue, false).AssignAttornerId));
 
-            ddlLawyerName.DataSource = counselorLawyer;
+            ddlLawyerName.DataSource = counselorLawyer.OrderBy(x => x.LawyerName);
             ddlLawyerName.DataValueField = "LawyerId";
             ddlLawyerName.DataTextField = "LawyerName";
             ddlLawyerName.DataBind();
@@ -96,7 +96,7 @@ namespace LegalSystemWeb
             if (UserRoleId == 5)
                 caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-            ddlCaseNo.DataSource = caseMasterList;
+            ddlCaseNo.DataSource = caseMasterList.OrderBy(x => x.CaseNumber);
             ddlCaseNo.DataValueField = "CaseNumber";
             ddlCaseNo.DataTextField = "CaseNumber";
             ddlCaseNo.DataBind();

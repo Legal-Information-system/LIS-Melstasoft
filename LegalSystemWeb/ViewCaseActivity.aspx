@@ -150,8 +150,34 @@
                 </asp:GridView>
             </div>
         </div>
+        -<% if ((rolePrivileges.Where(x => x.FunctionId == 35 || x.FunctionId == 36).Any()
+                                        && !(userPrivileges.Any(x => x.FunctionId == 35 || x.FunctionId == 36 && x.IsGrantRevoke == 0))) ||
+                                        userPrivileges.Any(x => x.FunctionId == 35 || x.FunctionId == 36 && x.IsGrantRevoke == 1))
+             {
+        %>
 
+        <div class="row">
+            <% if ((rolePrivileges.Where(x => x.FunctionId == 35).Any()
+                          && !(userPrivileges.Any(x => x.FunctionId == 35 && x.IsGrantRevoke == 0))) ||
+                          userPrivileges.Any(x => x.FunctionId == 35 && x.IsGrantRevoke == 1))
+                {
+            %>
+            <div class="col-3">
+                <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn-warning" Width="100%" Height="150%" BorderStyle="None" OnClick="btnEdit_Click" />
+            </div>
+            <%
+                }
+                if ((rolePrivileges.Where(x => x.FunctionId == 36).Any()
+                    && !(userPrivileges.Any(x => x.FunctionId == 36 && x.IsGrantRevoke == 0))) ||
+                    userPrivileges.Any(x => x.FunctionId == 36 && x.IsGrantRevoke == 1))
+                {
+            %>
+            <div class="col-3">
+                <asp:Button ID="btnDelete" runat="server" Text="Delete Case Activity" CssClass="btn-danger" Width="100%" Height="150%" BorderStyle="None" OnClick="btnDelete_Click" />
+            </div>
+            <%} %>
+        </div>
 
-
+        <%} %>
     </div>
 </asp:Content>
