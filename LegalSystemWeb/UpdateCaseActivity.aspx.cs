@@ -273,6 +273,7 @@ namespace LegalSystemWeb
         protected void btnUpdateActivity_Click(object sender, EventArgs e)
         {
 
+
             CaseActivity caseActivity = new CaseActivity();
 
             CultureInfo provider = new CultureInfo("en-US");
