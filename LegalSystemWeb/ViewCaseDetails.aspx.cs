@@ -264,7 +264,7 @@ namespace LegalSystemWeb
                 else
                     activity.NextDateString = "N/A";
             }
-            int caseActivityNumber = caseActivityList[rowIndex].CaseActivitId;
+            int caseActivityNumber = caseActivityList.OrderByDescending(x => x.CaseActivitId).ToList()[rowIndex].CaseActivitId;
 
             Response.Redirect("ViewCaseActivity.aspx?CaseActivityNumber=" + caseActivityNumber);
         }
@@ -290,7 +290,7 @@ namespace LegalSystemWeb
                     activity.NextDateString = "N/A";
             }
 
-            gvCaseActivity.DataSource = caseActivityList;
+            gvCaseActivity.DataSource = caseActivityList.OrderByDescending(x => x.CaseActivitId).ToList();
             gvCaseActivity.DataBind();
             ViewState["CaseActivityList"] = caseActivityList;
         }

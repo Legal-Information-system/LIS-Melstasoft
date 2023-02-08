@@ -51,6 +51,8 @@ namespace LegalSystemWeb
                         {
                             Cname = Request.QueryString["cname"].ToString();
                         }
+
+
                         BindCaseStatus();
                     }
                 }
@@ -115,6 +117,23 @@ namespace LegalSystemWeb
                 }
             }
 
+            if (name != "All" && name != null && Cname == null)
+            {
+                //if (((userRolePrivileges.Where(x => (x.FunctionId == 28)).Any()
+                //         && !(UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 0))) ||
+                //         UserPrivileges.Any(x => (x.FunctionId == 28) && x.IsGrantRevoke == 1)))
+                //{
+                //    caseMasterListO = caseMasterListO.Where(c => c.company.CompanyName == name).ToList();
+                //    caseMasterListC = caseMasterListC.Where(c => c.company.CompanyName == name).ToList();
+                //}
+                //else
+                //{
+
+                caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+                caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name).ToList();
+
+
+            }
             if (name != "All" && name != null && Cname != null)
             {
                 //if (((userRolePrivileges.Where(x => (x.FunctionId == 28)).Any()
@@ -126,11 +145,11 @@ namespace LegalSystemWeb
                 //}
                 //else
                 //{
+
                 caseMasterListO = caseMasterListO.Where(c => c.companyUnit.CompanyUnitName == name && c.company.CompanyName == Cname).ToList();
                 caseMasterListC = caseMasterListC.Where(c => c.companyUnit.CompanyUnitName == name && c.company.CompanyName == Cname).ToList();
 
             }
-
             datatablesSimple.DataSource = caseMasterListO;
             datatablesSimple.DataBind();
 
