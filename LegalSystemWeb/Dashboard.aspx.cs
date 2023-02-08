@@ -1,4 +1,5 @@
-﻿using LegalSystemCore.Common;
+﻿using LegalSystemCore;
+using LegalSystemCore.Common;
 using LegalSystemCore.Controller;
 using LegalSystemCore.Domain;
 using System;
@@ -15,8 +16,10 @@ namespace LegalSystemWeb
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         public DataTable dashboardCardList, progressTable, claimAmoutTable, DailyCaseList, MonthCaseList;
-        public string dates, caseCount, caseNumber, per;
+        public string dates, caseCount, caseNumber, per, CompanyUnitName, CompanyName;
         public int DailyTotal, MonthlyTotal = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,46 +29,62 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() == "3")
-                    Response.Redirect("ViewPaymentMemo.aspx");
+                List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
 
+                if (!((userRolePrivileges.Where(x => x.FunctionId == 20).Any()) && userRolePrivileges.Where(x => x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30).Any() &&
+                !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => (x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 0)) ||
+                userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => (x.FunctionId == 28 || x.FunctionId == 29 || x.FunctionId == 30) && x.IsGrantRevoke == 1)))
+                {
+                    Response.Redirect("ViewPaymentMemo.aspx");
+                }
                 if (!IsPostBack)
                 {
-                    BindCompanyList();
+
+                    if (Request.QueryString["name"] == null)
+                    {
+                        DashboardView.Visible = true;
+                        BindCompanyList();
+                        ViewCompany.Visible = false;
+                    }
+                    else
+                    {
+                        CompanyUnitName = Request.QueryString["name"].ToString();
+                        //CompanyName = Request.QueryString["Cname"].ToString();
+                        DashboardView.Visible = false;
+                        ViewCompany.Visible = true;
+                        BindCompanyUnitList();
+
+                    }
                 }
 
             }
         }
-
-        private void BindCompanyList()
+        private void BindCompanyUnitList()
         {
             IDashboardCardController dashboardCardController = ControllerFactory.CreateDashboardCardController();
-
-            if (Session["User_Role_Id"].ToString() == "1" || Session["User_Role_Id"].ToString() == "2")
+            ICompanyController companyController = ControllerFactory.CreateCompanyController();
+            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+            List<UserPrivilege> UserPrivileges = userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"]));
+            Company company = new Company();
+            company = companyController.GetCompanyByName(CompanyUnitName);
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 28).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 1)))
             {
-                dashboardCardList = dashboardCardController.GetCardDetails();
-                progressTable = dashboardCardController.GetMonthProgress();
-                claimAmoutTable = dashboardCardController.GetClaimAmountPercentage();
+
+
+                dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(company.CompanyId);
+                progressTable = dashboardCardController.GetMonthProgressUnit(false, company.CompanyId);
+                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, company.CompanyId);
+
             }
-
-
-            if (Session["User_Role_Id"].ToString() == "4")
-            {
-                dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(Convert.ToInt32(Session["company_id"].ToString()));
-                progressTable = dashboardCardController.GetMonthProgressUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
-                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
-            }
-
-            if (Session["User_Role_Id"].ToString() == "5")
-            {
-                dashboardCardList = dashboardCardController.GetCardDetailsUnit(Convert.ToInt32(Session["company_unit_id"].ToString()));
-                progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
-                claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
-            }
-
+            StringBuilder cstextCard = new StringBuilder();
+            cstextCard.Append("<div id=\"DashboardView\" runat=\"server\">\r\n        <h1 class=\"mt-4\">");
+            cstextCard.Append(CompanyUnitName);
+            cstextCard.Append("</h1> <br/> <br/>\r\n <div class=\"row\">");
             foreach (DataRow row in dashboardCardList.Rows)
             {
-                StringBuilder cstextCard = new StringBuilder();
+
 
                 cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
                 cstextCard.Append(row["company_name"].ToString());
@@ -73,10 +92,89 @@ namespace LegalSystemWeb
                 cstextCard.Append(row["case_count"].ToString());
                 cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
                 cstextCard.Append(row["company_name"].ToString());
+
+                cstextCard.Append("&cname=");
+                cstextCard.Append(CompanyUnitName);
+
+                string text = CompanyUnitName;
                 cstextCard.Append("\"></a>  </div>  </div>  </div> ");
 
-                ltCompanyStatus.Text += cstextCard;
             }
+            cstextCard.Append("</div> </div>");
+            ltCompanyUnit.Text += cstextCard;
+        }
+
+        private void BindCompanyList()
+        {
+            IDashboardCardController dashboardCardController = ControllerFactory.CreateDashboardCardController();
+            List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+            List<UserPrivilege> UserPrivileges = userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"]));
+            if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 28).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 28 && x.IsGrantRevoke == 1)))
+            {
+                dashboardCardList = dashboardCardController.GetCardDetails();
+                progressTable = dashboardCardController.GetMonthProgress();
+                claimAmoutTable = dashboardCardController.GetClaimAmountPercentage();
+                foreach (DataRow row in dashboardCardList.Rows)
+                {
+                    StringBuilder cstextCard = new StringBuilder();
+
+                    cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                    cstextCard.Append(row["company_name"].ToString());
+                    cstextCard.Append("</div>   <div class=\"text-center\">");
+                    cstextCard.Append(row["case_count"].ToString());
+                    cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"Dashboard.aspx?name=");
+                    cstextCard.Append(row["company_name"].ToString());
+                    string text = row["company_name"].ToString();
+                    cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                    ltCompanyStatus.Text += cstextCard;
+                }
+            }
+            else
+            {
+
+
+                if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 29).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 29 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 29 && x.IsGrantRevoke == 1)))
+                {
+                    dashboardCardList = dashboardCardController.GetCardDetailsCompanyUnit(Convert.ToInt32(Session["company_id"].ToString()));
+                    progressTable = dashboardCardController.GetMonthProgressUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
+                    claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(false, Convert.ToInt32(Session["company_id"].ToString()));
+                }
+                else
+                {
+
+                    if (((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 30).Any()
+                    && !(UserPrivileges.Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 0))) ||
+                    UserPrivileges.Any(x => x.FunctionId == 30 && x.IsGrantRevoke == 1)))
+                    {
+                        dashboardCardList = dashboardCardController.GetCardDetailsUnit(Convert.ToInt32(Session["company_unit_id"].ToString()));
+                        progressTable = dashboardCardController.GetMonthProgressUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
+                        claimAmoutTable = dashboardCardController.GetClaimAmountPercentageUnit(true, Convert.ToInt32(Session["company_unit_id"].ToString()));
+                    }
+
+                }
+                foreach (DataRow row in dashboardCardList.Rows)
+                {
+                    StringBuilder cstextCard = new StringBuilder();
+
+                    cstextCard.Append("<div class=\"col-xl-3 col-md-6\">    <div class=\"card bg-primary text-white mb-4\"> <div class=\"card-body\">   <div class=\"text-center\">");
+                    cstextCard.Append(row["company_name"].ToString());
+                    cstextCard.Append("</div>   <div class=\"text-center\">");
+                    cstextCard.Append(row["case_count"].ToString());
+                    cstextCard.Append("</div>   <a class=\"small text-white stretched-link\" href=\"ViewCases.aspx?name=");
+                    cstextCard.Append(row["company_name"].ToString());
+                    string text = row["company_name"].ToString();
+                    cstextCard.Append("\"></a>  </div>  </div>  </div> ");
+
+                    ltCompanyStatus.Text += cstextCard;
+                }
+            }
+
+
 
             foreach (DataRow row in progressTable.Rows)
             {

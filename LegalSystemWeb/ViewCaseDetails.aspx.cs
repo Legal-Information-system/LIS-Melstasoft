@@ -20,7 +20,12 @@ namespace LegalSystemWeb
         CaseMaster caseMaster = new CaseMaster();
         string caseNumber;
         int UserId, companyId;
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
+        ICaseActivityController caseActivityController = ControllerFactory.CreateCaseActivityController();
+        protected List<UserRolePrivilege> rolePrivileges = new List<UserRolePrivilege>();
+        protected List<UserPrivilege> userPrivileges = new List<UserPrivilege>();
+        static List<CaseActivity> caseActivityList = new List<CaseActivity>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -35,11 +40,21 @@ namespace LegalSystemWeb
                 //{
                 if (!IsPostBack)
                 {
-                    SetCaseMasterData();
-                    caseNumber = Request.QueryString["CaseNumber"].ToString();
-                    BindCaseActivityList(caseNumber);
-                    BindDocumentList(caseNumber);
-                    BindPaymentDetailsList(caseNumber);
+                    rolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
+                    userPrivileges = userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"]));
+                    if (!((rolePrivileges.Where(x => x.FunctionId == 24).Any()
+                    && !(userPrivileges.Any(x => x.FunctionId == 24 && x.IsGrantRevoke == 0))) ||
+                    userPrivileges.Any(x => x.FunctionId == 24 && x.IsGrantRevoke == 1)))
+                        Response.Redirect("404.aspx");
+                    else
+                    {
+                        SetCaseMasterData();
+                        caseNumber = Request.QueryString["CaseNumber"].ToString();
+                        BindCaseActivityList(caseNumber);
+                        BindDocumentList(caseNumber);
+                        BindPaymentDetailsList(caseNumber);
+                        caseActivityList.Clear();
+                    }
                 }
                 //}
             }
@@ -51,27 +66,32 @@ namespace LegalSystemWeb
             {
                 ICaseMasterController caseMasterController = ControllerFactory.CreateCaseMasterController();
                 caseMaster = caseMasterController.GetCaseMaster(Request.QueryString["CaseNumber"].ToString(), true);
+                List<UserRolePrivilege> userRolePrivileges = userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString());
 
                 UserId = Convert.ToInt32(Session["User_Role_Id"]);
                 companyId = Convert.ToInt32(Session["company_id"].ToString());
                 int companyUnitId = Convert.ToInt32(Session["company_unit_id"].ToString());
-
-                if (UserId == 4)
+                if (!userRolePrivileges.Where(x => x.FunctionId == 28).Any())
                 {
-                    if (caseMaster.CompanyId != companyId)
+                    if (userRolePrivileges.Where(x => x.FunctionId == 29).Any())
                     {
-                        Response.Redirect("404.aspx");
+                        if (caseMaster.CompanyId != companyId)
+                        {
+                            Response.Redirect("404.aspx");
+                        }
+                    }
+                    else
+                    {
+
+                        if (userRolePrivileges.Where(x => x.FunctionId == 30).Any())
+                        {
+                            if (caseMaster.CompanyUnitId != companyUnitId)
+                            {
+                                Response.Redirect("404.aspx");
+                            }
+                        }
                     }
                 }
-
-                if (UserId == 5)
-                {
-                    if (caseMaster.CompanyUnitId != companyUnitId)
-                    {
-                        Response.Redirect("404.aspx");
-                    }
-                }
-
 
                 if (caseMaster.JudgementTypeId > 0)
                 {
@@ -226,12 +246,39 @@ namespace LegalSystemWeb
 
         }
 
+        protected void btnViewActivity_Click(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((LinkButton)sender).NamingContainer).RowIndex;
+            int pageSize = gvCaseActivity.PageSize;
+            int pageIndex = gvCaseActivity.PageIndex;
+            caseNumber = Request.QueryString["CaseNumber"].ToString();
+            rowIndex = (pageSize * pageIndex) + rowIndex;
+            caseActivityList = caseActivityController.GetUpdateCaseList(true);
+            caseActivityList = caseActivityList.Where(x => x.CaseNumber == caseNumber).ToList();
+            foreach (var activity in caseActivityList)
+            {
+
+                activity.ActivityDateString = activity.ActivityDate.ToString("dd/MM/yyyy");
+                if ((activity.NextDate).ToString("dd/MM/yyyy") != "01/01/0001")
+                    activity.NextDateString = activity.NextDate.ToString("dd/MM/yyyy");
+                else
+                    activity.NextDateString = "N/A";
+            }
+            int caseActivityNumber = caseActivityList.OrderByDescending(x => x.CaseActivitId).ToList()[rowIndex].CaseActivitId;
+
+            Response.Redirect("ViewCaseActivity.aspx?CaseActivityNumber=" + caseActivityNumber);
+        }
 
         private void BindCaseActivityList(string casenumber)
         {
-            ICaseActivityController caseActivityController = ControllerFactory.CreateCaseActivityController();
-            List<CaseActivity> caseActivityList = caseActivityController.GetUpdateCaseList(true);
+
+            caseActivityList = caseActivityController.GetUpdateCaseList(true);
             caseActivityList = caseActivityList.Where(x => x.CaseNumber == casenumber).ToList();
+            foreach (CaseActivity caseActivity in caseActivityList)
+            {
+                caseActivity.court = lblCourt.Text;
+                caseActivity.location = lblLocationi.Text;
+            }
 
             foreach (var activity in caseActivityList)
             {
@@ -243,8 +290,9 @@ namespace LegalSystemWeb
                     activity.NextDateString = "N/A";
             }
 
-            gvCaseActivity.DataSource = caseActivityList;
+            gvCaseActivity.DataSource = caseActivityList.OrderByDescending(x => x.CaseActivitId).ToList();
             gvCaseActivity.DataBind();
+            ViewState["CaseActivityList"] = caseActivityList;
         }
 
 

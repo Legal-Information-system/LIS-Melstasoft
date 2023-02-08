@@ -52,10 +52,13 @@ namespace LegalSystemCore.Infrastructure
                                            "values ('Add Action'),('Add Activity'),('Add Case Nature'),('Add Case Status')," +
                                            "('Add Company'),('Add Company Unit'),('Add Court'),('Add Court Location')," +
                                            "('Add Judgement Type'),('Add Lawyer'),('Add Location'),('Add Payment Status')," +
-                                           "('Add Payment Memo'),('Add User Role'),('Approve Payment Memo'),('Create Account')," +
-                                           "('Create Case'),('Create Payment Memo'),('Daily Cases'),('Monthly Cases')," +
-                                           "('Update Case Activity'),('User Privileges'),('View Case Details'),('View Cases')," +
-                                           "('View Payment Memo')";
+                                           "('Add User Role'),('Approve Payment Memo'),('Create Account')," +
+                                           "('Create Case'),('Create Payment Memo'),('Daily Cases'),('Monthly Cases'), ('DashBoard')," +
+                                           "('Update Case Activity'),('User Privileges'),('User Role Privileges'),('View Case Details'),('View Cases')," +
+                                           "('View Payment Memo List'),('View Payment Details'), ('Full Access on Dashboard')," +
+                                           "('Company Wise Access on Dashboard'),('Company Unit Wise Access on Dashboard'),('Reset Password')," +
+                                           "('Edit Case'),('Delete Case'),('View Case Activity Details'),('Edit Case Activity on Platform'),('Delete Case Activity on Platform')";
+
 
 
             output = Convert.ToInt32(dbConnection.cmd.ExecuteScalar());

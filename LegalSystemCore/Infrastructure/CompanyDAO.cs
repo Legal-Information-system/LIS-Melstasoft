@@ -15,6 +15,8 @@ namespace LegalSystemCore.Infrastructure
         int Delete(Company company, DbConnection dbConnection);
         int Update(Company company, DbConnection dbConnection);
         Company GetCompany(int id, DbConnection dbConnection);
+
+        Company GetCompanyByName(string name, DbConnection dbConnection);
         List<Company> GetCompanyList(bool with0, DbConnection dbConnection);
     }
 
@@ -68,6 +70,21 @@ namespace LegalSystemCore.Infrastructure
 
             dbConnection.cmd.CommandText = "select * from company WHERE company_id = @CompanyId";
             dbConnection.cmd.Parameters.AddWithValue("@CompanyId", id);
+
+            dbConnection.dr = dbConnection.cmd.ExecuteReader();
+            DataAccessObject dataAccessObject = new DataAccessObject();
+            company = dataAccessObject.GetSingleOject<Company>(dbConnection.dr);
+            dbConnection.dr.Close();
+
+            return company;
+        }
+
+        public Company GetCompanyByName(string name, DbConnection dbConnection)
+        {
+            Company company = new Company();
+
+            dbConnection.cmd.CommandText = "select * from company WHERE company_name = @CompanyId";
+            dbConnection.cmd.Parameters.AddWithValue("@CompanyId", name);
 
             dbConnection.dr = dbConnection.cmd.ExecuteReader();
             DataAccessObject dataAccessObject = new DataAccessObject();

@@ -12,7 +12,8 @@ namespace LegalSystemWeb
 {
     public partial class CreateAccount : System.Web.UI.Page
     {
-
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -21,7 +22,9 @@ namespace LegalSystemWeb
             }
             else
             {
-                if (Session["User_Role_Id"].ToString() != "1")
+                if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 15).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 15 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 15 && x.IsGrantRevoke == 1)))
                 {
                     Response.Redirect("404.aspx");
                 }
@@ -53,7 +56,7 @@ namespace LegalSystemWeb
         private void BindCompanyList()
         {
             ICompanyController companyController = ControllerFactory.CreateCompanyController();
-            ddlCompany.DataSource = companyController.GetCompanyList(false);
+            ddlCompany.DataSource = companyController.GetCompanyList(false).OrderBy(x => x.CompanyName);
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataTextField = "CompanyName";
 
@@ -65,7 +68,7 @@ namespace LegalSystemWeb
             ICompanyUnitController companyUnitController = ControllerFactory.CreateCompanyUnitController();
             if (ddlCompany.SelectedValue != "")
             {
-                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(false, ddlCompany.SelectedValue);
+                ddlCompanyUnit.DataSource = companyUnitController.GetCompanyUnitListFilter(false, ddlCompany.SelectedValue).OrderBy(x => x.CompanyUnitName);
                 ddlCompanyUnit.DataValueField = "CompanyUnitId";
                 ddlCompanyUnit.DataTextField = "CompanyUnitName";
 
@@ -105,11 +108,14 @@ namespace LegalSystemWeb
 
                 Clear();
                 lblErrorMsg.Text = "";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "swal('Success!', 'User Created Succesfully!', 'success')", true);
+
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "alert", "swal('Success!', 'User Created Succesfully!', 'success')", true);
+                Clear();
 
             }
             else
             {
+                Clear();
                 lblSuccessMsg.Text = "";
                 lblErrorMsg.Text = "User Already Exists!";
             }

@@ -12,7 +12,11 @@ namespace LegalSystemCore.Controller
     {
         int Save(UserRolePrivilege userRolePrivilege);
         int Delete(UserRolePrivilege userRolePrivilege);
+
+        int Init();
         List<UserRolePrivilege> GetUserRolePrivilegeList();
+
+        List<UserRolePrivilege> GetUserRolePrivilegeListByRole(string userRoleID);
     }
 
     public class UserRolePrivilegeControllerImpl : IUserRolePrivilegeController
@@ -27,6 +31,30 @@ namespace LegalSystemCore.Controller
             {
                 dbConnection = new DbConnection();
                 listUserRolePrivilege = userRolePrivilegeDAO.GetUserRolePrivilegeList(dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+            return listUserRolePrivilege;
+        }
+
+        public List<UserRolePrivilege> GetUserRolePrivilegeListByRole(string userRoleID)
+        {
+            DbConnection dbConnection = null;
+            List<UserRolePrivilege> listUserRolePrivilege = new List<UserRolePrivilege>();
+            try
+            {
+                dbConnection = new DbConnection();
+                listUserRolePrivilege = userRolePrivilegeDAO.GetUserRolePrivilegeListByRole(userRoleID, dbConnection);
             }
             catch (Exception)
             {
@@ -65,6 +93,27 @@ namespace LegalSystemCore.Controller
             }
         }
 
+        public int Init()
+        {
+            DbConnection dbConnection = null;
+            try
+            {
+                dbConnection = new DbConnection();
+                return userRolePrivilegeDAO.Init(dbConnection);
+            }
+            catch (Exception)
+            {
+                dbConnection.RollBack();
+                throw;
+            }
+            finally
+            {
+                if (dbConnection.con.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Commit();
+                }
+            }
+        }
 
 
         public int Delete(UserRolePrivilege userRolePrivilege)

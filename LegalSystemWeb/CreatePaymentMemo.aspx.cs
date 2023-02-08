@@ -15,6 +15,8 @@ namespace LegalSystemWeb
 {
     public partial class CreatePaymentMemo : System.Web.UI.Page
     {
+        IUserRolePrivilegeController userRolePrivilegeController = ControllerFactory.CreateUserRolePrivilegeController();
+        IUserPrivilegeController userPrivilegeController = ControllerFactory.CreateUserPrivilegeController();
         UserPrivilege activity = new UserPrivilege();
         List<UserPrivilege> listActivity = new List<UserPrivilege>();
         ILawyerController LawyerController = ControllerFactory.CreateLawyerController();
@@ -35,7 +37,9 @@ namespace LegalSystemWeb
                 }
                 else
                 {
-                    if (Session["User_Role_Id"].ToString() == "3")
+                    if (!((userRolePrivilegeController.GetUserRolePrivilegeListByRole(Session["User_Role_Id"].ToString()).Where(x => x.FunctionId == 17).Any()
+                    && !(userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 17 && x.IsGrantRevoke == 0))) ||
+                    userPrivilegeController.GetUserPrivilegeList(Convert.ToInt32(Session["User_Id"])).Any(x => x.FunctionId == 17 && x.IsGrantRevoke == 1)))
                     {
                         Response.Redirect("404.aspx");
                     }
@@ -52,7 +56,7 @@ namespace LegalSystemWeb
         private void BindActivityList()
         {
             IActivityController activityController = ControllerFactory.CreateActivityController();
-            cblActivity.DataSource = activityController.GetActivityList(false);
+            cblActivity.DataSource = activityController.GetActivityList(false).OrderBy(x => x.ActivityName);
             cblActivity.DataValueField = "ActivityId";
             cblActivity.DataTextField = "ActivityName";
             cblActivity.DataBind();
@@ -70,7 +74,7 @@ namespace LegalSystemWeb
 
             counselorLawyer.Add(LawyerController.GetLawyer(masterController.GetCaseMaster(ddlCaseNo.SelectedValue, false).AssignAttornerId));
 
-            ddlLawyerName.DataSource = counselorLawyer;
+            ddlLawyerName.DataSource = counselorLawyer.OrderBy(x => x.LawyerName);
             ddlLawyerName.DataValueField = "LawyerId";
             ddlLawyerName.DataTextField = "LawyerName";
             ddlLawyerName.DataBind();
@@ -92,7 +96,7 @@ namespace LegalSystemWeb
             if (UserRoleId == 5)
                 caseMasterList = caseMasterList.Where(c => c.CompanyUnitId == companyUnitId).ToList();
 
-            ddlCaseNo.DataSource = caseMasterList;
+            ddlCaseNo.DataSource = caseMasterList.OrderBy(x => x.CaseNumber);
             ddlCaseNo.DataValueField = "CaseNumber";
             ddlCaseNo.DataTextField = "CaseNumber";
             ddlCaseNo.DataBind();
@@ -214,6 +218,7 @@ namespace LegalSystemWeb
             }
 
             listUplodedFile.Clear();
+            UplodedFilesList.Clear();
             files.Clear();
             filePaths.Clear();
             BindDocuments();
