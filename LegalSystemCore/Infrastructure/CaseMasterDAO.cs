@@ -159,14 +159,14 @@ namespace LegalSystemCore.Infrastructure
             dbConnection.cmd.CommandType = System.Data.CommandType.Text;
             if (caseMaster.PrevCaseNumber == "")
             {
-                dbConnection.cmd.CommandText = "Update case_master SET company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
+                dbConnection.cmd.CommandText = "Update case_master SET case_number=@CaseNumber, company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
                     "case_description = @CaseDescription ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
                     "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate" +
                     " WHERE case_number = @PrevCaseNumberUpdate ";
             }
             else
             {
-                dbConnection.cmd.CommandText = "Update case_master SET company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
+                dbConnection.cmd.CommandText = "Update case_master SET case_number=@CaseNumber, company_id = @CompanyId,company_unit_id = @CompanyUnitId, case_nature_id = @CaseNatureId, " +
                     "case_description = @CaseDescription ,claim_amount = @ClaimAmount , is_plaintif = @IsPlentif, court_id = @CourtId, locationc_id = @LocationId," +
                     "assign_attorney_id = @AssignAttornerId, created_by_user = @CreatedUserId, created_date = @CreatedDate, case_status_id = @CaseStatusId, case_open_date = @CaseOpenDate," +
                     "prev_case_number = @PrevCaseNumber WHERE case_number = @PrevCaseNumberUpdate ";
