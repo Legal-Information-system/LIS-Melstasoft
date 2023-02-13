@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -158,6 +159,55 @@ namespace LegalSystemWeb
 
         }
 
+        protected void txtSearch_SelectedTextChanged(object sender, EventArgs e)
+        {
+            BindCaseList();
+            if (txtSearch.Text == "" || txtSearch.Text == string.Empty || txtSearch.Text == null)
+            {
+                if (ddlCaseStatus.SelectedValue == "1")
+                {
+                    datatablesSimple.DataSource = caseMasterListO;
+                }
+                else
+                {
+                    datatablesSimple.DataSource = caseMasterListC;
+                }
+                datatablesSimple.DataBind();
+            }
+            else
+            {
+                List<CaseMaster> caseMasterList = new List<CaseMaster>();
+                if (ddlCaseStatus.SelectedValue == "1")
+                {
+
+                    foreach (CaseMaster caseMaster in caseMasterListO)
+                    {
+                        string str = "^" + txtSearch.Text + "+";
+                        Regex re = new Regex(str);
+                        if (re.IsMatch(caseMaster.CaseNumber))
+                        {
+                            caseMasterList.Add(caseMaster);
+                        }
+                    }
+
+                }
+                else
+                {
+                    foreach (CaseMaster caseMaster in caseMasterListC)
+                    {
+                        string str = "^" + txtSearch.Text + "+";
+                        Regex re = new Regex(str);
+                        if (re.IsMatch(caseMaster.CaseNumber))
+                        {
+                            caseMasterList.Add(caseMaster);
+                        }
+                    }
+                }
+                datatablesSimple.DataSource = caseMasterList;
+                datatablesSimple.DataBind();
+
+            }
+        }
         protected void ddlCaseStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindCaseList();

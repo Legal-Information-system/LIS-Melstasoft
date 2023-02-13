@@ -11,19 +11,22 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <div class="card-header d-flex justify-content-between">
-                    <div>
+                    <div class="col-sm-3">
                         <i class="fas fa-table me-1 "></i>
                         Case Table
                     </div>
-                    <div>
-                        <asp:DropDownList ID="ddlCaseStatus" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled"
-                            Style="margin-top: 5px" AutoPostBack="true" OnSelectedIndexChanged="ddlCaseStatus_SelectedIndexChanged">
+                    <div class="col-sm-5">
+                        <asp:TextBox runat="server" placeholder=" Search " CssClass="form-control form-control-user" ID="txtSearch" AutoPostBack="true" OnTextChanged="txtSearch_SelectedTextChanged" Style="margin-top: 5px"></asp:TextBox>
+                    </div>
+                    <div class="float-right" style="margin-right: 0px">
+                        <asp:DropDownList ID="ddlCaseStatus" runat="server" CssClass="btn btn-outline-dark dropdown-toggle dropdown-item.disabled mr-0"
+                            Style="margin-top: 5px; margin-right: 0px" AutoPostBack="true" OnSelectedIndexChanged="ddlCaseStatus_SelectedIndexChanged">
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div class="card-body table-responsive">
                     <asp:GridView ID="datatablesSimple" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-condensed table-responsive table-hover"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="datatablesSimple_PageIndexChanging">
+                        CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" OnPageIndexChanging="datatablesSimple_PageIndexChanging" ShowHeaderWhenEmpty="true">
                         <HeaderStyle BackColor="#212529" ForeColor="white" HorizontalAlign="center" />
 
                         <Columns>
@@ -57,6 +60,9 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <EmptyDataTemplate>
+                            <div align="center">No Case records found.</div>
+                        </EmptyDataTemplate>
 
                     </asp:GridView>
                 </div>
