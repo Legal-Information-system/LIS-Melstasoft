@@ -402,7 +402,7 @@ namespace LegalSystemWeb
 
                         }
 
-                        cstextCard.Append(" </div>\r\n                            </div>\r\n                            </div>");
+                        cstextCard.Append(" </div>\r\n                            </div>\r\n<div style=\"break-after:page\"></div>                          ");
                     }
 
 
