@@ -1,6 +1,35 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MonthlyCases.aspx.cs" Inherits="LegalSystemWeb.MonthlyCases" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script language="javascript" type="text/javascript">
+
+        function printDiv() {
+            var divContents = document.getElementById("lt").innerHTML;
+            var a = window.open('', '');
+            a.document.write('<html><head>' +
+
+                '<style>' +
+                ' @media print {' +
+                '   .parent {' +
+                'overflow: scroll;' +
+                'display: block;' +
+                ' }' +
+                ' .pb_after  { page -break-after: always!important; }' +
+                ' }    ' +
+                '</style > ' +
+
+                '<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" media=\"print\"/>' +
+                '<link href="css/styles.css" rel="stylesheet" />' +
+                '<link href="Styles/sweetalert.css" rel="stylesheet" media=\"print\" /></head>');
+            a.document.write('<body > ');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            setTimeout(function () { a.print(); }, 1000);
+
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container my-5" id="main">
@@ -59,7 +88,7 @@
 
                                 <div class="col-sm-2" id="btnPrint" runat="server">
 
-                                    <asp:button runat="server" cssclass="btn btn-primary btn-user btn-block" onclientclick="javascript:window.print();" text="Print" xmlns:asp="#unknown" />
+                                    <asp:button runat="server" cssclass="btn btn-primary btn-user btn-block" onclientclick="javascript:printDiv();" text="Print" xmlns:asp="#unknown" />
 
                                 </div>
 

@@ -76,6 +76,8 @@
     }
 }
 
+
+
 body {
     margin: 0;
     font-family: var(--bs-body-font-family);
@@ -12404,4 +12406,15 @@ fieldset .checkbox {
     position: relative;
     display: block;
     padding-left: 1.25rem;
+}
+
+@media print {
+    .parent {
+        overflow: scroll;
+        display: block;
+    }
+
+    .pb_after {
+        page-break-after: always !important;
+    }
 }

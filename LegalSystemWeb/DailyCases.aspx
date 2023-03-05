@@ -2,24 +2,33 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script language="javascript" type="text/javascript">
-        //function CallPrint(strid) {
 
+        function printDiv() {
+            var divContents = document.getElementById("lt").innerHTML;
+            var a = window.open('', '');
+            a.document.write('<html><head>' +
 
-        //    var prtContent = document.getElementById(strid);
-        //    var WinPrint = window.open('', 'PRINT', 'left=0,top=0,width=800,height=100,toolbar=0,scrollbars=0,status=0,dir=ltr');
-        //    WinPrint.document.write('</head><body >');
-        //    WinPrint.document.write('<h1>' + document.title + '</h1>');
+                '<style>' +
+                ' @media print {' +
+                '   .parent {' +
+                'overflow: scroll;' +
+                'display: block;' +
+                ' }' +
+                ' .pb_after  { page -break-after: always!important; }' +
+                ' }    ' +
+                '</style > ' +
 
-        //    WinPrint.document.write(prtContent.innerHTML);
-        //    mywindow.document.write('</body></html>');
-        //    WinPrint.document.close();
-        //    WinPrint.focus();
-        //    WinPrint.print();
-        //    WinPrint.close();
-        //    prtContent.innerHTML = strOldOne;
-        //}
+                '<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" media=\"print\"/>' +
+                '<link href="css/styles.css" rel="stylesheet" />' +
+                '<link href="Styles/sweetalert.css" rel="stylesheet" media=\"print\" /></head>');
+            a.document.write('<body > ');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            setTimeout(function () { a.print(); }, 1000);
 
-       //}
+        }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -66,7 +75,7 @@
 
                                 <div class="col-sm-3" id="btnPrint" runat="server">
 
-                                    <asp:button runat="server" cssclass="btn btn-primary btn-user btn-block" onclientclick="javascript:window.print();" text="Print" xmlns:asp="#unknown" />
+                                    <asp:button runat="server" cssclass="btn btn-primary btn-user btn-block" onclientclick="javascript:printDiv();" text="Print" xmlns:asp="#unknown" />
 
                                 </div>
 
